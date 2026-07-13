@@ -2137,3 +2137,14 @@ footer h3{
         0 0 55px rgba(160,100,240,.75);
 
 }
+
+
+.contenedor-btn-musica{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin-top:30px;
+
+}
