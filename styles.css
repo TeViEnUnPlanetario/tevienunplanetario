@@ -1246,8 +1246,6 @@ footer h3{
 
     justify-content:center;
 
-    gap:10px;
-
     padding:12px 35px;
 
     color:white;
@@ -1302,5 +1300,12 @@ footer h3{
 .botones-redes a:nth-child(3):hover{
 
     background:#1877f2;
+
+}
+
+.botones-redes i{
+
+    font-size:18px;
+    margin-right:8px;
 
 }
