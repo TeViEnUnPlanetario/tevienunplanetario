@@ -1048,3 +1048,160 @@ footer p{
     font-size:20px;
 
 }
+
+/* =========================
+ PAGINA MUSICA
+========================= */
+
+
+.pagina-musica{
+
+text-align:center;
+
+padding:100px 20px 50px;
+
+background:
+radial-gradient(circle,
+rgba(120,70,180,.25),
+transparent 50%),
+#050505;
+
+color:white;
+
+}
+
+
+
+.pagina-musica h1{
+
+font-size:45px;
+
+letter-spacing:3px;
+
+}
+
+
+
+.pagina-musica p{
+
+color:#aaa;
+
+}
+
+
+
+.discografia{
+
+padding:50px 8%;
+
+}
+
+
+
+.tarjetas-musica{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+
+gap:50px;
+
+}
+
+
+
+.album{
+
+text-align:center;
+
+color:white;
+
+opacity:0;
+
+transform:translateY(40px);
+
+animation:
+aparecerAlbum 1s forwards;
+
+}
+
+
+
+.album img{
+
+width:100%;
+
+border-radius:20px;
+
+box-shadow:
+0 0 40px rgba(120,80,180,.3);
+
+transition:.5s;
+
+}
+
+
+
+.album:hover img{
+
+transform:scale(1.05);
+
+box-shadow:
+0 0 60px rgba(160,100,220,.6);
+
+}
+
+
+
+.info-album{
+
+margin-top:25px;
+
+}
+
+
+
+.info-album span{
+
+font-size:12px;
+
+letter-spacing:4px;
+
+color:#aaa;
+
+}
+
+
+
+.info-album h3{
+
+font-size:22px;
+
+letter-spacing:2px;
+
+}
+
+
+
+.info-album p{
+
+color:#bbb;
+
+line-height:1.7;
+
+}
+
+
+
+@keyframes aparecerAlbum{
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
