@@ -1689,3 +1689,110 @@ footer h3{
 
 
 }
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Galería | Te Vi En Un Planetario</title>
+
+<link rel="stylesheet" href="styles.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+
+
+<header class="pagina-musica">
+
+    <h1>
+        Nuestro universo visual
+    </h1>
+
+    <p>
+        Fotografías, escenarios y recuerdos
+        que forman parte de nuestro viaje.
+    </p>
+
+</header>
+
+
+
+<section class="galeria-premium">
+
+
+<div class="masonry">
+
+
+<div class="item grande">
+<img src="img/galeria/foto1.jpg">
+</div>
+
+<div class="item">
+<img src="img/galeria/foto2.jpg">
+</div>
+
+<div class="item">
+<img src="img/galeria/foto3.jpg">
+</div>
+
+<div class="item grande">
+<img src="img/galeria/foto4.jpg">
+</div>
+
+<div class="item">
+<img src="img/galeria/foto5.jpg">
+</div>
+
+<div class="item">
+<img src="img/galeria/foto6.jpg">
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+<footer>
+
+<h2>
+Continúa explorando nuestro universo.
+</h2>
+
+<div class="botones-portada">
+
+<a href="index.html">
+
+<i class="fa-solid fa-house"></i>
+
+Volver al inicio
+
+</a>
+
+</div>
+
+<p>
+
+© 2026 Te Vi En Un Planetario
+
+</p>
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
