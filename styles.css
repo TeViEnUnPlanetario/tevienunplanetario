@@ -864,3 +864,63 @@ footer{
     background:linear-gradient(135deg,#b78cff,#e0c7ff);
 
 }
+
+footer {
+
+    text-align: center;
+    padding: 60px 20px;
+    background: #050505;
+
+}
+
+
+footer h3 {
+
+    color: white;
+    font-size: 28px;
+    margin-bottom: 30px;
+
+}
+
+
+.botones-footer {
+
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+
+}
+
+
+.botones-footer a {
+
+    text-decoration: none;
+    color: white;
+
+    background: #242424;
+
+    border: 1px solid rgba(255,255,255,.3);
+
+    padding: 12px 30px;
+
+    border-radius: 30px;
+
+    transition: .3s;
+
+}
+
+
+.botones-footer a:hover {
+
+    background: #6b4ca5;
+
+}
+
+
+footer p {
+
+    margin-top: 40px;
+    color: #777;
+
+}
