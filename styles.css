@@ -769,38 +769,6 @@ footer{
 
 
 
-.botones-portada a{
-
-    color:white;
-
-    text-decoration:none;
-
-
-    padding:12px 30px;
-
-
-    border-radius:30px;
-
-
-    background:rgba(255,255,255,.15);
-
-
-    border:1px solid rgba(255,255,255,.3);
-
-
-    backdrop-filter:blur(8px);
-
-
-    font-weight:bold;
-
-
-    transition:.4s;
-
-}
-
-
-
-.botones-portada a:hover{
 
     background:white;
 
@@ -893,27 +861,21 @@ footer h2{
 }
 
 
-.botones-portada a{
-
-    color:white;
-    text-decoration:none;
-
-    background:#242424;
-
-    border:1px solid rgba(255,255,255,.3);
-
-    padding:12px 35px;
-
-    border-radius:30px;
-
-    transition:.3s;
-
-}
 
 
 .botones-portada a:hover{
 
-    background:#6f4fa3;
+    transform:translateY(-5px);
+
+    background:#7254a3;
+
+    color:white;
+
+    box-shadow:
+    0 0 15px rgba(150,100,220,.5),
+    0 0 35px rgba(150,100,220,.3);
+
+}
 
 }
 
@@ -1030,6 +992,26 @@ footer p{
 
 }
 
+
+/* =========================
+   BOTONES PLATAFORMAS MUSICA
+========================= */
+
+
+.botones-portada{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+}
+
+
+
 .botones-portada a{
 
     display:flex;
@@ -1040,7 +1022,50 @@ footer p{
 
     gap:10px;
 
+    padding:12px 35px;
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:30px;
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.3);
+
+    backdrop-filter:blur(8px);
+
+    font-weight:bold;
+
+    transition:.35s ease;
+
 }
+
+
+
+.botones-portada a:hover{
+
+    transform:translateY(-5px);
+
+    background:#7254a3;
+
+    box-shadow:
+
+    0 0 15px rgba(150,100,220,.5),
+
+    0 0 35px rgba(150,100,220,.3);
+
+}
+
+
+
+.botones-portada i{
+
+    font-size:20px;
+
+}
+
 
 
 .botones-portada i{
