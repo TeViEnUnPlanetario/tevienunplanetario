@@ -1328,3 +1328,60 @@ footer h3{
     margin-right:8px;
 
 }
+
+/* =========================
+   HOVER PLATAFORMAS MUSICA
+========================= */
+
+
+/* Spotify */
+
+.botones-portada a:nth-child(1):hover{
+
+    background:#1DB954;
+
+    border-color:#1DB954;
+
+    box-shadow:
+    0 0 20px rgba(29,185,84,.7),
+    0 0 45px rgba(29,185,84,.4);
+
+    transform:translateY(-5px);
+
+}
+
+
+
+/* YouTube */
+
+.botones-portada a:nth-child(2):hover{
+
+    background:#ff0000;
+
+    border-color:#ff0000;
+
+    box-shadow:
+    0 0 20px rgba(255,0,0,.7),
+    0 0 45px rgba(255,0,0,.4);
+
+    transform:translateY(-5px);
+
+}
+
+
+
+/* Apple Music */
+
+.botones-portada a:nth-child(3):hover{
+
+    background:#222;
+
+    border-color:#aaa;
+
+    box-shadow:
+    0 0 20px rgba(255,255,255,.35),
+    0 0 45px rgba(255,255,255,.15);
+
+    transform:translateY(-5px);
+
+}
