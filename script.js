@@ -83,3 +83,92 @@ setTimeout(function(){
 
 
 },7000);
+
+
+// =========================
+// CONTADOR NUEVO LANZAMIENTO
+// =========================
+
+
+// Cambia esta fecha por la fecha real del lanzamiento.
+// Formato: AÑO-MES-DÍA y hora.
+// Ejemplo: 15 de septiembre de 2026 a las 00:00.
+
+const fechaNuevoEP =
+new Date("2026-09-15T00:00:00").getTime();
+
+
+const contadorEP =
+setInterval(function(){
+
+
+    const ahora =
+    new Date().getTime();
+
+
+    const distancia =
+    fechaNuevoEP - ahora;
+
+
+    const dias =
+    Math.floor(
+        distancia / (1000 * 60 * 60 * 24)
+    );
+
+
+    const horas =
+    Math.floor(
+        (distancia % (1000 * 60 * 60 * 24))
+        / (1000 * 60 * 60)
+    );
+
+
+    const minutos =
+    Math.floor(
+        (distancia % (1000 * 60 * 60))
+        / (1000 * 60)
+    );
+
+
+    const segundos =
+    Math.floor(
+        (distancia % (1000 * 60))
+        / 1000
+    );
+
+
+    document.getElementById("dias").textContent =
+    String(dias).padStart(2,"0");
+
+
+    document.getElementById("horas").textContent =
+    String(horas).padStart(2,"0");
+
+
+    document.getElementById("minutos").textContent =
+    String(minutos).padStart(2,"0");
+
+
+    document.getElementById("segundos").textContent =
+    String(segundos).padStart(2,"0");
+
+
+    if(distancia < 0){
+
+        clearInterval(contadorEP);
+
+
+        document.getElementById(
+            "contadorLanzamiento"
+        ).innerHTML = `
+
+            <div class="mensaje-estreno">
+                EL NUEVO EP YA ESTÁ DISPONIBLE
+            </div>
+
+        `;
+
+    }
+
+
+},1000);
