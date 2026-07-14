@@ -47,22 +47,46 @@ body{
 
     top:-120px;
 
+    z-index:1;
 
     user-select:none;
 
     -webkit-user-drag:none;
 
-
     opacity:1;
 
     transform:scale(1);
 
-
     transition:
+        opacity 1.5s ease,
+        transform 6s ease;
 
-    opacity 1.5s ease,
+}
 
-    transform 6s ease;
+
+/* Degradado general del banner */
+
+.banner::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:-1px;
+
+    height:120px;
+
+    background:linear-gradient(
+        to bottom,
+        transparent,
+        #0b0b0d
+    );
+
+    pointer-events:none;
+
+    z-index:2;
 
 }
 
@@ -76,24 +100,19 @@ body{
 
     inset:0;
 
+    z-index:3;
 
     background:
-
     linear-gradient(
-
         rgba(0,0,0,.25),
-
         rgba(0,0,0,.75)
-
     );
-
 
     display:flex;
 
     flex-direction:column;
 
     justify-content:space-between;
-
 
     padding:35px;
 
@@ -696,11 +715,9 @@ footer{
 
 @media(max-width:900px){
 
-
     .contenido-musica{
 
         grid-template-columns:1fr;
-
         text-align:center;
 
     }
@@ -709,8 +726,22 @@ footer{
     .botones-musica{
 
         justify-content:center;
-
         flex-wrap:wrap;
+
+    }
+
+
+    .banner::after{
+
+        height:150px;
+
+        background:linear-gradient(
+            to bottom,
+            rgba(11,11,13,0) 0%,
+            rgba(11,11,13,.45) 30%,
+            rgba(11,11,13,.88) 72%,
+            #0b0b0d 100%
+        );
 
     }
 
