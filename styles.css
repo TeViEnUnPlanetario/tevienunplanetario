@@ -1,5 +1,5 @@
 /* =========================
-   CONFIGURACIÓN GENERAL
+   01. CONFIGURACIÓN GENERAL
 ========================= */
 
 *{
@@ -8,733 +8,1210 @@
     box-sizing:border-box;
 }
 
+html{
+    scroll-behavior:smooth;
+}
+
 body{
-
-    font-family: 'Segoe UI', Arial, sans-serif;
-
+    font-family:'Segoe UI', Arial, sans-serif;
     background:#0b0b0d;
-
     color:white;
 }
 
 
 /* =========================
-   BANNER PRINCIPAL
+   02. BANNER PRINCIPAL
 ========================= */
 
-
 .banner{
-
     width:100%;
-
     height:450px;
-
     overflow:hidden;
-
     position:relative;
-
 }
 
-
-
 .banner img{
-
     width:100%;
-
     position:absolute;
-
     left:0;
-
     top:-120px;
-
     z-index:1;
-
     user-select:none;
-
     -webkit-user-drag:none;
-
     opacity:1;
-
     transform:scale(1);
-
     transition:
         opacity 1.5s ease,
         transform 6s ease;
-
 }
 
-
-/* Degradado general del banner */
-
+/* Degradado final que une el banner con el fondo */
 .banner::after{
-
     content:"";
-
     position:absolute;
-
     left:0;
     right:0;
     bottom:-1px;
+    height:150px;
+    z-index:4;
+    pointer-events:none;
+    background:linear-gradient(
+        to bottom,
+        rgba(11,11,13,0) 0%,
+        rgba(11,11,13,.30) 30%,
+        rgba(11,11,13,.78) 72%,
+        #0b0b0d 100%
+    );
+}
 
-    height:120px;
+/* Capa oscura general */
+.overlay{
+    position:absolute;
+    inset:0;
+    z-index:3;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:35px;
+    background:linear-gradient(
+        180deg,
+        rgba(0,0,0,.15) 0%,
+        rgba(0,0,0,.25) 45%,
+        rgba(0,0,0,.55) 100%
+    );
+}
 
+.titulo-blog,
+.menu{
+    position:relative;
+    z-index:5;
+}
+
+
+/* =========================
+   03. TÍTULO DE LA BANDA
+========================= */
+
+.titulo-blog{
+    text-align:center;
+    margin-top:80px;
+}
+
+.titulo-blog h1{
+    font-size:60px;
+    letter-spacing:6px;
+    text-transform:uppercase;
+    font-weight:700;
+}
+
+.titulo-blog p{
+    font-size:22px;
+    margin-top:15px;
+    letter-spacing:3px;
+    color:#ddd;
+}
+
+
+/* =========================
+   04. MENÚ
+========================= */
+
+.menu{
+    display:flex;
+    justify-content:center;
+    gap:35px;
+    padding:12px 30px;
+    margin:auto;
+    border-radius:40px;
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(10px);
+}
+
+.menu a{
+    color:white;
+    text-decoration:none;
+    font-size:17px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.menu a:hover{
+    color:#cba6ff;
+}
+
+
+/* =========================
+   05. PRESENTACIÓN / HISTORIA
+========================= */
+
+.presentacion{
+    width:80%;
+    max-width:900px;
+    margin:70px auto;
+    text-align:center;
+}
+
+.presentacion h2{
+    font-size:38px;
+    margin-bottom:20px;
+}
+
+.presentacion p{
+    color:#ccc;
+    font-size:20px;
+    line-height:1.7;
+}
+
+.historia{
+    max-width:1000px;
+    margin:80px auto;
+    text-align:center;
+}
+
+.historia h2{
+    font-size:42px;
+    margin-bottom:25px;
+}
+
+.historia p{
+    color:#ccc;
+    font-size:20px;
+    line-height:1.9;
+}
+
+
+/* =========================
+   06. SHOWS
+========================= */
+
+.shows{
+    width:85%;
+    max-width:1200px;
+    margin:80px auto;
+}
+
+.shows h2{
+    margin-bottom:40px;
+    text-align:center;
+    font-size:40px;
+}
+
+.tarjetas-shows{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:35px;
+}
+
+.show{
+    overflow:hidden;
+    border-radius:15px;
+    background:#15151a;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
+    transition:.4s;
+}
+
+.show:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 40px rgba(120,80,200,.35);
+}
+
+.show img{
+    width:100%;
+    height:380px;
+    object-fit:cover;
+}
+
+.show div{
+    padding:25px;
+}
+
+.show span{
+    color:#cba6ff;
+    font-size:14px;
+    letter-spacing:3px;
+    font-weight:bold;
+}
+
+.show h3{
+    margin:15px 0;
+    font-size:28px;
+}
+
+.show p{
+    color:#ccc;
+    line-height:1.6;
+}
+
+.btn-boletos{
+    display:inline-block;
+    margin-top:20px;
+    padding:12px 22px;
+    border-radius:30px;
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    background:linear-gradient(135deg,#8f5cff,#cba6ff);
+    box-shadow:0 10px 25px rgba(143,92,255,.35);
+    transition:.35s;
+}
+
+.btn-boletos:hover{
+    transform:translateY(-4px);
+    background:linear-gradient(135deg,#b78cff,#e0c7ff);
+    box-shadow:0 15px 35px rgba(143,92,255,.55);
+}
+
+
+/* =========================
+   07. SECCIÓN MÚSICA
+========================= */
+
+.musica{
+    width:85%;
+    max-width:1100px;
+    margin:100px auto;
+}
+
+.titulo-seccion-musica{
+    width:80%;
+    max-width:900px;
+    margin:0 auto 50px;
+    text-align:center;
+}
+
+.titulo-seccion-musica h2{
+    margin-bottom:15px;
+    font-size:42px;
+}
+
+.titulo-seccion-musica p{
+    color:#ccc;
+    font-size:20px;
+    line-height:1.6;
+}
+
+.contenido-musica{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+    gap:60px;
+}
+
+.portada img{
+    width:100%;
+    max-width:450px;
+    border-radius:15px;
+    box-shadow:0 20px 50px rgba(0,0,0,.5);
+    transition:.4s;
+}
+
+.portada img:hover{
+    transform:scale(1.03);
+}
+
+.info-musica h2{
+    margin-bottom:10px;
+    font-size:45px;
+}
+
+.info-musica h3{
+    margin-bottom:25px;
+    color:#cba6ff;
+    font-size:24px;
+}
+
+.info-musica p{
+    color:#ccc;
+    font-size:18px;
+    line-height:1.8;
+}
+
+.info-musica h4{
+    margin-top:40px;
+    margin-bottom:20px;
+    color:white;
+    font-size:20px;
+    letter-spacing:1px;
+}
+
+.info-musica iframe{
+    margin-top:0;
+    margin-bottom:40px;
+    border-radius:12px;
+    box-shadow:0 15px 35px rgba(0,0,0,.4);
+}
+
+.botones-musica{
+    display:flex;
+    gap:20px;
+    margin-top:35px;
+}
+
+.botones-musica a{
+    padding:12px 25px;
+    border-radius:30px;
+    color:white;
+    text-decoration:none;
+    background:#252530;
+    transition:.3s;
+}
+
+.botones-musica a:hover{
+    color:#111;
+    background:#cba6ff;
+}
+
+
+/* =========================
+   08. LANZAMIENTO EP
+========================= */
+
+.lanzamiento-ep{
+    margin-top:30px;
+    text-align:center;
+    color:white;
+}
+
+.lanzamiento-ep span{
+    color:#aaa;
+    font-size:12px;
+    letter-spacing:4px;
+}
+
+.lanzamiento-ep h3{
+    margin:15px 0;
+    font-size:24px;
+    letter-spacing:2px;
+}
+
+.lanzamiento-ep p{
+    color:#bbb;
+    line-height:1.7;
+    letter-spacing:2px;
+}
+
+
+/* =========================
+   09. BOTÓN PRINCIPAL NEÓN
+========================= */
+
+.btn-principal{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-top:20px;
+    padding:12px 40px;
+    border:1px solid rgba(255,255,255,.7);
+    border-radius:30px;
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(10px);
+    box-shadow:
+        0 0 10px rgba(255,255,255,.5),
+        0 0 25px rgba(180,140,255,.7),
+        0 0 45px rgba(140,90,220,.5);
+    transition:.4s;
+}
+
+.btn-principal:hover{
+    transform:translateY(-6px);
+    border-color:white;
+    background:linear-gradient(
+        135deg,
+        rgba(255,255,255,.45),
+        rgba(150,100,230,.8)
+    );
+    box-shadow:
+        0 0 20px rgba(255,255,255,1),
+        0 0 45px rgba(190,150,255,1),
+        0 0 90px rgba(140,80,230,.8),
+        0 0 130px rgba(140,80,230,.4);
+}
+
+.contenedor-btn-musica{
+    display:flex;
+    justify-content:center;
+    margin-top:30px;
+}
+
+
+/* =========================
+   10. CONTADOR NUEVO LANZAMIENTO
+========================= */
+
+.nuevo-lanzamiento{
+    width:85%;
+    max-width:1100px;
+    margin:110px auto;
+    padding:75px 40px;
+    position:relative;
+    overflow:hidden;
+    text-align:center;
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:28px;
+    background:radial-gradient(
+        circle at center,
+        rgba(145,90,230,.18),
+        rgba(10,10,13,.96) 58%
+    );
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.55),
+        0 0 55px rgba(130,80,210,.15);
+}
+
+.luz-lanzamiento{
+    position:absolute;
+    width:320px;
+    height:320px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:rgba(150,90,230,.18);
+    filter:blur(80px);
+    animation:pulsoLanzamiento 4s ease-in-out infinite alternate;
+    pointer-events:none;
+}
+
+.etiqueta-lanzamiento{
+    position:relative;
+    display:inline-block;
+    margin-bottom:22px;
+    color:#cba6ff;
+    font-size:13px;
+    font-weight:bold;
+    letter-spacing:5px;
+}
+
+.nuevo-lanzamiento h2{
+    position:relative;
+    margin-bottom:18px;
+    font-size:42px;
+    letter-spacing:2px;
+}
+
+.descripcion-lanzamiento{
+    position:relative;
+    max-width:720px;
+    margin:0 auto 50px;
+    color:#ccc;
+    font-size:19px;
+    line-height:1.8;
+}
+
+.contador-lanzamiento{
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
+.unidad-contador{
+    width:135px;
+    padding:24px 15px;
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:18px;
+    background:rgba(255,255,255,.055);
+    backdrop-filter:blur(10px);
+    box-shadow:
+        0 0 15px rgba(255,255,255,.06),
+        0 0 30px rgba(145,90,230,.14);
+    transition:.4s;
+}
+
+.unidad-contador:hover{
+    transform:translateY(-7px);
+    border-color:rgba(220,195,255,.75);
+    box-shadow:
+        0 0 18px rgba(255,255,255,.45),
+        0 0 42px rgba(160,105,240,.55),
+        0 0 75px rgba(130,70,220,.25);
+}
+
+.unidad-contador span{
+    display:block;
+    color:white;
+    font-size:48px;
+    font-weight:700;
+    line-height:1;
+    text-shadow:
+        0 0 12px rgba(255,255,255,.3),
+        0 0 28px rgba(170,115,255,.45);
+}
+
+.unidad-contador small{
+    display:block;
+    margin-top:14px;
+    color:#bbb;
+    font-size:11px;
+    letter-spacing:3px;
+}
+
+.separador-contador{
+    color:#cba6ff;
+    font-size:40px;
+    text-shadow:0 0 15px rgba(180,120,255,.8);
+}
+
+.fecha-lanzamiento{
+    position:relative;
+    margin-top:38px;
+    color:#aaa;
+    font-size:14px;
+    letter-spacing:3px;
+}
+
+.mensaje-estreno{
+    padding:20px 35px;
+    border-radius:30px;
+    color:white;
+    font-size:22px;
+    font-weight:bold;
+    letter-spacing:3px;
+    background:linear-gradient(135deg,#8f5cff,#cba6ff);
+    box-shadow:
+        0 0 20px rgba(255,255,255,.5),
+        0 0 55px rgba(160,100,240,.75);
+}
+
+@keyframes pulsoLanzamiento{
+    from{
+        opacity:.45;
+        transform:translate(-50%,-50%) scale(.9);
+    }
+
+    to{
+        opacity:1;
+        transform:translate(-50%,-50%) scale(1.15);
+    }
+}
+
+
+/* =========================
+   11. BOTONES PRE-GUARDADO
+========================= */
+
+.preguardar-lanzamiento{
+    position:relative;
+    margin-top:45px;
+}
+
+.texto-preguardar{
+    margin-bottom:28px;
+    color:#e8e8e8;
+    font-size:18px;
+    letter-spacing:1px;
+}
+
+.botones-preguardar{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:22px;
+}
+
+.btn-preguardar{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:15px;
+    width:100%;
+    max-width:520px;
+    padding:18px 30px;
+    border-radius:14px;
+    color:white;
+    text-decoration:none;
+    font-size:17px;
+    font-weight:700;
+    letter-spacing:1px;
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease,
+        filter .35s ease;
+}
+
+.btn-preguardar i{
+    font-size:30px;
+    filter:drop-shadow(0 0 10px rgba(255,255,255,.75));
+}
+
+.spotify-preguardar{
+    background:linear-gradient(135deg,#1ED760,#1DB954);
+    box-shadow:
+        0 0 20px rgba(29,185,84,.55),
+        0 0 45px rgba(29,185,84,.25);
+}
+
+.spotify-preguardar:hover{
+    transform:translateY(-6px) scale(1.02);
+    box-shadow:
+        0 0 25px rgba(29,185,84,1),
+        0 0 55px rgba(29,185,84,.9),
+        0 0 90px rgba(29,185,84,.55);
+}
+
+.apple-preguardar{
+    background:linear-gradient(135deg,#ff4f7d,#d91d63);
+    box-shadow:
+        0 0 20px rgba(255,70,120,.55),
+        0 0 45px rgba(255,70,120,.25);
+}
+
+.apple-preguardar:hover{
+    transform:translateY(-6px) scale(1.02);
+    box-shadow:
+        0 0 25px rgba(255,70,120,1),
+        0 0 55px rgba(255,70,120,.9),
+        0 0 90px rgba(255,70,120,.55);
+}
+
+
+/* =========================
+   12. CONTACTO / BOOKING
+========================= */
+
+.contacto{
+    width:85%;
+    max-width:1000px;
+    margin:100px auto;
+    text-align:center;
+}
+
+.contacto h2{
+    margin-bottom:20px;
+    font-size:42px;
+}
+
+.contacto > p{
+    margin-bottom:50px;
+    color:#ccc;
+    font-size:20px;
+    line-height:1.7;
+}
+
+.contacto-info{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:35px;
+}
+
+.tarjeta-contacto{
+    padding:35px;
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:20px;
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(10px);
+    transition:.4s;
+}
+
+.tarjeta-contacto:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 30px rgba(150,100,220,.4);
+}
+
+.tarjeta-contacto h3{
+    margin-bottom:15px;
+    font-size:28px;
+}
+
+.tarjeta-contacto p{
+    margin-bottom:25px;
+    color:#bbb;
+}
+
+.tarjeta-contacto a{
+    color:#cba6ff;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.tarjeta-contacto a:hover{
+    color:white;
+}
+
+
+/* =========================
+   13. PÁGINA MÚSICA
+========================= */
+
+.pagina-musica{
+    padding:100px 20px 50px;
+    text-align:center;
+    color:white;
+    background:
+        radial-gradient(
+            circle,
+            rgba(120,70,180,.25),
+            transparent 50%
+        ),
+        #050505;
+}
+
+.pagina-musica h1{
+    font-size:45px;
+    letter-spacing:3px;
+}
+
+.pagina-musica p{
+    color:#aaa;
+}
+
+.discografia{
+    padding:50px 8%;
+}
+
+.tarjetas-musica{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:50px;
+}
+
+.album{
+    color:white;
+    text-align:center;
+    opacity:0;
+    transform:translateY(40px);
+    animation:aparecerAlbum 1s forwards;
+}
+
+.album img{
+    width:100%;
+    border-radius:20px;
+    box-shadow:0 0 40px rgba(120,80,180,.3);
+    transition:.5s;
+}
+
+.album:hover img{
+    transform:scale(1.05);
+    box-shadow:0 0 60px rgba(160,100,220,.6);
+}
+
+.info-album{
+    margin-top:25px;
+}
+
+.info-album span{
+    color:#aaa;
+    font-size:12px;
+    letter-spacing:4px;
+}
+
+.info-album h3{
+    font-size:22px;
+    letter-spacing:2px;
+}
+
+.info-album p{
+    color:#bbb;
+    line-height:1.7;
+}
+
+@keyframes aparecerAlbum{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+/* =========================
+   14. GALERÍA PREMIUM
+========================= */
+
+.galeria-premium{
+    width:90%;
+    max-width:1400px;
+    margin:80px auto;
+}
+
+.masonry{
+    columns:3 320px;
+    column-gap:25px;
+}
+
+.item{
+    position:relative;
+    margin-bottom:25px;
+    break-inside:avoid;
+    overflow:hidden;
+    border-radius:20px;
+    cursor:pointer;
+    background:#111;
+    box-shadow:0 15px 35px rgba(0,0,0,.45);
+    transition:
+        transform .4s ease,
+        box-shadow .4s ease;
+}
+
+.item img{
+    width:100%;
+    display:block;
+    transition:
+        transform .8s ease,
+        filter .6s ease;
+}
+
+.item:hover{
+    transform:translateY(-5px);
+    box-shadow:
+        0 0 25px rgba(150,100,220,.55),
+        0 0 60px rgba(150,100,220,.25);
+}
+
+.item:hover img{
+    transform:scale(1.08);
+    filter:brightness(.75);
+}
+
+.overlay-galeria{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:2;
+    padding:70px 25px 25px;
+    text-align:left;
+    color:white;
     background:linear-gradient(
         to bottom,
         transparent,
-        #0b0b0d
+        rgba(0,0,0,.92)
     );
-
+    opacity:0;
+    transform:translateY(20px);
     pointer-events:none;
-
-    z-index:2;
-
+    transition:
+        opacity .4s ease,
+        transform .4s ease;
 }
 
-
-
-/* Capa oscura sobre imagen */
-
-.overlay{
-
-    position:absolute;
-
-    inset:0;
-
-    z-index:3;
-
-    background:
-    linear-gradient(
-        rgba(0,0,0,.25),
-        rgba(0,0,0,.75)
-    );
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:space-between;
-
-    padding:35px;
-
+.item:hover .overlay-galeria{
+    opacity:1;
+    transform:translateY(0);
 }
 
-
-
-/* =========================
-   TITULO DE LA BANDA
-========================= */
-
-
-.titulo-blog{
-
-    text-align:center;
-
-    margin-top:80px;
-
-}
-
-
-
-.titulo-blog h1{
-
-    font-size:60px;
-
-    letter-spacing:6px;
-
-    text-transform:uppercase;
-
-    font-weight:700;
-
-}
-
-
-
-.titulo-blog p{
-
-    font-size:22px;
-
-    margin-top:15px;
-
-    letter-spacing:3px;
-
-    color:#ddd;
-
-}
-
-
-
-/* =========================
-   MENU
-========================= */
-
-
-.menu{
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:35px;
-
-
-    background:rgba(255,255,255,.12);
-
-    backdrop-filter:blur(10px);
-
-
-    padding:12px 30px;
-
-    border-radius:40px;
-
-    margin:auto;
-
-}
-
-
-
-.menu a{
-
+.overlay-galeria h3{
+    margin-bottom:8px;
     color:white;
-
-    text-decoration:none;
-
-
-    font-size:17px;
-
-    font-weight:bold;
-
-
-    transition:.3s;
-
+    font-size:24px;
+    text-shadow:0 0 12px rgba(255,255,255,.2);
 }
 
-
-
-.menu a:hover{
-
-    color:#cba6ff;
-
-}
-
-
-
-/* =========================
-   PRESENTACIÓN
-========================= */
-
-
-.presentacion{
-
-
-    text-align:center;
-
-
-    width:80%;
-
-    max-width:900px;
-
-
-    margin:70px auto;
-
-}
-
-
-
-.presentacion h2{
-
-
-    font-size:38px;
-
-    margin-bottom:20px;
-
-
-}
-
-
-
-.presentacion p{
-
-
-    font-size:20px;
-
-    line-height:1.7;
-
-    color:#ccc;
-
-}
-
-
-
-/* =========================
-   SHOWS
-========================= */
-
-
-.shows{
-
-
-    width:85%;
-
-    max-width:1200px;
-
-
-    margin:80px auto;
-
-
-}
-
-
-
-.shows h2{
-
-
-    text-align:center;
-
-
-    font-size:40px;
-
-
-    margin-bottom:40px;
-
-}
-
-
-
-.tarjetas-shows{
-
-
-    display:grid;
-
-
-    grid-template-columns:repeat(3,1fr);
-
-
-    gap:35px;
-
-}
-
-
-
-
-.show{
-
-
-    background:#15151a;
-
-
-    border-radius:15px;
-
-
-    overflow:hidden;
-
-
-    transition:.4s;
-
-
-    box-shadow:
-
-    0 10px 30px rgba(0,0,0,.4);
-
-}
-
-
-
-
-.show:hover{
-
-
-    transform:translateY(-10px);
-
-
-    box-shadow:
-
-    0 20px 40px rgba(120,80,200,.35);
-
-
-}
-
-
-
-
-.show img{
-
-
-    width:100%;
-
-
-    height:380px;
-
-
-    object-fit:cover;
-
-
-}
-
-
-
-
-.show div{
-
-
-    padding:25px;
-
-
-}
-
-
-
-
-.show span{
-
-
-    color:#cba6ff;
-
-
-    font-size:14px;
-
-
-    letter-spacing:3px;
-
-
-    font-weight:bold;
-
-
-}
-
-
-
-
-.show h3{
-
-
-    font-size:28px;
-
-
-    margin:15px 0;
-
-
-}
-
-
-
-.show p{
-
-
-    color:#ccc;
-
-
+.overlay-galeria p{
+    color:#ddd;
+    font-size:15px;
     line-height:1.6;
-
-
 }
 
 
-
 /* =========================
-   FOOTER
+   15. LIGHTBOX DE GALERÍA
 ========================= */
 
+.lightbox{
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:35px 90px 120px;
+    background:rgba(0,0,0,.94);
+    backdrop-filter:blur(12px);
+}
+
+.lightbox.activo{
+    display:flex;
+    animation:aparecerLightbox .35s ease;
+}
+
+.lightbox img{
+    max-width:90%;
+    max-height:78vh;
+    object-fit:contain;
+    border-radius:18px;
+    box-shadow:
+        0 0 25px rgba(255,255,255,.15),
+        0 0 65px rgba(150,100,220,.45);
+    animation:zoomLightbox .4s ease;
+}
+
+.info-lightbox{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    padding:75px 25px 30px;
+    text-align:center;
+    background:linear-gradient(
+        to bottom,
+        transparent,
+        rgba(0,0,0,.97) 65%
+    );
+}
+
+.info-lightbox h2{
+    margin-bottom:10px;
+    color:white;
+    font-size:32px;
+}
+
+.info-lightbox p{
+    max-width:750px;
+    margin:auto;
+    color:#ddd;
+    font-size:16px;
+    line-height:1.7;
+}
+
+.cerrar{
+    position:absolute;
+    top:22px;
+    right:34px;
+    z-index:3;
+    color:white;
+    font-size:50px;
+    line-height:1;
+    cursor:pointer;
+    transition:
+        transform .3s ease,
+        color .3s ease,
+        text-shadow .3s ease;
+}
+
+.cerrar:hover{
+    color:#cba6ff;
+    transform:rotate(90deg);
+    text-shadow:0 0 20px rgba(190,140,255,.9);
+}
+
+.flecha{
+    position:absolute;
+    top:50%;
+    z-index:3;
+    transform:translateY(-50%);
+    color:white;
+    font-size:55px;
+    cursor:pointer;
+    user-select:none;
+    transition:
+        transform .3s ease,
+        color .3s ease,
+        text-shadow .3s ease;
+}
+
+.flecha:hover{
+    color:#cba6ff;
+    text-shadow:0 0 25px rgba(180,120,255,.9);
+}
+
+.flecha.izquierda{
+    left:28px;
+}
+
+.flecha.derecha{
+    right:28px;
+}
+
+.flecha.izquierda:hover{
+    transform:translateY(-50%) translateX(-5px);
+}
+
+.flecha.derecha:hover{
+    transform:translateY(-50%) translateX(5px);
+}
+
+@keyframes aparecerLightbox{
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
+}
+
+@keyframes zoomLightbox{
+    from{
+        opacity:0;
+        transform:scale(.92);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+
+/* =========================
+   16. FOOTER Y PLATAFORMAS
+========================= */
 
 footer{
-
-
-    background:#050505;
-
-
-    text-align:center;
-
-
-    padding:30px;
-
-
     margin-top:80px;
-
-
+    padding:60px 20px;
+    text-align:center;
     color:#aaa;
-
-
+    background:#050505;
 }
 
-
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-
-@media(max-width:900px){
-
-
-    .tarjetas-shows{
-
-
-        grid-template-columns:1fr;
-
-    }
-
-
-    .titulo-blog h1{
-
-
-        font-size:38px;
-
-    }
-
-
-    .menu{
-
-
-        gap:15px;
-
-        flex-wrap:wrap;
-
-    }
-
-
-}
-
-/* =========================
-   TITULO SECCIÓN MÚSICA
-========================= */
-
-
-.titulo-seccion-musica{
-
-    text-align:center;
-
-    width:80%;
-
-    max-width:900px;
-
-    margin:0 auto 50px;
-
-}
-
-
-.titulo-seccion-musica h2{
-
-    font-size:42px;
-
-    margin-bottom:15px;
-
-}
-
-
-
-.titulo-seccion-musica p{
-
-    color:#ccc;
-
-    font-size:20px;
-
-    line-height:1.6;
-
-}
-
-
-
-
-.contenido-musica{
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:60px;
-
-    align-items:center;
-
-}
-
-/* =========================
-   SECCIÓN MÚSICA
-========================= */
-
-
-.musica{
-
-    width:85%;
-
-    max-width:1100px;
-
-    margin:100px auto;
-
-}
-
-
-
-/* Título de la sección */
-
-.titulo-seccion-musica{
-
-    text-align:center;
-
-    margin-bottom:50px;
-
-}
-
-
-.titulo-seccion-musica h2{
-
-    font-size:42px;
-
-    margin-bottom:15px;
-
-}
-
-
-.titulo-seccion-musica p{
-
-    color:#ccc;
-
-    font-size:20px;
-
-    line-height:1.6;
-
-}
-
-
-
-/* Contenido música */
-
-.contenido-musica{
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:60px;
-
-    align-items:center;
-
-}
-
-
-
-/* Portada */
-
-.portada img{
-
-    width:100%;
-
-    max-width:450px;
-
-    border-radius:15px;
-
-    box-shadow:
-    0 20px 50px rgba(0,0,0,.5);
-
-    transition:.4s;
-
-}
-
-
-.portada img:hover{
-
-    transform:scale(1.03);
-
-}
-
-
-
-/* Información del EP */
-
-.info-musica h2{
-
-    font-size:45px;
-
-    margin-bottom:10px;
-
-}
-
-
-.info-musica h3{
-
-    color:#cba6ff;
-
-    font-size:24px;
-
-    margin-bottom:25px;
-
-}
-
-
-.info-musica p{
-
-    color:#ccc;
-
-    font-size:18px;
-
-    line-height:1.8;
-
-}
-
-
-
-/* Botones */
-
-.botones-musica{
-
-    display:flex;
-
-    gap:20px;
-
-    margin-top:35px;
-
-}
-
-
-.botones-musica a{
-
-    text-decoration:none;
-
+footer h2{
+    margin-bottom:30px;
     color:white;
+    font-size:28px;
+}
 
-    background:#252530;
+footer h3{
+    margin-top:60px;
+    margin-bottom:25px;
+    color:white;
+    font-size:22px;
+}
 
-    padding:12px 25px;
+footer p{
+    margin-top:40px;
+    color:#777;
+}
 
+.botones-portada{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+    margin-top:35px;
+}
+
+.botones-portada a{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:12px 35px;
+    border:1px solid rgba(255,255,255,.3);
     border-radius:30px;
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(8px);
+    transition:.35s ease;
+}
 
+.botones-portada i{
+    font-size:20px;
+}
+
+.botones-portada a:nth-child(1):hover{
+    transform:translateY(-5px);
+    border-color:#1DB954;
+    background:#1DB954;
+    box-shadow:
+        0 0 20px rgba(29,185,84,.7),
+        0 0 45px rgba(29,185,84,.4);
+}
+
+.botones-portada a:nth-child(2):hover{
+    transform:translateY(-5px);
+    border-color:#ff0000;
+    background:#ff0000;
+    box-shadow:
+        0 0 20px rgba(255,0,0,.7),
+        0 0 45px rgba(255,0,0,.4);
+}
+
+.botones-portada a:nth-child(3):hover{
+    transform:translateY(-5px);
+    border-color:#aaa;
+    background:#222;
+    box-shadow:
+        0 0 20px rgba(255,255,255,.35),
+        0 0 45px rgba(255,255,255,.15);
+}
+
+
+/* =========================
+   17. REDES SOCIALES
+========================= */
+
+.botones-redes{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+    margin-top:20px;
+}
+
+.botones-redes a{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:12px 35px;
+    border:1px solid rgba(255,255,255,.3);
+    border-radius:30px;
+    color:white;
+    text-decoration:none;
+    background:rgba(255,255,255,.05);
     transition:.3s;
+}
 
+.botones-redes i{
+    margin-right:8px;
+    font-size:18px;
+}
+
+.botones-redes a:nth-child(1):hover{
+    transform:translateY(-5px);
+    background:#8a3ab9;
+    box-shadow:
+        0 0 20px rgba(138,58,185,.8),
+        0 0 50px rgba(225,48,108,.5);
+}
+
+.botones-redes a:nth-child(2):hover{
+    transform:translateY(-5px);
+    background:#000;
+    box-shadow:
+        0 0 20px rgba(255,255,255,.7),
+        0 0 50px rgba(255,255,255,.3);
+}
+
+.botones-redes a:nth-child(3):hover{
+    transform:translateY(-5px);
+    background:#1877f2;
+    box-shadow:
+        0 0 20px rgba(24,119,242,.8),
+        0 0 50px rgba(24,119,242,.5);
 }
 
 
-.botones-musica a:hover{
-
-    background:#cba6ff;
-
-    color:#111;
-
-}
-
-
-
-/* Móvil */
+/* =========================
+   18. RESPONSIVE
+========================= */
 
 @media(max-width:900px){
 
-    .contenido-musica{
-
-        grid-template-columns:1fr;
-        text-align:center;
-
+    .banner{
+        height:450px;
     }
 
-
-    .botones-musica{
-
-        justify-content:center;
-        flex-wrap:wrap;
-
+    .banner img{
+        width:auto;
+        min-width:100%;
+        height:100%;
+        top:0;
+        left:50%;
+        transform:translateX(-50%) scale(1);
+        object-fit:cover;
     }
-
 
     .banner::after{
-
-        height:150px;
-
+        height:170px;
         background:linear-gradient(
             to bottom,
             rgba(11,11,13,0) 0%,
@@ -742,1538 +1219,158 @@ footer{
             rgba(11,11,13,.88) 72%,
             #0b0b0d 100%
         );
-
     }
 
-}
-
-/* =========================
-   HISTORIA DE LA BANDA
-========================= */
-
-.historia{
-
-    max-width:1000px;
-
-    margin:80px auto;
-
-    text-align:center;
-
-}
-
-
-.historia h2{
-
-    font-size:42px;
-
-    margin-bottom:25px;
-
-}
-
-
-.historia p{
-
-    color:#ccc;
-
-    font-size:20px;
-
-    line-height:1.9;
-
-}
-
-/* =========================
-   BOTONES EN PORTADA
-========================= */
-
-
-.botones-portada{
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:20px;
-
-    margin-top:35px;
-
-}
-
-
-
-.info-musica iframe{
-
-    border-radius:12px;
-
-    margin-top:15px;
-
-    margin-bottom:30px;
-
-    box-shadow:
-    0 15px 35px rgba(0,0,0,.4);
-
-}
-
-/* =========================
-   BOTÓN DE BOLETOS
-========================= */
-
-.btn-boletos{
-
-    display:inline-block;
-
-    margin-top:20px;
-
-    padding:12px 22px;
-
-    text-decoration:none;
-
-    color:white;
-
-    background:linear-gradient(135deg,#8f5cff,#cba6ff);
-
-    border-radius:30px;
-
-    font-weight:bold;
-
-    transition:.35s;
-
-    box-shadow:
-        0 10px 25px rgba(143,92,255,.35);
-
-}
-
-
-.btn-boletos:hover{
-
-    transform:translateY(-4px);
-
-    box-shadow:
-        0 15px 35px rgba(143,92,255,.55);
-
-    background:linear-gradient(135deg,#b78cff,#e0c7ff);
-
-}
-
-footer{
-
-    text-align:center;
-    padding:60px 20px;
-    background:#050505;
-
-}
-
-
-footer h2{
-
-    color:white;
-    margin-bottom:30px;
-    font-size:28px;
-
-}
-
-
-.botones-portada{
-
-    display:flex;
-    justify-content:center;
-    gap:20px;
-    flex-wrap:wrap;
-
-}
-
-
-
-
-.botones-portada a:hover{
-
-    transform:translateY(-5px);
-
-    background:#7254a3;
-
-    color:white;
-
-    box-shadow:
-    0 0 15px rgba(150,100,220,.5),
-    0 0 35px rgba(150,100,220,.3);
-
-}
-
-
-
-
-footer p{
-
-    margin-top:40px;
-    color:#777;
-
-}
-
-/* =========================
-   LANZAMIENTO EP
-========================= */
-
-
-.lanzamiento-ep{
-
-    margin-top:30px;
-
-    text-align:center;
-
-    color:white;
-
-}
-
-
-
-.lanzamiento-ep span{
-
-    font-size:12px;
-
-    letter-spacing:4px;
-
-    color:#aaa;
-
-}
-
-
-
-.lanzamiento-ep h3{
-
-    margin:15px 0;
-
-    font-size:24px;
-
-    letter-spacing:2px;
-
-}
-
-
-
-.lanzamiento-ep p{
-
-    color:#bbb;
-
-    line-height:1.7;
-
-    letter-spacing:2px;
-
-}
-
-
-
-/* =========================
-   BOTONES PLATAFORMAS MUSICA
-========================= */
-
-
-.botones-portada{
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:20px;
-
-    flex-wrap:wrap;
-
-}
-
-
-
-.botones-portada a{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:10px;
-
-    padding:12px 35px;
-
-    color:white;
-
-    text-decoration:none;
-
-    border-radius:30px;
-
-    background:rgba(255,255,255,.05);
-
-    border:1px solid rgba(255,255,255,.3);
-
-    backdrop-filter:blur(8px);
-
-    font-weight:bold;
-
-    transition:.35s ease;
-
-}
-
-
-
-.botones-portada a:hover{
-
-    transform:translateY(-5px);
-
-    background:#7254a3;
-
-    box-shadow:
-
-    0 0 15px rgba(150,100,220,.5),
-
-    0 0 35px rgba(150,100,220,.3);
-
-}
-
-
-
-.botones-portada i{
-
-    font-size:20px;
-
-}
-
-
-
-.botones-portada i{
-
-    font-size:20px;
-
-}
-
-/* =========================
- PAGINA MUSICA
-========================= */
-
-
-.pagina-musica{
-
-text-align:center;
-
-padding:100px 20px 50px;
-
-background:
-radial-gradient(circle,
-rgba(120,70,180,.25),
-transparent 50%),
-#050505;
-
-color:white;
-
-}
-
-
-
-.pagina-musica h1{
-
-font-size:45px;
-
-letter-spacing:3px;
-
-}
-
-
-
-.pagina-musica p{
-
-color:#aaa;
-
-}
-
-
-
-.discografia{
-
-padding:50px 8%;
-
-}
-
-
-
-.tarjetas-musica{
-
-display:grid;
-
-grid-template-columns:
-repeat(auto-fit,minmax(250px,1fr));
-
-gap:50px;
-
-}
-
-
-
-.album{
-
-text-align:center;
-
-color:white;
-
-opacity:0;
-
-transform:translateY(40px);
-
-animation:
-aparecerAlbum 1s forwards;
-
-}
-
-
-
-.album img{
-
-width:100%;
-
-border-radius:20px;
-
-box-shadow:
-0 0 40px rgba(120,80,180,.3);
-
-transition:.5s;
-
-}
-
-
-
-.album:hover img{
-
-transform:scale(1.05);
-
-box-shadow:
-0 0 60px rgba(160,100,220,.6);
-
-}
-
-
-
-.info-album{
-
-margin-top:25px;
-
-}
-
-
-
-.info-album span{
-
-font-size:12px;
-
-letter-spacing:4px;
-
-color:#aaa;
-
-}
-
-
-
-.info-album h3{
-
-font-size:22px;
-
-letter-spacing:2px;
-
-}
-
-
-
-.info-album p{
-
-color:#bbb;
-
-line-height:1.7;
-
-}
-
-
-
-@keyframes aparecerAlbum{
-
-to{
-
-opacity:1;
-
-transform:translateY(0);
-
-}
-
-}
-
-
-/* =========================
-   REDES SOCIALES
-========================= */
-
-
-footer h3{
-
-    color:white;
-
-    margin-top:60px;
-
-    margin-bottom:25px;
-
-    font-size:22px;
-
-}
-
-
-
-.botones-redes{
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:20px;
-
-    flex-wrap:wrap;
-
-    margin-top:20px;
-
-}
-
-
-
-.botones-redes a{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    padding:12px 35px;
-
-    color:white;
-
-    text-decoration:none;
-
-    border-radius:30px;
-
-    border:1px solid rgba(255,255,255,.3);
-
-    background:rgba(255,255,255,.05);
-
-    transition:.3s;
-
-}
-
-
-
-.botones-redes a:hover{
-
-    transform:translateY(-5px);
-
-    background:#7254a3;
-
-    box-shadow:
-
-    0 0 20px rgba(150,100,220,.8),
-
-    0 0 45px rgba(150,100,220,.6),
-
-    0 0 70px rgba(150,100,220,.35);
-
-}
-
-
-
-.botones-redes i{
-
-    font-size:18px;
-
-}
-
-/* Instagram */
-
-.botones-redes a:nth-child(1):hover{
-
-    background:#8a3ab9;
-
-    box-shadow:
-
-    0 0 20px rgba(138,58,185,.8),
-
-    0 0 50px rgba(225,48,108,.5);
-
-    transform:translateY(-5px);
-
-}
-
-
-
-/* X */
-
-.botones-redes a:nth-child(2):hover{
-
-    background:#000;
-
-    box-shadow:
-
-    0 0 20px rgba(255,255,255,.7),
-
-    0 0 50px rgba(255,255,255,.3);
-
-    transform:translateY(-5px);
-
-}
-
-
-
-/* Facebook */
-
-.botones-redes a:nth-child(3):hover{
-
-    background:#1877f2;
-
-    box-shadow:
-
-    0 0 20px rgba(24,119,242,.8),
-
-    0 0 50px rgba(24,119,242,.5);
-
-    transform:translateY(-5px);
-
-}
-
-.botones-redes i{
-
-    font-size:18px;
-    margin-right:8px;
-
-}
-
-/* =========================
-   HOVER PLATAFORMAS MUSICA
-========================= */
-
-
-/* Spotify */
-
-.botones-portada a:nth-child(1):hover{
-
-    background:#1DB954;
-
-    border-color:#1DB954;
-
-    box-shadow:
-    0 0 20px rgba(29,185,84,.7),
-    0 0 45px rgba(29,185,84,.4);
-
-    transform:translateY(-5px);
-
-}
-
-
-
-/* YouTube */
-
-.botones-portada a:nth-child(2):hover{
-
-    background:#ff0000;
-
-    border-color:#ff0000;
-
-    box-shadow:
-    0 0 20px rgba(255,0,0,.7),
-    0 0 45px rgba(255,0,0,.4);
-
-    transform:translateY(-5px);
-
-}
-
-
-
-/* Apple Music */
-
-.botones-portada a:nth-child(3):hover{
-
-    background:#222;
-
-    border-color:#aaa;
-
-    box-shadow:
-    0 0 20px rgba(255,255,255,.35),
-    0 0 45px rgba(255,255,255,.15);
-
-    transform:translateY(-5px);
-
-}
-
-/* =========================
-   TITULOS REPRODUCTORES
-========================= */
-
-
-.info-musica h4{
-
-    margin-top:40px;
-
-    margin-bottom:20px;
-
-    color:white;
-
-    font-size:20px;
-
-    letter-spacing:1px;
-
-}
-
-
-/* =========================
-   TRANSICIÓN BANNER A FONDO
-========================= */
-
-
-.banner::after{
-
-    content:"";
-
-    position:absolute;
-
-    left:0;
-
-    bottom:-1px;
-
-    width:100%;
-
-    height:120px;
-
-
-    background:linear-gradient(
-        to bottom,
-        transparent,
-        #0b0b0d
-    );
-
-
-    pointer-events:none;
-
-}
-
-/* =========================
-   BOTÓN EXPLORAR MÚSICA
-   NEÓN DREAM POP
-========================= */
-
-
-.btn-principal{
-
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-
-    margin-top:20px;
-    padding:12px 40px;
-
-    color:white;
-    text-decoration:none;
-
-    border-radius:30px;
-    font-weight:bold;
-
-    background:rgba(255,255,255,.08);
-
-    border:1px solid rgba(255,255,255,.7);
-
-    backdrop-filter:blur(10px);
-
-    transition:.4s;
-
-    box-shadow:
-        0 0 10px rgba(255,255,255,.5),
-        0 0 25px rgba(180,140,255,.7),
-        0 0 45px rgba(140,90,220,.5);
-
-}
-
-
-.btn-principal:hover{
-
-    transform:translateY(-6px);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.45),
-            rgba(150,100,230,.8)
-        );
-
-    border-color:white;
-
-    box-shadow:
-        0 0 20px rgba(255,255,255,1),
-        0 0 45px rgba(190,150,255,1),
-        0 0 90px rgba(140,80,230,.8),
-        0 0 130px rgba(140,80,230,.4);
-
-}
-
-/* =========================
-   CONTACTO / BOOKING
-========================= */
-
-
-.contacto{
-
-    width:85%;
-
-    max-width:1000px;
-
-    margin:100px auto;
-
-    text-align:center;
-
-}
-
-
-
-.contacto h2{
-
-    font-size:42px;
-
-    margin-bottom:20px;
-
-}
-
-
-
-.contacto > p{
-
-    color:#ccc;
-
-    font-size:20px;
-
-    line-height:1.7;
-
-    margin-bottom:50px;
-
-}
-
-
-
-.contacto-info{
-
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:35px;
-
-}
-
-
-
-.tarjeta-contacto{
-
-
-    background:rgba(255,255,255,.05);
-
-
-    border:1px solid rgba(255,255,255,.2);
-
-
-    border-radius:20px;
-
-
-    padding:35px;
-
-
-    backdrop-filter:blur(10px);
-
-
-    transition:.4s;
-
-
-}
-
-
-
-.tarjeta-contacto:hover{
-
-
-    transform:translateY(-8px);
-
-
-    box-shadow:
-
-    0 0 30px rgba(150,100,220,.4);
-
-
-}
-
-
-
-.tarjeta-contacto h3{
-
-
-    font-size:28px;
-
-    margin-bottom:15px;
-
-
-}
-
-
-
-.tarjeta-contacto p{
-
-
-    color:#bbb;
-
-    margin-bottom:25px;
-
-
-}
-
-
-
-.tarjeta-contacto a{
-
-
-    color:#cba6ff;
-
-
-    text-decoration:none;
-
-
-    font-weight:bold;
-
-
-}
-
-
-
-.tarjeta-contacto a:hover{
-
-
-    color:white;
-
-
-}
-
-/* =========================
-   GALERÍA PREMIUM
-========================= */
-
-.galeria-premium{
-
-    width:90%;
-    max-width:1400px;
-    margin:80px auto;
-
-}
-
-
-.masonry{
-
-    columns:3 320px;
-    column-gap:25px;
-
-}
-
-
-.item{
-
-    margin-bottom:25px;
-
-    break-inside:avoid;
-
-    overflow:hidden;
-
-    border-radius:20px;
-
-    position:relative;
-
-    cursor:pointer;
-
-    box-shadow:
-        0 15px 35px rgba(0,0,0,.45);
-
-}
-
-
-.item img{
-
-    width:100%;
-
-    display:block;
-
-    transition:
-        transform .8s ease,
-        filter .6s ease;
-
-}
-
-
-.item::after{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-        linear-gradient(
-            transparent,
-            rgba(0,0,0,.75)
-        );
-
-    opacity:0;
-
-    transition:.4s;
-
-}
-
-
-.item:hover::after{
-
-    opacity:1;
-
-}
-
-
-.item:hover img{
-
-    transform:scale(1.08);
-
-    filter:brightness(.85);
-
-}
-
-
-.item:hover{
-
-    box-shadow:
-
-        0 0 25px rgba(150,100,220,.55),
-
-        0 0 60px rgba(150,100,220,.25);
-
-}
-
-
-
-@media(max-width:900px){
-
-    .masonry{
-
-        columns:1;
-
+    .overlay{
+        padding:25px 18px;
     }
 
-}
-
-
-/* =========================
-   CONTADOR NUEVO LANZAMIENTO
-========================= */
-
-.nuevo-lanzamiento{
-
-    width:85%;
-    max-width:1100px;
-
-    margin:110px auto;
-
-    padding:75px 40px;
-
-    position:relative;
-    overflow:hidden;
-
-    text-align:center;
-
-    border-radius:28px;
-
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(145,90,230,.18),
-            rgba(10,10,13,.96) 58%
-        );
-
-    border:1px solid rgba(255,255,255,.14);
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.55),
-        0 0 55px rgba(130,80,210,.15);
-
-}
-
-
-.luz-lanzamiento{
-
-    position:absolute;
-
-    width:320px;
-    height:320px;
-
-    left:50%;
-    top:50%;
-
-    transform:translate(-50%,-50%);
-
-    border-radius:50%;
-
-    background:rgba(150,90,230,.18);
-
-    filter:blur(80px);
-
-    animation:pulsoLanzamiento 4s ease-in-out infinite alternate;
-
-    pointer-events:none;
-
-}
-
-
-.etiqueta-lanzamiento{
-
-    position:relative;
-
-    display:inline-block;
-
-    margin-bottom:22px;
-
-    color:#cba6ff;
-
-    font-size:13px;
-    font-weight:bold;
-
-    letter-spacing:5px;
-
-}
-
-
-.nuevo-lanzamiento h2{
-
-    position:relative;
-
-    margin-bottom:18px;
-
-    font-size:42px;
-
-    letter-spacing:2px;
-
-}
-
-
-.descripcion-lanzamiento{
-
-    position:relative;
-
-    max-width:720px;
-
-    margin:0 auto 50px;
-
-    color:#ccc;
-
-    font-size:19px;
-    line-height:1.8;
-
-}
-
-
-.contador-lanzamiento{
-
-    position:relative;
-
-    display:flex;
-
-    justify-content:center;
-    align-items:center;
-
-    gap:20px;
-
-    flex-wrap:wrap;
-
-}
-
-
-.unidad-contador{
-
-    width:135px;
-
-    padding:24px 15px;
-
-    border-radius:18px;
-
-    background:rgba(255,255,255,.055);
-
-    border:1px solid rgba(255,255,255,.18);
-
-    backdrop-filter:blur(10px);
-
-    box-shadow:
-        0 0 15px rgba(255,255,255,.06),
-        0 0 30px rgba(145,90,230,.14);
-
-    transition:.4s;
-
-}
-
-
-.unidad-contador:hover{
-
-    transform:translateY(-7px);
-
-    border-color:rgba(220,195,255,.75);
-
-    box-shadow:
-        0 0 18px rgba(255,255,255,.45),
-        0 0 42px rgba(160,105,240,.55),
-        0 0 75px rgba(130,70,220,.25);
-
-}
-
-
-.unidad-contador span{
-
-    display:block;
-
-    color:white;
-
-    font-size:48px;
-    font-weight:700;
-
-    line-height:1;
-
-    text-shadow:
-        0 0 12px rgba(255,255,255,.3),
-        0 0 28px rgba(170,115,255,.45);
-
-}
-
-
-.unidad-contador small{
-
-    display:block;
-
-    margin-top:14px;
-
-    color:#bbb;
-
-    font-size:11px;
-    letter-spacing:3px;
-
-}
-
-
-.separador-contador{
-
-    color:#cba6ff;
-
-    font-size:40px;
-
-    text-shadow:
-        0 0 15px rgba(180,120,255,.8);
-
-}
-
-
-.fecha-lanzamiento{
-
-    position:relative;
-
-    margin-top:38px;
-
-    color:#aaa;
-
-    font-size:14px;
-    letter-spacing:3px;
-
-}
-
-
-@keyframes pulsoLanzamiento{
-
-    from{
-
-        opacity:.45;
-
-        transform:
-        translate(-50%,-50%)
-        scale(.9);
-
+    .titulo-blog{
+        margin-top:70px;
     }
 
-    to{
-
-        opacity:1;
-
-        transform:
-        translate(-50%,-50%)
-        scale(1.15);
-
+    .titulo-blog h1{
+        font-size:38px;
+        letter-spacing:4px;
+        line-height:1.1;
     }
 
-}
+    .titulo-blog p{
+        font-size:16px;
+        letter-spacing:1.5px;
+        line-height:1.5;
+    }
 
+    .menu{
+        gap:15px;
+        padding:10px 18px;
+        flex-wrap:wrap;
+    }
 
-@media(max-width:900px){
+    .tarjetas-shows{
+        grid-template-columns:1fr;
+    }
+
+    .contenido-musica{
+        grid-template-columns:1fr;
+        text-align:center;
+    }
+
+    .botones-musica{
+        justify-content:center;
+        flex-wrap:wrap;
+    }
+
+    .contacto-info{
+        grid-template-columns:1fr;
+    }
 
     .nuevo-lanzamiento{
-
         width:90%;
-
-        padding:55px 18px;
-
         margin:80px auto;
-
+        padding:55px 18px;
     }
-
 
     .nuevo-lanzamiento h2{
-
         font-size:32px;
-
     }
-
 
     .descripcion-lanzamiento{
-
         font-size:17px;
-
     }
-
 
     .contador-lanzamiento{
-
         display:grid;
-
         grid-template-columns:repeat(2,1fr);
-
         max-width:330px;
-
         margin:auto;
-
         gap:15px;
-
     }
-
 
     .unidad-contador{
-
         width:100%;
-
     }
-
 
     .unidad-contador span{
-
         font-size:38px;
-
     }
-
 
     .separador-contador{
-
         display:none;
-
     }
 
+    .masonry{
+        columns:2 240px;
+    }
+
+    .lightbox{
+        padding:70px 15px 150px;
+    }
+
+    .lightbox img{
+        max-width:100%;
+        max-height:70vh;
+        border-radius:12px;
+    }
+
+    .flecha{
+        top:auto;
+        bottom:65px;
+        font-size:42px;
+    }
+
+    .flecha.izquierda{
+        left:30%;
+    }
+
+    .flecha.derecha{
+        right:30%;
+    }
+
+    .cerrar{
+        top:15px;
+        right:20px;
+        font-size:42px;
+    }
+
+    .info-lightbox{
+        padding:65px 20px 20px;
+    }
+
+    .info-lightbox h2{
+        font-size:24px;
+    }
+
+    .info-lightbox p{
+        font-size:14px;
+    }
 }
 
 
-.mensaje-estreno{
-
-    padding:20px 35px;
-
-    color:white;
-
-    font-size:22px;
-    font-weight:bold;
-
-    letter-spacing:3px;
-
-    border-radius:30px;
-
-    background:linear-gradient(
-        135deg,
-        #8f5cff,
-        #cba6ff
-    );
-
-    box-shadow:
-        0 0 20px rgba(255,255,255,.5),
-        0 0 55px rgba(160,100,240,.75);
-
-}
-
-
-.contenedor-btn-musica{
-
-    display:flex;
-
-    justify-content:center;
-
-    margin-top:30px;
-
-}
-
-/* =========================
-   BOTONES PRE-GUARDADO
-========================= */
-
-.preguardar-lanzamiento{
-
-    margin-top:45px;
-
-}
-
-
-.texto-preguardar{
-
-    color:#e8e8e8;
-
-    margin-bottom:28px;
-
-    font-size:18px;
-
-    letter-spacing:1px;
-
-}
-
-
-.botones-preguardar{
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    gap:22px;
-
-}
-
-
-/* BOTÓN GENERAL */
-
-.btn-preguardar{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:15px;
-
-    width:100%;
-
-    max-width:520px;
-
-    padding:18px 30px;
-
-    border-radius:14px;
-
-    color:white;
-
-    text-decoration:none;
-
-    font-size:17px;
-
-    font-weight:700;
-
-    letter-spacing:1px;
-
-    transition:
-        transform .35s ease,
-        box-shadow .35s ease,
-        filter .35s ease;
-
-}
-
-
-.btn-preguardar i{
-
-    font-size:30px;
-
-}
-
-
-
-/* =========================
-   SPOTIFY
-========================= */
-
-.spotify-preguardar{
-
-    background:linear-gradient(
-        135deg,
-        #1ED760,
-        #1DB954
-    );
-
-    box-shadow:
-
-        0 0 20px rgba(29,185,84,.55),
-
-        0 0 45px rgba(29,185,84,.25);
-
-}
-
-
-.spotify-preguardar:hover{
-
-    transform:translateY(-6px) scale(1.02);
-
-    box-shadow:
-
-        0 0 25px rgba(29,185,84,1),
-
-        0 0 55px rgba(29,185,84,.9),
-
-        0 0 90px rgba(29,185,84,.55);
-
-}
-
-
-
-/* =========================
-   APPLE MUSIC
-========================= */
-
-.apple-preguardar{
-
-    background:linear-gradient(
-        135deg,
-        #ff4f7d,
-        #d91d63
-    );
-
-    box-shadow:
-
-        0 0 20px rgba(255,70,120,.55),
-
-        0 0 45px rgba(255,70,120,.25);
-
-}
-
-
-.apple-preguardar:hover{
-
-    transform:translateY(-6px) scale(1.02);
-
-    box-shadow:
-
-        0 0 25px rgba(255,70,120,1),
-
-        0 0 55px rgba(255,70,120,.9),
-
-        0 0 90px rgba(255,70,120,.55);
-
-}
-
-.btn-preguardar i{
-
-    font-size:30px;
-
-    filter:drop-shadow(
-        0 0 10px rgba(255,255,255,.75)
-    );
-
+@media(max-width:600px){
+
+    .masonry{
+        columns:1;
+    }
+
+    .overlay-galeria{
+        opacity:1;
+        transform:none;
+        padding:60px 20px 20px;
+    }
+
+    .btn-preguardar{
+        padding:15px 14px;
+        font-size:13px;
+    }
+
+    .btn-preguardar i{
+        font-size:24px;
+    }
+
+    .botones-portada a,
+    .botones-redes a{
+        width:100%;
+        max-width:320px;
+    }
 }
