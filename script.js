@@ -292,3 +292,172 @@ setInterval(function(){
 
 
 },1000);
+
+
+// =========================
+// ANIMACIONES AL HACER SCROLL
+// =========================
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const elementosGenerales = document.querySelectorAll(
+
+        ".presentacion, " +
+        ".nuevo-lanzamiento, " +
+        ".shows > h2, " +
+        ".titulo-seccion-musica, " +
+        ".contacto > h2, " +
+        ".contacto > p, " +
+        "footer h2, " +
+        "footer h3"
+
+    );
+
+
+    elementosGenerales.forEach(function(elemento){
+
+        elemento.classList.add("revelar-scroll");
+
+    });
+
+
+    // Tarjetas de shows con retraso progresivo
+
+    const tarjetasShows =
+    document.querySelectorAll(".show");
+
+
+    tarjetasShows.forEach(function(tarjeta, indice){
+
+        tarjeta.classList.add(
+            "revelar-scroll",
+            `retraso-${(indice % 3) + 1}`
+        );
+
+    });
+
+
+    // Portada del EP desde la izquierda
+
+    const portada =
+    document.querySelector(".portada");
+
+
+    if(portada){
+
+        portada.classList.add(
+            "revelar-scroll",
+            "revelar-izquierda"
+        );
+
+    }
+
+
+    // Información musical desde la derecha
+
+    const informacionMusica =
+    document.querySelector(".info-musica");
+
+
+    if(informacionMusica){
+
+        informacionMusica.classList.add(
+            "revelar-scroll",
+            "revelar-derecha"
+        );
+
+    }
+
+
+    // Tarjetas de contacto
+
+    const tarjetasContacto =
+    document.querySelectorAll(".tarjeta-contacto");
+
+
+    tarjetasContacto.forEach(function(tarjeta, indice){
+
+        tarjeta.classList.add(
+            "revelar-scroll",
+            `retraso-${(indice % 3) + 1}`
+        );
+
+    });
+
+
+    // Contador con zoom sutil
+
+    const contador =
+    document.querySelector(".contador-lanzamiento");
+
+
+    if(contador){
+
+        contador.classList.add(
+            "revelar-scroll",
+            "revelar-zoom"
+        );
+
+    }
+
+
+    // Botones de preguardado
+
+    const preguardado =
+    document.querySelector(".preguardar-lanzamiento");
+
+
+    if(preguardado){
+
+        preguardado.classList.add(
+            "revelar-scroll"
+        );
+
+    }
+
+
+    const observador = new IntersectionObserver(
+
+        function(entradas){
+
+            entradas.forEach(function(entrada){
+
+                if(entrada.isIntersecting){
+
+                    entrada.target.classList.add(
+                        "visible"
+                    );
+
+                    observador.unobserve(
+                        entrada.target
+                    );
+
+                }
+
+            });
+
+        },
+
+        {
+
+            threshold:0.15,
+
+            rootMargin:
+            "0px 0px -60px 0px"
+
+        }
+
+    );
+
+
+    const elementosAnimados =
+    document.querySelectorAll(".revelar-scroll");
+
+
+    elementosAnimados.forEach(function(elemento){
+
+        observador.observe(elemento);
+
+    });
+
+});
