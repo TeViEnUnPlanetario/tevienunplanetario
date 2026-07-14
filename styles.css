@@ -1230,13 +1230,13 @@ footer p{
     }
 
     .titulo-blog h1{
-        font-size:38px;
-        letter-spacing:4px;
+        font-size:32px;
+        letter-spacing:2px;
         line-height:1.1;
     }
 
     .titulo-blog p{
-        font-size:16px;
+        font-size:14px;
         letter-spacing:1.5px;
         line-height:1.5;
     }
