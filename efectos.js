@@ -88,9 +88,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
     // No crear aura en móviles o pantallas táctiles
 
-    if(!tieneCursor || reduceMotion){
-        return;
-    }
+ if(tieneCursor && !reduceMotion){
 
 
     // =========================
@@ -142,10 +140,10 @@ document.addEventListener("DOMContentLoaded", function(){
     function animarAura(){
 
         auraX +=
-            (mouseX - auraX) * 0.12;
+            (mouseX - auraX) * 0.08;
 
         auraY +=
-            (mouseY - auraY) * 0.12;
+            (mouseY - auraY) * 0.08;
 
 
         aura.style.left =
@@ -192,7 +190,7 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
 
-    enlaces.forEach(function(enlace){
+       enlaces.forEach(function(enlace){
 
         enlace.addEventListener(
             "mouseenter",
@@ -201,7 +199,6 @@ document.addEventListener("DOMContentLoaded", function(){
                 limpiarColores();
 
                 aura.classList.add("activa");
-
 
                 const href =
                     (
@@ -212,17 +209,11 @@ document.addEventListener("DOMContentLoaded", function(){
 
                 if(href.includes("spotify")){
 
-                    aura.classList.add(
-                        "spotify"
-                    );
+                    aura.classList.add("spotify");
 
-                }else if(
-                    href.includes("youtube")
-                ){
+                }else if(href.includes("youtube")){
 
-                    aura.classList.add(
-                        "youtube"
-                    );
+                    aura.classList.add("youtube");
 
                 }else if(
                     href.includes("music.apple")
@@ -231,34 +222,22 @@ document.addEventListener("DOMContentLoaded", function(){
                     )
                 ){
 
-                    aura.classList.add(
-                        "apple"
-                    );
+                    aura.classList.add("apple");
 
-                }else if(
-                    href.includes("instagram")
-                ){
+                }else if(href.includes("instagram")){
 
-                    aura.classList.add(
-                        "instagram"
-                    );
+                    aura.classList.add("instagram");
 
                 }else if(
                     href.includes("x.com")
                     || href.includes("twitter")
                 ){
 
-                    aura.classList.add(
-                        "twitter"
-                    );
+                    aura.classList.add("twitter");
 
-                }else if(
-                    href.includes("facebook")
-                ){
+                }else if(href.includes("facebook")){
 
-                    aura.classList.add(
-                        "facebook"
-                    );
+                    aura.classList.add("facebook");
 
                 }
 
@@ -270,9 +249,7 @@ document.addEventListener("DOMContentLoaded", function(){
             "mouseleave",
             function(){
 
-                aura.classList.remove(
-                    "activa"
-                );
+                aura.classList.remove("activa");
 
                 limpiarColores();
 
@@ -281,4 +258,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
     });
 
-});
+
+} // Cierra: if(tieneCursor && !reduceMotion)
+
+
+}); // Cierra: document.addEventListener("DOMContentLoaded", ...)
