@@ -1415,10 +1415,8 @@ footer p{
 /* Estado inicial */
 
 .revelar-scroll{
-
     opacity:0;
-
-    transform:translateY(45px);
+    transform:translateY(70px);
 
     transition:
         opacity .9s ease,
@@ -1443,8 +1441,7 @@ footer p{
 /* Aparición desde la izquierda */
 
 .revelar-izquierda{
-
-    transform:translateX(-55px);
+    transform:translateX(-85px);
 
 }
 
@@ -1459,8 +1456,8 @@ footer p{
 /* Aparición desde la derecha */
 
 .revelar-derecha{
+    transform:translateX(85px);
 
-    transform:translateX(55px);
 
 }
 
