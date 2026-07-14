@@ -1998,3 +1998,38 @@ footer{
     }
 
 }
+
+/* Animaciones más suaves en móvil */
+
+@media(max-width:900px){
+
+    .revelar-scroll{
+
+        transform:translateY(25px);
+
+        transition:
+            opacity .8s ease,
+            transform .8s cubic-bezier(.22,1,.36,1);
+
+    }
+
+
+    .revelar-izquierda,
+    .revelar-derecha{
+
+        transform:translateY(25px);
+
+    }
+
+
+    .revelar-scroll.visible,
+    .revelar-izquierda.visible,
+    .revelar-derecha.visible{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
