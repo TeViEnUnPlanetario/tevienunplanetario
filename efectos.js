@@ -1,7 +1,7 @@
 // =========================
 // EFECTOS VISUALES
 // =========================
-
+console.log("efectos.js cargado correctamente");
 document.addEventListener("DOMContentLoaded", function(){
 
     const reduceMotion =
@@ -10,9 +10,9 @@ document.addEventListener("DOMContentLoaded", function(){
         ).matches;
 
     const tieneCursor =
-        window.matchMedia(
-            "(pointer: fine)"
-        ).matches;
+    window.matchMedia(
+        "(any-pointer: fine)"
+    ).matches;
 
 
     // =========================
