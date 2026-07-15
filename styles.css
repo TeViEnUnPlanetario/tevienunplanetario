@@ -2061,9 +2061,24 @@ footer p{
 
     body::before,
     .titulo-blog h1::after,
-    .particula{
+    .particula,
+    .estrella-fugaz{
 
         animation:none;
+
+    }
+
+
+    .particula{
+
+        opacity:.55;
+
+    }
+
+
+    .estrella-fugaz{
+
+        display:none;
 
     }
 
