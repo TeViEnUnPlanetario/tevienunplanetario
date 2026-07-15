@@ -112,11 +112,18 @@ footer{
 ========================= */
 
 .banner{
+
     width:100%;
     height:450px;
-    overflow:hidden;
+
     position:relative;
+
+    overflow:hidden;
+
+    background:#000;
+
 }
+
 
 .banner img{
 
@@ -1511,15 +1518,22 @@ footer p{
         height:450px;
     }
 
-    .banner img{
-        width:auto;
-        min-width:100%;
-        height:100%;
-        top:0;
-        left:50%;
-        transform:translateX(-50%) scale(1);
-        object-fit:cover;
-    }
+   .banner img{
+
+    width:100%;
+    min-width:100%;
+
+    height:100%;
+
+    left:0;
+    top:0;
+
+    object-fit:cover;
+    object-position:center;
+
+    transform:scale(1);
+
+}
 
     .banner::after{
 
