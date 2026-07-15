@@ -19,10 +19,10 @@ body{
     background:
         radial-gradient(
             circle at top,
-            #21183c 0%,
-            #141424 25%,
-            #0b0b14 55%,
-            #050507 100%
+            #151221 0%,
+            #0d0d14 28%,
+            #08080d 58%,
+            #030305 100%
         );
 
     color:white;
@@ -50,23 +50,23 @@ body::before{
 
         radial-gradient(
             circle at 18% 20%,
-            rgba(135,95,255,.16),
+            rgba(125,85,220,.08),
             transparent 30%
         ),
 
         radial-gradient(
             circle at 80% 25%,
-            rgba(90,120,255,.10),
+            rgba(70,100,190,.05),
             transparent 35%
         ),
 
         radial-gradient(
             circle at 60% 75%,
-            rgba(170,110,255,.12),
+            rgba(145,90,220,.06),
             transparent 35%
         );
 
-    filter:blur(90px);
+    filter:blur(100px);
 
     animation:
         respirarNebulosa
