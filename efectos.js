@@ -9,10 +9,8 @@ document.addEventListener("DOMContentLoaded", function(){
             "(prefers-reduced-motion: reduce)"
         ).matches;
 
-    const tieneCursor =
-    window.matchMedia(
-        "(any-pointer: fine)"
-    ).matches;
+    const esEscritorio =
+    window.innerWidth > 900;
 
 
    // =========================
@@ -147,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
     // No crear aura en móviles o pantallas táctiles
 
- if(tieneCursor && !reduceMotion){
+if(esEscritorio && !reduceMotion){
 
 
     // =========================
