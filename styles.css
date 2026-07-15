@@ -495,37 +495,26 @@ footer{
 ========================= */
 
 /*
-   En index.html, abre:
-   <div class="zona-nebulosa">
-   justo antes del contador y ciérralo después de Contacto,
-   antes de <footer>.
+   Envuelve contador, shows, música y contacto con:
+   <div class="zona-nebulosa"> ... </div>
 */
 
 .zona-nebulosa{
 
     position:relative;
 
+    display:flow-root;
+
     overflow:hidden;
 
-    background:
-        linear-gradient(
-            to bottom,
-            #000 0%,
-            #030107 7%,
-            #080312 18%,
-            #120726 36%,
-            #1a0a38 55%,
-            #120727 72%,
-            #07030f 89%,
-            #000 100%
-        );
-
     isolation:isolate;
+
+    background:#000;
 
 }
 
 
-/* Una sola nube ambiental para toda la zona */
+/* Una sola nebulosa ambiental detrás de toda la zona */
 
 .zona-nebulosa::before{
 
@@ -533,47 +522,92 @@ footer{
 
     position:absolute;
 
-    left:50%;
-    top:220px;
-
-    width:140vw;
-    height:1450px;
-
-    transform:
-        translateX(-50%)
-        scale(.98);
+    inset:0;
 
     z-index:0;
 
     pointer-events:none;
 
-    opacity:.78;
+    opacity:.82;
 
     background:
-        radial-gradient(
-            ellipse at 50% 35%,
-            rgba(132,78,240,.20) 0%,
-            rgba(92,48,185,.13) 30%,
-            rgba(44,21,94,.07) 54%,
-            transparent 76%
-        );
 
-    filter:blur(95px);
+        radial-gradient(
+            ellipse at 50% 24%,
+            rgba(110,64,225,.16) 0%,
+            rgba(72,38,155,.10) 28%,
+            transparent 58%
+        ),
+
+        radial-gradient(
+            ellipse at 30% 58%,
+            rgba(73,40,165,.15) 0%,
+            rgba(46,23,105,.08) 34%,
+            transparent 64%
+        ),
+
+        radial-gradient(
+            ellipse at 72% 78%,
+            rgba(126,70,230,.17) 0%,
+            rgba(55,28,125,.09) 32%,
+            transparent 65%
+        ),
+
+        linear-gradient(
+            to bottom,
+            #000 0%,
+            #000 7%,
+            rgba(7,3,16,.96) 15%,
+            rgba(17,7,37,.94) 36%,
+            rgba(22,9,48,.93) 58%,
+            rgba(12,5,28,.96) 80%,
+            #000 100%
+        );
 
     animation:
         respirarZonaNebulosa
-        18s ease-in-out infinite alternate;
+        20s ease-in-out infinite alternate;
 
 }
 
 
-/* Todo el contenido permanece por encima */
+/* Desvanecido negro al inicio: evita que el morado suba a Historia */
+
+.zona-nebulosa::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    top:0;
+
+    height:260px;
+
+    z-index:1;
+
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #000 0%,
+            rgba(0,0,0,.98) 28%,
+            rgba(0,0,0,.76) 58%,
+            rgba(0,0,0,0) 100%
+        );
+
+}
+
+
+/* El contenido queda encima de la nebulosa */
 
 .zona-nebulosa > *{
 
     position:relative;
 
-    z-index:1;
+    z-index:2;
 
 }
 
@@ -582,21 +616,17 @@ footer{
 
     from{
 
-        transform:
-            translateX(-50%)
-            scale(.96);
+        opacity:.68;
 
-        opacity:.62;
+        transform:scale(1);
 
     }
 
     to{
 
-        transform:
-            translateX(-50%)
-            scale(1.06);
-
         opacity:.9;
+
+        transform:scale(1.025);
 
     }
 
@@ -628,15 +658,15 @@ footer{
 
 .luz-lanzamiento{
     position:absolute;
-    width:320px;
-    height:320px;
+    width:300px;
+    height:300px;
     left:50%;
     top:50%;
     transform:translate(-50%,-50%);
     border-radius:50%;
-    background:rgba(150,90,230,.18);
-    filter:blur(80px);
-    animation:pulsoLanzamiento 4s ease-in-out infinite alternate;
+    background:rgba(145,85,225,.11);
+    filter:blur(88px);
+    animation:pulsoLanzamiento 5s ease-in-out infinite alternate;
     pointer-events:none;
 }
 
@@ -1376,6 +1406,18 @@ footer p{
 ========================= */
 
 @media(max-width:900px){
+
+    .zona-nebulosa::before{
+
+        opacity:.72;
+
+    }
+
+    .zona-nebulosa::after{
+
+        height:210px;
+
+    }
 
 
     .zona-nebulosa::before{
@@ -2162,9 +2204,9 @@ footer p{
 
     .zona-nebulosa::before{
 
-        opacity:.72;
+        opacity:.78;
 
-        transform:translateX(-50%);
+        transform:none;
 
     }
 
