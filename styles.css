@@ -98,20 +98,11 @@ body::before{
 header,
 section,
 footer{
+
     position:relative;
-    margin-top:80px;
-    padding:60px 20px;
-    text-align:center;
-    color:#aaa;
-    background:
-        linear-gradient(
-            to bottom,
-            #000 0%,
-            #05030a 40%,
-            #10071f 75%,
-            #000 100%
-        );
-    overflow:hidden;
+
+    z-index:1;
+
 }
 
 
