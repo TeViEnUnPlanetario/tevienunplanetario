@@ -92,19 +92,20 @@ function aplicarZoomBanner(escala){
 
 function ajustarBanner(){
 
-    usarEncuadreFijo()){
+    if(usarEncuadreFijo()){
 
         bannerImg.style.top = "0px";
-
-        aplicarZoomBanner(1);
+        bannerImg.style.height = "100%";
 
     }else{
 
         bannerImg.style.top = posY + "px";
-
-        aplicarZoomBanner(1);
+        bannerImg.style.height =
+        "calc(100% + 240px)";
 
     }
+
+    aplicarZoomBanner(1);
 
 }
 
