@@ -1892,11 +1892,11 @@ footer p{
 
     inset:0;
 
-    z-index:2;
-
-    overflow:hidden;
+    z-index:5;
 
     pointer-events:none;
+
+    overflow:hidden;
 
 }
 
