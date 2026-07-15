@@ -2125,7 +2125,7 @@ footer{
 
     body::before{
 
-        opacity:.18;
+        opacity:.10;
 
         filter:blur(55px);
 
