@@ -73,17 +73,8 @@ function usarEncuadreFijo(){
 
 function aplicarZoomBanner(escala){
 
-    if(usarEncuadreFijo()){
-
-        bannerImg.style.transform =
-        `scale(${escala})`;
-
-    }else{
-
-        bannerImg.style.transform =
-        `scale(${escala})`;
-
-    }
+    bannerImg.style.transform =
+    `scale(${escala})`;
 
 }
 
@@ -120,104 +111,88 @@ if(banner && bannerImg){
     ajustarBanner();
 
 
-    // Movimiento vertical solo en computadora
+// Movimiento vertical solo en computadora
 
-    banner.addEventListener("wheel", function(e){
+banner.addEventListener("wheel", function(e){
 
-        usarEncuadreFijo()){
-            return;
+    if(usarEncuadreFijo()){
+        return;
+    }
+
+    e.preventDefault();
+
+    posY -= e.deltaY * 0.5;
+
+    const limiteSuperior = 0;
+
+    const limiteInferior =
+    banner.clientHeight - bannerImg.clientHeight;
+
+
+    if(posY > limiteSuperior){
+        posY = limiteSuperior;
+    }
+
+
+    if(posY < limiteInferior){
+        posY = limiteInferior;
+    }
+
+
+    bannerImg.style.top = posY + "px";
+
+}, { passive:false });
+
+
+// Carrusel automático
+
+setInterval(function(){
+
+    indice++;
+
+    if(indice >= imagenes.length){
+        indice = 0;
+    }
+
+
+    bannerImg.style.opacity = 0;
+
+
+    setTimeout(function(){
+
+        bannerImg.src = imagenes[indice];
+
+
+        if(usarEncuadreFijo()){
+
+            bannerImg.style.top = "0px";
+            bannerImg.style.height = "100%";
+
+        }else{
+
+            bannerImg.style.top = posY + "px";
+            bannerImg.style.height =
+            "calc(100% + 240px)";
+
         }
 
-        e.preventDefault();
 
-        posY -= e.deltaY * 0.5;
-
-        const limiteSuperior = 0;
-
-        const limiteInferior =
-        banner.clientHeight - bannerImg.clientHeight;
-
-
-        if(posY > limiteSuperior){
-
-            posY = limiteSuperior;
-
-        }
-
-
-        if(posY < limiteInferior){
-
-            posY = limiteInferior;
-
-        }
-
-
-        bannerImg.style.top = posY + "px";
-
-    }, { passive:false });
-
-
-    // Carrusel automático
-
-    setInterval(function(){
-
-        indice++;
-
-        if(indice >= imagenes.length){
-
-            indice = 0;
-
-        }
-
-
-        // Desvanecer imagen actual
-
-        bannerImg.style.opacity = 0;
+        aplicarZoomBanner(1);
 
 
         setTimeout(function(){
 
-            // Cambiar imagen
+            bannerImg.style.opacity = 1;
 
-            bannerImg.src = imagenes[indice];
+            aplicarZoomBanner(1.08);
 
-
-            // Mantener posición correcta
-
-            usarEncuadreFijo()){
-
-                bannerImg.style.top = "0px";
-
-            }else{
-
-                bannerImg.style.top = posY + "px";
-
-            }
+        },100);
 
 
-            // Reiniciar zoom sin perder el centrado móvil
-
-            aplicarZoomBanner(1);
+    },1500);
 
 
-            setTimeout(function(){
-
-                // Mostrar nueva imagen
-
-                bannerImg.style.opacity = 1;
-
-
-                // Aplicar zoom lento
-
-                aplicarZoomBanner(1.08);
-
-            },100);
-
-
-        },1500);
-
-
-    },7000);
+},7000);
 
 
     // Corregir posición si cambia el tamaño de pantalla
