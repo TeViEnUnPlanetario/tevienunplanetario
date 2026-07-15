@@ -1151,11 +1151,28 @@ footer{
 ========================= */
 
 footer{
+
+    position:relative;
+
     margin-top:80px;
-    padding:60px 20px;
+
+    padding:60px 20px 0;
+
     text-align:center;
+
     color:#aaa;
-    background:#050505;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.98) 0%,
+            rgba(4,3,8,.94) 20%,
+            rgba(13,7,28,.88) 58%,
+            rgba(35,12,70,.82) 100%
+        );
+
+    overflow:hidden;
+
 }
 
 footer h2{
