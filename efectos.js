@@ -15,75 +15,132 @@ document.addEventListener("DOMContentLoaded", function(){
     ).matches;
 
 
-    // =========================
-    // NEBULOSA Y PARTÍCULAS
-    // =========================
+   // =========================
+// CIELO ESTRELLADO
+// =========================
 
-    if(!reduceMotion){
+if(!reduceMotion){
 
-        const contenedorParticulas =
-            document.createElement("div");
+    const contenedorParticulas =
+        document.createElement("div");
 
-        contenedorParticulas.className =
-            "particulas-fondo";
+    contenedorParticulas.className =
+        "particulas-fondo";
 
-        document.body.prepend(
-            contenedorParticulas
+    document.body.prepend(
+        contenedorParticulas
+    );
+
+
+    // Estrellas fijas
+
+    const cantidadEstrellas =
+        window.innerWidth <= 900 ? 18 : 32;
+
+
+    for(let i = 0; i < cantidadEstrellas; i++){
+
+        const estrella =
+            document.createElement("span");
+
+        estrella.className =
+            "particula";
+
+
+        const posicionX =
+            Math.random() * 100;
+
+        const posicionY =
+            Math.random() * 100;
+
+        const tamano =
+            1 + Math.random() * 3;
+
+        const duracion =
+            2.5 + Math.random() * 5;
+
+        const retraso =
+            Math.random() * -6;
+
+
+        estrella.style.left =
+            posicionX + "%";
+
+        estrella.style.top =
+            posicionY + "%";
+
+        estrella.style.width =
+            tamano + "px";
+
+        estrella.style.height =
+            tamano + "px";
+
+        estrella.style.animationDuration =
+            duracion + "s";
+
+        estrella.style.animationDelay =
+            retraso + "s";
+
+
+        contenedorParticulas.appendChild(
+            estrella
+        );
+
+    }
+
+
+    // Crear estrella fugaz ocasional
+
+    function crearEstrellaFugaz(){
+
+        const estrellaFugaz =
+            document.createElement("span");
+
+        estrellaFugaz.className =
+            "estrella-fugaz";
+
+
+        estrellaFugaz.style.left =
+            (-25 + Math.random() * 35) + "%";
+
+        estrellaFugaz.style.top =
+            (-180 + Math.random() * 100) + "px";
+
+
+        contenedorParticulas.appendChild(
+            estrellaFugaz
         );
 
 
-        const cantidadParticulas =
-            window.innerWidth <= 900 ? 10 : 18;
+        setTimeout(function(){
 
+            estrellaFugaz.remove();
 
-        for(let i = 0; i < cantidadParticulas; i++){
-
-            const particula =
-                document.createElement("span");
-
-            particula.className =
-                "particula";
-
-
-            const posicionHorizontal =
-                Math.random() * 100;
-
-
-            const duracion =
-                16 + Math.random() * 20;
-
-
-            const retraso =
-                Math.random() * -30;
-
-
-            const tamano =
-                2 + Math.random() * 3;
-
-
-            particula.style.left =
-                posicionHorizontal + "%";
-
-            particula.style.width =
-                tamano + "px";
-
-            particula.style.height =
-                tamano + "px";
-
-            particula.style.animationDuration =
-                duracion + "s";
-
-            particula.style.animationDelay =
-                retraso + "s";
-
-
-            contenedorParticulas.appendChild(
-                particula
-            );
-
-        }
+        },2500);
 
     }
+
+
+    function programarEstrellaFugaz(){
+
+        const espera =
+            8000 + Math.random() * 9000;
+
+
+        setTimeout(function(){
+
+            crearEstrellaFugaz();
+
+            programarEstrellaFugaz();
+
+        },espera);
+
+    }
+
+
+    programarEstrellaFugaz();
+
+}
 
 
     // No crear aura en móviles o pantallas táctiles
