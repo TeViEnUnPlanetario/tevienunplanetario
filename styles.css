@@ -1370,9 +1370,9 @@ footer{
 
     position:relative;
 
-    margin-top:80px;
+    margin-top:0;
 
-    padding:60px 20px 0;
+    padding:60px 20px;
 
     text-align:center;
 
@@ -1381,10 +1381,11 @@ footer{
     background:
         linear-gradient(
             to bottom,
-            rgba(0,0,0,.98) 0%,
-            rgba(4,3,8,.94) 20%,
-            rgba(13,7,28,.88) 58%,
-            rgba(35,12,70,.82) 100%
+            #000 0%,
+            #000 12%,
+            #05030a 38%,
+            #10071f 74%,
+            #000 100%
         );
 
     overflow:hidden;
@@ -2338,5 +2339,60 @@ footer p{
         transform:translateY(0);
 
     }
+
+}
+
+
+.contacto{
+
+    position:relative;
+
+    width:85%;
+    max-width:1000px;
+
+    margin:100px auto 0;
+
+    padding-bottom:120px;
+
+    text-align:center;
+
+}
+
+
+.contacto::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    bottom:-1px;
+
+    width:100vw;
+    height:180px;
+
+    transform:translateX(-50%);
+
+    z-index:0;
+
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,0) 0%,
+            rgba(0,0,0,.35) 35%,
+            rgba(0,0,0,.82) 72%,
+            #000 100%
+        );
+
+}
+
+
+.contacto > *{
+
+    position:relative;
+
+    z-index:1;
 
 }
