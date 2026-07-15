@@ -56,9 +56,15 @@ let posY = -120;
 
 // Detectar versión móvil
 
-function esMovil(){
+function usarEncuadreFijo(){
 
-    return window.innerWidth <= 900;
+    const ventanaAngosta =
+        window.innerWidth <= 900;
+
+    const ventanaVertical =
+        window.innerWidth / window.innerHeight <= 1.33;
+
+    return ventanaAngosta || ventanaVertical;
 
 }
 
@@ -67,10 +73,10 @@ function esMovil(){
 
 function aplicarZoomBanner(escala){
 
-    if(esMovil()){
+    if(usarEncuadreFijo()){
 
         bannerImg.style.transform =
-        `translateX(-50%) scale(${escala})`;
+        `scale(${escala})`;
 
     }else{
 
@@ -86,7 +92,7 @@ function aplicarZoomBanner(escala){
 
 function ajustarBanner(){
 
-    if(esMovil()){
+    usarEncuadreFijo()){
 
         bannerImg.style.top = "0px";
 
@@ -117,7 +123,7 @@ if(banner && bannerImg){
 
     banner.addEventListener("wheel", function(e){
 
-        if(esMovil()){
+        usarEncuadreFijo()){
             return;
         }
 
@@ -177,7 +183,7 @@ if(banner && bannerImg){
 
             // Mantener posición correcta
 
-            if(esMovil()){
+            usarEncuadreFijo()){
 
                 bannerImg.style.top = "0px";
 
