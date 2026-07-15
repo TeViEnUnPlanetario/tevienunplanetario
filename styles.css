@@ -1867,7 +1867,7 @@ footer{
 
 
 /* =========================
-   PARTÍCULAS
+   CIELO ESTRELLADO
 ========================= */
 
 .particulas-fondo{
@@ -1876,7 +1876,7 @@ footer{
 
     inset:0;
 
-    z-index:0;
+    z-index:2;
 
     overflow:hidden;
 
@@ -1885,31 +1885,99 @@ footer{
 }
 
 
+/* Estrellas pequeñas */
+
 .particula{
 
     position:absolute;
-
-    bottom:-20px;
 
     width:3px;
     height:3px;
 
     border-radius:50%;
 
-    opacity:0;
+    opacity:.25;
 
-    background:rgba(220,200,255,.65);
+    background:white;
 
     box-shadow:
-        0 0 8px rgba(190,145,255,.75);
+
+        0 0 6px rgba(255,255,255,.75),
+
+        0 0 12px rgba(180,135,255,.55);
 
     animation:
-        flotarParticula linear infinite;
+
+        parpadeoEstrella ease-in-out infinite alternate;
 
 }
 
 
-@keyframes flotarParticula{
+@keyframes parpadeoEstrella{
+
+    from{
+
+        opacity:.15;
+
+        transform:scale(.75);
+
+    }
+
+    to{
+
+        opacity:.8;
+
+        transform:scale(1.35);
+
+    }
+
+}
+
+
+/* Estrella fugaz */
+
+.estrella-fugaz{
+
+    position:absolute;
+
+    top:-120px;
+
+    left:-20%;
+
+    width:2px;
+
+    height:130px;
+
+    border-radius:999px;
+
+    opacity:0;
+
+    background:
+
+        linear-gradient(
+            to bottom,
+            transparent,
+            rgba(255,255,255,.98),
+            rgba(190,145,255,.75),
+            transparent
+        );
+
+    box-shadow:
+
+        0 0 10px rgba(255,255,255,.9),
+
+        0 0 24px rgba(170,110,255,.7);
+
+    transform:rotate(-40deg);
+
+    animation:
+
+        cruzarEstrella 2.2s ease-out forwards;
+
+}
+
+
+@keyframes cruzarEstrella{
 
     0%{
 
@@ -1917,19 +1985,19 @@ footer{
 
         transform:
             translate3d(0,0,0)
-            scale(.6);
+            rotate(-40deg);
 
     }
 
-    15%{
+    12%{
 
-        opacity:.55;
+        opacity:1;
 
     }
 
-    75%{
+    65%{
 
-        opacity:.3;
+        opacity:.8;
 
     }
 
@@ -1938,15 +2006,17 @@ footer{
         opacity:0;
 
         transform:
-            translate3d(40px,-110vh,0)
-            scale(1.3);
+            translate3d(130vw,120vh,0)
+            rotate(-40deg);
 
     }
 
 }
 
 
-/* Desactivar efectos innecesarios en móvil */
+/* =========================
+   MÓVIL
+========================= */
 
 @media(max-width:900px){
 
@@ -1968,7 +2038,14 @@ footer{
 
     .particulas-fondo{
 
-        opacity:.55;
+        opacity:.45;
+
+    }
+
+
+    .estrella-fugaz{
+
+        height:90px;
 
     }
 
