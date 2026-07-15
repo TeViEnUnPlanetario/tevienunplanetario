@@ -1670,9 +1670,7 @@ footer p{
 
     opacity:0;
 
-    transform:
-        translate(-50%,-50%)
-        scale(.8);
+    transform:translate(-50%,-50%);
 
     background:
 
@@ -1709,10 +1707,6 @@ footer p{
 
     width:340px;
     height:340px;
-
-    transform:
-        translate(-50%,-50%)
-        scale(1);
 
 }
 
@@ -1918,7 +1912,7 @@ footer p{
 
     border-radius:50%;
 
-    opacity:.25;
+    opacity:.45;
 
     background:white;
 
