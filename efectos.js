@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function(){
 // CIELO ESTRELLADO
 // =========================
 
-if(!reduceMotion){
+{
 
     const contenedorParticulas =
         document.createElement("div");
@@ -32,10 +32,8 @@ if(!reduceMotion){
     );
 
 
-    // Estrellas fijas
-
     const cantidadEstrellas =
-        window.innerWidth <= 900 ? 18 : 32;
+        window.innerWidth <= 900 ? 18 : 40;
 
 
     for(let i = 0; i < cantidadEstrellas; i++){
@@ -54,7 +52,7 @@ if(!reduceMotion){
             Math.random() * 100;
 
         const tamano =
-            1 + Math.random() * 3;
+            1.5 + Math.random() * 3;
 
         const duracion =
             2.5 + Math.random() * 5;
@@ -87,6 +85,62 @@ if(!reduceMotion){
         );
 
     }
+
+
+    function crearEstrellaFugaz(){
+
+        const estrellaFugaz =
+            document.createElement("span");
+
+        estrellaFugaz.className =
+            "estrella-fugaz";
+
+
+        estrellaFugaz.style.left =
+            (-25 + Math.random() * 35) + "%";
+
+        estrellaFugaz.style.top =
+            (-180 + Math.random() * 100) + "px";
+
+
+        contenedorParticulas.appendChild(
+            estrellaFugaz
+        );
+
+
+        setTimeout(function(){
+
+            estrellaFugaz.remove();
+
+        },2500);
+
+    }
+
+
+    function programarEstrellaFugaz(){
+
+        const espera =
+            8000 + Math.random() * 9000;
+
+
+        setTimeout(function(){
+
+            crearEstrellaFugaz();
+
+            programarEstrellaFugaz();
+
+        },espera);
+
+    }
+
+
+    if(!reduceMotion){
+
+        programarEstrellaFugaz();
+
+    }
+
+}
 
 
     // Crear estrella fugaz ocasional
