@@ -1358,7 +1358,7 @@ footer{
 
     position:relative;
 
-    margin-top:80px;
+    margin-top:0;
 
     padding:60px 20px 0;
 
@@ -1369,10 +1369,12 @@ footer{
     background:
         linear-gradient(
             to bottom,
-            rgba(0,0,0,.98) 0%,
-            rgba(4,3,8,.94) 20%,
-            rgba(13,7,28,.88) 58%,
-            rgba(35,12,70,.82) 100%
+            #120d25 0%,
+            #120d25 12%,
+            #0d091b 34%,
+            #07050e 62%,
+            #020203 84%,
+            #000000 100%
         );
 
     overflow:hidden;
