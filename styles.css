@@ -2940,101 +2940,37 @@ footer{
 
 }
 
-@media(max-width:600px){
-
-    footer{
-
-        min-height:850px;
-
-    }
-
-    .escena-lunar-footer{
-
-        height:440px;
-
-    }
-
-    .suelo-lunar{
-
-        width:auto;
-        height:210px;
-
-        min-width:760px;
-
-        left:50%;
-        bottom:0;
-
-        transform:translateX(-50%);
-
-        object-fit:cover;
-
-    }
-
-    .anuncio-lunar{
-
-        width:92vw;
-
-        bottom:95px;
-
-    }
-
-    .halo-anuncio-lunar{
-
-        width:120vw;
-        height:220px;
-
-        bottom:112px;
-
-        opacity:.72;
-
-    }
-
-}
-
 /* =========================
-   FOOTER LUNAR — MÓVIL FINAL
+   FOOTER LUNAR — MÓVIL
 ========================= */
 
 @media(max-width:600px){
 
     footer{
-
         min-height:0;
+        height:auto;
 
         padding:
             60px
             18px
             0;
 
+        margin:0;
+
         overflow:hidden;
-
     }
-
-
-    /* Contenido principal del footer */
 
     footer > *:not(.escena-lunar-footer){
-
         position:relative;
-
         z-index:5;
-
     }
-
 
     footer p{
-
         margin-top:40px;
         margin-bottom:0;
-
     }
 
-
-    /* La escena deja de ser absoluta
-       y pasa a formar parte del footer */
-
     .escena-lunar-footer{
-
         position:relative;
 
         left:auto;
@@ -3042,34 +2978,29 @@ footer{
         bottom:auto;
 
         width:calc(100% + 36px);
-        height:390px;
+        height:360px;
 
         margin:
-            65px
+            55px
             -18px
             0;
+
+        padding:0;
 
         overflow:hidden;
 
         z-index:2;
-
         pointer-events:none;
-
     }
 
-
-    /* Superficie lunar */
-
     .suelo-lunar{
-
         position:absolute;
 
         left:50%;
         bottom:0;
 
         width:auto;
-        height:245px;
-
+        height:230px;
         min-width:760px;
 
         display:block;
@@ -3085,18 +3016,13 @@ footer{
             brightness(.72)
             contrast(1.12)
             saturate(.70);
-
     }
 
-
-    /* Anuncio */
-
     .anuncio-lunar{
-
         position:absolute;
 
         left:50%;
-        bottom:105px;
+        bottom:95px;
 
         width:min(500px, 78vw);
         height:auto;
@@ -3117,18 +3043,13 @@ footer{
                 0 20px 18px
                 rgba(0,0,0,.80)
             );
-
     }
 
-
-    /* Halo morado detrás del anuncio */
-
     .halo-anuncio-lunar{
-
         position:absolute;
 
         left:50%;
-        bottom:125px;
+        bottom:115px;
 
         width:115vw;
         height:210px;
@@ -3138,7 +3059,6 @@ footer{
         transform:translateX(-50%);
 
         opacity:.70;
-
         border-radius:50%;
 
         background:
@@ -3150,59 +3070,10 @@ footer{
             );
 
         filter:blur(38px);
-
     }
 
 }
 
-/* =========================
-   CORRECCIÓN FINAL FOOTER MÓVIL
-========================= */
-
-@media(max-width:600px){
-
-    footer{
-        min-height:0 !important;
-        height:auto !important;
-
-        padding-top:60px;
-        padding-right:18px;
-        padding-bottom:0 !important;
-        padding-left:18px;
-
-        margin-bottom:0 !important;
-    }
-
-    .escena-lunar-footer{
-        position:relative;
-
-        width:calc(100% + 36px);
-
-        height:360px !important;
-        min-height:0 !important;
-
-        margin:
-            55px
-            -18px
-            0;
-
-        padding:0 !important;
-
-        bottom:auto;
-    }
-
-    .suelo-lunar{
-        bottom:0;
-
-        height:230px;
-        min-width:760px;
-    }
-
-    .anuncio-lunar{
-        bottom:95px;
-    }
-
-}
 
 /* =========================
    CAPAS VISUALES FINALES
