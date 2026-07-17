@@ -3156,6 +3156,55 @@ footer{
 }
 
 /* =========================
+   CORRECCIÓN FINAL FOOTER MÓVIL
+========================= */
+
+@media(max-width:600px){
+
+    footer{
+        min-height:0 !important;
+        height:auto !important;
+
+        padding-top:60px;
+        padding-right:18px;
+        padding-bottom:0 !important;
+        padding-left:18px;
+
+        margin-bottom:0 !important;
+    }
+
+    .escena-lunar-footer{
+        position:relative;
+
+        width:calc(100% + 36px);
+
+        height:360px !important;
+        min-height:0 !important;
+
+        margin:
+            55px
+            -18px
+            0;
+
+        padding:0 !important;
+
+        bottom:auto;
+    }
+
+    .suelo-lunar{
+        bottom:0;
+
+        height:230px;
+        min-width:760px;
+    }
+
+    .anuncio-lunar{
+        bottom:95px;
+    }
+
+}
+
+/* =========================
    CAPAS VISUALES FINALES
 ========================= */
 
