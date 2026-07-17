@@ -2454,51 +2454,34 @@ footer p{
    ESTRELLAS PINTADAS PNG
 ========================= */
 
-/*
-   Esta capa comienza debajo del banner.
-   JavaScript calcula su altura y posición.
-*/
-
 .estrellas-pintadas-fondo{
-
     position:absolute;
-
     left:0;
-
     width:100%;
-
     overflow:hidden;
-
     pointer-events:none;
-
     z-index:2;
-
 }
 
-
-/* Cada estrella PNG */
-
 .estrella-pintada{
-
     position:absolute;
-
     display:block;
 
     width:30px;
     height:30px;
 
     object-fit:contain;
-
     opacity:0;
 
     pointer-events:none;
-
     user-select:none;
 
     filter:
-    drop-shadow(0 0 8px rgba(255,230,120,.70))
-    drop-shadow(0 0 18px rgba(255,185,70,.45))
-    drop-shadow(0 0 28px rgba(255,150,40,.20));
+        brightness(1.22)
+        saturate(1.12)
+        drop-shadow(0 0 7px rgba(255,240,165,.80))
+        drop-shadow(0 0 16px rgba(255,195,80,.55))
+        drop-shadow(0 0 28px rgba(255,145,40,.28));
 
     will-change:
         opacity,
@@ -2508,119 +2491,91 @@ footer p{
         aparecerEstrellaPintada
         ease-in-out
         infinite;
-
 }
-
-
-/* Aparición irregular y sutil */
 
 @keyframes aparecerEstrellaPintada{
 
     0%{
-
         opacity:0;
 
         transform:
-            scale(.68)
+            scale(.72)
             rotate(var(--rotacion-inicial));
-
     }
 
-    18%{
+    15%{
+        opacity:
+            calc(
+                var(--opacidad-maxima) * .82
+            );
+    }
 
+    28%{
         opacity:var(--opacidad-maxima);
 
+        transform:
+            scale(1.04)
+            rotate(var(--rotacion-inicial));
     }
 
     52%{
-
         opacity:
             calc(
-                var(--opacidad-maxima) * .72
+                var(--opacidad-maxima) * .92
             );
 
         transform:
             scale(1)
             rotate(var(--rotacion-final));
-
     }
 
-    78%{
-
+    76%{
         opacity:var(--opacidad-maxima);
 
+        transform:
+            scale(1.10)
+            rotate(var(--rotacion-final));
     }
 
     100%{
-
         opacity:0;
 
         transform:
-            scale(.82)
+            scale(.84)
             rotate(var(--rotacion-final));
-
     }
-
 }
-
-
-/*
-   El contenido debe quedar delante
-   de las estrellas pintadas.
-*/
 
 section,
 footer{
-
     position:relative;
-
-    z-index:2;
-
+    z-index:3;
 }
-
-
-/* El banner permanece por encima y no recibe estas estrellas */
 
 .banner{
-
     position:relative;
-
     z-index:4;
-
 }
-
-
-/* Ajustes móviles */
 
 @media(max-width:900px){
 
     .estrella-pintada{
-
         filter:
-            drop-shadow(
-                0 0 3px rgba(255,205,75,.30)
-            )
-            drop-shadow(
-                0 0 8px rgba(255,170,35,.12)
-            );
-
+            brightness(1.18)
+            saturate(1.08)
+            drop-shadow(0 0 6px rgba(255,235,150,.72))
+            drop-shadow(0 0 13px rgba(255,190,70,.48))
+            drop-shadow(0 0 22px rgba(255,140,35,.22));
     }
-
 }
-
-
-/* Accesibilidad */
 
 @media(prefers-reduced-motion:reduce){
 
     .estrella-pintada{
-
         animation:none;
-
-        opacity:.18;
-
+        opacity:.65;
+        transform:none;
     }
-
 }
 
 
