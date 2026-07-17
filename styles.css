@@ -1691,32 +1691,19 @@ footer p{
 
     position:absolute;
 
-    left:50%;
-    bottom:-10px;
+    left:0;
+    bottom:0;
 
-    width:110%;
+    width:100%;
     height:auto;
-
-    min-width:1200px;
-
-    z-index:2;
 
     display:block;
 
-    transform:translateX(-50%);
-
     object-fit:cover;
-
-    object-position:center bottom;
 
     filter:
         brightness(.72)
-        contrast(1.12)
-        saturate(.72);
-
-    user-select:none;
-
-    -webkit-user-drag:none;
+        contrast(1.12);
 
 }
 
@@ -1727,40 +1714,14 @@ footer p{
     position:absolute;
 
     left:50%;
-    bottom:160px;
 
-    width:min(700px, 70vw);
-    height:auto;
+    bottom:120px;
 
-    z-index:4;
+    width:520px;
 
-    display:block;
-
-    transform:
-        translateX(-50%)
-        rotate(-1deg);
-
-    transform-origin:center bottom;
-
-    filter:
-        brightness(.76)
-        contrast(1.08)
-        saturate(.82)
-        drop-shadow(
-            0 28px 20px
-            rgba(0,0,0,.88)
-        )
-        drop-shadow(
-            0 0 14px
-            rgba(135,85,210,.14)
-        );
-
-    user-select:none;
-
-    -webkit-user-drag:none;
+    transform:translateX(-50%);
 
 }
-
 /* Resplandor morado muy tenue */
 
 .halo-anuncio-lunar{
@@ -1773,7 +1734,7 @@ footer p{
     width:760px;
     height:320px;
 
-    z-index:3;
+    z-index:2;
 
     transform:translateX(-50%);
 
