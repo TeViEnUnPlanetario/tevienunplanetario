@@ -1487,21 +1487,28 @@ footer{
 
 footer{
 
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(0,0,0,.35) 0%,
-            #000 18%,
-            #000 100%
-        );
-
-    padding:80px 20px 45px;
-
     position:relative;
+
+    min-height:1050px;
+
+    padding:
+        80px
+        20px
+        0;
 
     overflow:hidden;
 
     text-align:center;
+
+    background:transparent;
+
+}
+
+footer > *:not(.escena-lunar-footer){
+
+    position:relative;
+
+    z-index:5;
 
 }
 
@@ -1654,6 +1661,135 @@ footer p{
         0 0 50px rgba(24,119,242,.5);
 }
 
+/* =========================
+   ESCENA LUNAR DEL FOOTER
+========================= */
+
+.escena-lunar-footer{
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    width:100%;
+    height:650px;
+
+    z-index:1;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+}
+
+
+/* Superficie lunar */
+
+.suelo-lunar{
+
+    position:absolute;
+
+    left:50%;
+    bottom:-10px;
+
+    width:110%;
+    height:auto;
+
+    min-width:1200px;
+
+    z-index:2;
+
+    display:block;
+
+    transform:translateX(-50%);
+
+    object-fit:cover;
+
+    object-position:center bottom;
+
+    filter:
+        brightness(.72)
+        contrast(1.12)
+        saturate(.72);
+
+    user-select:none;
+
+    -webkit-user-drag:none;
+
+}
+
+/* Anuncio sobre la Luna */
+
+.anuncio-lunar{
+
+    position:absolute;
+
+    left:50%;
+    bottom:160px;
+
+    width:min(700px, 70vw);
+    height:auto;
+
+    z-index:4;
+
+    display:block;
+
+    transform:
+        translateX(-50%)
+        rotate(-1deg);
+
+    transform-origin:center bottom;
+
+    filter:
+        brightness(.76)
+        contrast(1.08)
+        saturate(.82)
+        drop-shadow(
+            0 28px 20px
+            rgba(0,0,0,.88)
+        )
+        drop-shadow(
+            0 0 14px
+            rgba(135,85,210,.14)
+        );
+
+    user-select:none;
+
+    -webkit-user-drag:none;
+
+}
+
+/* Resplandor morado muy tenue */
+
+.halo-anuncio-lunar{
+
+    position:absolute;
+
+    left:50%;
+    bottom:190px;
+
+    width:760px;
+    height:320px;
+
+    z-index:3;
+
+    transform:translateX(-50%);
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(125,75,200,.16) 0%,
+            rgba(90,45,160,.07) 38%,
+            transparent 72%
+        );
+
+    filter:blur(34px);
+
+}
 
 /* =========================
    18. RESPONSIVE
@@ -2765,7 +2901,108 @@ footer{
     }
 }
 
+@media(max-width:900px){
 
+    footer{
+
+        min-height:930px;
+
+        padding:
+            65px
+            18px
+            0;
+
+    }
+
+    .escena-lunar-footer{
+
+        height:520px;
+
+    }
+
+    .suelo-lunar{
+
+        width:125%;
+
+        min-width:900px;
+
+        bottom:-5px;
+
+    }
+
+    .anuncio-lunar{
+
+        width:min(580px, 88vw);
+
+        bottom:120px;
+
+        transform:
+            translateX(-50%)
+            rotate(-1deg);
+
+    }
+
+    .halo-anuncio-lunar{
+
+        width:110vw;
+        height:250px;
+
+        bottom:145px;
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    footer{
+
+        min-height:850px;
+
+    }
+
+    .escena-lunar-footer{
+
+        height:440px;
+
+    }
+
+    .suelo-lunar{
+
+        width:auto;
+        height:210px;
+
+        min-width:760px;
+
+        left:50%;
+        bottom:0;
+
+        transform:translateX(-50%);
+
+        object-fit:cover;
+
+    }
+
+    .anuncio-lunar{
+
+        width:92vw;
+
+        bottom:95px;
+
+    }
+
+    .halo-anuncio-lunar{
+
+        width:120vw;
+        height:220px;
+
+        bottom:112px;
+
+        opacity:.72;
+
+    }
+
+}
 /* =========================
    CAPAS VISUALES FINALES
 ========================= */
