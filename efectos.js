@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", function(){
     window.innerWidth > 900;
 
 
-   // =========================
-// CIELO ESTRELLADO
+    // =========================
+    // CIELO ESTRELLADO
 // =========================
 
 {
@@ -144,9 +144,6 @@ document.addEventListener("DOMContentLoaded", function(){
    
 
     // No crear aura en móviles o pantallas táctiles
-
-if(esEscritorio && !reduceMotion){
-
 
 // =========================
 // ESTRELLAS PINTADAS PNG
@@ -306,7 +303,7 @@ function crearEstrellasPintadas(){
 
 
         estrella.src =
-            rutaAleatoria;
+            encodeURI(rutaAleatoria);
 
 
         estrella.alt = "";
@@ -315,6 +312,13 @@ function crearEstrellasPintadas(){
             "aria-hidden",
             "true"
         );
+
+        estrella.addEventListener("error", function(){
+            console.error(
+                "No se pudo cargar la estrella PNG:",
+                estrella.src
+            );
+        });
 
 
         /*
@@ -358,7 +362,7 @@ function crearEstrellasPintadas(){
 
 
         const opacidad =
-            numeroAleatorio(.16, .46);
+            numeroAleatorio(.10, .28);
 
 
         const rotacionInicial =
@@ -426,6 +430,14 @@ function crearEstrellasPintadas(){
    contenido definan la altura final.
 */
 
+/*
+   Crear las estrellas inmediatamente.
+   Se repite al terminar de cargar todo para
+   recalcular la altura final del documento.
+*/
+
+crearEstrellasPintadas();
+
 window.addEventListener(
     "load",
     crearEstrellasPintadas
@@ -457,7 +469,14 @@ window.addEventListener(
 );
 
     
-    // =========================
+    
+
+    // No crear aura en móviles o pantallas táctiles
+
+if(esEscritorio && !reduceMotion){
+
+
+// =========================
     // AURA DEL CURSOR
     // =========================
 
@@ -632,7 +651,7 @@ document.documentElement.addEventListener(
     });
 
 
-} // Cierra: if(tieneCursor && !reduceMotion)
+} // Cierra: if(esEscritorio && !reduceMotion)
 
 
 }); // Cierra: document.addEventListener("DOMContentLoaded", ...)
