@@ -24,14 +24,9 @@ body{
 
     font-family:'Segoe UI', Arial, sans-serif;
 
- background:
-linear-gradient(
-    to bottom,
-    rgba(0,0,0,.35) 0%,
-    #000 18%,
-    #000 100%
-);
+    background:#000;
 
+}
     color:white;
 
     overflow-x:hidden;
@@ -1412,14 +1407,20 @@ footer{
 
 footer{
 
-    background:#000;
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.35) 0%,
+            #000 18%,
+            #000 100%
+        );
 
-    padding:120px 20px 45px;
+    padding:80px 20px 45px;
 
     position:relative;
 
     overflow:hidden;
-   
+
     text-align:center;
 
 }
