@@ -20,6 +20,8 @@ html{
 
 body{
 
+    position:relative;
+
     font-family:'Segoe UI', Arial, sans-serif;
 
     background:
@@ -103,7 +105,7 @@ footer{
 
     position:relative;
 
-    z-index:1;
+    z-index:3;
 
 }
 
@@ -167,53 +169,15 @@ footer{
 @media(min-width:1600px){
 
     .banner{
-
-       height:clamp(
-    520px,
-    70vh,
-    850px
-);
-
+        height:820px;
     }
 
 }
-
 
 @media(min-width:2200px){
 
     .banner{
-
-        height:clamp(
-            720px,
-            72vh,
-            920px
-        );
-
-    }
-
-}
-
-/* Monitores grandes */
-
-@media (min-width:1600px){
-
-    .banner{
-
-        height:820px;
-
-    }
-
-}
-
-
-/* Monitores 2K / Ultrawide */
-
-@media (min-width:2200px){
-
-    .banner{
-
         height:920px;
-
     }
 
 }
@@ -1609,61 +1573,35 @@ footer p{
 
 @media(max-width:900px){
 
-   .banner{
-
-    height:520px;
-
-    min-height:520px;
-
-}
-
-
-.banner img{
-
-    position:absolute;
-
-    inset:0;
-
-    width:100%;
-    height:100%;
-
-    object-fit:cover;
-
-    object-position:center center;
-
-    transform:scale(1);
-
-}
-
-   @media(max-width:600px){
-
     .banner{
-
-        height:500px;
-
-        min-height:500px;
-
+        height:520px;
+        min-height:520px;
     }
 
-}
+    .banner img{
+        position:absolute;
+        inset:0;
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        object-position:center center;
+        transform:scale(1);
+    }
 
     .banner::after{
+        height:260px;
+        bottom:-2px;
+        background:linear-gradient(
+            to bottom,
+            rgba(0,0,0,0) 0%,
+            rgba(0,0,0,.18) 18%,
+            rgba(0,0,0,.58) 50%,
+            rgba(0,0,0,.92) 76%,
+            var(--negro-fondo) 90%,
+            var(--negro-fondo) 100%
+        );
+    }
 
-    height:260px;
-
-    bottom:-2px;
-
-    background:linear-gradient(
-        to bottom,
-        rgba(0,0,0,0) 0%,
-        rgba(0,0,0,.18) 18%,
-        rgba(0,0,0,.58) 50%,
-        rgba(0,0,0,.92) 76%,
-        var(--negro-fondo) 90%,
-        var(--negro-fondo) 100%
-    );
-
-}
 
     .overlay{
         padding:25px 18px;
@@ -1823,7 +1761,15 @@ footer p{
 }
 
 
+
+}
+
 @media(max-width:600px){
+
+    .banner{
+        height:500px;
+        min-height:500px;
+    }
 
     .masonry{
         columns:1;
@@ -1849,8 +1795,8 @@ footer p{
         width:100%;
         max-width:320px;
     }
-}
 
+}
 
 /* =========================
    ANIMACIONES AL HACER SCROLL
@@ -2551,10 +2497,10 @@ footer p{
 
     filter:
         drop-shadow(
-            0 0 4px rgba(255,205,75,.38)
+            0 0 4px rgba(255,205,75,.28)
         )
         drop-shadow(
-            0 0 11px rgba(255,170,35,.16)
+            0 0 11px rgba(255,170,35,.10)
         );
 
     will-change:
@@ -2631,7 +2577,7 @@ footer{
 
     position:relative;
 
-    z-index:3;
+    z-index:2;
 
 }
 
@@ -2679,3 +2625,17 @@ footer{
     }
 
 }
+
+
+/* =========================
+   CAPAS VISUALES FINALES
+========================= */
+
+/*
+   0 = fondo y nebulosa
+   1 = estrellas pequeñas
+   2 = estrellas PNG pintadas
+   3 = contenido
+   4 = banner
+   9998 = aura del cursor
+*/
