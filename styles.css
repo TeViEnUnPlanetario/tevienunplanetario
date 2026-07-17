@@ -2502,3 +2502,180 @@ footer p{
     z-index:1;
 
 }
+
+
+/* =========================
+   ESTRELLAS PINTADAS PNG
+========================= */
+
+/*
+   Esta capa comienza debajo del banner.
+   JavaScript calcula su altura y posición.
+*/
+
+.estrellas-pintadas-fondo{
+
+    position:absolute;
+
+    left:0;
+
+    width:100%;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    z-index:1;
+
+}
+
+
+/* Cada estrella PNG */
+
+.estrella-pintada{
+
+    position:absolute;
+
+    display:block;
+
+    width:30px;
+    height:30px;
+
+    object-fit:contain;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    user-select:none;
+
+    filter:
+        drop-shadow(
+            0 0 4px rgba(255,205,75,.38)
+        )
+        drop-shadow(
+            0 0 11px rgba(255,170,35,.16)
+        );
+
+    will-change:
+        opacity,
+        transform;
+
+    animation:
+        aparecerEstrellaPintada
+        ease-in-out
+        infinite;
+
+}
+
+
+/* Aparición irregular y sutil */
+
+@keyframes aparecerEstrellaPintada{
+
+    0%{
+
+        opacity:0;
+
+        transform:
+            scale(.68)
+            rotate(var(--rotacion-inicial));
+
+    }
+
+    18%{
+
+        opacity:var(--opacidad-maxima);
+
+    }
+
+    52%{
+
+        opacity:
+            calc(
+                var(--opacidad-maxima) * .72
+            );
+
+        transform:
+            scale(1)
+            rotate(var(--rotacion-final));
+
+    }
+
+    78%{
+
+        opacity:var(--opacidad-maxima);
+
+    }
+
+    100%{
+
+        opacity:0;
+
+        transform:
+            scale(.82)
+            rotate(var(--rotacion-final));
+
+    }
+
+}
+
+
+/*
+   El contenido debe quedar delante
+   de las estrellas pintadas.
+*/
+
+section,
+footer{
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+
+/* El banner permanece por encima y no recibe estas estrellas */
+
+.banner{
+
+    position:relative;
+
+    z-index:3;
+
+}
+
+
+/* Ajustes móviles */
+
+@media(max-width:900px){
+
+    .estrella-pintada{
+
+        filter:
+            drop-shadow(
+                0 0 3px rgba(255,205,75,.30)
+            )
+            drop-shadow(
+                0 0 8px rgba(255,170,35,.12)
+            );
+
+    }
+
+}
+
+
+/* Accesibilidad */
+
+@media(prefers-reduced-motion:reduce){
+
+    .estrella-pintada{
+
+        animation:none;
+
+        opacity:.18;
+
+    }
+
+}
