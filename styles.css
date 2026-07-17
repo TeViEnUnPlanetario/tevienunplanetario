@@ -2215,7 +2215,7 @@ footer p{
 
     inset:0;
 
-    z-index:5;
+    z-index:1;
 
     pointer-events:none;
 
@@ -2525,7 +2525,7 @@ footer p{
 
     pointer-events:none;
 
-    z-index:1;
+    z-index:2;
 
 }
 
@@ -2631,7 +2631,7 @@ footer{
 
     position:relative;
 
-    z-index:2;
+    z-index:3;
 
 }
 
@@ -2642,7 +2642,7 @@ footer{
 
     position:relative;
 
-    z-index:3;
+    z-index:4;
 
 }
 
