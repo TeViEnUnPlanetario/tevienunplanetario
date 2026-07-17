@@ -32,7 +32,7 @@ body{
 
 }
 
-/* Nebulosa del fondo */
+/* Nebulosa morada del fondo */
 
 body::before{
 
@@ -48,33 +48,40 @@ body::before{
 
     background:
         radial-gradient(
-            circle at 50% 115%,
-            rgba(125,80,240,.13),
-            transparent 48%
+            ellipse at 10% 48%,
+            rgba(126,65,220,.24) 0%,
+            rgba(95,40,180,.13) 24%,
+            transparent 55%
+        ),
+
+        radial-gradient(
+            ellipse at 90% 55%,
+            rgba(180,45,150,.20) 0%,
+            rgba(110,45,205,.12) 27%,
+            transparent 58%
+        ),
+
+        radial-gradient(
+            ellipse at 50% 88%,
+            rgba(120,75,235,.18) 0%,
+            transparent 52%
         );
 
-    filter:blur(110px);
+    filter:blur(55px);
+
+    opacity:.9;
+
+    transform:translateZ(0);
 
     animation:
         respirarNebulosa
         18s ease-in-out infinite alternate;
-
 }
 
 
 /* Animación de la nebulosa */
 
 @keyframes respirarNebulosa{
-
-    from{
-
-        transform:
-            scale(1)
-            rotate(0deg);
-
-        opacity:.65;
-
-    }
 
     to{
 
@@ -2303,13 +2310,11 @@ footer p{
     }
 
 
-    body::before{
-
-        opacity:.10;
-
-        filter:blur(55px);
-
+     body::before{
+        opacity:.65;
+        filter:blur(45px);
     }
+}
 
 
     .particulas-fondo{
