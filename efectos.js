@@ -148,6 +148,315 @@ document.addEventListener("DOMContentLoaded", function(){
 if(esEscritorio && !reduceMotion){
 
 
+// =========================
+// ESTRELLAS PINTADAS PNG
+// =========================
+
+const rutasEstrellasPintadas = [
+
+    "img/background/estrella 1.png",
+    "img/background/estrella 2.png",
+    "img/background/estrella 3.png",
+    "img/background/estrella 4.png"
+
+];
+
+
+let temporizadorRedimensionEstrellas;
+
+
+function numeroAleatorio(minimo, maximo){
+
+    return (
+        Math.random() *
+        (maximo - minimo)
+    ) + minimo;
+
+}
+
+
+function crearEstrellasPintadas(){
+
+    const bannerPrincipal =
+        document.querySelector(".banner");
+
+
+    if(!bannerPrincipal){
+        return;
+    }
+
+
+    /*
+       Eliminar la capa anterior para evitar
+       estrellas duplicadas al redimensionar.
+    */
+
+    const capaAnterior =
+        document.querySelector(
+            ".estrellas-pintadas-fondo"
+        );
+
+
+    if(capaAnterior){
+
+        capaAnterior.remove();
+
+    }
+
+
+    const capaEstrellas =
+        document.createElement("div");
+
+
+    capaEstrellas.className =
+        "estrellas-pintadas-fondo";
+
+
+    /*
+       La capa comienza exactamente después
+       del borde inferior del banner.
+    */
+
+    const inicioEstrellas =
+        bannerPrincipal.offsetTop +
+        bannerPrincipal.offsetHeight;
+
+
+    const alturaDocumento =
+        Math.max(
+            document.body.scrollHeight,
+            document.documentElement.scrollHeight
+        );
+
+
+    const alturaDisponible =
+        Math.max(
+            0,
+            alturaDocumento - inicioEstrellas
+        );
+
+
+    capaEstrellas.style.top =
+        inicioEstrellas + "px";
+
+
+    capaEstrellas.style.height =
+        alturaDisponible + "px";
+
+
+    document.body.appendChild(
+        capaEstrellas
+    );
+
+
+    const esMovil =
+        window.innerWidth <= 900;
+
+
+    /*
+       La cantidad depende de la altura real
+       de la página para que no queden amontonadas.
+    */
+
+    const cantidadBase =
+        Math.floor(
+            alturaDisponible /
+            (esMovil ? 300 : 240)
+        );
+
+
+    const cantidadEstrellas =
+        esMovil
+            ? Math.min(
+                22,
+                Math.max(12, cantidadBase)
+            )
+            : Math.min(
+                42,
+                Math.max(20, cantidadBase)
+            );
+
+
+    for(
+        let indiceEstrella = 0;
+        indiceEstrella < cantidadEstrellas;
+        indiceEstrella++
+    ){
+
+        const estrella =
+            document.createElement("img");
+
+
+        estrella.className =
+            "estrella-pintada";
+
+
+        /*
+           Elegir aleatoriamente uno
+           de los cuatro diseños.
+        */
+
+        const rutaAleatoria =
+            rutasEstrellasPintadas[
+                Math.floor(
+                    Math.random() *
+                    rutasEstrellasPintadas.length
+                )
+            ];
+
+
+        estrella.src =
+            rutaAleatoria;
+
+
+        estrella.alt = "";
+
+        estrella.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        /*
+           Posición aleatoria dentro
+           de toda la página.
+        */
+
+        const posicionX =
+            numeroAleatorio(2, 96);
+
+
+        const posicionY =
+            numeroAleatorio(1, 98);
+
+
+        /*
+           Diferentes tamaños.
+        */
+
+        const tamano =
+            esMovil
+                ? numeroAleatorio(12, 31)
+                : numeroAleatorio(16, 48);
+
+
+        const duracion =
+            numeroAleatorio(6, 14);
+
+
+        /*
+           Retraso negativo:
+           algunas ya estarán visibles
+           cuando cargue la página.
+        */
+
+        const retraso =
+            numeroAleatorio(
+                -duracion,
+                0
+            );
+
+
+        const opacidad =
+            numeroAleatorio(.16, .46);
+
+
+        const rotacionInicial =
+            numeroAleatorio(-15, 15);
+
+
+        const rotacionFinal =
+            rotacionInicial +
+            numeroAleatorio(-10, 10);
+
+
+        estrella.style.left =
+            posicionX + "%";
+
+
+        estrella.style.top =
+            posicionY + "%";
+
+
+        estrella.style.width =
+            tamano + "px";
+
+
+        estrella.style.height =
+            tamano + "px";
+
+
+        estrella.style.animationDuration =
+            duracion + "s";
+
+
+        estrella.style.animationDelay =
+            retraso + "s";
+
+
+        estrella.style.setProperty(
+            "--opacidad-maxima",
+            opacidad
+        );
+
+
+        estrella.style.setProperty(
+            "--rotacion-inicial",
+            rotacionInicial + "deg"
+        );
+
+
+        estrella.style.setProperty(
+            "--rotacion-final",
+            rotacionFinal + "deg"
+        );
+
+
+        capaEstrellas.appendChild(
+            estrella
+        );
+
+    }
+
+}
+
+
+/*
+   Esperar a que imágenes, iframes y demás
+   contenido definan la altura final.
+*/
+
+window.addEventListener(
+    "load",
+    crearEstrellasPintadas
+);
+
+
+/*
+   Regenerar cuando cambie el tamaño,
+   pero con una pequeña espera para evitar
+   ejecutarlo decenas de veces.
+*/
+
+window.addEventListener(
+    "resize",
+    function(){
+
+        clearTimeout(
+            temporizadorRedimensionEstrellas
+        );
+
+
+        temporizadorRedimensionEstrellas =
+            setTimeout(
+                crearEstrellasPintadas,
+                250
+            );
+
+    }
+);
+
+    
     // =========================
     // AURA DEL CURSOR
     // =========================
