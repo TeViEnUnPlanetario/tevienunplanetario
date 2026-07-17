@@ -1416,11 +1416,13 @@ footer{
 
     background:#000;
 
-    padding:80px 20px 45px;
+    padding:120px 20px 45px;
 
     position:relative;
 
     overflow:hidden;
+   
+    text-align:center;
 
 }
 
