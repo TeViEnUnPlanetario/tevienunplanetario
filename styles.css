@@ -200,16 +200,44 @@ footer{
 
 @media(min-width:1600px){
 
+    :root{
+        --alto-banner:820px;
+    }
+
     .banner{
-        height:820px;
+        height:var(--alto-banner);
+        min-height:820px;
     }
 
 }
 
 @media(min-width:2200px){
 
+    :root{
+        --alto-banner:920px;
+    }
+
     .banner{
-        height:920px;
+        height:var(--alto-banner);
+        min-height:920px;
+    }
+
+}
+
+@media(min-width:1600px){
+
+    .banner::after{
+        height:390px;
+        bottom:-8px;
+    }
+
+}
+
+@media(min-width:2200px){
+
+    .banner::after{
+        height:440px;
+        bottom:-8px;
     }
 
 }
