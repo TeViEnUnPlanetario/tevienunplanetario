@@ -2990,6 +2990,171 @@ footer{
     }
 
 }
+
+/* =========================
+   FOOTER LUNAR — MÓVIL FINAL
+========================= */
+
+@media(max-width:600px){
+
+    footer{
+
+        min-height:0;
+
+        padding:
+            60px
+            18px
+            0;
+
+        overflow:hidden;
+
+    }
+
+
+    /* Contenido principal del footer */
+
+    footer > *:not(.escena-lunar-footer){
+
+        position:relative;
+
+        z-index:5;
+
+    }
+
+
+    footer p{
+
+        margin-top:40px;
+        margin-bottom:0;
+
+    }
+
+
+    /* La escena deja de ser absoluta
+       y pasa a formar parte del footer */
+
+    .escena-lunar-footer{
+
+        position:relative;
+
+        left:auto;
+        right:auto;
+        bottom:auto;
+
+        width:calc(100% + 36px);
+        height:390px;
+
+        margin:
+            65px
+            -18px
+            0;
+
+        overflow:hidden;
+
+        z-index:2;
+
+        pointer-events:none;
+
+    }
+
+
+    /* Superficie lunar */
+
+    .suelo-lunar{
+
+        position:absolute;
+
+        left:50%;
+        bottom:0;
+
+        width:auto;
+        height:245px;
+
+        min-width:760px;
+
+        display:block;
+
+        transform:translateX(-50%);
+
+        object-fit:cover;
+        object-position:center bottom;
+
+        z-index:1;
+
+        filter:
+            brightness(.72)
+            contrast(1.12)
+            saturate(.70);
+
+    }
+
+
+    /* Anuncio */
+
+    .anuncio-lunar{
+
+        position:absolute;
+
+        left:50%;
+        bottom:105px;
+
+        width:min(500px, 78vw);
+        height:auto;
+
+        z-index:4;
+
+        transform:
+            translateX(-50%)
+            rotate(-1deg);
+
+        transform-origin:center bottom;
+
+        filter:
+            brightness(.82)
+            contrast(1.08)
+            saturate(.88)
+            drop-shadow(
+                0 20px 18px
+                rgba(0,0,0,.80)
+            );
+
+    }
+
+
+    /* Halo morado detrás del anuncio */
+
+    .halo-anuncio-lunar{
+
+        position:absolute;
+
+        left:50%;
+        bottom:125px;
+
+        width:115vw;
+        height:210px;
+
+        z-index:3;
+
+        transform:translateX(-50%);
+
+        opacity:.70;
+
+        border-radius:50%;
+
+        background:
+            radial-gradient(
+                ellipse,
+                rgba(125,75,200,.14) 0%,
+                rgba(90,45,160,.06) 42%,
+                transparent 74%
+            );
+
+        filter:blur(38px);
+
+    }
+
+}
+
 /* =========================
    CAPAS VISUALES FINALES
 ========================= */
