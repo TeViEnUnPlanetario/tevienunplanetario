@@ -2496,12 +2496,9 @@ footer p{
     user-select:none;
 
     filter:
-        drop-shadow(
-            0 0 4px rgba(255,205,75,.28)
-        )
-        drop-shadow(
-            0 0 11px rgba(255,170,35,.10)
-        );
+    drop-shadow(0 0 8px rgba(255,230,120,.70))
+    drop-shadow(0 0 18px rgba(255,185,70,.45))
+    drop-shadow(0 0 28px rgba(255,150,40,.20));
 
     will-change:
         opacity,
