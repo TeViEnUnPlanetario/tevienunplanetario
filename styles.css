@@ -1691,19 +1691,28 @@ footer p{
 
     position:absolute;
 
-    left:0;
+    left:50%;
     bottom:0;
 
     width:100%;
+    min-width:1700px;
     height:auto;
 
     display:block;
 
+    z-index:1;
+
+    transform:translateX(-50%);
+
     object-fit:cover;
+    object-position:center bottom;
 
     filter:
         brightness(.72)
         contrast(1.12);
+
+    user-select:none;
+    -webkit-user-drag:none;
 
 }
 
@@ -1714,12 +1723,29 @@ footer p{
     position:absolute;
 
     left:50%;
+    bottom:118px;
 
-    bottom:120px;
+    width:min(560px, 70vw);
+    height:auto;
 
-    width:520px;
+    display:block;
 
-    transform:translateX(-50%);
+    z-index:4;
+
+    transform:
+        translateX(-50%)
+        rotate(-1deg);
+
+    transform-origin:center bottom;
+
+    filter:
+        brightness(.82)
+        contrast(1.08)
+        saturate(.88)
+        drop-shadow(0 25px 45px rgba(0,0,0,.65));
+
+    user-select:none;
+    -webkit-user-drag:none;
 
 }
 /* Resplandor morado muy tenue */
@@ -1729,10 +1755,10 @@ footer p{
     position:absolute;
 
     left:50%;
-    bottom:190px;
+    bottom:185px;
 
-    width:760px;
-    height:320px;
+    width:900px;
+    height:340px;
 
     z-index:2;
 
@@ -1743,12 +1769,12 @@ footer p{
     background:
         radial-gradient(
             ellipse,
-            rgba(125,75,200,.16) 0%,
-            rgba(90,45,160,.07) 38%,
-            transparent 72%
+            rgba(135,85,220,.18) 0%,
+            rgba(100,55,180,.08) 42%,
+            transparent 74%
         );
 
-    filter:blur(34px);
+    filter:blur(42px);
 
 }
 
