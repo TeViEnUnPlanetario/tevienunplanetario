@@ -3349,6 +3349,77 @@ footer{
 }
 
 /* =========================
+   PÁGINAS INTERIORES
+   MÚSICA Y GALERÍA
+========================= */
+
+.pagina-musica-body,
+.pagina-galeria-body{
+
+    position:relative;
+
+    width:100%;
+    min-height:100vh;
+
+    color:white;
+
+    background:#000;
+
+    overflow-x:hidden;
+
+
+}
+
+/* =========================
+   DEGRADADO SUPERIOR
+   PÁGINAS INTERIORES
+========================= */
+
+.pagina-musica-body::after,
+.pagina-galeria-body::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:420px;
+
+    z-index:0;
+
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #000 0%,
+            rgba(0,0,0,.98) 14%,
+            rgba(0,0,0,.88) 34%,
+            rgba(0,0,0,.56) 62%,
+            rgba(0,0,0,.18) 84%,
+            transparent 100%
+        );
+
+}
+
+.pagina-musica-body > header,
+.pagina-musica-body > section,
+.pagina-musica-body > footer,
+
+.pagina-galeria-body > header,
+.pagina-galeria-body > section,
+.pagina-galeria-body > footer{
+
+    position:relative;
+
+    z-index:3;
+
+}
+
+/* =========================
    CAPAS VISUALES FINALES
 ========================= */
 
