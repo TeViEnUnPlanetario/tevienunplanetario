@@ -4634,3 +4634,716 @@ and (orientation:landscape){
     }
 
 }
+
+/* =========================================================
+   ACABADO VISUAL PREMIUM — INDEX
+   No modifica estructura, alturas ni posicionamiento
+========================================================= */
+
+
+/* =========================================================
+   1. BANNER — MAYOR PROFUNDIDAD Y CONTRASTE
+========================================================= */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.banner{
+
+    isolation:isolate;
+
+    background:#000;
+
+}
+
+
+/*
+   La imagen conserva su color, pero adquiere
+   un poco más de profundidad y definición.
+*/
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.banner img{
+
+    filter:
+        brightness(.92)
+        contrast(1.08)
+        saturate(1.08);
+
+}
+
+
+/*
+   Overlay cinematográfico:
+   oscurece ligeramente los bordes y la parte inferior,
+   sin apagar demasiado el centro de la fotografía.
+*/
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.overlay{
+
+    background:
+
+        radial-gradient(
+            ellipse at center 38%,
+            transparent 10%,
+            rgba(0,0,0,.04) 38%,
+            rgba(0,0,0,.18) 75%,
+            rgba(0,0,0,.32) 100%
+        ),
+
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.08) 0%,
+            rgba(0,0,0,.02) 32%,
+            rgba(0,0,0,.12) 67%,
+            rgba(0,0,0,.46) 100%
+        );
+
+}
+
+
+/* Mayor legibilidad para el título */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.titulo-blog h1{
+
+    color:#fff;
+
+    text-shadow:
+        0 2px 8px rgba(0,0,0,.80),
+        0 0 18px rgba(0,0,0,.42),
+        0 0 28px rgba(255,255,255,.08);
+
+}
+
+
+/* Descripción del banner */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.titulo-blog p{
+
+    color:rgba(255,255,255,.86);
+
+    text-shadow:
+        0 2px 7px rgba(0,0,0,.92),
+        0 0 16px rgba(0,0,0,.60);
+
+}
+
+
+
+/* =========================================================
+   2. MENÚ PRINCIPAL — CRISTAL TIPO APPLE
+========================================================= */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.menu{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    width:max-content;
+    max-width:100%;
+
+    margin:auto;
+
+    padding:12px 28px;
+
+    gap:30px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.24);
+
+    border-radius:999px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.16) 0%,
+            rgba(255,255,255,.075) 42%,
+            rgba(15,15,22,.24) 100%
+        );
+
+    -webkit-backdrop-filter:
+        blur(22px)
+        saturate(175%);
+
+    backdrop-filter:
+        blur(22px)
+        saturate(175%);
+
+    box-shadow:
+
+        0 1px 0
+        rgba(255,255,255,.20)
+        inset,
+
+        0 -1px 0
+        rgba(0,0,0,.42)
+        inset,
+
+        0 8px 30px
+        rgba(0,0,0,.28),
+
+        0 0 24px
+        rgba(170,120,255,.10);
+
+    overflow:hidden;
+
+    isolation:isolate;
+
+}
+
+
+/* Reflejo superior del cristal */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.menu::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:8%;
+    right:8%;
+    top:0;
+
+    height:45%;
+
+    z-index:-1;
+
+    border-radius:
+        999px
+        999px
+        50%
+        50%;
+
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255,255,255,.18),
+            rgba(255,255,255,.035),
+            transparent
+        );
+
+}
+
+
+/* Halo ambiental debajo del menú */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.menu::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:12%;
+    right:12%;
+    bottom:-14px;
+
+    height:28px;
+
+    z-index:-2;
+
+    pointer-events:none;
+
+    border-radius:50%;
+
+    background:
+        rgba(145,90,225,.18);
+
+    filter:blur(18px);
+
+}
+
+
+/* Enlaces siempre visibles */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.menu a{
+
+    position:relative;
+
+    z-index:2;
+
+    display:inline-flex;
+
+    align-items:center;
+    justify-content:center;
+
+    flex:0 0 auto;
+
+    padding:5px 1px;
+
+    color:rgba(255,255,255,.94);
+
+    text-decoration:none;
+
+    font-size:17px;
+    font-weight:700;
+
+    line-height:1;
+
+    white-space:nowrap;
+
+    text-shadow:
+        0 1px 5px rgba(0,0,0,.80),
+        0 0 9px rgba(255,255,255,.16);
+
+    transition:
+        color .3s ease,
+        transform .3s ease,
+        text-shadow .3s ease;
+
+}
+
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.menu a:hover{
+
+    color:#fff;
+
+    transform:translateY(-1px);
+
+    text-shadow:
+        0 0 8px rgba(255,255,255,.82),
+        0 0 18px rgba(215,185,255,.60),
+        0 0 30px rgba(155,95,235,.40);
+
+}
+
+
+
+/* =========================================================
+   3. BOTONES — BRILLO NEÓN SUTIL
+========================================================= */
+
+/*
+   Plataformas musicales y redes sociales.
+   El brillo normal es moderado.
+*/
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-portada a,
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-redes a{
+
+    position:relative;
+
+    isolation:isolate;
+
+    border:
+        1px solid
+        rgba(255,255,255,.30);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.075),
+            rgba(255,255,255,.025)
+        );
+
+    -webkit-backdrop-filter:
+        blur(13px)
+        saturate(145%);
+
+    backdrop-filter:
+        blur(13px)
+        saturate(145%);
+
+    box-shadow:
+
+        0 1px 0
+        rgba(255,255,255,.12)
+        inset,
+
+        0 -1px 0
+        rgba(0,0,0,.40)
+        inset,
+
+        0 8px 24px
+        rgba(0,0,0,.22),
+
+        0 0 13px
+        rgba(185,140,255,.055);
+
+    text-shadow:
+        0 1px 5px rgba(0,0,0,.70),
+        0 0 9px rgba(255,255,255,.10);
+
+    transition:
+        transform .32s ease,
+        border-color .32s ease,
+        background .32s ease,
+        box-shadow .32s ease,
+        filter .32s ease;
+
+}
+
+
+/* Reflejo suave dentro de cada botón */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-portada a::before,
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-redes a::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:1px;
+
+    z-index:-1;
+
+    border-radius:inherit;
+
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            115deg,
+            rgba(255,255,255,.11),
+            transparent 32%,
+            transparent 70%,
+            rgba(180,125,255,.055)
+        );
+
+}
+
+
+/* El icono destaca ligeramente */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-portada i,
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-redes i{
+
+    filter:
+        drop-shadow(
+            0 0 7px
+            rgba(255,255,255,.25)
+        );
+
+}
+
+
+/* Hover genérico antes del color específico de cada marca */
+
+@media (hover:hover){
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .botones-portada a:hover,
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .botones-redes a:hover{
+
+        transform:translateY(-4px);
+
+        border-color:
+            rgba(255,255,255,.58);
+
+        filter:brightness(1.06);
+
+    }
+
+}
+
+
+
+/* =========================================================
+   4. ESTRELLAS — MÁS PRESENCIA EN MÓVIL
+========================================================= */
+
+@media(max-width:900px){
+
+    /*
+       Antes el contenedor de partículas bajaba hasta .45.
+       Lo elevamos sin saturar la pantalla.
+    */
+
+    .particulas-fondo{
+
+        opacity:.72;
+
+    }
+
+
+    .particula{
+
+        opacity:.72;
+
+        box-shadow:
+            0 0 6px rgba(255,255,255,.95),
+            0 0 14px rgba(190,150,255,.72),
+            0 0 23px rgba(140,90,225,.25);
+
+    }
+
+
+    /*
+       Las estrellas pintadas ganan luz y color,
+       pero conservan su animación actual.
+    */
+
+    .estrella-pintada{
+
+        filter:
+            brightness(1.30)
+            contrast(1.05)
+            saturate(1.18)
+            drop-shadow(
+                0 0 6px
+                rgba(255,240,175,.82)
+            )
+            drop-shadow(
+                0 0 14px
+                rgba(255,190,75,.52)
+            )
+            drop-shadow(
+                0 0 25px
+                rgba(255,145,35,.25)
+            );
+
+    }
+
+
+    /*
+       Estrella fugaz un poco más luminosa,
+       sin aumentar demasiado la frecuencia.
+    */
+
+    .estrella-fugaz{
+
+        filter:
+            brightness(1.16);
+
+        box-shadow:
+            0 0 7px rgba(255,255,255,.88),
+            0 0 15px rgba(180,125,255,.58),
+            0 0 25px rgba(130,75,220,.22);
+
+    }
+
+}
+
+
+/* =========================================================
+   5. FOOTER LUNAR — ACABADO PREMIUM
+========================================================= */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+footer{
+
+    background:
+
+        radial-gradient(
+            ellipse at 50% 38%,
+            rgba(68,38,115,.07),
+            transparent 52%
+        ),
+
+        radial-gradient(
+            ellipse at 18% 45%,
+            rgba(35,25,70,.055),
+            transparent 40%
+        ),
+
+        #000;
+
+}
+
+
+/* Títulos del footer */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+footer h2,
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+footer h3{
+
+    color:#fff;
+
+    text-shadow:
+        0 2px 8px rgba(0,0,0,.82),
+        0 0 15px rgba(255,255,255,.08),
+        0 0 28px rgba(155,100,235,.08);
+
+}
+
+
+/* Superficie con mayor riqueza tonal */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.suelo-lunar{
+
+    filter:
+        brightness(.77)
+        contrast(1.15)
+        saturate(.76)
+        drop-shadow(
+            0 -16px 34px
+            rgba(0,0,0,.34)
+        );
+
+}
+
+
+/*
+   Brillo tenue del horizonte lunar.
+   Se aplica detrás del suelo y no crea una máscara encima.
+*/
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.halo-anuncio-lunar{
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(150,100,230,.19) 0%,
+            rgba(105,65,190,.085) 38%,
+            rgba(65,45,120,.025) 58%,
+            transparent 76%
+        );
+
+    filter:blur(48px);
+
+}
+
+
+/* Anuncio integrado con la iluminación nocturna */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.anuncio-lunar{
+
+    filter:
+        brightness(.88)
+        contrast(1.07)
+        saturate(.92)
+        drop-shadow(
+            0 22px 32px
+            rgba(0,0,0,.70)
+        )
+        drop-shadow(
+            0 0 12px
+            rgba(150,105,215,.08)
+        );
+
+}
+
+
+/* Copyright más limpio */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+footer > p:last-of-type{
+
+    color:rgba(255,255,255,.44);
+
+    text-shadow:
+        0 2px 6px rgba(0,0,0,.95);
+
+}
+
+
+/* =========================================================
+   MENÚ PREMIUM — RESPONSIVE
+========================================================= */
+
+@media(max-width:900px){
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .menu{
+
+        justify-content:center;
+
+        width:auto;
+        max-width:calc(100vw - 36px);
+
+        gap:14px;
+
+        padding:13px 20px;
+
+        overflow-x:auto;
+        overflow-y:hidden;
+
+        scrollbar-width:none;
+
+        -webkit-overflow-scrolling:touch;
+
+    }
+
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .menu::-webkit-scrollbar{
+
+        display:none;
+
+    }
+
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .menu a{
+
+        flex:0 0 auto;
+
+        padding:5px 0;
+
+        font-size:14px;
+
+        color:rgba(255,255,255,.94);
+
+        white-space:nowrap;
+
+    }
+
+
+    /*
+       El fondo móvil conserva más detalle.
+       Tu overlay anterior era rgba(0,0,0,.13).
+    */
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .overlay{
+
+        background:
+
+            radial-gradient(
+                ellipse at center 35%,
+                transparent 7%,
+                rgba(0,0,0,.04) 42%,
+                rgba(0,0,0,.22) 78%,
+                rgba(0,0,0,.40) 100%
+            ),
+
+            linear-gradient(
+                to bottom,
+                rgba(0,0,0,.05) 0%,
+                transparent 30%,
+                rgba(0,0,0,.10) 62%,
+                rgba(0,0,0,.53) 100%
+            );
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
