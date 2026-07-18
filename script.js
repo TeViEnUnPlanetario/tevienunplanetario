@@ -353,10 +353,10 @@ document.addEventListener("DOMContentLoaded", function(){
         if (iniciado) {
 
             auraX +=
-                (mouseX - auraX) * 0.22;
+                (mouseX - auraX) * 0.13;
 
             auraY +=
-                (mouseY - auraY) * 0.22;
+                (mouseY - auraY) * 0.13;
 
             cursorAura.style.left =
                 `${auraX}px`;
