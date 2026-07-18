@@ -470,3 +470,48 @@ if (cursorAura) {
 
 }
 
+
+// =========================
+// ESTRELLAS FUGACES CORTAS
+// =========================
+
+const contenedorParticulas =
+    document.querySelector(".particulas-fondo");
+
+function crearEstrellaFugaz(){
+
+    if (!contenedorParticulas) {
+        return;
+    }
+
+    const estrella =
+        document.createElement("div");
+
+    estrella.classList.add(
+        "estrella-fugaz"
+    );
+
+    estrella.style.left =
+        `${Math.random() * 55 - 5}%`;
+
+    estrella.style.top =
+        `${Math.random() * 38 - 8}%`;
+
+    estrella.style.animationDelay =
+        `${Math.random() * 0.25}s`;
+
+    contenedorParticulas.appendChild(
+        estrella
+    );
+
+    estrella.addEventListener(
+        "animationend",
+        function(){
+            estrella.remove();
+        },
+        {
+            once:true
+        }
+    );
+
+}
