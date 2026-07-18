@@ -353,9 +353,9 @@ footer{
    04. MENÚ
 ========================= */
 
-
-
 .menu{
+
+    position:relative;
 
     display:flex;
 
@@ -365,81 +365,47 @@ footer{
 
     gap:12px;
 
-    padding:10px;
+    width:max-content;
+    max-width:100%;
+
+    margin:auto;
+
+    padding:12px 22px;
+
+    border:1px solid rgba(255,255,255,.24);
 
     border-radius:999px;
 
     background:
-
-        rgba(18,18,22,.38);
-
-    backdrop-filter:
-
-        blur(24px)
-
-        saturate(180%);
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.13),
+            rgba(255,255,255,.045)
+        );
 
     -webkit-backdrop-filter:
+        blur(20px)
+        saturate(170%);
 
-        blur(24px)
-
-        saturate(180%);
-
-    border:1px solid
-
-        rgba(255,255,255,.16);
+    backdrop-filter:
+        blur(20px)
+        saturate(170%);
 
     box-shadow:
+        0 0 1px rgba(255,255,255,.75),
+        0 0 18px rgba(195,155,255,.18),
+        0 0 38px rgba(115,70,210,.10),
+        inset 0 1px 0 rgba(255,255,255,.22),
+        inset 0 -1px 0 rgba(0,0,0,.45);
 
-        0 0 1px
+    overflow:hidden;
 
-        rgba(255,255,255,.45),
-
-        0 0 24px
-
-        rgba(255,255,255,.05),
-
-        inset 0 1px 0
-
-        rgba(255,255,255,.18),
-
-        inset 0 -1px 0
-
-        rgba(0,0,0,.45);
+    isolation:isolate;
 
 }
 
-.menu a{
 
-    color:
-
-        rgba(255,255,255,.90);
-
-    font-weight:600;
-
-    letter-spacing:.2px;
-
-    text-shadow:
-
-        0 0 10px
-        rgba(255,255,255,.18);
-
-    transition:
-
-        .35s ease;
-
-}
-
-.menu a:hover{
-
-    color:#fff;
-
-    text-shadow:
-
-        0 0 14px
-        rgba(255,255,255,.45);
-
-}
+/* Brillo de cristal */
 
 .menu::before{
 
@@ -447,33 +413,83 @@ footer{
 
     position:absolute;
 
-    inset:-2px;
+    inset:0;
+
+    z-index:-1;
 
     border-radius:inherit;
 
-    background:
-
-        linear-gradient(
-
-            135deg,
-
-            rgba(255,255,255,.12),
-
-            transparent 35%,
-
-            transparent 65%,
-
-            rgba(255,255,255,.08)
-
-        );
-
-    opacity:.75;
-
     pointer-events:none;
+
+    background:
+        linear-gradient(
+            120deg,
+            rgba(255,255,255,.20) 0%,
+            rgba(255,255,255,.06) 25%,
+            transparent 48%,
+            rgba(185,135,255,.08) 75%,
+            rgba(255,255,255,.13) 100%
+        );
 
 }
 
 
+/* Enlaces del menú */
+
+.menu a{
+
+    position:relative;
+
+    z-index:2;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:5px 3px;
+
+    color:rgba(255,255,255,.94);
+
+    text-decoration:none;
+
+    font-size:17px;
+
+    font-weight:700;
+
+    line-height:1;
+
+    white-space:nowrap;
+
+    letter-spacing:.2px;
+
+    text-shadow:
+        0 0 8px rgba(255,255,255,.25),
+        0 0 18px rgba(190,145,255,.16);
+
+    transition:
+        color .3s ease,
+        text-shadow .3s ease,
+        transform .3s ease;
+
+}
+
+
+/* Hover en escritorio */
+
+.menu a:hover{
+
+    color:#fff;
+
+    transform:translateY(-1px);
+
+    text-shadow:
+        0 0 8px rgba(255,255,255,.85),
+        0 0 18px rgba(215,185,255,.65),
+        0 0 32px rgba(155,100,235,.45);
+
+}
 /* =========================
    05. PRESENTACIÓN / HISTORIA
 ========================= */
@@ -2230,40 +2246,39 @@ footer p{
 
     .menu{
 
-        display:flex;
+    justify-content:flex-start;
 
-        justify-content:center;
+    gap:14px;
 
-        align-items:center;
+    width:auto;
+    max-width:calc(100vw - 36px);
 
-        gap:8px;
+    padding:13px 20px;
 
-        padding:10px 14px;
+    overflow-x:auto;
+    overflow-y:hidden;
 
-        flex-wrap:nowrap;
+    scrollbar-width:none;
 
-        overflow-x:auto;
+}
 
-        scrollbar-width:none;
+.menu::-webkit-scrollbar{
 
-    }
+    display:none;
 
-    .menu::-webkit-scrollbar{
+}
 
-        display:none;
+.menu a{
 
-    }
+    flex:0 0 auto;
 
-    .menu a{
+    padding:5px 0;
 
-        font-size:14px;
+    font-size:14px;
 
-        padding:4px 2px;
+    white-space:nowrap;
 
-        white-space:nowrap;
-
-    }
-
+}
     .tarjetas-shows{
 
         grid-template-columns:1fr;
