@@ -5337,7 +5337,401 @@ footer > p:last-of-type{
 
 }
 
+/* =========================================================
+   RESTAURAR EFECTOS DE LUZ POR PLATAFORMA Y RED SOCIAL
+   Debe estar al final absoluto de styles.css
+========================================================= */
 
+
+/* =========================================================
+   ESTADO BASE — PLATAFORMAS Y REDES
+========================================================= */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-portada a,
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-redes a{
+
+    position:relative;
+
+    z-index:1;
+
+    isolation:isolate;
+
+    overflow:hidden;
+
+    border:1px solid rgba(255,255,255,.34);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.09),
+            rgba(255,255,255,.025)
+        );
+
+    -webkit-backdrop-filter:
+        blur(14px)
+        saturate(155%);
+
+    backdrop-filter:
+        blur(14px)
+        saturate(155%);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.15),
+        inset 0 -1px 0 rgba(0,0,0,.38),
+        0 8px 24px rgba(0,0,0,.30),
+        0 0 13px rgba(175,125,245,.08);
+
+    transition:
+        transform .35s ease,
+        border-color .35s ease,
+        background .35s ease,
+        box-shadow .35s ease,
+        filter .35s ease;
+
+}
+
+
+/* Reflejo interior */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-portada a::before,
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-redes a::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:-1;
+
+    border-radius:inherit;
+
+    pointer-events:none;
+
+    opacity:.75;
+
+    background:
+        linear-gradient(
+            120deg,
+            rgba(255,255,255,.16) 0%,
+            transparent 34%,
+            transparent 68%,
+            rgba(180,125,255,.07) 100%
+        );
+
+}
+
+
+/* Brillo exterior invisible en reposo */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-portada a::after,
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-redes a::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-20px;
+
+    z-index:-2;
+
+    border-radius:inherit;
+
+    pointer-events:none;
+
+    opacity:0;
+
+    filter:blur(20px);
+
+    transition:
+        opacity .35s ease,
+        background .35s ease;
+
+}
+
+
+/* =========================================================
+   PLATAFORMAS MUSICALES
+========================================================= */
+
+
+/* Spotify */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-portada a:nth-child(1):hover{
+
+    color:#fff;
+
+    transform:translateY(-5px);
+
+    border-color:rgba(75,255,140,.95);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(30,215,96,.96),
+            rgba(18,145,66,.94)
+        );
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.28),
+        0 0 15px rgba(29,215,96,.90),
+        0 0 35px rgba(29,185,84,.58),
+        0 0 65px rgba(29,185,84,.24),
+        0 15px 35px rgba(0,0,0,.40);
+
+}
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-portada a:nth-child(1):hover::after{
+
+    opacity:.9;
+
+    background:rgba(29,215,96,.42);
+
+}
+
+
+/* YouTube */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-portada a:nth-child(2):hover{
+
+    color:#fff;
+
+    transform:translateY(-5px);
+
+    border-color:rgba(255,80,80,.95);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,32,32,.97),
+            rgba(175,0,0,.95)
+        );
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.26),
+        0 0 15px rgba(255,30,30,.90),
+        0 0 35px rgba(255,0,0,.55),
+        0 0 65px rgba(255,0,0,.22),
+        0 15px 35px rgba(0,0,0,.40);
+
+}
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-portada a:nth-child(2):hover::after{
+
+    opacity:.9;
+
+    background:rgba(255,0,0,.40);
+
+}
+
+
+/* Apple Music */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-portada a:nth-child(3):hover{
+
+    color:#fff;
+
+    transform:translateY(-5px);
+
+    border-color:rgba(255,255,255,.88);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(115,115,125,.96),
+            rgba(26,26,32,.97)
+        );
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.32),
+        0 0 15px rgba(255,255,255,.70),
+        0 0 34px rgba(210,195,230,.38),
+        0 0 60px rgba(180,155,215,.17),
+        0 15px 35px rgba(0,0,0,.42);
+
+}
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-portada a:nth-child(3):hover::after{
+
+    opacity:.75;
+
+    background:rgba(225,215,240,.30);
+
+}
+
+
+/* =========================================================
+   REDES SOCIALES
+========================================================= */
+
+
+/* Instagram */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-redes a:nth-child(1):hover{
+
+    color:#fff;
+
+    transform:translateY(-5px);
+
+    border-color:rgba(255,125,210,.92);
+
+    background:
+        linear-gradient(
+            135deg,
+            #833ab4 0%,
+            #c13584 38%,
+            #e1306c 66%,
+            #f77737 100%
+        );
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.28),
+        0 0 16px rgba(225,48,108,.88),
+        0 0 38px rgba(193,53,132,.55),
+        0 0 68px rgba(131,58,180,.24),
+        0 15px 35px rgba(0,0,0,.40);
+
+}
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-redes a:nth-child(1):hover::after{
+
+    opacity:.9;
+
+    background:rgba(225,48,108,.40);
+
+}
+
+
+/* X / Twitter */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-redes a:nth-child(2):hover{
+
+    color:#fff;
+
+    transform:translateY(-5px);
+
+    border-color:rgba(255,255,255,.84);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(38,38,42,.98),
+            rgba(0,0,0,.98)
+        );
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.24),
+        0 0 14px rgba(255,255,255,.62),
+        0 0 32px rgba(220,225,235,.30),
+        0 0 58px rgba(255,255,255,.12),
+        0 15px 35px rgba(0,0,0,.44);
+
+}
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-redes a:nth-child(2):hover::after{
+
+    opacity:.68;
+
+    background:rgba(255,255,255,.25);
+
+}
+
+
+/* Facebook */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-redes a:nth-child(3):hover{
+
+    color:#fff;
+
+    transform:translateY(-5px);
+
+    border-color:rgba(95,165,255,.95);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(35,130,245,.98),
+            rgba(20,80,185,.96)
+        );
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.28),
+        0 0 16px rgba(24,119,242,.90),
+        0 0 38px rgba(24,119,242,.55),
+        0 0 68px rgba(24,85,190,.23),
+        0 15px 35px rgba(0,0,0,.40);
+
+}
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-redes a:nth-child(3):hover::after{
+
+    opacity:.9;
+
+    background:rgba(24,119,242,.42);
+
+}
+
+
+/* =========================================================
+   ICONOS MÁS LUMINOSOS DURANTE HOVER
+========================================================= */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-portada a:hover i,
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-redes a:hover i{
+
+    filter:
+        brightness(1.12)
+        drop-shadow(0 0 7px rgba(255,255,255,.82))
+        drop-shadow(0 0 14px rgba(255,255,255,.30));
+
+}
+
+
+/* =========================================================
+   EFECTO PARA PANTALLAS TÁCTILES
+========================================================= */
+
+@media (hover:none){
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .botones-portada a:active,
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .botones-redes a:active{
+
+        transform:
+            translateY(-2px)
+            scale(.985);
+
+        filter:brightness(1.13);
+
+    }
+
+}
 
 
 
