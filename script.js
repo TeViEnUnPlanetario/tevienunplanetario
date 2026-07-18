@@ -284,7 +284,7 @@ document.addEventListener("DOMContentLoaded", function(){
     if (!cursorAura) {
 
         console.warn(
-            "No se encontró el elemento .cursor-aura"
+            "No se encontró .cursor-aura en el HTML"
         );
 
         return;
@@ -292,14 +292,11 @@ document.addEventListener("DOMContentLoaded", function(){
     }
 
     if (
-        !window.matchMedia(
-            "(pointer:fine)"
-        ).matches
+        !window.matchMedia("(pointer: fine)").matches
     ) {
-
         return;
-
     }
+
 
     let mouseX = 0;
     let mouseY = 0;
@@ -310,8 +307,10 @@ document.addEventListener("DOMContentLoaded", function(){
     let iniciado = false;
 
 
-    document.addEventListener(
-        "mousemove",
+    // Seguimiento del puntero
+
+    window.addEventListener(
+        "pointermove",
         function(evento){
 
             mouseX = evento.clientX;
@@ -330,11 +329,14 @@ document.addEventListener("DOMContentLoaded", function(){
                 "visible"
             );
 
+        },
+        {
+            passive:true
         }
     );
 
 
-    document.addEventListener(
+    document.documentElement.addEventListener(
         "mouseleave",
         function(){
 
@@ -346,35 +348,23 @@ document.addEventListener("DOMContentLoaded", function(){
     );
 
 
-    document.addEventListener(
-        "mouseenter",
-        function(){
-
-            if (iniciado) {
-
-                cursorAura.classList.add(
-                    "visible"
-                );
-
-            }
-
-        }
-    );
-
-
     function animarAura(){
 
-        auraX +=
-            (mouseX - auraX) * 0.22;
+        if (iniciado) {
 
-        auraY +=
-            (mouseY - auraY) * 0.22;
+            auraX +=
+                (mouseX - auraX) * 0.22;
 
-        cursorAura.style.left =
-            auraX + "px";
+            auraY +=
+                (mouseY - auraY) * 0.22;
 
-        cursorAura.style.top =
-            auraY + "px";
+            cursorAura.style.left =
+                `${auraX}px`;
+
+            cursorAura.style.top =
+                `${auraY}px`;
+
+        }
 
         requestAnimationFrame(
             animarAura
@@ -385,14 +375,10 @@ document.addEventListener("DOMContentLoaded", function(){
 
     animarAura();
 
-});
 
-
-// =========================
-// COLORES DEL AURA
-// =========================
-
-if (cursorAura) {
+    // =========================
+    // COLORES DEL AURA
+    // =========================
 
     function limpiarAura(){
 
@@ -498,7 +484,7 @@ if (cursorAura) {
         }
     );
 
-}
+});
 
 
 // =========================
