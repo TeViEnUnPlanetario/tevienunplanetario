@@ -141,9 +141,6 @@ document.addEventListener("DOMContentLoaded", function(){
 }
 
 
-   
-
-    // No crear aura en móviles o pantallas táctiles
 
 // =========================
 // ESTRELLAS PINTADAS PNG
