@@ -1507,11 +1507,12 @@ footer{
 }
 
 
-/* =========================
-   16. FOOTER Y PLATAFORMAS
-========================= */
+/* =========================================================
+   16. FOOTER PRINCIPAL — INDEX
+   TRANSICIÓN CONTINUA NEBULOSA → NEGRO → SUELO LUNAR
+========================================================= */
 
-footer{
+body:not(.pagina-musica-body):not(.pagina-galeria-body) footer{
 
     position:relative;
 
@@ -1522,7 +1523,14 @@ footer{
         20px
         0;
 
-    overflow:hidden;
+    margin:0;
+
+    /*
+       Debe permitir que el degradado se extienda
+       hacia arriba sobre la sección Contacto.
+    */
+
+    overflow:visible;
 
     text-align:center;
 
@@ -1532,23 +1540,69 @@ footer{
 
 }
 
-/* No volver a degradar aquí.
-   La nebulosa del body ya hizo la transición. */
 
+/* =========================================================
+   DEGRADADO QUE SUBE SOBRE CONTACTO
+========================================================= */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
 footer::before{
 
-    content:none;
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    right:0;
+
+    top:-360px;
+
+    width:100%;
+    height:360px;
+
+    z-index:0;
+
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            to bottom,
+
+            rgba(0,0,0,0) 0%,
+
+            rgba(0,0,0,.04) 12%,
+
+            rgba(0,0,0,.12) 25%,
+
+            rgba(0,0,0,.26) 40%,
+
+            rgba(0,0,0,.46) 55%,
+
+            rgba(0,0,0,.68) 70%,
+
+            rgba(0,0,0,.86) 84%,
+
+            rgba(0,0,0,.97) 94%,
+
+            #000 100%
+        );
 
 }
 
+
+/* Evitar una segunda capa de degradado */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
 footer::after{
 
     content:none;
 
 }
 
-/* Contenido del footer */
 
+/* Contenido textual sobre el fondo */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
 footer > *:not(.escena-lunar-footer){
 
     position:relative;
@@ -1557,6 +1611,33 @@ footer > *:not(.escena-lunar-footer){
 
 }
 
+
+/* La escena lunar permanece dentro del footer */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.escena-lunar-footer{
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    width:100%;
+    height:650px;
+
+    z-index:2;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+}
+
+
+/* Textos del footer */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
 footer h2{
 
     margin-bottom:30px;
@@ -1567,6 +1648,7 @@ footer h2{
 
 }
 
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
 footer h3{
 
     margin-top:60px;
@@ -1579,6 +1661,7 @@ footer h3{
 
 }
 
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
 footer p{
 
     margin-top:40px;
