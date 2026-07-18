@@ -2537,85 +2537,125 @@ footer p{
 
 }
 
-/* Estrella fugaz */
+/* =========================
+   ESTRELLAS FUGACES CORTAS
+========================= */
 
 .estrella-fugaz{
 
     position:absolute;
 
-    top:-120px;
-
-    left:-20%;
+    top:-80px;
+    left:-12%;
 
     width:2px;
-
-    height:130px;
+    height:105px;
 
     border-radius:999px;
 
     opacity:0;
 
-    background:
+    pointer-events:none;
 
+    background:
         linear-gradient(
             to bottom,
-            transparent,
-            rgba(255,255,255,.98),
-            rgba(190,145,255,.75),
-            transparent
+            transparent 0%,
+            rgba(255,255,255,.10) 18%,
+            rgba(190,145,255,.45) 48%,
+            rgba(255,255,255,.98) 78%,
+            transparent 100%
         );
 
     box-shadow:
+        0 0 8px rgba(255,255,255,.75),
+        0 0 18px rgba(170,110,255,.55);
 
-        0 0 10px rgba(255,255,255,.9),
+    transform:
+        rotate(-42deg)
+        translate3d(0,0,0);
 
-        0 0 24px rgba(170,110,255,.7);
+    transform-origin:center center;
 
-    transform:rotate(-40deg);
+    filter:blur(.25px);
+
+    will-change:
+        transform,
+        opacity;
 
     animation:
-
-        cruzarEstrella 2.2s ease-out forwards;
+        cruzarEstrellaCorta
+        1.7s
+        cubic-bezier(.18,.72,.28,1)
+        forwards;
 
 }
 
-
-@keyframes cruzarEstrella{
+@keyframes cruzarEstrellaCorta{
 
     0%{
-
         opacity:0;
 
         transform:
             translate3d(0,0,0)
-            rotate(-40deg);
-
+            rotate(-42deg)
+            scaleY(.75);
     }
 
     12%{
-
-        opacity:1;
-
+        opacity:.95;
     }
 
-    65%{
+    34%{
+        opacity:1;
 
-        opacity:.8;
+        transform:
+            translate3d(24vw,18vh,0)
+            rotate(-42deg)
+            scaleY(1);
+    }
 
+    52%{
+        opacity:.58;
+    }
+
+    72%{
+        opacity:.16;
+
+        transform:
+            translate3d(48vw,36vh,0)
+            rotate(-42deg)
+            scaleY(.88);
     }
 
     100%{
-
         opacity:0;
 
         transform:
-            translate3d(130vw,120vh,0)
-            rotate(-40deg);
-
+            translate3d(58vw,43vh,0)
+            rotate(-42deg)
+            scaleY(.72);
     }
 
 }
 
+
+.estrella-fugaz:nth-child(3n){
+    animation-duration:1.35s;
+    height:82px;
+    opacity:.85;
+}
+
+.estrella-fugaz:nth-child(3n + 1){
+    animation-duration:1.9s;
+    height:118px;
+}
+
+.estrella-fugaz:nth-child(3n + 2){
+    animation-duration:1.55s;
+    height:95px;
+    filter:blur(.45px);
+}
 
 /* =========================
    MÓVIL
@@ -2633,8 +2673,14 @@ footer p{
     }
 
     .estrella-fugaz{
-        height:90px;
-    }
+    height:72px;
+
+    animation-duration:1.35s;
+
+    box-shadow:
+        0 0 6px rgba(255,255,255,.70),
+        0 0 13px rgba(170,110,255,.42);
+}
 
 }
 
