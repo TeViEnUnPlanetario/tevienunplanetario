@@ -2662,20 +2662,19 @@ footer p{
         display:none;
     }
 
-
     .particulas-fondo{
         opacity:.45;
     }
 
     .estrella-fugaz{
-    height:72px;
+        height:72px;
 
-    animation-duration:1.35s;
+        animation-duration:1.35s;
 
-    box-shadow:
-        0 0 6px rgba(255,255,255,.70),
-        0 0 13px rgba(170,110,255,.42);
-}
+        box-shadow:
+            0 0 6px rgba(255,255,255,.70),
+            0 0 13px rgba(170,110,255,.42);
+    }
 
 }
 
