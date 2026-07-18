@@ -2261,8 +2261,8 @@ footer p{
     left:0;
     top:0;
 
-    width:280px;
-    height:280px;
+    width:210px;
+    height:210px;
 
     z-index:9998;
 
@@ -2307,23 +2307,28 @@ footer p{
 }
 
 .cursor-aura.activa{
-    width:340px;
-    height:340px;
+    width:270px;
+    height:270px;
 }
 
 /* Colores dinámicos */
 
 .cursor-aura.spotify{
 
-    background:
-        radial-gradient(
-            circle,
-            rgba(255,255,255,.18),
-            rgba(29,215,96,.28) 26%,
-            rgba(29,185,84,.12) 52%,
-            transparent 74%
-        );
+   background:
+radial-gradient(
+    circle,
 
+    rgba(255,255,255,.42) 0%,
+
+    rgba(255,255,255,.16) 12%,
+
+    rgba(29,215,96,.24) 36%,
+
+    rgba(29,185,84,.10) 60%,
+
+    transparent 78%
+);
 }
 
 
