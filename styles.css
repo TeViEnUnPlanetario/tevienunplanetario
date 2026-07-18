@@ -2588,7 +2588,6 @@ footer p{
         1.7s
         cubic-bezier(.18,.72,.28,1)
         forwards;
-
 }
 
 @keyframes cruzarEstrellaCorta{
@@ -2636,14 +2635,11 @@ footer p{
             rotate(-42deg)
             scaleY(.72);
     }
-
 }
-
 
 .estrella-fugaz:nth-child(3n){
     animation-duration:1.35s;
     height:82px;
-    opacity:.85;
 }
 
 .estrella-fugaz:nth-child(3n + 1){
@@ -2656,7 +2652,6 @@ footer p{
     height:95px;
     filter:blur(.45px);
 }
-
 /* =========================
    MÓVIL
 ========================= */
