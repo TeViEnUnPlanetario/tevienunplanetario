@@ -6462,3 +6462,39 @@ footer{
     }
 
 }
+
+
+/* =========================================================
+   CORRECCIÓN MÓVIL — SUELO LUNAR SOBRE LAS PARTÍCULAS
+========================================================= */
+
+@media(max-width:900px){
+
+    footer{
+        position:relative;
+        z-index:auto !important;
+        isolation:auto !important;
+    }
+
+    .escena-lunar-footer{
+        position:relative;
+        z-index:auto !important;
+        isolation:auto !important;
+    }
+
+    .halo-anuncio-lunar{
+        position:absolute;
+        z-index:5 !important;
+    }
+
+    .suelo-lunar{
+        position:absolute;
+        z-index:6 !important;
+    }
+
+    .anuncio-lunar{
+        position:absolute;
+        z-index:7 !important;
+    }
+
+}
