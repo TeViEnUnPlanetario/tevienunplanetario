@@ -70,28 +70,24 @@
 
 
 
-        <nav class="menu">
+       <nav class="menu">
+    <a href="#inicio">Inicio</a>
+    <a href="#shows">Shows</a>
+    <a href="musica.html">Música</a>
 
-    <a href="#inicio">
-        Inicio
-    </a>
+    <button
+        class="boton-comunidad"
+        id="abrir-portal"
+        type="button"
+        aria-haspopup="dialog"
+        aria-controls="portal-universo"
+    >
+        <span aria-hidden="true">✦</span>
+        Comunidad
+    </button>
 
-    <a href="#shows">
-        Shows
-    </a>
-
-    <a href="#musica">
-        Música
-    </a>
-
-    <a href="#contacto">
-        Contacto
-    </a>
-
-    <a href="galeria.html">
-        Galería
-    </a>
-
+    <a href="galeria.html">Galería</a>
+    <a href="#contacto">Contacto</a>
 </nav>
 
 
@@ -734,17 +730,583 @@ allowfullscreen>
 
 </footer>
 
+<!-- =========================================
+     MISIÓN I — EL PORTAL
+     Acceso a la comunidad TVEUP
+========================================== -->
+
+<div
+    class="portal-universo"
+    id="portal-universo"
+    aria-hidden="true"
+>
+    <!-- Fondo oscuro -->
+    <div
+        class="portal-universo__fondo"
+        data-cerrar-portal
+    ></div>
+
+    <!-- Ventana principal -->
+    <section
+        class="portal-universo__contenedor"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="portal-titulo"
+        aria-describedby="portal-descripcion"
+    >
+        <!-- Decoración -->
+        <div
+            class="portal-universo__resplandor"
+            aria-hidden="true"
+        ></div>
+
+        <div
+            class="portal-universo__estrellas"
+            aria-hidden="true"
+        >
+            <span class="portal-estrella portal-estrella--1">✦</span>
+            <span class="portal-estrella portal-estrella--2">·</span>
+            <span class="portal-estrella portal-estrella--3">✧</span>
+            <span class="portal-estrella portal-estrella--4">·</span>
+        </div>
+
+        <!-- Cerrar -->
+        <button
+            class="portal-universo__cerrar"
+            id="cerrar-portal"
+            type="button"
+            aria-label="Cerrar portal"
+        >
+            <span aria-hidden="true">×</span>
+        </button>
+
+        <!-- Contenido -->
+        <div class="portal-universo__contenido">
+
+            <div
+                class="portal-universo__simbolo"
+                aria-hidden="true"
+            >
+                ✦
+            </div>
+
+            <!-- =========================
+                 VISTA: INICIAR SESIÓN
+            ========================== -->
+
+            <div
+                class="portal-vista portal-vista--activa"
+                id="vista-login"
+                data-vista="login"
+            >
+                <header class="portal-universo__encabezado">
+
+                    <p class="portal-universo__etiqueta">
+                        Te Vi En Un Planetario
+                    </p>
+
+                    <h2
+                        class="portal-universo__titulo"
+                        id="portal-titulo"
+                    >
+                        Entrar al Universo
+                    </h2>
+
+                    <p
+                        class="portal-universo__descripcion"
+                        id="portal-descripcion"
+                    >
+                        Las mejores historias comienzan
+                        mirando hacia el cielo.
+                    </p>
+
+                </header>
+
+                <form
+                    class="portal-formulario"
+                    id="formulario-login"
+                    novalidate
+                >
+                    <div class="portal-campo">
+
+                        <label
+                            class="portal-campo__etiqueta"
+                            for="login-correo"
+                        >
+                            Correo electrónico
+                        </label>
+
+                        <div class="portal-campo__contenedor">
+
+                            <span
+                                class="portal-campo__icono"
+                                aria-hidden="true"
+                            >
+                                ✧
+                            </span>
+
+                            <input
+                                class="portal-campo__input"
+                                id="login-correo"
+                                name="correo"
+                                type="email"
+                                autocomplete="email"
+                                placeholder="viajero@universo.com"
+                                required
+                            >
+
+                        </div>
+
+                        <span
+                            class="portal-campo__error"
+                            id="error-login-correo"
+                            aria-live="polite"
+                        ></span>
+
+                    </div>
+
+                    <div class="portal-campo">
+
+                        <label
+                            class="portal-campo__etiqueta"
+                            for="login-contrasena"
+                        >
+                            Contraseña
+                        </label>
+
+                        <div class="portal-campo__contenedor">
+
+                            <span
+                                class="portal-campo__icono"
+                                aria-hidden="true"
+                            >
+                                ◌
+                            </span>
+
+                            <input
+                                class="portal-campo__input"
+                                id="login-contrasena"
+                                name="contrasena"
+                                type="password"
+                                autocomplete="current-password"
+                                placeholder="Tu contraseña"
+                                minlength="6"
+                                required
+                            >
+
+                            <button
+                                class="portal-campo__mostrar"
+                                type="button"
+                                data-mostrar-contrasena="login-contrasena"
+                                aria-label="Mostrar contraseña"
+                            >
+                                ◉
+                            </button>
+
+                        </div>
+
+                        <span
+                            class="portal-campo__error"
+                            id="error-login-contrasena"
+                            aria-live="polite"
+                        ></span>
+
+                    </div>
+
+                    <button
+                        class="portal-boton portal-boton--principal"
+                        id="boton-login"
+                        type="submit"
+                    >
+                        <span
+                            class="portal-boton__icono"
+                            aria-hidden="true"
+                        >
+                            ✦
+                        </span>
+
+                        <span class="portal-boton__texto">
+                            Entrar al Universo
+                        </span>
+
+                        <span
+                            class="portal-boton__carga"
+                            aria-hidden="true"
+                        ></span>
+                    </button>
+
+                    <p
+                        class="portal-mensaje"
+                        id="mensaje-login"
+                        aria-live="polite"
+                    ></p>
+
+                </form>
+
+                <div class="portal-separador">
+                    <span></span>
+
+                    <p>Primera visita</p>
+
+                    <span></span>
+                </div>
+
+                <p class="portal-universo__alternativa">
+                    ¿Aún no formas parte del universo?
+                </p>
+
+                <button
+                    class="portal-boton portal-boton--secundario"
+                    id="mostrar-registro"
+                    type="button"
+                >
+                    <span aria-hidden="true">☄</span>
+                    Comenzar el viaje
+                </button>
+
+            </div>
+
+            <!-- =========================
+                 VISTA: CREAR CUENTA
+            ========================== -->
+
+            <div
+                class="portal-vista"
+                id="vista-registro"
+                data-vista="registro"
+                hidden
+            >
+                <header class="portal-universo__encabezado">
+
+                    <p class="portal-universo__etiqueta">
+                        Primera observación
+                    </p>
+
+                    <h2 class="portal-universo__titulo">
+                        Comenzar el viaje
+                    </h2>
+
+                    <p class="portal-universo__descripcion">
+                        Crea tu identidad y forma parte
+                        del universo de la banda.
+                    </p>
+
+                </header>
+
+                <form
+                    class="portal-formulario"
+                    id="formulario-registro"
+                    novalidate
+                >
+                    <div class="portal-campo">
+
+                        <label
+                            class="portal-campo__etiqueta"
+                            for="registro-nombre"
+                        >
+                            Nombre de viajero
+                        </label>
+
+                        <div class="portal-campo__contenedor">
+
+                            <span
+                                class="portal-campo__icono"
+                                aria-hidden="true"
+                            >
+                                ✦
+                            </span>
+
+                            <input
+                                class="portal-campo__input"
+                                id="registro-nombre"
+                                name="nombre"
+                                type="text"
+                                autocomplete="name"
+                                placeholder="¿Cómo quieres que te conozcan?"
+                                maxlength="40"
+                                required
+                            >
+
+                        </div>
+
+                        <span
+                            class="portal-campo__error"
+                            id="error-registro-nombre"
+                            aria-live="polite"
+                        ></span>
+
+                    </div>
+
+                    <div class="portal-campo">
+
+                        <label
+                            class="portal-campo__etiqueta"
+                            for="registro-correo"
+                        >
+                            Correo electrónico
+                        </label>
+
+                        <div class="portal-campo__contenedor">
+
+                            <span
+                                class="portal-campo__icono"
+                                aria-hidden="true"
+                            >
+                                ✧
+                            </span>
+
+                            <input
+                                class="portal-campo__input"
+                                id="registro-correo"
+                                name="correo"
+                                type="email"
+                                autocomplete="email"
+                                placeholder="viajero@universo.com"
+                                required
+                            >
+
+                        </div>
+
+                        <span
+                            class="portal-campo__error"
+                            id="error-registro-correo"
+                            aria-live="polite"
+                        ></span>
+
+                    </div>
+
+                    <div class="portal-campo">
+
+                        <label
+                            class="portal-campo__etiqueta"
+                            for="registro-contrasena"
+                        >
+                            Contraseña
+                        </label>
+
+                        <div class="portal-campo__contenedor">
+
+                            <span
+                                class="portal-campo__icono"
+                                aria-hidden="true"
+                            >
+                                ◌
+                            </span>
+
+                            <input
+                                class="portal-campo__input"
+                                id="registro-contrasena"
+                                name="contrasena"
+                                type="password"
+                                autocomplete="new-password"
+                                placeholder="Mínimo 6 caracteres"
+                                minlength="6"
+                                required
+                            >
+
+                            <button
+                                class="portal-campo__mostrar"
+                                type="button"
+                                data-mostrar-contrasena="registro-contrasena"
+                                aria-label="Mostrar contraseña"
+                            >
+                                ◉
+                            </button>
+
+                        </div>
+
+                        <span
+                            class="portal-campo__error"
+                            id="error-registro-contrasena"
+                            aria-live="polite"
+                        ></span>
+
+                    </div>
+
+                    <div class="portal-campo">
+
+                        <label
+                            class="portal-campo__etiqueta"
+                            for="registro-confirmar"
+                        >
+                            Confirmar contraseña
+                        </label>
+
+                        <div class="portal-campo__contenedor">
+
+                            <span
+                                class="portal-campo__icono"
+                                aria-hidden="true"
+                            >
+                                ◌
+                            </span>
+
+                            <input
+                                class="portal-campo__input"
+                                id="registro-confirmar"
+                                name="confirmarContrasena"
+                                type="password"
+                                autocomplete="new-password"
+                                placeholder="Repite tu contraseña"
+                                minlength="6"
+                                required
+                            >
+
+                            <button
+                                class="portal-campo__mostrar"
+                                type="button"
+                                data-mostrar-contrasena="registro-confirmar"
+                                aria-label="Mostrar contraseña"
+                            >
+                                ◉
+                            </button>
+
+                        </div>
+
+                        <span
+                            class="portal-campo__error"
+                            id="error-registro-confirmar"
+                            aria-live="polite"
+                        ></span>
+
+                    </div>
+
+                    <label class="portal-terminos">
+
+                        <input
+                            id="registro-terminos"
+                            name="terminos"
+                            type="checkbox"
+                            required
+                        >
+
+                        <span class="portal-terminos__marca"></span>
+
+                        <span class="portal-terminos__texto">
+                            Acepto formar parte de esta comunidad
+                            y mantener una convivencia respetuosa.
+                        </span>
+
+                    </label>
+
+                    <button
+                        class="portal-boton portal-boton--principal"
+                        id="boton-registro"
+                        type="submit"
+                    >
+                        <span
+                            class="portal-boton__icono"
+                            aria-hidden="true"
+                        >
+                            ☄
+                        </span>
+
+                        <span class="portal-boton__texto">
+                            Comenzar el viaje
+                        </span>
+
+                        <span
+                            class="portal-boton__carga"
+                            aria-hidden="true"
+                        ></span>
+                    </button>
+
+                    <p
+                        class="portal-mensaje"
+                        id="mensaje-registro"
+                        aria-live="polite"
+                    ></p>
+
+                </form>
+
+                <button
+                    class="portal-regresar"
+                    id="mostrar-login"
+                    type="button"
+                >
+                    <span aria-hidden="true">←</span>
+                    Ya tengo una cuenta
+                </button>
+
+            </div>
+
+            <!-- =========================
+                 VISTA: BIENVENIDA
+            ========================== -->
+
+            <div
+                class="portal-vista portal-bienvenida"
+                id="vista-bienvenida"
+                data-vista="bienvenida"
+                hidden
+            >
+                <div
+                    class="portal-bienvenida__constelacion"
+                    aria-hidden="true"
+                >
+                    <span>✦</span>
+                    <span>·</span>
+                    <span>✧</span>
+                    <span>·</span>
+                    <span>✦</span>
+                </div>
+
+                <p class="portal-universo__etiqueta">
+                    Tu primera observación
+                </p>
+
+                <h2 class="portal-universo__titulo">
+                    El universo te da la bienvenida
+                </h2>
+
+                <p class="portal-bienvenida__nombre">
+                    <span id="nombre-bienvenida">
+                        Nuevo viajero
+                    </span>
+                </p>
+
+                <div class="portal-bienvenida__insignia">
+                    <span aria-hidden="true">🌠</span>
+                    Viajero
+                </div>
+
+                <p class="portal-universo__descripcion">
+                    Desde hoy formas parte de este lugar.
+                    Explora, comparte y acompáñanos
+                    durante el viaje.
+                </p>
+
+                <button
+                    class="portal-boton portal-boton--principal"
+                    id="finalizar-bienvenida"
+                    type="button"
+                >
+                    Explorar el Universo
+                </button>
+            </div>
+
+        </div>
+    </section>
+</div>
 
 <div
     class="cursor-aura"
-    aria-hidden="true"
-></div>
+    aria-hidden="true">
+</div>
 
+<script src="js/script.js"></script>
+<script src="js/effects/animaciones.js"></script>
+<script src="js/effects/efectos.js"></script>
 
-<script src="script.js"></script>
-<script src="animaciones.js"></script>
-<script src="efectos.js"></script>
+<script
+    type="module"
+    src="js/firebase/auth.js"
+></script>
+
+<script
+    type="module"
+    src="js/ui/login-modal.js"
+></script>
 
 </body>
-
 </html>

@@ -787,7 +787,6 @@ document.addEventListener(
 );
 
 
-crearParticulasTitulo();
 
 }); // Cierra: document.addEventListener("DOMContentLoaded", ...)
 
