@@ -159,13 +159,14 @@ body::before{
 /* Mantener el contenido por encima del fondo */
 
 header,
-section,
-footer{
-
+section{
     position:relative;
-
     z-index:3;
+}
 
+footer{
+    position:relative;
+    z-index:auto;
 }
 
 
@@ -283,7 +284,7 @@ footer{
 
     height:330px;
 
-    z-index:4;
+    z-index:2;
 
     pointer-events:none;
 
@@ -356,6 +357,7 @@ footer{
 .menu{
 
     position:relative;
+    z-index:5;
 
     display:flex;
 
@@ -1670,7 +1672,8 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body) footer{
 
     background:#000;
 
-    isolation:isolate;
+    isolation:auto;
+z-index:auto;
 
 }
 
@@ -1959,28 +1962,7 @@ footer p{
         0 0 50px rgba(24,119,242,.5);
 }
 
-/* =========================
-   ESCENA LUNAR DEL FOOTER
-========================= */
 
-.escena-lunar-footer{
-
-    position:absolute;
-
-    left:0;
-    right:0;
-    bottom:0;
-
-    width:100%;
-    height:650px;
-
-    z-index:2;
-
-    overflow:hidden;
-
-    pointer-events:none;
-
-}
 
 
 /* Superficie lunar */
@@ -2136,6 +2118,10 @@ footer p{
 
     body::before{
 
+        
+
+    
+
     opacity:.95;
 
     filter:blur(48px);
@@ -2209,6 +2195,7 @@ footer p{
     );
 
 }
+    
 
     .overlay{
 
@@ -2490,6 +2477,7 @@ footer p{
     }
 
 }
+
 /* =========================
    ANIMACIONES AL HACER SCROLL
 ========================= */
@@ -3750,7 +3738,6 @@ footer{
         margin:0;
 
         overflow:hidden;
-
         overscroll-behavior:none;
 
     }
@@ -3759,7 +3746,6 @@ footer{
     footer > *:not(.escena-lunar-footer){
 
         position:relative;
-
         z-index:5;
 
     }
@@ -3768,7 +3754,6 @@ footer{
     footer p{
 
         margin-top:40px;
-
         margin-bottom:0;
 
     }
@@ -3782,7 +3767,6 @@ footer{
         bottom:auto;
 
         width:calc(100% + 36px);
-
         height:360px;
 
         margin:
@@ -3794,104 +3778,100 @@ footer{
 
         overflow:hidden;
 
-        z-index:2;
+        z-index:auto;
+        isolation:auto;
 
         pointer-events:none;
 
     }
 
-    .suelo-lunar{
+}
 
-        position:absolute;
+.suelo-lunar{
 
-        left:50%;
-        bottom:0;
+    position:absolute;
 
-        width:auto;
+    left:50%;
+    bottom:0;
 
-        height:230px;
+    width:auto;
+    height:230px;
+    min-width:760px;
 
-        min-width:760px;
+    display:block;
 
-        display:block;
+    transform:translateX(-50%);
 
-        transform:translateX(-50%);
+    object-fit:cover;
+    object-position:center bottom;
 
-        object-fit:cover;
+    z-index:6;
 
-        object-position:center bottom;
+    filter:
+        brightness(.72)
+        contrast(1.12)
+        saturate(.70);
 
-        z-index:1;
+}
 
-        filter:
-            brightness(.72)
-            contrast(1.12)
-            saturate(.70);
+.halo-anuncio-lunar{
 
-    }
+    position:absolute;
 
-    .anuncio-lunar{
+    left:50%;
+    bottom:115px;
 
-        position:absolute;
+    width:115vw;
+    height:210px;
 
-        left:50%;
-        bottom:95px;
+    z-index:5;
 
-        width:min(500px,78vw);
+    transform:translateX(-50%);
 
-        height:auto;
+    opacity:.70;
 
-        display:block;
+    border-radius:50%;
 
-        z-index:4;
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(125,75,200,.14) 0%,
+            rgba(90,45,160,.06) 42%,
+            transparent 74%
+        );
 
-        transform:
-            translateX(-50%)
-            rotate(-1deg);
+    filter:blur(38px);
 
-        transform-origin:center bottom;
+}
 
-        filter:
-            brightness(.82)
-            contrast(1.08)
-            saturate(.88)
-            drop-shadow(
-                0 20px 18px
-                rgba(0,0,0,.80)
-            );
+.anuncio-lunar{
 
-    }
+    position:absolute;
 
-    .halo-anuncio-lunar{
+    left:50%;
+    bottom:95px;
 
-        position:absolute;
+    width:min(500px,78vw);
+    height:auto;
 
-        left:50%;
-        bottom:115px;
+    display:block;
 
-        width:115vw;
+    z-index:7;
 
-        height:210px;
+    transform:
+        translateX(-50%)
+        rotate(-1deg);
 
-        z-index:3;
+    transform-origin:center bottom;
 
-        transform:translateX(-50%);
-
-        opacity:.70;
-
-        border-radius:50%;
-
-        background:
-            radial-gradient(
-                ellipse,
-                rgba(125,75,200,.14) 0%,
-                rgba(90,45,160,.06) 42%,
-                transparent 74%
-            );
-
-        filter:blur(38px);
-
-    }
+    filter:
+        brightness(.82)
+        contrast(1.08)
+        saturate(.88)
+        drop-shadow(
+            0 20px 18px
+            rgba(0,0,0,.80)
+        );
 
 }
 
@@ -3917,6 +3897,8 @@ body.pagina-galeria-body{
    Se elimina la máscara que en index depende de la altura del banner. */
 body.pagina-musica-body::before,
 body.pagina-galeria-body::before{
+
+
     content:"";
     position:absolute;
     inset:0;
@@ -4287,6 +4269,7 @@ body.pagina-galeria-body footer{
 @media(prefers-reduced-motion:reduce){
     body.pagina-musica-body::before,
     body.pagina-galeria-body::before{
+
         animation:none;
     }
 }
@@ -4527,7 +4510,7 @@ body.pagina-galeria-body footer{
 
         background:#000;
 
-        isolation:isolate;
+        isolation:auto;
 
     }
 
@@ -6498,3 +6481,26 @@ footer{
     }
 
 }
+
+@media(max-width:900px){
+
+    footer,
+    .escena-lunar-footer{
+        z-index:auto !important;
+        isolation:auto !important;
+    }
+
+    .halo-anuncio-lunar{
+        z-index:5 !important;
+    }
+
+    .suelo-lunar{
+        z-index:6 !important;
+    }
+
+    .anuncio-lunar{
+        z-index:7 !important;
+    }
+
+}
+

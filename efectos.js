@@ -467,6 +467,18 @@ function crearEstrellasPintadas(){
 
 }
 
+const escena =
+    document.querySelector(
+        ".escena-lunar-footer"
+    );
+
+const limite =
+    escena.getBoundingClientRect().top;
+
+    if (posicionY > limite) {
+    return;
+}
+
 
 /*
    Esperar a que imágenes, iframes y demás
@@ -1107,6 +1119,228 @@ document.addEventListener(
 
 
         programarDestello();
+
+    }
+);
+
+
+// =========================================================
+// OCULTAR CIELO ESTRELLADO DETRÁS DEL SUELO LUNAR
+// =========================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        const sueloLunar =
+            document.querySelector(
+                ".suelo-lunar"
+            );
+
+
+        if (!sueloLunar) {
+
+            console.warn(
+                "No se encontró .suelo-lunar"
+            );
+
+            return;
+
+        }
+
+
+        /*
+           La imagen lunar tiene una gran zona
+           transparente en su parte superior.
+
+           El terreno visible comienza aproximadamente
+           al 62% de la altura total del PNG.
+        */
+
+        const proporcionHorizonte =
+            0.62;
+
+
+        let actualizacionPendiente =
+            false;
+
+
+        function actualizarEstrellasSobreLuna(){
+
+            actualizacionPendiente =
+                false;
+
+
+            const rectSuelo =
+                sueloLunar
+                    .getBoundingClientRect();
+
+
+            /*
+               Calculamos la posición real donde
+               comienza el terreno visible.
+            */
+
+            const inicioTerreno =
+                rectSuelo.top +
+                rectSuelo.height *
+                proporcionHorizonte;
+
+
+            /*
+               Solo seleccionamos:
+
+               1. Partículas normales del cielo.
+               2. Estrellas pintadas PNG.
+
+               No afecta los destellos del título.
+            */
+
+            const estrellas =
+                document.querySelectorAll(
+                    [
+                        ".particulas-fondo .particula",
+                        ".estrellas-pintadas-fondo .estrella-pintada"
+                    ].join(",")
+                );
+
+
+            estrellas.forEach(
+                function(estrella){
+
+                    const rectEstrella =
+                        estrella
+                            .getBoundingClientRect();
+
+
+                    const centroX =
+                        rectEstrella.left +
+                        rectEstrella.width / 2;
+
+
+                    const centroY =
+                        rectEstrella.top +
+                        rectEstrella.height / 2;
+
+
+                    /*
+                       Confirmamos que la estrella está
+                       horizontalmente dentro del suelo.
+                    */
+
+                    const dentroHorizontalmente =
+                        centroX >= rectSuelo.left &&
+                        centroX <= rectSuelo.right;
+
+
+                    /*
+                       La estrella está sobre el terreno
+                       cuando se encuentra por debajo
+                       de la línea del horizonte.
+                    */
+
+                    const sobreTerreno =
+                        dentroHorizontalmente &&
+                        centroY >= inicioTerreno &&
+                        centroY <= rectSuelo.bottom;
+
+
+                    estrella.style.visibility =
+                        sobreTerreno
+                            ? "hidden"
+                            : "visible";
+
+                }
+            );
+
+        }
+
+
+        /*
+           Evita ejecutar el cálculo demasiadas veces
+           durante el desplazamiento.
+        */
+
+        function solicitarActualizacion(){
+
+            if (actualizacionPendiente) {
+                return;
+            }
+
+
+            actualizacionPendiente =
+                true;
+
+
+            requestAnimationFrame(
+                actualizarEstrellasSobreLuna
+            );
+
+        }
+
+
+        /*
+           Actualizar mientras se desplaza la página.
+        */
+
+        window.addEventListener(
+            "scroll",
+            solicitarActualizacion,
+            {
+                passive:true
+            }
+        );
+
+
+        /*
+           Actualizar cuando cambia la orientación
+           o el tamaño de la pantalla.
+        */
+
+        window.addEventListener(
+            "resize",
+            solicitarActualizacion
+        );
+
+
+        window.addEventListener(
+            "orientationchange",
+            solicitarActualizacion
+        );
+
+
+        /*
+           Esperar a que las imágenes y estrellas PNG
+           hayan terminado de cargar y generarse.
+        */
+
+        window.addEventListener(
+            "load",
+            function(){
+
+                solicitarActualizacion();
+
+
+                setTimeout(
+                    solicitarActualizacion,
+                    350
+                );
+
+
+                setTimeout(
+                    solicitarActualizacion,
+                    900
+                );
+
+            }
+        );
+
+
+        /*
+           Primera comprobación.
+        */
+
+        solicitarActualizacion();
 
     }
 );
