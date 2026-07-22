@@ -6505,3 +6505,78 @@ footer{
 
 }
 
+/* =========================================================
+   CORRECCIÓN FINAL — ESTRELLAS PNG Y SUELO LUNAR
+========================================================= */
+
+/* Recuperar las estrellas pintadas */
+.estrellas-pintadas-fondo{
+
+    position:absolute;
+
+    left:0;
+    width:100%;
+
+    z-index:50 !important;
+
+    visibility:visible !important;
+
+    pointer-events:none;
+
+}
+
+.estrella-pintada{
+
+    display:block !important;
+
+    visibility:visible !important;
+
+}
+
+
+/* Escritorio y ventanas amplias */
+@media(min-width:901px){
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .escena-lunar-footer{
+
+        position:absolute !important;
+
+        left:50% !important;
+        right:auto !important;
+        bottom:0 !important;
+
+        width:100vw !important;
+        max-width:none !important;
+
+        transform:translateX(-50%) !important;
+
+        overflow:hidden;
+
+    }
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .suelo-lunar{
+
+        position:absolute !important;
+
+        left:50% !important;
+        bottom:-5px !important;
+
+        width:calc(100vw + 20px) !important;
+        min-width:calc(100vw + 20px) !important;
+        max-width:none !important;
+
+        height:auto !important;
+        min-height:0 !important;
+
+        transform:translateX(-50%) !important;
+
+        object-fit:cover;
+        object-position:center bottom;
+
+        z-index:6 !important;
+
+    }
+
+}

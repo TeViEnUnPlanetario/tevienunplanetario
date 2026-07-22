@@ -467,17 +467,7 @@ function crearEstrellasPintadas(){
 
 }
 
-const escena =
-    document.querySelector(
-        ".escena-lunar-footer"
-    );
 
-const limite =
-    escena.getBoundingClientRect().top;
-
-    if (posicionY > limite) {
-    return;
-}
 
 
 /*
@@ -1200,7 +1190,7 @@ document.addEventListener(
                 document.querySelectorAll(
                     [
                         ".particulas-fondo .particula",
-                        ".estrellas-pintadas-fondo .estrella-pintada"
+                        
                     ].join(",")
                 );
 
