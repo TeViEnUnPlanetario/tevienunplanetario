@@ -8286,3 +8286,39 @@ span:nth-child(5) {
     }
 
 }
+
+@media (max-width: 768px) {
+
+    .menu {
+        display: flex;
+        justify-content: flex-start;
+        gap: 8px;
+
+        width: calc(100% - 32px);
+        margin-inline: auto;
+        padding: 10px 12px;
+
+        overflow-x: auto;
+        white-space: nowrap;
+
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .menu::-webkit-scrollbar {
+        display: none;
+    }
+
+    .menu a,
+    .menu .boton-comunidad {
+        flex: 0 0 auto;
+        white-space: nowrap;
+    }
+
+    .boton-comunidad {
+        min-width: max-content;
+        padding: 9px 13px;
+        font-size: 0.86rem;
+    }
+
+}
