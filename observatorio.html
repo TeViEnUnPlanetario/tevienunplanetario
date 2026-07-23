@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Observatorio, la comunidad oficial de Te Vi En Un Planetario."
+    >
+
+    <title>
+        Observatorio | Te Vi En Un Planetario
+    </title>
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="img/favicon.png"
+    >
+
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/observatorio.css"
+    >
+
+</head>
+
+
+<body class="observatorio-pagina">
+
+    <!-- =========================================
+         FONDO DEL UNIVERSO
+    ========================================== -->
+
+    <div
+        class="observatorio-fondo"
+        aria-hidden="true"
+    >
+        <div class="observatorio-nebulosa"></div>
+        <div class="observatorio-estrellas"></div>
+    </div>
+
+
+    <!-- =========================================
+         CABECERA
+    ========================================== -->
+
+    <header class="observatorio-header">
+
+        <a
+            class="observatorio-marca"
+            href="index.html"
+            aria-label="Volver al inicio"
+        >
+
+            <span class="observatorio-marca__simbolo">
+                ✦
+            </span>
+
+            <span class="observatorio-marca__texto">
+                Te Vi En Un Planetario
+            </span>
+
+        </a>
+
+
+        <nav
+            class="observatorio-header__acciones"
+            aria-label="Navegación del Observatorio"
+        >
+
+            <a
+                class="observatorio-enlace"
+                href="index.html"
+            >
+                Volver al universo
+            </a>
+
+            <a
+                class="observatorio-perfil"
+                href="perfil.html"
+            >
+                Mi constelación
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =========================================
+         CONTENIDO PRINCIPAL
+    ========================================== -->
+
+    <main class="observatorio-principal">
+
+        <!-- PRESENTACIÓN -->
+
+        <section class="observatorio-intro">
+
+            <span class="observatorio-etiqueta">
+                ✦ Comunidad
+            </span>
+
+            <h1>
+                Observatorio
+            </h1>
+
+            <p>
+                Un espacio para compartir descubrimientos,
+                pensamientos y momentos que orbitan alrededor
+                de la música.
+            </p>
+
+        </section>
+
+
+        <!-- =====================================
+             CREAR OBSERVACIÓN
+        ====================================== -->
+
+        <!-- =====================================
+     CREAR OBSERVACIÓN
+====================================== -->
+
+<form
+    class="crear-observacion"
+    id="formCrearObservacion"
+    aria-labelledby="tituloCrearObservacion"
+>
+
+    <div class="crear-observacion__encabezado">
+
+        <div
+            class="crear-observacion__avatar"
+            id="crearObservacionAvatar"
+            data-usuario-avatar
+            aria-hidden="true"
+        >
+            E
+        </div>
+
+        <div>
+
+            <p
+                class="crear-observacion__autor"
+                id="crearObservacionAutor"
+                data-usuario-nombre
+            >
+                Eduardo
+            </p>
+
+            <span
+                class="crear-observacion__rango"
+                id="crearObservacionRango"
+                data-usuario-rango
+            >
+                🌠 Viajero
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="crear-observacion__campo">
+
+        <label
+            id="tituloCrearObservacion"
+            for="textoObservacion"
+        >
+            ¿Qué descubriste hoy?
+        </label>
+
+        <textarea
+            id="textoObservacion"
+            maxlength="800"
+            rows="4"
+            placeholder="Comparte una observación con otros viajeros..."
+        ></textarea>
+
+        <div class="crear-observacion__contador">
+
+            <span id="contadorObservacion">
+                0
+            </span>
+
+            <span>
+                / 800
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="crear-observacion__preview"
+        id="vistaPreviaObservacion"
+        hidden
+    ></div>
+
+
+    <div class="crear-observacion__acciones">
+
+        <button
+            class="crear-observacion__imagen"
+            id="botonAgregarImagen"
+            type="button"
+        >
+            <span aria-hidden="true">
+                ◫
+            </span>
+
+            Añadir imagen
+        </button>
+
+
+        <input
+            type="file"
+            id="inputImagenObservacion"
+            accept="image/*"
+            hidden
+        >
+
+
+        <button
+            class="crear-observacion__publicar"
+            id="botonPublicarObservacion"
+            type="submit"
+            disabled
+        >
+            <span aria-hidden="true">
+                ✦
+            </span>
+
+            Publicar observación
+        </button>
+
+    </div>
+
+</form>
+
+
+        <!-- =====================================
+             CABECERA DEL FEED
+        ====================================== -->
+
+        <section class="observatorio-feed">
+
+            <div class="observatorio-feed__encabezado">
+
+                <div>
+
+                    <span class="observatorio-feed__etiqueta">
+                        Señales recientes
+                    </span>
+
+                    <h2>
+                        Observaciones
+                    </h2>
+
+                </div>
+
+
+                <button
+                    class="observatorio-feed__actualizar"
+                    id="botonActualizarFeed"
+                    type="button"
+                    aria-label="Actualizar observaciones"
+                >
+                    ↻
+                </button>
+
+            </div>
+
+
+            <!-- =================================
+                 CONTENEDOR DEL FEED
+            ================================== -->
+
+            <div
+                class="observatorio-feed__lista"
+                id="feedObservatorio"
+                aria-live="polite"
+            >
+
+                <!-- Tarjetas temporales de prueba -->
+
+                <article class="observacion-card observacion-card--oficial">
+
+                    <div class="observacion-card__brillo"></div>
+
+                    <header class="observacion-card__header">
+
+                        <div class="observacion-card__avatar">
+                            TV
+                        </div>
+
+                        <div class="observacion-card__identidad">
+
+                            <div class="observacion-card__nombre-linea">
+
+                                <strong>
+                                    Te Vi En Un Planetario
+                                </strong>
+
+                                <span
+                                    class="observacion-card__verificado"
+                                    title="Cuenta oficial"
+                                >
+                                    ✦
+                                </span>
+
+                            </div>
+
+                            <span class="observacion-card__rango">
+                                🌌 Sistema Planetario
+                            </span>
+
+                        </div>
+
+                        <time
+                            class="observacion-card__fecha"
+                            datetime="2026-07-23T10:00:00"
+                        >
+                            Hace 2 horas
+                        </time>
+
+                    </header>
+
+
+                    <div class="observacion-card__contenido">
+
+                        <span class="observacion-card__tipo">
+                            Observación oficial
+                        </span>
+
+                        <p>
+                            Hoy comenzamos a construir un nuevo espacio
+                            para compartir nuestra música, nuestros
+                            procesos y todo aquello que forma parte de
+                            este universo.
+                        </p>
+
+                    </div>
+
+
+                    <footer class="observacion-card__acciones">
+
+                        <button
+                            class="observacion-accion"
+                            type="button"
+                        >
+                            <span aria-hidden="true">
+                                ☆
+                            </span>
+
+                            <span>
+                                128 Estrellas
+                            </span>
+                        </button>
+
+                        <button
+                            class="observacion-accion"
+                            type="button"
+                        >
+                            <span aria-hidden="true">
+                                ◌
+                            </span>
+
+                            <span>
+                                24 Ecos
+                            </span>
+                        </button>
+
+                        <button
+                            class="observacion-accion observacion-accion--compartir"
+                            type="button"
+                        >
+                            <span aria-hidden="true">
+                                ↗
+                            </span>
+
+                            <span>
+                                Compartir
+                            </span>
+                        </button>
+
+                    </footer>
+
+                </article>
+
+
+                <article class="observacion-card">
+
+                    <div class="observacion-card__brillo"></div>
+
+                    <header class="observacion-card__header">
+
+                        <div class="observacion-card__avatar">
+                            E
+                        </div>
+
+                        <div class="observacion-card__identidad">
+
+                            <strong>
+                                Eduardo
+                            </strong>
+
+                            <span class="observacion-card__rango">
+                                🌠 Viajero
+                            </span>
+
+                        </div>
+
+                        <time
+                            class="observacion-card__fecha"
+                            datetime="2026-07-23T11:40:00"
+                        >
+                            Hace 20 minutos
+                        </time>
+
+                    </header>
+
+
+                    <div class="observacion-card__contenido">
+
+                        <p>
+                            Escuché El fin de los tiempos durante el
+                            trayecto al trabajo. Cada vez encuentro
+                            nuevos detalles escondidos entre las
+                            canciones.
+                        </p>
+
+                    </div>
+
+
+                    <footer class="observacion-card__acciones">
+
+                        <button
+                            class="observacion-accion"
+                            type="button"
+                        >
+                            <span aria-hidden="true">
+                                ☆
+                            </span>
+
+                            <span>
+                                4 Estrellas
+                            </span>
+                        </button>
+
+                        <button
+                            class="observacion-accion"
+                            type="button"
+                        >
+                            <span aria-hidden="true">
+                                ◌
+                            </span>
+
+                            <span>
+                                2 Ecos
+                            </span>
+                        </button>
+
+                        <button
+                            class="observacion-accion observacion-accion--compartir"
+                            type="button"
+                        >
+                            <span aria-hidden="true">
+                                ↗
+                            </span>
+
+                            <span>
+                                Compartir
+                            </span>
+                        </button>
+
+                    </footer>
+
+                </article>
+
+            </div>
+
+
+            <!-- ESTADO VACÍO FUTURO -->
+
+            <div
+                class="observatorio-vacio"
+                id="observatorioVacio"
+                hidden
+            >
+
+                <span aria-hidden="true">
+                    ✦
+                </span>
+
+                <h3>
+                    El cielo está en silencio
+                </h3>
+
+                <p>
+                    Sé el primer viajero en compartir una observación.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         MENSAJES DEL SISTEMA
+    ========================================== -->
+
+    <div
+        class="observatorio-mensaje"
+        id="observatorioMensaje"
+        role="status"
+        aria-live="polite"
+    ></div>
+
+
+    <!-- =========================================
+         SCRIPTS
+    ========================================== -->
+
+    <script src="js/script.js"></script>
+
+    <script
+        type="module"
+        src="js/firebase/auth.js"
+    ></script>
+
+    <script
+        type="module"
+        src="js/ui/observatorio/crear-observacion.js"
+    ></script>
+
+    <script
+        type="module"
+        src="js/ui/observatorio/feed.js"
+    ></script>
+
+</body>
+
+</html>
