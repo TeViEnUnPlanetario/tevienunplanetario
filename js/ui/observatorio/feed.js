@@ -25,6 +25,11 @@ import {
 } from "./card-observacion.js";
 
 
+import {
+    escucharObservaciones
+} from "../../firebase/firestore-observaciones.js";
+
+
 /* ==================================================
    REFERENCIAS DEL DOM
 ================================================== */
@@ -58,101 +63,7 @@ const mensajeObservatorio =
    Más adelante serán sustituidos por Firestore.
 ================================================== */
 
-const observacionesIniciales = [
-
-    {
-
-        id:
-            "observacion-oficial-001",
-
-        autorId:
-            "te-vi-en-un-planetario",
-
-        autorNombre:
-            "Te Vi En Un Planetario",
-
-        autorRango:
-            "🌌 Sistema Planetario",
-
-        autorAvatar:
-            "TV",
-
-        texto:
-            "Hoy comenzamos a construir un nuevo espacio para compartir nuestra música, nuestros procesos y todo aquello que forma parte de este universo.",
-
-        fechaTexto:
-            "Hace 2 horas",
-
-        fechaISO:
-            "2026-07-23T00:00:00",
-
-        estrellas:
-            128,
-
-        ecos:
-            24,
-
-        oficial:
-            true,
-
-        verificado:
-            true,
-
-        imagen:
-            "",
-
-        editada:
-            false
-
-    },
-
-    {
-
-        id:
-            "observacion-eduardo-001",
-
-        autorId:
-            "usuario-eduardo",
-
-        autorNombre:
-            "Eduardo",
-
-        autorRango:
-            "🌠 Viajero",
-
-        autorAvatar:
-            "E",
-
-        texto:
-            "Escuché El fin de los tiempos durante el trayecto al trabajo. Cada vez encuentro nuevos detalles escondidos entre las canciones.",
-
-        fechaTexto:
-            "Hace 20 minutos",
-
-        fechaISO:
-            "2026-07-23T01:40:00",
-
-        estrellas:
-            4,
-
-        ecos:
-            2,
-
-        oficial:
-            false,
-
-        verificado:
-            false,
-
-        imagen:
-            "",
-
-        editada:
-            false
-
-    }
-
-];
+/* Ya se sustituyeron 
 
 
 /* ==================================================
@@ -160,7 +71,7 @@ const observacionesIniciales = [
 ================================================== */
 
 let observaciones =
-    [...observacionesIniciales];
+    [];
 
 
 let temporizadorMensaje =
@@ -184,12 +95,40 @@ function iniciarFeed() {
     }
 
 
-    renderizarFeed();
-
     registrarEventos();
 
-}
 
+    escucharObservaciones(
+
+        function (
+            nuevasObservaciones
+        ) {
+
+            establecerObservaciones(
+                nuevasObservaciones
+            );
+
+        },
+
+        function (
+            error
+        ) {
+
+            console.error(
+                "No fue posible cargar las Observaciones:",
+                error
+            );
+
+
+            mostrarMensaje(
+                "No fue posible cargar las Observaciones."
+            );
+
+        }
+
+    );
+
+}
 
 iniciarFeed();
 
@@ -414,28 +353,6 @@ function registrarEventos() {
         manejarAccionesFeed
     );
 
-
-    document.addEventListener(
-        "observatorio:nueva-observacion",
-        function (evento) {
-
-            const observacion =
-                evento.detail;
-
-
-            if (!observacion) {
-
-                return;
-
-            }
-
-
-            agregarObservacionAlFeed(
-                observacion
-            );
-
-        }
-    );
 
 
     document.addEventListener(

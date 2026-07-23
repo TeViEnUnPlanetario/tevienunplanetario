@@ -9920,4 +9920,84 @@ nav:has(.boton-comunidad) {
 
 }
 
+/* =========================================
+   ACCESO AL OBSERVATORIO DESDE EL PERFIL
+========================================= */
+
+.perfil-accion--observatorio {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        10px;
+
+    width:
+        100%;
+
+    box-sizing:
+        border-box;
+
+    text-decoration:
+        none;
+
+    color:
+        #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(118, 73, 190, 0.9),
+            rgba(55, 33, 95, 0.95)
+        );
+
+    border-color:
+        rgba(190, 153, 255, 0.55);
+
+    box-shadow:
+        0 12px 35px
+        rgba(95, 54, 165, 0.22);
+
+}
+
+
+.perfil-accion--observatorio:hover {
+
+    transform:
+        translateY(-2px);
+
+    border-color:
+        rgba(215, 190, 255, 0.9);
+
+    box-shadow:
+        0 16px 42px
+        rgba(112, 65, 190, 0.34);
+
+}
+
+
+.perfil-accion--observatorio span {
+
+    font-size:
+        0.85rem;
+
+    transition:
+        transform 0.25s ease;
+
+}
+
+
+.perfil-accion--observatorio:hover span {
+
+    transform:
+        rotate(90deg)
+        scale(1.15);
+
+}
 

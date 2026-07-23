@@ -24,6 +24,13 @@
    CONFIGURACIÓN
 ================================================== */
 
+
+import {
+    guardarObservacion
+} from "../../firebase/firestore-observaciones.js";
+
+
+
 const LIMITE_CARACTERES =
     800;
 
@@ -196,7 +203,7 @@ function registrarEventos() {
    PUBLICAR OBSERVACIÓN
 ================================================== */
 
-function publicarObservacion(
+async function publicarObservacion(
     evento
 ) {
 
@@ -228,6 +235,10 @@ function publicarObservacion(
         LIMITE_CARACTERES
     ) {
 
+        mostrarMensajeLocal(
+            `La Observación no puede superar los ${LIMITE_CARACTERES} caracteres.`
+        );
+
         return;
 
     }
@@ -240,97 +251,75 @@ function publicarObservacion(
     actualizarFormulario();
 
 
-    const autor =
-        obtenerDatosAutor();
+    try {
+
+        const autor =
+            obtenerDatosAutor();
 
 
-    const observacion = {
+        await guardarObservacion({
 
-        id:
-            generarIdTemporal(),
+            texto:
+                texto,
 
-        autorId:
-            autor.id,
+            imagen:
+                imagenSeleccionada,
 
-        autorNombre:
-            autor.nombre,
+            autorNombre:
+                autor.nombre,
 
-        autorRango:
-            autor.rango,
+            autorRango:
+                autor.rango,
 
-        autorAvatar:
-            autor.avatar,
+            autorAvatar:
+                autor.avatar,
 
-        texto:
-            texto,
+            oficial:
+                autor.oficial,
 
-        fechaTexto:
-            "Hace unos segundos",
+            verificado:
+                autor.verificado
 
-        fechaISO:
-            new Date().toISOString(),
-
-        estrellas:
-            0,
-
-        ecos:
-            0,
-
-        oficial:
-            autor.oficial,
-
-        verificado:
-            autor.verificado,
-
-        imagen:
-            imagenSeleccionada,
-
-        editada:
-            false
-
-    };
+        });
 
 
-    /*
-     * Este evento es escuchado desde feed.js.
-     *
-     * Así evitamos que crear-observacion.js tenga
-     * que importar directamente al feed.
-     */
+        /*
+         * No agregamos la tarjeta manualmente.
+         *
+         * escucharObservaciones() detectará la nueva
+         * publicación desde Firestore y actualizará
+         * automáticamente el feed.
+         */
 
-    document.dispatchEvent(
-
-        new CustomEvent(
-            "observatorio:nueva-observacion",
-            {
-
-                detail:
-                    observacion
-
-            }
-        )
-
-    );
+        limpiarFormulario();
 
 
-    limpiarFormulario();
+        mostrarConfirmacion();
+
+    }
+    catch (error) {
+
+        console.error(
+            "No fue posible publicar la Observación:",
+            error
+        );
 
 
-    mostrarConfirmacion();
+        mostrarMensajeLocal(
+            error?.message ||
+            "No fue posible publicar la Observación."
+        );
+
+    }
+    finally {
+
+        publicando =
+            false;
 
 
-    window.setTimeout(
-        function () {
+        actualizarFormulario();
 
-            publicando =
-                false;
-
-
-            actualizarFormulario();
-
-        },
-        350
-    );
+    }
 
 }
 
