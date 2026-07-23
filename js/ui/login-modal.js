@@ -3,6 +3,11 @@ import {
 } from "../firebase/firebase-config.js";
 
 import {
+    crearPerfilUsuario,
+    asegurarPerfilUsuario
+
+} from "../firebase/firestore.js";
+import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     updateProfile
@@ -122,6 +127,17 @@ document.addEventListener(
                 },
                 300
             );
+
+        }
+
+        const sesionActiva =
+            botonAbrir.dataset
+             .sesionActiva ===
+        "true";
+
+        if (sesionActiva) {
+
+            return;
 
         }
 
@@ -794,8 +810,13 @@ document.addEventListener(
         );
 
         botonFinalizarBienvenida?.addEventListener(
-            "click",
-            cerrarPortal
+           "click",
+           function () {
+
+                window.location.href =
+               "perfil.html";
+
+            }
         );
 
 
@@ -855,6 +876,27 @@ document.addEventListener(
 
                     const usuario =
                         credencial.user;
+
+                    const perfil =
+                        await asegurarPerfilUsuario(
+                            usuario
+                        );
+
+                        mostrarMensaje(
+                            mensajeLogin,
+                         `Bienvenido nuevamente, ${perfil.nombre}.`,
+                         "exito"
+                        );
+
+                        window.setTimeout(
+                           function () {
+
+                               window.location.href =
+                                "perfil.html";
+
+                            },
+                            800
+                        );
 
                     mostrarMensaje(
                         mensajeLogin,
@@ -972,6 +1014,8 @@ document.addEventListener(
                     const usuario =
                         credencial.user;
 
+                       
+
                     await updateProfile(
                         usuario,
                         {
@@ -979,7 +1023,11 @@ document.addEventListener(
                                 nombre
                         }
                     );
-
+                    await crearPerfilUsuario(
+                      usuario,
+                      nombre
+                    );
+                    
                     const nombreBienvenida =
                         document.getElementById(
                             "nombre-bienvenida"
