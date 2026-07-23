@@ -9617,3 +9617,312 @@ nav:has(.boton-comunidad) {
     }
 
 }
+
+
+/* ==================================================
+   COMUNIDAD — DESTELLO ESTELAR
+================================================== */
+
+.boton-comunidad {
+    isolation: isolate;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.35s ease;
+}
+
+
+/* Aura blanca detrás del botón */
+
+.boton-comunidad::after {
+    content: "";
+
+    position: absolute;
+    inset: -16px;
+
+    z-index: -1;
+
+    border-radius: inherit;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(255, 255, 255, 0.34),
+            rgba(255, 255, 255, 0.13) 34%,
+            transparent 72%
+        );
+
+    filter: blur(15px);
+
+    opacity: 0;
+
+    transform: scale(0.76);
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.45s cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+
+    pointer-events: none;
+}
+
+
+/* Franja luminosa que cruza el cristal */
+
+.boton-comunidad::before {
+    content: "";
+
+    position: absolute;
+    top: -80%;
+    left: -75%;
+
+    z-index: 0;
+
+    width: 42%;
+    height: 260%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.08),
+            rgba(255, 255, 255, 0.95),
+            rgba(255, 255, 255, 0.18),
+            transparent
+        );
+
+    filter: blur(2px);
+
+    opacity: 0;
+
+    transform:
+        rotate(18deg)
+        translateX(0);
+
+    pointer-events: none;
+}
+
+
+/* Mantener texto e icono por encima del destello */
+
+.boton-comunidad > * {
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/* Hover principal */
+
+.boton-comunidad:hover {
+    color: #ffffff;
+
+    border-color:
+        rgba(255, 255, 255, 0.75);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.22),
+            rgba(255, 255, 255, 0.07)
+        );
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.34),
+        inset 0 0 18px rgba(255, 255, 255, 0.08),
+        0 0 16px rgba(255, 255, 255, 0.32),
+        0 0 38px rgba(255, 255, 255, 0.18),
+        0 0 72px rgba(255, 255, 255, 0.1);
+
+    text-shadow:
+        0 0 8px rgba(255, 255, 255, 0.95),
+        0 0 20px rgba(255, 255, 255, 0.55);
+
+    transform:
+        translateY(-2px)
+        scale(1.035);
+
+    animation:
+        comunidadRespira
+        2.2s ease-in-out
+        infinite;
+}
+
+
+.boton-comunidad:hover::after {
+    opacity: 1;
+
+    transform:
+        scale(1.08);
+}
+
+
+.boton-comunidad:hover::before {
+    opacity: 1;
+
+    animation:
+        comunidadDestello
+        0.85s cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        )
+        forwards;
+}
+
+
+/* Estrella del botón */
+
+.boton-comunidad > span:first-child {
+    transition:
+        transform 0.35s ease,
+        text-shadow 0.35s ease,
+        filter 0.35s ease;
+}
+
+
+.boton-comunidad:hover > span:first-child {
+    transform:
+        rotate(90deg)
+        scale(1.22);
+
+    filter:
+        brightness(1.35);
+
+    text-shadow:
+        0 0 7px rgba(255, 255, 255, 1),
+        0 0 18px rgba(255, 255, 255, 0.95),
+        0 0 34px rgba(255, 255, 255, 0.65);
+}
+
+
+/* ==================================================
+   DESTELLO AUTOMÁTICO OCASIONAL
+================================================== */
+
+.boton-comunidad:not(
+    [data-sesion-activa="true"]
+) {
+    animation:
+        comunidadLlamada
+        12s ease-in-out
+        infinite;
+}
+
+
+/* ==================================================
+   ANIMACIONES
+================================================== */
+
+@keyframes comunidadDestello {
+
+    0% {
+        left: -75%;
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 0.95;
+    }
+
+    100% {
+        left: 145%;
+        opacity: 0;
+    }
+
+}
+
+
+@keyframes comunidadRespira {
+
+    0%,
+    100% {
+        filter:
+            brightness(1);
+    }
+
+    50% {
+        filter:
+            brightness(1.16);
+    }
+
+}
+
+
+@keyframes comunidadLlamada {
+
+    0%,
+    82%,
+    100% {
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.12),
+            0 8px 30px rgba(0, 0, 0, 0.18);
+
+        text-shadow:
+            none;
+    }
+
+    87% {
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.28),
+            0 0 15px rgba(255, 255, 255, 0.28),
+            0 0 38px rgba(255, 255, 255, 0.14);
+
+        text-shadow:
+            0 0 9px rgba(255, 255, 255, 0.8);
+    }
+
+    91% {
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.12),
+            0 8px 30px rgba(0, 0, 0, 0.18);
+
+        text-shadow:
+            none;
+    }
+
+}
+
+
+/* ==================================================
+   MÓVIL Y PANTALLAS TÁCTILES
+================================================== */
+
+@media (hover: none) {
+
+    .boton-comunidad:hover {
+        animation: none;
+
+        transform: none;
+    }
+
+    .boton-comunidad::before {
+        display: none;
+    }
+
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    .boton-comunidad,
+    .boton-comunidad::before,
+    .boton-comunidad::after,
+    .boton-comunidad > span:first-child {
+        animation: none !important;
+
+        transition-duration:
+            0.01ms !important;
+    }
+
+}
