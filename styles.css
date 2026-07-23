@@ -9495,91 +9495,78 @@ nav:has(.boton-comunidad) {
 @media (max-width: 760px) {
 
     .perfil-header {
-        width:
-            calc(100% - 28px);
-
-        padding:
-            17px 0;
+        width: calc(100% - 28px);
+        padding: 17px 0;
+        gap: 10px;
     }
 
     .perfil-header__marca span:last-child {
-        display:
-            none;
+        display: none;
     }
 
-    .perfil-enlace {
-        display:
-            none;
+    .perfil-header__acciones {
+        gap: 7px;
+    }
+
+    .perfil-enlace,
+    .perfil-boton-salir {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 8px 10px;
+
+        font-size: 0.64rem;
+
+        white-space: nowrap;
     }
 
     .perfil-principal {
-        width:
-            calc(100% - 24px);
-
-        margin-top:
-            18px;
+        width: calc(100% - 24px);
+        margin-top: 18px;
     }
 
     .perfil-observatorio {
-        padding:
-            27px 19px;
-
-        border-radius:
-            24px;
+        padding: 27px 19px;
+        border-radius: 24px;
     }
 
     .perfil-portada {
-        flex-direction:
-            column;
-
-        align-items:
-            flex-start;
-
-        gap:
-            20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
     }
 
     .perfil-avatar {
-        width:
-            92px;
-        height:
-            92px;
+        width: 92px;
+        height: 92px;
 
-        font-size:
-            2rem;
+        font-size: 2rem;
     }
 
     .perfil-grid {
-        grid-template-columns:
-            1fr;
+        grid-template-columns: 1fr;
     }
 
     .perfil-estadisticas {
-        grid-template-columns:
-            repeat(3, 1fr);
-
-        gap:
-            7px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 7px;
     }
 
     .perfil-estadistica {
-        padding:
-            18px 7px;
+        padding: 18px 7px;
     }
 
     .perfil-estadistica strong {
-        font-size:
-            1.25rem;
+        font-size: 1.25rem;
     }
 
     .perfil-estadistica span {
-        font-size:
-            0.62rem;
+        font-size: 0.62rem;
     }
 
     .perfil-acciones {
-        grid-template-columns:
-            1fr;
+        grid-template-columns: 1fr;
     }
 
 }
@@ -9588,21 +9575,26 @@ nav:has(.boton-comunidad) {
 @media (max-width: 390px) {
 
     .perfil-identidad h1 {
-        font-size:
-            1.85rem;
+        font-size: 1.85rem;
     }
 
     .perfil-panel {
-        padding:
-            20px 17px;
+        padding: 20px 17px;
     }
 
-    .perfil-boton-salir {
-        padding:
-            9px 12px;
+    .perfil-header {
+        width: calc(100% - 20px);
+    }
 
-        font-size:
-            0.68rem;
+    .perfil-header__acciones {
+        gap: 5px;
+    }
+
+    .perfil-enlace,
+    .perfil-boton-salir {
+        padding: 7px 8px;
+
+        font-size: 0.58rem;
     }
 
 }
@@ -9655,6 +9647,7 @@ nav:has(.boton-comunidad) {
             rgba(255, 255, 255, 0.34),
             rgba(255, 255, 255, 0.13) 34%,
             transparent 72%
+            
         );
 
     filter: blur(15px);
@@ -9815,7 +9808,7 @@ nav:has(.boton-comunidad) {
 ) {
     animation:
         comunidadLlamada
-        12s ease-in-out
+        20s ease-in-out
         infinite;
 }
 
