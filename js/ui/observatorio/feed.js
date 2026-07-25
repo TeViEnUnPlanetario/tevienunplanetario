@@ -36,6 +36,12 @@ import {
 } from "../../firebase/firestore-estrellas.js";
 
 
+import {
+    abrirEcos
+} from "./comentarios.js";
+
+
+
 /* ==================================================
    REFERENCIAS DEL DOM
 ================================================== */
@@ -527,13 +533,17 @@ async function manejarAccionesFeed(
         break;
 
 
-        case "eco":
+case "eco":
 
-            mostrarMensaje(
-                "◌ El sistema de Ecos llegará próximamente."
-            );
+    mostrarMensaje(
+        "Ecos en mantenimiento."
+    );
 
-            break;
+    abrirEcos(
+        observacionId
+    );
+
+    break;
 
 
         case "compartir":

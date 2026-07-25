@@ -196,6 +196,18 @@ if(banner && bannerImg){
 const fechaNuevoEP =
 new Date("2026-11-19T00:00:00").getTime();
 
+const existeContador =
+    document.getElementById("dias") &&
+    document.getElementById("horas") &&
+    document.getElementById("minutos") &&
+    document.getElementById("segundos");
+
+if (existeContador) {
+
+    // aquí inicia setInterval(...)
+
+}
+
 
 const contadorEP =
 setInterval(function(){
@@ -236,20 +248,77 @@ setInterval(function(){
     );
 
 
-    document.getElementById("dias").textContent =
-    String(dias).padStart(2,"0");
+const elementoDias =
+    document.getElementById(
+        "dias"
+    );
+
+const elementoHoras =
+    document.getElementById(
+        "horas"
+    );
+
+const elementoMinutos =
+    document.getElementById(
+        "minutos"
+    );
+
+const elementoSegundos =
+    document.getElementById(
+        "segundos"
+    );
 
 
-    document.getElementById("horas").textContent =
-    String(horas).padStart(2,"0");
+if (
+    !elementoDias ||
+    !elementoHoras ||
+    !elementoMinutos ||
+    !elementoSegundos
+) {
+
+    clearInterval(
+        contadorEP
+    );
+
+    return;
+
+}
 
 
-    document.getElementById("minutos").textContent =
-    String(minutos).padStart(2,"0");
+elementoDias.textContent =
+    String(
+        dias
+    ).padStart(
+        2,
+        "0"
+    );
 
 
-    document.getElementById("segundos").textContent =
-    String(segundos).padStart(2,"0");
+elementoHoras.textContent =
+    String(
+        horas
+    ).padStart(
+        2,
+        "0"
+    );
+
+
+elementoMinutos.textContent =
+    String(
+        minutos
+    ).padStart(
+        2,
+        "0"
+    );
+
+
+elementoSegundos.textContent =
+    String(
+        segundos
+    ).padStart(
+        2,
+        "0"
+    );
 
 
     if(distancia < 0){

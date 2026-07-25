@@ -19,6 +19,10 @@
 // UI Component
 // ==================================================
 
+import {
+    obtenerUltimosEcos
+} from "../../firebase/firestore-ecos.js";
+
 
 /**
  * Construye una tarjeta completa de Observación.
@@ -86,17 +90,243 @@ export function crearCardObservacion(
         );
 
 
+    const vistaEcos =
+        document.createElement(
+            "div"
+        );
+
+
+    vistaEcos.className =
+        "observacion-card__ecos-vista";
+
+
+    vistaEcos.dataset.ecosVista =
+        datos.id;
+
+
+    vistaEcos.hidden =
+        true;
+
+
     card.append(
         brillo,
         header,
         contenido,
-        acciones
+        acciones,
+        vistaEcos
     );
+
+
+    if (datos.id) {
+
+        cargarVistaPreviaEcos(
+            datos.id,
+            vistaEcos
+        );
+
+    }
 
 
     return card;
 
 }
+
+
+async function cargarVistaPreviaEcos(
+    observacionId,
+    contenedor
+) {
+
+    try {
+
+        const ecos =
+            await obtenerUltimosEcos(
+                observacionId,
+                3
+            );
+
+
+        contenedor.replaceChildren();
+
+
+        if (
+            ecos.length ===
+            0
+        ) {
+
+            contenedor.hidden =
+                true;
+
+            return;
+
+        }
+
+
+        contenedor.hidden =
+            false;
+
+
+        ecos
+            .slice()
+            .reverse()
+            .forEach(
+                function (
+                    eco
+                ) {
+
+                    const elemento =
+                        document.createElement(
+                            "button"
+                        );
+
+
+                    elemento.type =
+                        "button";
+
+
+                    elemento.className =
+                        "observacion-card__eco-previo";
+
+
+                    elemento.dataset.accion =
+                        "eco";
+
+
+                    elemento.innerHTML = `
+
+                        <span
+                            class="observacion-card__eco-avatar">
+
+                            ${escaparHTML(
+                                eco.autorAvatar ||
+                                obtenerIniciales(
+                                    eco.autorNombre
+                                )
+                            )}
+
+                        </span>
+
+                        <span
+                            class="observacion-card__eco-contenido">
+
+                            <strong>
+                                ${escaparHTML(
+                                    eco.autorNombre
+                                )}
+                            </strong>
+
+                            <span>
+                                ${escaparHTML(
+                                    recortarTexto(
+                                        eco.texto,
+                                        90
+                                    )
+                                )}
+                            </span>
+
+                        </span>
+
+                    `;
+
+
+                    contenedor.appendChild(
+                        elemento
+                    );
+
+                }
+            );
+
+
+        const verTodos =
+            document.createElement(
+                "button"
+            );
+
+
+        verTodos.type =
+            "button";
+
+
+        verTodos.className =
+            "observacion-card__ecos-ver-todos";
+
+
+        verTodos.dataset.accion =
+            "eco";
+
+
+        verTodos.textContent =
+            "Ver todos los Ecos";
+
+
+        contenedor.appendChild(
+            verTodos
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "No fue posible cargar la vista previa de Ecos:",
+            error
+        );
+
+        contenedor.hidden =
+            true;
+
+    }
+
+}
+
+function escaparHTML(
+    valor
+) {
+
+    const elemento =
+        document.createElement(
+            "span"
+        );
+
+
+    elemento.textContent =
+        String(
+            valor ?? ""
+        );
+
+
+    return elemento.innerHTML;
+
+}
+
+
+function recortarTexto(
+    texto,
+    limite
+) {
+
+    const valor =
+        String(
+            texto ?? ""
+        ).trim();
+
+
+    if (
+        valor.length <=
+        limite
+    ) {
+
+        return valor;
+
+    }
+
+
+    return `${valor.slice(
+        0,
+        limite
+    ).trim()}…`;
+
+}
+
 
 
 /* ==================================================
