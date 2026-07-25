@@ -45,12 +45,16 @@
     ========================================== -->
 
     <div
-        class="observatorio-fondo"
-        aria-hidden="true"
-    >
-        <div class="observatorio-nebulosa"></div>
-        <div class="observatorio-estrellas"></div>
-    </div>
+    class="observatorio-fondo"
+    aria-hidden="true"
+>
+    <div class="observatorio-nebulosa"></div>
+
+    <div
+        class="observatorio-estrellas"
+        id="observatorioEstrellas"
+    ></div>
+</div>
 
 
     <!-- =========================================
@@ -554,6 +558,11 @@
     <script
         type="module"
         src="js/ui/observatorio/feed.js"
+    ></script>
+
+    <script
+        type="module"
+        src="js/ui/observatorio/estrellas-observatorio.js"
     ></script>
 
 </body>
