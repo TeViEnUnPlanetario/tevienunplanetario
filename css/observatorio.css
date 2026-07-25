@@ -1850,29 +1850,29 @@ body.observatorio-pagina {
             0;
     }
 
+    .crear-observacion__preview-contenido {
+    height:
+        clamp(200px, 72vw, 320px);
+
+    max-height:
+        320px;
+    }
+
 }
 
 
 @media (max-width: 390px) {
 
-    .observatorio-enlace {
-        display:
-            none;
+    body.observatorio-pagina
+    .observacion-card
+    .observacion-card__media {
+        height:
+            280px;
     }
 
-    .observatorio-intro h1 {
-        font-size:
-            3rem;
-    }
-
-    .observacion-card__acciones {
-        gap:
-            4px;
-    }
-
-    .observacion-accion {
-        padding:
-            0 7px;
+    .crear-observacion__preview-contenido {
+        height:
+            250px;
     }
 
 }
@@ -2326,17 +2326,39 @@ body.observatorio-pagina
 }
 
 
-/* Contenedor genérico para imágenes publicadas */
+/* ==================================================
+   CONTENEDOR DE IMAGEN PUBLICADA
+================================================== */
 
-.observacion-card__imagen-contenedor {
+body.observatorio-pagina
+.observacion-card
+.observacion-card__media {
+    position:
+        relative;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
     width:
         100%;
 
     max-width:
         100%;
 
-    margin-top:
-        18px;
+    height:
+        clamp(240px, 52vw, 500px);
+
+    margin:
+        20px 0 0;
+
+    padding:
+        0;
 
     overflow:
         hidden;
@@ -2348,28 +2370,43 @@ body.observatorio-pagina
         18px;
 
     background:
-        rgba(4, 4, 9, 0.38);
+        linear-gradient(
+            145deg,
+            rgba(6, 5, 12, 0.82),
+            rgba(15, 12, 27, 0.72)
+        );
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+    isolation:
+        isolate;
 }
 
 
-/* Imagen dentro de una publicación */
-
-.observacion-card__imagen-contenedor img,
+body.observatorio-pagina
+.observacion-card
 .observacion-card__imagen {
+    position:
+        relative;
+
+    z-index:
+        2;
+
     display:
         block;
 
     width:
         100%;
 
+    height:
+        100%;
+
     max-width:
         100%;
 
-    height:
-        auto;
-
     max-height:
-        520px;
+        100%;
 
     margin:
         0;
@@ -2381,11 +2418,41 @@ body.observatorio-pagina
         center;
 
     background:
-        rgba(4, 4, 9, 0.55);
+        transparent;
+
+    user-select:
+        none;
+
+    -webkit-user-drag:
+        none;
 }
 
 
 /* Vista previa al seleccionar una imagen */
+
+.crear-observacion__vista-previa {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+    background: rgba(4, 4, 9, 0.4);
+}
+
+.crear-observacion__vista-previa img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 420px;
+    object-fit: contain;
+    object-position: center;
+}
+
+
+/* ==================================================
+   VISTA PREVIA DE IMAGEN
+================================================== */
 
 .crear-observacion__vista-previa {
     width:
@@ -2394,8 +2461,8 @@ body.observatorio-pagina
     max-width:
         100%;
 
-    margin-top:
-        16px;
+    margin:
+        16px 0 0;
 
     overflow:
         hidden;
@@ -2407,10 +2474,48 @@ body.observatorio-pagina
         18px;
 
     background:
-        rgba(4, 4, 9, 0.4);
+        rgba(5, 4, 11, 0.55);
 }
 
-.crear-observacion__vista-previa img {
+.crear-observacion__vista-previa[hidden] {
+    display:
+        none !important;
+}
+
+.crear-observacion__preview-contenido {
+    position:
+        relative;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    width:
+        100%;
+
+    height:
+        clamp(220px, 38vw, 380px);
+
+    max-height:
+        380px;
+
+    overflow:
+        hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(7, 6, 14, 0.92),
+            rgba(22, 17, 38, 0.82)
+        );
+}
+
+.crear-observacion__preview-contenido > img {
     display:
         block;
 
@@ -2418,16 +2523,72 @@ body.observatorio-pagina
         100%;
 
     height:
-        auto;
+        100%;
+
+    max-width:
+        100%;
 
     max-height:
-        420px;
+        100%;
 
     object-fit:
         contain;
 
     object-position:
         center;
+
+    background:
+        transparent;
+}
+
+.crear-observacion__eliminar-imagen {
+    position:
+        absolute;
+
+    top:
+        12px;
+
+    right:
+        12px;
+
+    z-index:
+        5;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    width:
+        34px;
+
+    height:
+        34px;
+
+    padding:
+        0;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.24);
+
+    border-radius:
+        50%;
+
+    color:
+        #ffffff;
+
+    background:
+        rgba(4, 4, 9, 0.75);
+
+    backdrop-filter:
+        blur(12px);
+
+    cursor:
+        pointer;
 }
 
 
@@ -2450,34 +2611,35 @@ body.observatorio-pagina
 
 @media (max-width: 760px) {
 
-    body.observatorio-pagina {
-        background-attachment:
-            scroll;
-    }
-
-    .observatorio-fondo {
+    body.observatorio-pagina
+    .observacion-card
+    .observacion-card__media {
         height:
-            100dvh;
-    }
+            clamp(220px, 105vw, 420px);
 
-    .observatorio-principal {
-        width:
-            calc(100% - 22px);
+        margin-top:
+            17px;
 
-        max-width:
-            none;
-    }
-
-    .observacion-card__imagen-contenedor,
-    .crear-observacion__vista-previa {
         border-radius:
             15px;
     }
 
-    .observacion-card__imagen-contenedor img,
+    body.observatorio-pagina
+    .observacion-card
     .observacion-card__imagen {
+        width:
+            100%;
+
+        height:
+            100%;
+
         max-height:
-            430px;
+            100%;
+    }
+
+    .crear-observacion__vista-previa {
+        border-radius:
+            15px;
     }
 
     .crear-observacion__vista-previa img {
@@ -2486,7 +2648,6 @@ body.observatorio-pagina
     }
 
 }
-
 
 
 /* ==================================================
@@ -2601,44 +2762,39 @@ body.observatorio-pagina::after {
     z-index:
         1;
 
-      opacity: 1;
-
-    .observatorio-nebulosa {
-    opacity: .82;
-
+    opacity:
+        0.82;
 
     pointer-events:
         none;
 
     background:
-    radial-gradient(
-        circle at 18% 28%,
-        rgba(155, 88, 255, .60) 0%,
-        rgba(128, 70, 235, .42) 18%,
-        rgba(93, 45, 175, .20) 42%,
-        transparent 70%
-    ),
+        radial-gradient(
+            circle at 18% 28%,
+            rgba(155, 88, 255, 0.60) 0%,
+            rgba(128, 70, 235, 0.42) 18%,
+            rgba(93, 45, 175, 0.20) 20%,
+            transparent 70%
+        ),
+        radial-gradient(
+            circle at 82% 58%,
+            rgba(65, 150, 255, 0.42) 0%,
+            rgba(40, 105, 205, 0.24) 25%,
+            transparent 62%
+        ),
+        radial-gradient(
+            circle at 55% 78%,
+            rgba(255, 90, 210, 0.22) 0%,
+            transparent 58%
+        ),
+        radial-gradient(
+            circle at 45% 40%,
+            rgba(255, 255, 255, 0.05) 0%,
+            transparent 65%
+        );
 
-    radial-gradient(
-        circle at 82% 58%,
-        rgba(65,150,255,.42) 0%,
-        rgba(40,105,205,.24) 25%,
-        transparent 62%
-    ),
-
-    radial-gradient(
-        circle at 55% 78%,
-        rgba(255,90,210,.22) 0%,
-        transparent 58%
-    ),
-
-    radial-gradient(
-        circle at 45% 40%,
-        rgba(255,255,255,.05) 0%,
-        transparent 65%
-    );
-
-    filter: blur(120px);
+    filter:
+        blur(120px);
 
     transform-origin:
         center;
@@ -2653,13 +2809,7 @@ body.observatorio-pagina::after {
         ease-in-out
         infinite
         alternate;
-    }
-
 }
-
-
-
-
 /*
    Estrellas por encima de la nebulosa.
 */
@@ -2751,3 +2901,154 @@ body.observatorio-pagina::after {
 } 
 
 
+     body.observatorio-pagina
+     .observacion-card
+     .observacion-card__media::before {
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        -24px;
+
+    z-index:
+        0;
+
+    background-image:
+        var(--imagen-observacion);
+
+    background-position:
+        center;
+
+    background-size:
+        cover;
+
+    filter:
+        blur(28px)
+        brightness(0.34)
+        saturate(0.85);
+
+    opacity:
+        0.68;
+
+    transform:
+        scale(1.08);
+
+    pointer-events:
+        none;
+}
+
+     body.observatorio-pagina
+     .observacion-card
+     .observacion-card__media::after {
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    z-index:
+        1;
+
+    background:
+        rgba(5, 4, 10, 0.22);
+
+    pointer-events:
+        none;
+}
+
+
+/* ==================================================
+   SISTEMA DE ESTRELLAS
+================================================== */
+
+.observacion-accion[data-accion="estrella"] {
+    transition:
+        color 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+
+.observacion-accion[data-accion="estrella"]
+span:first-child {
+    transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
+}
+
+.observacion-accion[data-accion="estrella"]:hover {
+    color:
+        rgba(255, 236, 162, 0.94);
+}
+
+
+.observacion-accion--activa[data-accion="estrella"] {
+    color:
+        rgba(255, 226, 118, 1);
+
+    border-color:
+        rgba(255, 220, 118, 0.22);
+
+    background:
+        rgba(255, 208, 92, 0.08);
+
+    box-shadow:
+        0 0 18px rgba(255, 206, 80, 0.1);
+}
+
+.observacion-accion--activa[data-accion="estrella"]
+span:first-child {
+    transform:
+        scale(1.16);
+
+    filter:
+        drop-shadow(
+            0 0 7px
+            rgba(255, 219, 98, 0.8)
+        );
+}
+
+.observacion-accion--cargando {
+    opacity:
+        0.55;
+
+    pointer-events:
+        none;
+}
+
+.observacion-accion--cargando
+span:first-child {
+    animation:
+        observatorioEstrellaCargando
+        0.75s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+@keyframes observatorioEstrellaCargando {
+
+    from {
+        transform:
+            scale(0.78);
+
+        opacity:
+            0.45;
+    }
+
+    to {
+        transform:
+            scale(1.16);
+
+        opacity:
+            1;
+    }
+
+}

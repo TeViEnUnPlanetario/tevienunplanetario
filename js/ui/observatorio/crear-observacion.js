@@ -24,11 +24,19 @@
    CONFIGURACIÓN
 ================================================== */
 
-
 import {
     guardarObservacion
 } from "../../firebase/firestore-observaciones.js";
 
+
+import {
+    auth
+} from "../../firebase/firebase-config.js";
+
+
+import {
+    asegurarPerfilUsuario
+} from "../../firebase/firestore.js";
 
 
 const LIMITE_CARACTERES =
@@ -254,7 +262,7 @@ async function publicarObservacion(
     try {
 
         const autor =
-            obtenerDatosAutor();
+           await obtenerDatosAutor();
 
 
         await guardarObservacion({
@@ -328,106 +336,140 @@ async function publicarObservacion(
    DATOS DEL AUTOR
 ================================================== */
 
-function obtenerDatosAutor() {
+async function obtenerDatosAutor() {
 
-    /*
-     * Primero intentamos obtener los datos visibles
-     * del perfil que ya existe en la interfaz.
-     */
-
-    const nombreVisible =
-        obtenerTextoPrimerElemento([
-
-            "[data-usuario-nombre]",
-
-            "#usuarioNombre",
-
-            ".crear-observacion__nombre",
-
-            ".perfil-usuario__nombre"
-
-        ]);
+    const usuario =
+        auth.currentUser;
 
 
-    const rangoVisible =
-        obtenerTextoPrimerElemento([
+    if (!usuario) {
 
-            "[data-usuario-rango]",
-
-            "#usuarioRango",
-
-            ".crear-observacion__rango",
-
-            ".perfil-usuario__rango"
-
-        ]);
-
-
-    const avatarVisible =
-        obtenerTextoPrimerElemento([
-
-            "[data-usuario-avatar]",
-
-            "#usuarioAvatar",
-
-            ".crear-observacion__avatar",
-
-            ".perfil-usuario__avatar"
-
-        ]);
-
-
-    return {
-
-        id:
-            obtenerUsuarioId(),
-
-        nombre:
-            nombreVisible ||
-            "Eduardo",
-
-        rango:
-            rangoVisible ||
-            "🌠 Viajero",
-
-        avatar:
-            avatarVisible ||
-            obtenerIniciales(
-                nombreVisible ||
-                "Eduardo"
-            ),
-
-        oficial:
-            false,
-
-        verificado:
-            false
-
-    };
-
-}
-
-
-function obtenerUsuarioId() {
-
-    const elementoUsuario =
-        document.querySelector(
-            "[data-usuario-id]"
+        throw new Error(
+            "Debes iniciar sesión para publicar una Observación."
         );
-
-
-    if (
-        elementoUsuario?.dataset.usuarioId
-    ) {
-
-        return elementoUsuario.dataset.usuarioId;
 
     }
 
 
-    return "usuario-local";
+    try {
+
+        const perfil =
+            await asegurarPerfilUsuario(
+                usuario
+            );
+
+
+        const nombre =
+            String(
+                perfil?.nombre ||
+                usuario.displayName ||
+                usuario.email
+                    ?.split("@")[0] ||
+                "Viajero"
+            ).trim();
+
+
+        const rangoBase =
+            String(
+                perfil?.rango ||
+                "Viajero"
+            ).trim();
+
+
+        /*
+         * Evita duplicar el emoji si el perfil
+         * ya contiene "🌠 Viajero".
+         */
+
+        const rango =
+            rangoBase.startsWith("🌠")
+                ? rangoBase
+                : `🌠 ${rangoBase}`;
+
+
+        const avatar =
+            String(
+                perfil?.avatar ||
+                perfil?.iniciales ||
+                obtenerIniciales(
+                    nombre
+                )
+            ).trim();
+
+
+        return {
+
+            id:
+                usuario.uid,
+
+            nombre:
+                nombre,
+
+            rango:
+                rango,
+
+            avatar:
+                avatar,
+
+            oficial:
+                Boolean(
+                    perfil?.oficial
+                ),
+
+            verificado:
+                Boolean(
+                    perfil?.verificado ||
+                    perfil?.oficial
+                )
+
+        };
+
+    }
+    catch (error) {
+
+        console.error(
+            "No fue posible obtener el perfil del autor:",
+            error
+        );
+
+
+        const nombreRespaldo =
+            usuario.displayName ||
+            usuario.email
+                ?.split("@")[0] ||
+            "Viajero";
+
+
+        return {
+
+            id:
+                usuario.uid,
+
+            nombre:
+                nombreRespaldo,
+
+            rango:
+                "🌠 Viajero",
+
+            avatar:
+                obtenerIniciales(
+                    nombreRespaldo
+                ),
+
+            oficial:
+                false,
+
+            verificado:
+                false
+
+        };
+
+    }
 
 }
+
+
+
 
 
 /* ==================================================

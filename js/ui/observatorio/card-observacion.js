@@ -599,6 +599,11 @@ function crearImagen(
     imagen.src =
         datos.imagen;
 
+    contenedor.style.setProperty(
+        "--imagen-observacion",
+        `url("${datos.imagen}")`
+    );
+
 
     imagen.alt =
         `Imagen compartida por ${datos.autorNombre}`;

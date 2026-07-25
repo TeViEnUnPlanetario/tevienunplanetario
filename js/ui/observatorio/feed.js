@@ -30,6 +30,12 @@ import {
 } from "../../firebase/firestore-observaciones.js";
 
 
+import {
+    alternarEstrella,
+    escucharEstrellasUsuario
+} from "../../firebase/firestore-estrellas.js";
+
+
 /* ==================================================
    REFERENCIAS DEL DOM
 ================================================== */
@@ -70,12 +76,19 @@ const mensajeObservatorio =
    ESTADO INTERNO
 ================================================== */
 
-let observaciones =
-    [];
+let observaciones =[];
 
 
 let temporizadorMensaje =
     null;
+
+
+let estrellasUsuario =
+    new Set();
+
+
+let procesandoEstrellas =
+    new Set();
 
 
 /* ==================================================
@@ -96,6 +109,34 @@ function iniciarFeed() {
 
 
     registrarEventos();
+
+
+    escucharEstrellasUsuario(
+
+    function (
+        nuevasEstrellas
+    ) {
+
+        estrellasUsuario =
+            nuevasEstrellas;
+
+
+        actualizarEstadoVisualEstrellas();
+
+    },
+
+    function (
+        error
+    ) {
+
+        console.error(
+            "No fue posible escuchar las Estrellas:",
+            error
+        );
+
+    }
+
+);
 
 
     escucharObservaciones(
@@ -186,6 +227,8 @@ export function renderizarFeed() {
     feedObservatorio.appendChild(
         fragmento
     );
+
+    actualizarEstadoVisualEstrellas();
 
 
     actualizarEstadoVacio();
@@ -435,7 +478,7 @@ function actualizarFeed() {
  * Delegación de eventos para las acciones
  * de todas las tarjetas.
  */
-function manejarAccionesFeed(
+async function manejarAccionesFeed(
     evento
 ) {
 
@@ -476,11 +519,12 @@ function manejarAccionesFeed(
 
         case "estrella":
 
-            mostrarMensaje(
-                "☆ El sistema de Estrellas llegará próximamente."
-            );
+        await procesarEstrella(
+        observacionId,
+        boton
+      );
 
-            break;
+        break;
 
 
         case "eco":
@@ -507,6 +551,299 @@ function manejarAccionesFeed(
                 "Acción desconocida:",
                 accion
             );
+
+    }
+
+}
+
+/* ==================================================
+   ESTRELLAS
+================================================== */
+
+async function procesarEstrella(
+    observacionId,
+    boton
+) {
+
+    if (
+        !observacionId ||
+        !boton
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        procesandoEstrellas.has(
+            observacionId
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    procesandoEstrellas.add(
+        observacionId
+    );
+
+
+    boton.disabled =
+        true;
+
+
+    boton.classList.add(
+        "observacion-accion--cargando"
+    );
+
+
+    try {
+
+        const resultado =
+            await alternarEstrella(
+                observacionId
+            );
+
+
+        /*
+         * Actualización inmediata de la interfaz.
+         * Los listeners de Firestore confirmarán
+         * el estado después.
+         */
+
+        if (
+            resultado.activa
+        ) {
+
+            estrellasUsuario.add(
+                observacionId
+            );
+
+        }
+        else {
+
+            estrellasUsuario.delete(
+                observacionId
+            );
+
+        }
+
+
+        actualizarBotonEstrella(
+            boton,
+            resultado.activa,
+            resultado.total
+        );
+
+
+        mostrarMensaje(
+
+            resultado.activa
+                ? "★ Enviaste una Estrella."
+                : "☆ Retiraste tu Estrella."
+
+        );
+
+    }
+    catch (
+        error
+    ) {
+
+        console.error(
+            "No fue posible actualizar la Estrella:",
+            error
+        );
+
+
+        mostrarMensaje(
+            error.message ||
+            "No fue posible actualizar la Estrella."
+        );
+
+    }
+    finally {
+
+        procesandoEstrellas.delete(
+            observacionId
+        );
+
+
+        boton.disabled =
+            false;
+
+
+        boton.classList.remove(
+            "observacion-accion--cargando"
+        );
+
+    }
+
+}
+
+
+function actualizarEstadoVisualEstrellas() {
+
+    if (!feedObservatorio) {
+
+        return;
+
+    }
+
+
+    const tarjetas =
+        feedObservatorio.querySelectorAll(
+            ".observacion-card"
+        );
+
+
+    tarjetas.forEach(
+
+        function (
+            tarjeta
+        ) {
+
+            const observacionId =
+                tarjeta.dataset.observacionId ||
+                "";
+
+
+            const boton =
+                tarjeta.querySelector(
+                    "[data-accion='estrella']"
+                );
+
+
+            if (!boton) {
+
+                return;
+
+            }
+
+
+            const estaActiva =
+                estrellasUsuario.has(
+                    observacionId
+                );
+
+
+            const total =
+                Number(
+                    boton.dataset.cantidad ||
+                    0
+                );
+
+
+            actualizarBotonEstrella(
+                boton,
+                estaActiva,
+                total
+            );
+
+        }
+
+    );
+
+}
+
+
+function actualizarBotonEstrella(
+    boton,
+    activa,
+    total
+) {
+
+    const cantidad =
+        Math.max(
+            0,
+            Number(
+                total
+            ) || 0
+        );
+
+
+    boton.dataset.cantidad =
+        String(
+            cantidad
+        );
+
+
+    boton.classList.toggle(
+        "observacion-accion--activa",
+        activa
+    );
+
+
+    boton.setAttribute(
+        "aria-pressed",
+        String(
+            activa
+        )
+    );
+
+
+    boton.setAttribute(
+        "aria-label",
+
+        activa
+            ? `Retirar Estrella. ${cantidad} Estrellas`
+            : `Dar Estrella. ${cantidad} Estrellas`
+
+    );
+
+
+    /*
+     * crearBotonAccion genera varios spans.
+     * Seleccionamos el primero como icono.
+     */
+
+    const icono =
+        boton.querySelector(
+            "span"
+        );
+
+
+    if (icono) {
+
+        icono.textContent =
+            activa
+                ? "★"
+                : "☆";
+
+    }
+
+
+    const texto =
+        cantidad === 1
+            ? "1 Estrella"
+            : `${cantidad} Estrellas`;
+
+
+    /*
+     * El texto normalmente está en el último span.
+     */
+
+    const elementos =
+        boton.querySelectorAll(
+            "span"
+        );
+
+
+    const elementoTexto =
+        elementos[
+            elementos.length - 1
+        ];
+
+
+    if (
+        elementoTexto &&
+        elementoTexto !== icono
+    ) {
+
+        elementoTexto.textContent =
+            texto;
 
     }
 
