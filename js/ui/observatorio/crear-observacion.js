@@ -39,12 +39,20 @@ import {
 } from "../../firebase/firestore.js";
 
 
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+
 const LIMITE_CARACTERES =
     800;
 
 
 const TAMANO_MAXIMO_IMAGEN =
     5 * 1024 * 1024;
+
+let perfilAutorActual =
+    null;
 
 
 /* ==================================================
@@ -135,6 +143,64 @@ function iniciarCrearObservacion() {
 
 }
 
+onAuthStateChanged(
+
+    auth,
+
+    async function (
+        usuario
+    ) {
+
+        perfilAutorActual =
+            null;
+
+
+        if (!usuario) {
+
+            return;
+
+        }
+
+
+        try {
+
+            const perfil =
+                await asegurarPerfilUsuario(
+                    usuario
+                );
+
+
+            perfilAutorActual =
+                perfil;
+
+
+            mostrarAutorEnFormulario(
+                perfil,
+                usuario
+            );
+
+        }
+        catch (
+            error
+        ) {
+
+            console.error(
+                "No fue posible cargar el autor del Observatorio:",
+                error
+            );
+
+
+            mostrarAutorEnFormulario(
+                null,
+                usuario
+            );
+
+        }
+
+    }
+
+);
+
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -203,6 +269,98 @@ function registrarEventos() {
         "click",
         manejarVistaPrevia
     );
+
+}
+
+
+/* ==================================================
+   PERFIL DEL AUTOR EN EL FORMULARIO
+================================================== */
+
+function mostrarAutorEnFormulario(
+    perfil,
+    usuario
+) {
+
+    const nombre =
+        String(
+            perfil?.nombre ||
+            usuario?.displayName ||
+            usuario?.email?.split("@")[0] ||
+            "Viajero"
+        ).trim();
+
+
+    const rangoBase =
+        String(
+            perfil?.rango ||
+            "Viajero"
+        ).trim();
+
+
+    const rango =
+        rangoBase.startsWith("🌠")
+            ? rangoBase
+            : `🌠 ${rangoBase}`;
+
+
+    const avatar =
+        String(
+            perfil?.avatar ||
+            perfil?.iniciales ||
+            obtenerIniciales(nombre)
+        ).trim();
+
+
+    const elementoNombre =
+        document.querySelector(
+            ".crear-observacion__nombre"
+        );
+
+
+    const elementoRango =
+        document.querySelector(
+            ".crear-observacion__rango"
+        );
+
+
+    const elementoAvatar =
+        document.querySelector(
+            ".crear-observacion__avatar"
+        );
+
+
+    if (elementoNombre) {
+
+        elementoNombre.textContent =
+            nombre;
+
+        elementoNombre.dataset.usuarioNombre =
+            nombre;
+
+    }
+
+
+    if (elementoRango) {
+
+        elementoRango.textContent =
+            rango;
+
+        elementoRango.dataset.usuarioRango =
+            rango;
+
+    }
+
+
+    if (elementoAvatar) {
+
+        elementoAvatar.textContent =
+            avatar;
+
+        elementoAvatar.dataset.usuarioAvatar =
+            avatar;
+
+    }
 
 }
 
@@ -351,120 +509,80 @@ async function obtenerDatosAutor() {
     }
 
 
-    try {
+    let perfil =
+        perfilAutorActual;
 
-        const perfil =
+
+    if (!perfil) {
+
+        perfil =
             await asegurarPerfilUsuario(
                 usuario
             );
 
 
-        const nombre =
-            String(
-                perfil?.nombre ||
-                usuario.displayName ||
-                usuario.email
-                    ?.split("@")[0] ||
-                "Viajero"
-            ).trim();
-
-
-        const rangoBase =
-            String(
-                perfil?.rango ||
-                "Viajero"
-            ).trim();
-
-
-        /*
-         * Evita duplicar el emoji si el perfil
-         * ya contiene "🌠 Viajero".
-         */
-
-        const rango =
-            rangoBase.startsWith("🌠")
-                ? rangoBase
-                : `🌠 ${rangoBase}`;
-
-
-        const avatar =
-            String(
-                perfil?.avatar ||
-                perfil?.iniciales ||
-                obtenerIniciales(
-                    nombre
-                )
-            ).trim();
-
-
-        return {
-
-            id:
-                usuario.uid,
-
-            nombre:
-                nombre,
-
-            rango:
-                rango,
-
-            avatar:
-                avatar,
-
-            oficial:
-                Boolean(
-                    perfil?.oficial
-                ),
-
-            verificado:
-                Boolean(
-                    perfil?.verificado ||
-                    perfil?.oficial
-                )
-
-        };
+        perfilAutorActual =
+            perfil;
 
     }
-    catch (error) {
-
-        console.error(
-            "No fue posible obtener el perfil del autor:",
-            error
-        );
 
 
-        const nombreRespaldo =
+    const nombre =
+        String(
+            perfil?.nombre ||
             usuario.displayName ||
-            usuario.email
-                ?.split("@")[0] ||
-            "Viajero";
+            usuario.email?.split("@")[0] ||
+            "Viajero"
+        ).trim();
 
 
-        return {
+    const rangoBase =
+        String(
+            perfil?.rango ||
+            "Viajero"
+        ).trim();
 
-            id:
-                usuario.uid,
 
-            nombre:
-                nombreRespaldo,
+    const rango =
+        rangoBase.startsWith("🌠")
+            ? rangoBase
+            : `🌠 ${rangoBase}`;
 
-            rango:
-                "🌠 Viajero",
 
-            avatar:
-                obtenerIniciales(
-                    nombreRespaldo
-                ),
+    const avatar =
+        String(
+            perfil?.avatar ||
+            perfil?.iniciales ||
+            obtenerIniciales(nombre)
+        ).trim();
 
-            oficial:
-                false,
 
-            verificado:
-                false
+    return {
 
-        };
+        id:
+            usuario.uid,
 
-    }
+        nombre:
+            nombre,
+
+        rango:
+            rango,
+
+        avatar:
+            avatar,
+
+        oficial:
+            Boolean(
+                perfil?.oficial
+            ),
+
+        verificado:
+            Boolean(
+                perfil?.verificado ||
+                perfil?.oficial
+            )
+
+    };
 
 }
 
