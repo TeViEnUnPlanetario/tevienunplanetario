@@ -358,19 +358,28 @@ body > footer {
 
     position:relative;
 
+    inset:auto;
+
     display:block;
 
-    width:min(760px,90vw);
-
+    width:min(680px,88vw);
     max-width:100%;
 
     height:auto;
+    max-height:none;
 
     margin:0 auto;
 
-    z-index:2;
-
     object-fit:contain;
+    object-position:center;
+
+    z-index:4;
+
+    opacity:1;
+
+    transform:none;
+
+    transition:none;
 
     user-select:none;
 
@@ -379,7 +388,7 @@ body > footer {
     filter:
         drop-shadow(
             0 0 10px
-            rgba(255,255,255,.15)
+            rgba(255,255,255,.18)
         );
 
 }
