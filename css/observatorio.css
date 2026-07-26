@@ -3577,6 +3577,34 @@ body.ecos-panel-abierto {
 ===================================================== */
 
 .ecos-panel__contenedor {
+    
+    .ecos-panel__contenedor,
+.ecos-panel__contenedor * {
+    box-sizing: border-box;
+}
+
+
+.ecos-panel__contenedor {
+    color: #ffffff;
+}
+
+
+.ecos-panel__contenedor button,
+.ecos-panel__contenedor textarea {
+    font-family: inherit;
+}
+
+.ecos-panel__contenedor {
+    color: #ffffff;
+}
+
+.ecos-panel__titulo,
+.eco-item__nombre,
+.eco-item__texto,
+.ecos-formulario__label {
+    color: #ffffff;
+}
+
     position: relative;
     z-index: 1;
 
