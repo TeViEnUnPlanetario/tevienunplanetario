@@ -131,34 +131,82 @@ if (escenaLunar) {
     }
 
 
-    function crearEstrellaFugaz(){
+    function crearEstrellaFugaz() {
 
-        const estrellaFugaz =
-            document.createElement("span");
-
-        estrellaFugaz.className =
-            "estrella-fugaz";
-
-
-        estrellaFugaz.style.left =
-            (-25 + Math.random() * 35) + "%";
-
-        estrellaFugaz.style.top =
-            (-180 + Math.random() * 100) + "px";
-
-
-        contenedorParticulas.appendChild(
-            estrellaFugaz
+    const estrellaFugaz =
+        document.createElement(
+            "span"
         );
 
 
-        setTimeout(function(){
+    estrellaFugaz.className =
+        "observatorio-estrella-fugaz";
+
+
+    estrellaFugaz.style.left =
+        numeroAleatorio(
+            8,
+            82
+        ) + "%";
+
+
+    estrellaFugaz.style.top =
+        numeroAleatorio(
+            -6,
+            28
+        ) + "%";
+
+
+    estrellaFugaz.style.setProperty(
+        "--fugaz-duracion",
+        numeroAleatorio(
+            1.1,
+            1.65
+        ) + "s"
+    );
+
+
+    estrellaFugaz.style.setProperty(
+        "--fugaz-longitud",
+        numeroAleatorio(
+            85,
+            135
+        ) + "px"
+    );
+
+
+    const fondo =
+        document.querySelector(
+            ".observatorio-fondo"
+        );
+
+
+    if (!fondo) {
+
+        return;
+
+    }
+
+
+    fondo.appendChild(
+        estrellaFugaz
+    );
+
+
+    estrellaFugaz.addEventListener(
+        "animationend",
+        function () {
 
             estrellaFugaz.remove();
 
-        },2500);
+        },
+        {
+            once:
+                true
+        }
+    );
 
-    }
+}
 
 
     function programarEstrellaFugaz(){

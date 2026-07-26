@@ -166,6 +166,10 @@ body.observatorio-pagina {
    FONDO
 ================================================== */
 
+/*
+   Capa base fija que siempre cubre la pantalla.
+*/
+
 .observatorio-fondo {
     position:
         fixed;
@@ -174,7 +178,16 @@ body.observatorio-pagina {
         0;
 
     z-index:
-        -10;
+        0;
+
+    width:
+        100vw;
+
+    height:
+        100dvh;
+
+    min-height:
+        100vh;
 
     overflow:
         hidden;
@@ -184,21 +197,26 @@ body.observatorio-pagina {
 
     background:
         radial-gradient(
-            circle at 50% -10%,
-            rgba(72, 79, 145, 0.2),
-            transparent 42%
+            ellipse at 14% 18%,
+            rgba(88, 54, 138, 0.08) 0%,
+            transparent 34%
         ),
         radial-gradient(
-            circle at 0% 35%,
-            rgba(73, 45, 114, 0.15),
+            ellipse at 88% 28%,
+            rgba(38, 67, 111, 0.055) 0%,
             transparent 38%
         ),
         radial-gradient(
-            circle at 100% 70%,
-            rgba(28, 77, 111, 0.12),
-            transparent 40%
+            ellipse at 52% 110%,
+            rgba(58, 35, 92, 0.045) 0%,
+            transparent 42%
         ),
-        #050509;
+        linear-gradient(
+            180deg,
+            #010102 0%,
+            #020204 42%,
+            #040408 100%
+        );
 }
 
 
@@ -207,29 +225,35 @@ body.observatorio-pagina {
         absolute;
 
     inset:
-        -18%;
+        -12%;
+
+    opacity:
+        0.42;
 
     background:
         radial-gradient(
-            circle at 30% 30%,
-            rgba(104, 84, 180, 0.12),
-            transparent 26%
+            ellipse at 18% 28%,
+            rgba(102, 64, 166, 0.075),
+            transparent 28%
         ),
         radial-gradient(
-            circle at 70% 58%,
-            rgba(64, 114, 160, 0.1),
-            transparent 25%
+            ellipse at 78% 64%,
+            rgba(51, 89, 132, 0.045),
+            transparent 30%
         );
 
     filter:
-        blur(60px);
+        blur(105px);
 
     animation:
         observatorioNebulosa
-        18s ease-in-out
+        22s ease-in-out
         infinite alternate;
-}
 
+    will-change:
+        transform,
+        opacity;
+}
 
 /* ==================================================
    CIELO ALEATORIO DEL OBSERVATORIO
@@ -1806,16 +1830,31 @@ body.observatorio-pagina {
 
 @keyframes observatorioNebulosa {
 
-    from {
+    0% {
         transform:
             translate3d(-2%, -1%, 0)
             scale(1);
+
+        opacity:
+            0.42;
     }
 
-    to {
+    50% {
         transform:
-            translate3d(3%, 2%, 0)
-            scale(1.08);
+            translate3d(1%, 2%, 0)
+            scale(1.04);
+
+        opacity:
+            0.58;
+    }
+
+    100% {
+        transform:
+            translate3d(3%, -1%, 0)
+            scale(1.07);
+
+        opacity:
+            0.48;
     }
 
 }
@@ -2340,31 +2379,28 @@ body.observatorio-pagina
 
 body.observatorio-pagina
 .observatorio-feed
-.observacion-card {
-    width:
-        100% !important;
-
-    max-width:
-        100% !important;
-
-    overflow:
-        hidden !important;
+.observacion-card{
 
     border:
-        1px solid rgba(194, 177, 255, 0.15) !important;
+        1px solid var(--observatorio-borde) !important;
 
     background:
         linear-gradient(
             145deg,
-            rgba(32, 27, 52, 0.86) 0%,
-            rgba(18, 15, 31, 0.9) 50%,
-            rgba(13, 12, 23, 0.92) 100%
+            rgba(255,255,255,.078),
+            rgba(255,255,255,.028)
         ) !important;
 
     box-shadow:
-        0 22px 60px rgba(0, 0, 0, 0.32),
-        inset 0 1px 0 rgba(255, 255, 255, 0.07),
-        0 0 40px rgba(98, 74, 180, 0.035) !important;
+        var(--observatorio-sombra),
+        inset 0 1px 0 rgba(255,255,255,.10) !important;
+
+    backdrop-filter:
+        blur(26px);
+
+    -webkit-backdrop-filter:
+        blur(26px);
+
 }
 
 
@@ -2792,112 +2828,6 @@ body.observatorio-pagina::after {
 
 
 /*
-   Capa base fija que siempre cubre la pantalla.
-*/
-
-.observatorio-fondo {
-    position:
-        fixed;
-
-    inset:
-        0;
-
-    z-index:
-        0;
-
-    width:
-        100vw;
-
-    height:
-        100dvh;
-
-    min-height:
-        100vh;
-
-    overflow:
-        hidden;
-
-    pointer-events:
-        none;
-
-    background:
-        radial-gradient(
-            ellipse at 50% -12%,
-            rgba(103, 82, 190, 0.18) 0%,
-            transparent 58%
-        ),
-        linear-gradient(
-            145deg,
-            #090713 0%,
-            #070610 46%,
-            #07101c 100%
-        );
-}
-
-
-/*
-   Nebulosa coloreada animada.
-*/
-
-.observatorio-nebulosa {
-    position:
-        absolute;
-
-    inset:
-        -55%;
-
-    z-index:
-        1;
-
-    opacity:
-        0.82;
-
-    pointer-events:
-        none;
-
-    background:
-        radial-gradient(
-            circle at 18% 28%,
-            rgba(155, 88, 255, 0.60) 0%,
-            rgba(128, 70, 235, 0.42) 18%,
-            rgba(93, 45, 175, 0.20) 20%,
-            transparent 70%
-        ),
-        radial-gradient(
-            circle at 82% 58%,
-            rgba(65, 150, 255, 0.42) 0%,
-            rgba(40, 105, 205, 0.24) 25%,
-            transparent 62%
-        ),
-        radial-gradient(
-            circle at 55% 78%,
-            rgba(255, 90, 210, 0.22) 0%,
-            transparent 58%
-        ),
-        radial-gradient(
-            circle at 45% 40%,
-            rgba(255, 255, 255, 0.05) 0%,
-            transparent 65%
-        );
-
-    filter:
-        blur(120px);
-
-    transform-origin:
-        center;
-
-    will-change:
-        transform,
-        opacity;
-
-    animation:
-        observatorioNebulosaVisible
-        14s
-        ease-in-out
-        infinite
-        alternate;
-}
-/*
    Estrellas por encima de la nebulosa.
 */
 
@@ -3279,4 +3209,276 @@ body.ecos-panel-abierto {
 
 .ecos-panel[hidden] {
     display: none !important;
+}
+
+
+/* ==================================================
+   ESTRELLAS PINTADAS DEL OBSERVATORIO
+================================================== */
+
+.observatorio-estrellas-pintadas {
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    z-index:
+        2;
+
+    overflow:
+        hidden;
+
+    pointer-events:
+        none;
+}
+
+
+.observatorio-estrella-pintada {
+    position:
+        absolute;
+
+    display:
+        block;
+
+    object-fit:
+        contain;
+
+    opacity:
+        0;
+
+    pointer-events:
+        none;
+
+    user-select:
+        none;
+
+    -webkit-user-drag:
+        none;
+
+    filter:
+        drop-shadow(
+            0 0 4px
+            rgba(255, 205, 75, 0.28)
+        )
+        drop-shadow(
+            0 0 11px
+            rgba(255, 170, 35, 0.1)
+        );
+
+    transform:
+        rotate(
+            var(--estrella-pintada-rotacion)
+        )
+        scale(0.7);
+
+    animation:
+        observatorioEstrellaPintada
+        var(--estrella-pintada-duracion)
+        ease-in-out
+        var(--estrella-pintada-retraso)
+        infinite;
+
+    will-change:
+        opacity,
+        transform;
+}
+
+
+@keyframes observatorioEstrellaPintada {
+
+    0%,
+    100% {
+        opacity:
+            0;
+
+        transform:
+            rotate(
+                var(--estrella-pintada-rotacion)
+            )
+            scale(0.68);
+    }
+
+    22% {
+        opacity:
+            var(--estrella-pintada-opacidad);
+    }
+
+    52% {
+        opacity:
+            calc(
+                var(--estrella-pintada-opacidad) *
+                0.72
+            );
+
+        transform:
+            rotate(
+                calc(
+                    var(--estrella-pintada-rotacion) +
+                    8deg
+                )
+            )
+            scale(1);
+    }
+
+    78% {
+        opacity:
+            var(--estrella-pintada-opacidad);
+    }
+
+}
+
+
+/* ==================================================
+   ESTRELLAS FUGACES DEL OBSERVATORIO
+================================================== */
+
+.observatorio-estrella-fugaz {
+    position:
+        absolute;
+
+    z-index:
+        4;
+
+    width:
+        2px;
+
+    height:
+        var(--fugaz-longitud);
+
+    border-radius:
+        999px;
+
+    opacity:
+        0;
+
+    pointer-events:
+        none;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 0.34) 34%,
+            rgba(255, 255, 255, 0.88) 78%,
+            rgba(197, 157, 255, 0.58) 100%
+        );
+
+    box-shadow:
+        0 0 4px rgba(255, 255, 255, 0.5),
+        0 0 9px rgba(170, 110, 255, 0.24);
+
+    transform:
+        rotate(-42deg)
+        translate3d(0, 0, 0);
+
+    transform-origin:
+        center bottom;
+
+    animation:
+        observatorioEstrellaFugaz
+        var(--fugaz-duracion)
+        cubic-bezier(
+            0.2,
+            0.55,
+            0.4,
+            1
+        )
+        forwards;
+
+    will-change:
+        opacity,
+        transform;
+}
+
+
+@keyframes observatorioEstrellaFugaz {
+
+    0% {
+        opacity:
+            0;
+
+        transform:
+            rotate(-42deg)
+            translate3d(
+                -18px,
+                -28px,
+                0
+            )
+            scaleY(0.72);
+    }
+
+    12% {
+        opacity:
+            0.42;
+    }
+
+    34% {
+        opacity:
+            0.82;
+
+        transform:
+            rotate(-42deg)
+            translate3d(
+                18px,
+                22px,
+                0
+            )
+            scaleY(1);
+    }
+
+    72% {
+        opacity:
+            0.38;
+    }
+
+    100% {
+        opacity:
+            0;
+
+        transform:
+            rotate(-42deg)
+            translate3d(
+                105px,
+                145px,
+                0
+            )
+            scaleY(0.82);
+    }
+
+}
+
+
+@media (max-width: 760px) {
+
+    .observatorio-estrella-fugaz {
+        --fugaz-longitud:
+            76px !important;
+
+        box-shadow:
+            0 0 5px
+            rgba(255, 255, 255, 0.7),
+            0 0 11px
+            rgba(170, 110, 255, 0.36);
+    }
+
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    .observatorio-estrella-pintada {
+        animation:
+            none;
+
+        opacity:
+            0.18;
+    }
+
+
+    .observatorio-estrella-fugaz {
+        display:
+            none;
+    }
+
 }
