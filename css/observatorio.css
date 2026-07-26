@@ -1,4 +1,4 @@
-/* ==================================================
+no/* ==================================================
    PROYECTO OBSERVATORIO
    TE VI EN UN PLANETARIO
 
@@ -3483,15 +3483,19 @@ body.ecos-panel-abierto {
 
 }
 
+
 /* =====================================================
-   ECOS — MODAL
+   MODAL DE ECOS
 ===================================================== */
 
-.ecos-panel {
+body.ecos-panel-abierto {
+    overflow: hidden;
+}
 
+
+.ecos-panel {
     position: fixed;
     inset: 0;
-
     z-index: 10000;
 
     display: flex;
@@ -3503,17 +3507,9 @@ body.ecos-panel-abierto {
         18px
         max(18px, env(safe-area-inset-bottom));
 
-    background:
-        rgba(0, 0, 0, .72);
-
-    backdrop-filter:
-        blur(10px);
-
-    -webkit-backdrop-filter:
-        blur(10px);
-
-    visibility: hidden;
     opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
 
     transition:
         opacity .25s ease,
@@ -3521,30 +3517,48 @@ body.ecos-panel-abierto {
 }
 
 
-.ecos-panel.activo {
+.ecos-panel[hidden] {
+    display: none;
+}
 
-    visibility: visible;
+
+.ecos-panel--visible {
     opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
 
+
+.ecos-panel__fondo {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 0;
+    border: 0;
+
+    background:
+        rgba(0, 0, 0, .72);
+
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+
+    cursor: default;
 }
 
 
 /* =====================================================
-   CONTENEDOR PRINCIPAL
+   CONTENEDOR
 ===================================================== */
 
-.ecos-panel__contenido {
+.ecos-panel__contenedor {
+    position: relative;
+    z-index: 1;
 
-    width: min(
-        100%,
-        720px
-    );
-
-    max-height:
-        min(
-            88dvh,
-            900px
-        );
+    width: min(100%, 720px);
+    max-height: min(88dvh, 900px);
 
     display: flex;
     flex-direction: column;
@@ -3553,27 +3567,20 @@ body.ecos-panel-abierto {
 
     border:
         1px solid
-        rgba(
-            255,
-            255,
-            255,
-            .13
-        );
+        rgba(255, 255, 255, .13);
 
-    border-radius:
-        30px;
+    border-radius: 30px;
 
     background:
         linear-gradient(
             180deg,
-            rgba(28, 20, 48, .97),
-            rgba(14, 13, 22, .98)
+            rgba(24, 19, 40, .98),
+            rgba(12, 12, 18, .98)
         );
 
     box-shadow:
         0 35px 90px
         rgba(0, 0, 0, .65);
-
 }
 
 
@@ -3581,76 +3588,56 @@ body.ecos-panel-abierto {
    ENCABEZADO
 ===================================================== */
 
-.ecos-panel__encabezado {
-
+.ecos-panel__header {
     position: relative;
 
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+
     padding:
-        28px
-        82px
-        22px
-        30px;
+        26px
+        26px
+        22px;
 
     border-bottom:
         1px solid
-        rgba(
-            255,
-            255,
-            255,
-            .10
-        );
-
+        rgba(255, 255, 255, .09);
 }
 
 
-.ecos-panel__subtitulo {
+.ecos-panel__etiqueta {
+    display: block;
 
-    margin: 0 0 4px;
+    margin-bottom: 5px;
 
     color:
-        rgba(
-            255,
-            255,
-            255,
-            .66
-        );
+        rgba(255, 255, 255, .62);
 
-    font-size:
-        .9rem;
-
-    letter-spacing:
-        .04em;
-
+    font-size: .88rem;
+    letter-spacing: .04em;
 }
 
 
 .ecos-panel__titulo {
-
     margin: 0;
 
     color: #ffffff;
 
     font-size:
-        clamp(
-            2rem,
-            7vw,
-            2.8rem
-        );
+        clamp(2rem, 6vw, 2.7rem);
 
     line-height: 1;
-
 }
 
 
 .ecos-panel__cerrar {
+    flex: 0 0 auto;
 
-    position: absolute;
-
-    top: 22px;
-    right: 22px;
-
-    width: 54px;
-    height: 54px;
+    width: 52px;
+    height: 52px;
 
     display: grid;
     place-items: center;
@@ -3659,26 +3646,16 @@ body.ecos-panel-abierto {
 
     border:
         1px solid
-        rgba(
-            255,
-            255,
-            255,
-            .10
-        );
+        rgba(255, 255, 255, .10);
 
     border-radius: 50%;
 
     background:
-        rgba(
-            255,
-            255,
-            255,
-            .08
-        );
+        rgba(255, 255, 255, .08);
 
     color: #ffffff;
 
-    font-size: 1.8rem;
+    font-size: 2rem;
     line-height: 1;
 
     cursor: pointer;
@@ -3686,46 +3663,51 @@ body.ecos-panel-abierto {
     transition:
         transform .2s ease,
         background .2s ease;
-
 }
 
 
 .ecos-panel__cerrar:hover {
-
     transform: scale(1.05);
 
     background:
-        rgba(
-            255,
-            255,
-            255,
-            .14
-        );
-
+        rgba(255, 255, 255, .14);
 }
 
 
 /* =====================================================
-   LISTA DE ECOS
+   CONTENIDO Y LISTA
 ===================================================== */
 
-.ecos-panel__lista {
-
+.ecos-panel__contenido {
     flex: 1;
 
+    min-height: 0;
+
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+
+.ecos-panel__estado {
+    margin: 0;
+
+    padding: 28px 24px;
+
+    color:
+        rgba(255, 255, 255, .58);
+
+    text-align: center;
+    line-height: 1.5;
+}
+
+
+.ecos-lista {
     display: flex;
     flex-direction: column;
 
     gap: 14px;
 
-    padding:
-        22px
-        24px;
-
-    overflow-y: auto;
-
-    overscroll-behavior: contain;
-
+    padding: 22px 24px;
 }
 
 
@@ -3734,31 +3716,21 @@ body.ecos-panel-abierto {
 ===================================================== */
 
 .eco-item {
-
     display: grid;
 
     grid-template-columns:
         48px
         minmax(0, 1fr);
 
-    gap:
-        0
-        14px;
+    gap: 14px;
 
-    padding:
-        18px;
+    padding: 18px;
 
     border:
         1px solid
-        rgba(
-            255,
-            255,
-            255,
-            .09
-        );
+        rgba(255, 255, 255, .09);
 
-    border-radius:
-        22px;
+    border-radius: 22px;
 
     background:
         linear-gradient(
@@ -3769,21 +3741,11 @@ body.ecos-panel-abierto {
 
     box-shadow:
         inset 0 1px 0
-        rgba(
-            255,
-            255,
-            255,
-            .035
-        );
-
+        rgba(255, 255, 255, .035);
 }
 
 
 .eco-item__avatar {
-
-    grid-row:
-        1 / span 3;
-
     width: 48px;
     height: 48px;
 
@@ -3792,44 +3754,45 @@ body.ecos-panel-abierto {
 
     border:
         1px solid
-        rgba(
-            255,
-            255,
-            255,
-            .15
-        );
+        rgba(255, 255, 255, .14);
 
     border-radius: 50%;
 
     background:
-        rgba(
-            255,
-            255,
-            255,
-            .08
-        );
+        rgba(255, 255, 255, .08);
 
     color: #ffffff;
 
+    font-size: .9rem;
     font-weight: 700;
 
     overflow: hidden;
-
 }
 
 
 .eco-item__avatar img {
-
     width: 100%;
     height: 100%;
 
     object-fit: cover;
-
 }
 
 
-.eco-item__cabecera {
+.eco-item__contenido {
+    min-width: 0;
+}
 
+
+.eco-item__encabezado {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 14px;
+}
+
+
+.eco-item__autor {
     min-width: 0;
 
     display: flex;
@@ -3838,154 +3801,96 @@ body.ecos-panel-abierto {
 
     column-gap: 8px;
     row-gap: 4px;
-
 }
 
 
-.eco-item__autor {
-
-    margin: 0;
-
+.eco-item__nombre {
     color: #ffffff;
 
     font-size: 1rem;
     font-weight: 700;
-
     line-height: 1.25;
 
     overflow-wrap: anywhere;
-
 }
 
 
 .eco-item__rango {
-
-    display: inline-flex;
-    align-items: center;
-
-    gap: 5px;
-
     color:
-        rgba(
-            255,
-            255,
-            255,
-            .58
-        );
+        rgba(255, 255, 255, .56);
 
     font-size: .84rem;
+    line-height: 1.25;
 
     white-space: nowrap;
-
-}
-
-
-.eco-item__fecha {
-
-    margin-top: 5px;
-
-    color:
-        rgba(
-            255,
-            255,
-            255,
-            .42
-        );
-
-    font-size: .82rem;
-
-    line-height: 1.3;
-
-}
-
-
-.eco-item__mensaje {
-
-    grid-column: 2;
-
-    margin:
-        12px
-        0
-        0;
-
-    color:
-        rgba(
-            255,
-            255,
-            255,
-            .88
-        );
-
-    font-size:
-        .98rem;
-
-    line-height:
-        1.55;
-
-    white-space:
-        pre-wrap;
-
-    overflow-wrap:
-        anywhere;
-
 }
 
 
 .eco-item__acciones {
-
-    grid-column: 2;
+    flex: 0 0 auto;
 
     display: flex;
+    align-items: center;
+    flex-wrap: wrap;
     justify-content: flex-end;
 
-    margin-top: 12px;
+    gap: 8px;
+}
 
+
+.eco-item__fecha {
+    color:
+        rgba(255, 255, 255, .42);
+
+    font-size: .78rem;
+    white-space: nowrap;
 }
 
 
 .eco-item__eliminar {
-
     padding:
-        7px
-        12px;
+        6px
+        10px;
 
     border:
         1px solid
-        rgba(
-            255,
-            120,
-            140,
-            .20
-        );
+        rgba(255, 120, 140, .22);
 
-    border-radius:
-        999px;
+    border-radius: 999px;
 
     background:
-        rgba(
-            255,
-            90,
-            115,
-            .08
-        );
+        rgba(255, 90, 115, .08);
 
     color:
-        rgba(
-            255,
-            180,
-            190,
-            .82
-        );
+        rgba(255, 185, 195, .88);
 
-    font-size:
-        .78rem;
+    font-size: .74rem;
+    font-weight: 600;
 
-    font-weight:
-        600;
+    cursor: pointer;
+}
 
-    cursor:
-        pointer;
 
+.eco-item__eliminar:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+
+.eco-item__texto {
+    margin:
+        13px
+        0
+        0;
+
+    color:
+        rgba(255, 255, 255, .88);
+
+    font-size: .97rem;
+    line-height: 1.55;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
 }
 
 
@@ -3993,8 +3898,7 @@ body.ecos-panel-abierto {
    FORMULARIO
 ===================================================== */
 
-.ecos-panel__formulario {
-
+.ecos-formulario {
     flex-shrink: 0;
 
     padding:
@@ -4004,207 +3908,127 @@ body.ecos-panel-abierto {
 
     border-top:
         1px solid
-        rgba(
-            255,
-            255,
-            255,
-            .10
-        );
+        rgba(255, 255, 255, .09);
 
     background:
-        rgba(
-            10,
-            9,
-            17,
-            .46
-        );
-
+        rgba(9, 8, 15, .55);
 }
 
 
-.ecos-panel__etiqueta {
-
+.ecos-formulario__label {
     display: block;
 
-    margin-bottom:
-        12px;
+    margin-bottom: 12px;
 
     color: #ffffff;
 
-    font-size:
-        1.05rem;
-
-    font-weight:
-        600;
-
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 
-.ecos-panel textarea {
-
+.ecos-formulario__textarea {
     width: 100%;
-    min-height: 118px;
+    min-height: 115px;
 
     resize: vertical;
 
     padding:
-        17px
-        18px;
+        16px
+        17px;
 
     border:
         1px solid
-        rgba(
-            255,
-            255,
-            255,
-            .13
-        );
+        rgba(255, 255, 255, .13);
 
-    border-radius:
-        20px;
+    border-radius: 20px;
 
     outline: none;
 
     background:
-        rgba(
-            255,
-            255,
-            255,
-            .065
-        );
+        rgba(255, 255, 255, .065);
 
     color: #ffffff;
 
     font: inherit;
-
-    line-height:
-        1.5;
+    line-height: 1.5;
 
     transition:
         border-color .2s ease,
         box-shadow .2s ease,
         background .2s ease;
-
 }
 
 
-.ecos-panel textarea::placeholder {
-
+.ecos-formulario__textarea::placeholder {
     color:
-        rgba(
-            255,
-            255,
-            255,
-            .38
-        );
-
+        rgba(255, 255, 255, .38);
 }
 
 
-.ecos-panel textarea:focus {
-
+.ecos-formulario__textarea:focus {
     border-color:
-        rgba(
-            148,
-            112,
-            255,
-            .68
-        );
+        rgba(148, 112, 255, .62);
 
     background:
-        rgba(
-            255,
-            255,
-            255,
-            .08
-        );
+        rgba(255, 255, 255, .08);
 
     box-shadow:
         0 0 0 4px
-        rgba(
-            123,
-            82,
-            255,
-            .12
-        );
-
+        rgba(123, 82, 255, .12);
 }
 
 
-.ecos-panel__pie-formulario {
-
+.ecos-formulario__pie {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     gap: 16px;
 
-    margin-top:
-        14px;
-
+    margin-top: 14px;
 }
 
 
-.ecos-panel__contador {
-
+.ecos-formulario__contador {
     color:
-        rgba(
-            255,
-            255,
-            255,
-            .50
-        );
+        rgba(255, 255, 255, .48);
 
-    font-size:
-        .85rem;
-
+    font-size: .84rem;
 }
 
 
-.ecos-panel__responder {
-
-    min-width:
-        130px;
+.ecos-formulario__enviar {
+    min-width: 128px;
 
     padding:
-        13px
-        22px;
+        12px
+        21px;
 
     border:
         1px solid
-        rgba(
-            255,
-            255,
-            255,
-            .10
-        );
+        rgba(255, 255, 255, .10);
 
-    border-radius:
-        999px;
+    border-radius: 999px;
 
     background:
         linear-gradient(
             135deg,
-            rgba(111, 78, 220, .95),
-            rgba(74, 48, 155, .95)
+            rgba(111, 78, 220, .96),
+            rgba(74, 48, 155, .96)
         );
 
     color: #ffffff;
 
-    font-weight:
-        700;
+    font-weight: 700;
 
-    cursor:
-        pointer;
-
+    cursor: pointer;
 }
 
 
-.ecos-panel__responder:disabled {
-
+.ecos-formulario__enviar:disabled {
     opacity: .38;
     cursor: not-allowed;
-
 }
 
 
@@ -4212,25 +4036,17 @@ body.ecos-panel-abierto {
    MÓVIL
 ===================================================== */
 
-@media (
-    max-width: 600px
-) {
+@media (max-width: 600px) {
 
     .ecos-panel {
+        align-items: flex-end;
 
-        align-items:
-            flex-end;
-
-        padding:
-            0;
-
+        padding: 0;
     }
 
 
-    .ecos-panel__contenido {
-
+    .ecos-panel__contenedor {
         width: 100%;
-
         max-height:
             calc(
                 100dvh -
@@ -4242,91 +4058,80 @@ body.ecos-panel-abierto {
             28px
             0
             0;
-
     }
 
 
-    .ecos-panel__encabezado {
-
+    .ecos-panel__header {
         padding:
-            24px
-            76px
+            22px
             18px
-            22px;
-
+            18px;
     }
 
 
     .ecos-panel__cerrar {
-
-        top: 18px;
-        right: 18px;
-
         width: 48px;
         height: 48px;
 
+        font-size: 1.8rem;
     }
 
 
-    .ecos-panel__lista {
-
+    .ecos-lista {
         gap: 12px;
 
         padding:
             18px
-            16px;
-
+            15px;
     }
 
 
     .eco-item {
-
         grid-template-columns:
             42px
             minmax(0, 1fr);
 
-        gap:
-            0
-            12px;
+        gap: 12px;
 
-        padding:
-            15px;
+        padding: 15px;
 
-        border-radius:
-            19px;
-
+        border-radius: 19px;
     }
 
 
     .eco-item__avatar {
-
         width: 42px;
         height: 42px;
 
-        font-size:
-            .85rem;
-
+        font-size: .82rem;
     }
 
 
-    .eco-item__autor {
+    .eco-item__encabezado {
+        flex-direction: column;
 
-        font-size:
-            .94rem;
-
+        gap: 7px;
     }
 
 
-    .eco-item__mensaje {
-
-        font-size:
-            .93rem;
-
+    .eco-item__acciones {
+        justify-content: flex-start;
     }
 
 
-    .ecos-panel__formulario {
+    .eco-item__nombre {
+        font-size: .94rem;
+    }
 
+
+    .eco-item__texto {
+        margin-top: 11px;
+
+        font-size: .93rem;
+    }
+
+
+    .ecos-formulario {
         padding:
             17px
             16px
@@ -4334,17 +4139,12 @@ body.ecos-panel-abierto {
                 20px,
                 env(safe-area-inset-bottom)
             );
-
     }
 
 
-    .ecos-panel textarea {
-
-        min-height:
-            105px;
-
+    .ecos-formulario__textarea {
+        min-height: 105px;
     }
 
 }
-
 
