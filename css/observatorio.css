@@ -3498,7 +3498,8 @@ body.ecos-panel-abierto {
     inset: 0;
     z-index: 10000;
 
-    display: flex;
+    display: none;
+
     align-items: center;
     justify-content: center;
 
@@ -3507,22 +3508,31 @@ body.ecos-panel-abierto {
         18px
         max(18px, env(safe-area-inset-bottom));
 
+    color: #ffffff;
+
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-
-    transition:
-        opacity .25s ease,
-        visibility .25s ease;
 }
 
+
+/*
+   Cerrado completamente.
+*/
 
 .ecos-panel[hidden] {
-    display: none;
+    display: none !important;
 }
 
 
-.ecos-panel--visible {
+/*
+   Solo aparece cuando JavaScript
+   agrega ecos-panel--visible.
+*/
+
+.ecos-panel.ecos-panel--visible {
+    display: flex;
+
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
@@ -3533,17 +3543,30 @@ body.ecos-panel-abierto {
     position: absolute;
     inset: 0;
 
+    display: block;
+
     width: 100%;
     height: 100%;
 
+    margin: 0;
     padding: 0;
+
     border: 0;
+    border-radius: 0;
+
+    appearance: none;
+    -webkit-appearance: none;
 
     background:
         rgba(0, 0, 0, .72);
 
-    backdrop-filter: blur(9px);
-    -webkit-backdrop-filter: blur(9px);
+    backdrop-filter:
+        blur(9px);
+
+    -webkit-backdrop-filter:
+        blur(9px);
+
+    box-shadow: none;
 
     cursor: default;
 }
