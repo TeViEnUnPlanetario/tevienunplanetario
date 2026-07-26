@@ -3482,3 +3482,869 @@ body.ecos-panel-abierto {
     }
 
 }
+
+/* =====================================================
+   ECOS — MODAL
+===================================================== */
+
+.ecos-panel {
+
+    position: fixed;
+    inset: 0;
+
+    z-index: 10000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding:
+        max(18px, env(safe-area-inset-top))
+        18px
+        max(18px, env(safe-area-inset-bottom));
+
+    background:
+        rgba(0, 0, 0, .72);
+
+    backdrop-filter:
+        blur(10px);
+
+    -webkit-backdrop-filter:
+        blur(10px);
+
+    visibility: hidden;
+    opacity: 0;
+
+    transition:
+        opacity .25s ease,
+        visibility .25s ease;
+}
+
+
+.ecos-panel.activo {
+
+    visibility: visible;
+    opacity: 1;
+
+}
+
+
+/* =====================================================
+   CONTENEDOR PRINCIPAL
+===================================================== */
+
+.ecos-panel__contenido {
+
+    width: min(
+        100%,
+        720px
+    );
+
+    max-height:
+        min(
+            88dvh,
+            900px
+        );
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .13
+        );
+
+    border-radius:
+        30px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(28, 20, 48, .97),
+            rgba(14, 13, 22, .98)
+        );
+
+    box-shadow:
+        0 35px 90px
+        rgba(0, 0, 0, .65);
+
+}
+
+
+/* =====================================================
+   ENCABEZADO
+===================================================== */
+
+.ecos-panel__encabezado {
+
+    position: relative;
+
+    padding:
+        28px
+        82px
+        22px
+        30px;
+
+    border-bottom:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .10
+        );
+
+}
+
+
+.ecos-panel__subtitulo {
+
+    margin: 0 0 4px;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .66
+        );
+
+    font-size:
+        .9rem;
+
+    letter-spacing:
+        .04em;
+
+}
+
+
+.ecos-panel__titulo {
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(
+            2rem,
+            7vw,
+            2.8rem
+        );
+
+    line-height: 1;
+
+}
+
+
+.ecos-panel__cerrar {
+
+    position: absolute;
+
+    top: 22px;
+    right: 22px;
+
+    width: 54px;
+    height: 54px;
+
+    display: grid;
+    place-items: center;
+
+    padding: 0;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .10
+        );
+
+    border-radius: 50%;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .08
+        );
+
+    color: #ffffff;
+
+    font-size: 1.8rem;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        background .2s ease;
+
+}
+
+
+.ecos-panel__cerrar:hover {
+
+    transform: scale(1.05);
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .14
+        );
+
+}
+
+
+/* =====================================================
+   LISTA DE ECOS
+===================================================== */
+
+.ecos-panel__lista {
+
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+
+    padding:
+        22px
+        24px;
+
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+
+}
+
+
+/* =====================================================
+   TARJETA INDIVIDUAL DE ECO
+===================================================== */
+
+.eco-item {
+
+    display: grid;
+
+    grid-template-columns:
+        48px
+        minmax(0, 1fr);
+
+    gap:
+        0
+        14px;
+
+    padding:
+        18px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .09
+        );
+
+    border-radius:
+        22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, .055),
+            rgba(255, 255, 255, .018)
+        );
+
+    box-shadow:
+        inset 0 1px 0
+        rgba(
+            255,
+            255,
+            255,
+            .035
+        );
+
+}
+
+
+.eco-item__avatar {
+
+    grid-row:
+        1 / span 3;
+
+    width: 48px;
+    height: 48px;
+
+    display: grid;
+    place-items: center;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .15
+        );
+
+    border-radius: 50%;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .08
+        );
+
+    color: #ffffff;
+
+    font-weight: 700;
+
+    overflow: hidden;
+
+}
+
+
+.eco-item__avatar img {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+}
+
+
+.eco-item__cabecera {
+
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    column-gap: 8px;
+    row-gap: 4px;
+
+}
+
+
+.eco-item__autor {
+
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    line-height: 1.25;
+
+    overflow-wrap: anywhere;
+
+}
+
+
+.eco-item__rango {
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 5px;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .58
+        );
+
+    font-size: .84rem;
+
+    white-space: nowrap;
+
+}
+
+
+.eco-item__fecha {
+
+    margin-top: 5px;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .42
+        );
+
+    font-size: .82rem;
+
+    line-height: 1.3;
+
+}
+
+
+.eco-item__mensaje {
+
+    grid-column: 2;
+
+    margin:
+        12px
+        0
+        0;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .88
+        );
+
+    font-size:
+        .98rem;
+
+    line-height:
+        1.55;
+
+    white-space:
+        pre-wrap;
+
+    overflow-wrap:
+        anywhere;
+
+}
+
+
+.eco-item__acciones {
+
+    grid-column: 2;
+
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: 12px;
+
+}
+
+
+.eco-item__eliminar {
+
+    padding:
+        7px
+        12px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            120,
+            140,
+            .20
+        );
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(
+            255,
+            90,
+            115,
+            .08
+        );
+
+    color:
+        rgba(
+            255,
+            180,
+            190,
+            .82
+        );
+
+    font-size:
+        .78rem;
+
+    font-weight:
+        600;
+
+    cursor:
+        pointer;
+
+}
+
+
+/* =====================================================
+   FORMULARIO
+===================================================== */
+
+.ecos-panel__formulario {
+
+    flex-shrink: 0;
+
+    padding:
+        20px
+        24px
+        24px;
+
+    border-top:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .10
+        );
+
+    background:
+        rgba(
+            10,
+            9,
+            17,
+            .46
+        );
+
+}
+
+
+.ecos-panel__etiqueta {
+
+    display: block;
+
+    margin-bottom:
+        12px;
+
+    color: #ffffff;
+
+    font-size:
+        1.05rem;
+
+    font-weight:
+        600;
+
+}
+
+
+.ecos-panel textarea {
+
+    width: 100%;
+    min-height: 118px;
+
+    resize: vertical;
+
+    padding:
+        17px
+        18px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .13
+        );
+
+    border-radius:
+        20px;
+
+    outline: none;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .065
+        );
+
+    color: #ffffff;
+
+    font: inherit;
+
+    line-height:
+        1.5;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+
+}
+
+
+.ecos-panel textarea::placeholder {
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .38
+        );
+
+}
+
+
+.ecos-panel textarea:focus {
+
+    border-color:
+        rgba(
+            148,
+            112,
+            255,
+            .68
+        );
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .08
+        );
+
+    box-shadow:
+        0 0 0 4px
+        rgba(
+            123,
+            82,
+            255,
+            .12
+        );
+
+}
+
+
+.ecos-panel__pie-formulario {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-top:
+        14px;
+
+}
+
+
+.ecos-panel__contador {
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .50
+        );
+
+    font-size:
+        .85rem;
+
+}
+
+
+.ecos-panel__responder {
+
+    min-width:
+        130px;
+
+    padding:
+        13px
+        22px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .10
+        );
+
+    border-radius:
+        999px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(111, 78, 220, .95),
+            rgba(74, 48, 155, .95)
+        );
+
+    color: #ffffff;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+}
+
+
+.ecos-panel__responder:disabled {
+
+    opacity: .38;
+    cursor: not-allowed;
+
+}
+
+
+/* =====================================================
+   MÓVIL
+===================================================== */
+
+@media (
+    max-width: 600px
+) {
+
+    .ecos-panel {
+
+        align-items:
+            flex-end;
+
+        padding:
+            0;
+
+    }
+
+
+    .ecos-panel__contenido {
+
+        width: 100%;
+
+        max-height:
+            calc(
+                100dvh -
+                env(safe-area-inset-top)
+            );
+
+        border-radius:
+            28px
+            28px
+            0
+            0;
+
+    }
+
+
+    .ecos-panel__encabezado {
+
+        padding:
+            24px
+            76px
+            18px
+            22px;
+
+    }
+
+
+    .ecos-panel__cerrar {
+
+        top: 18px;
+        right: 18px;
+
+        width: 48px;
+        height: 48px;
+
+    }
+
+
+    .ecos-panel__lista {
+
+        gap: 12px;
+
+        padding:
+            18px
+            16px;
+
+    }
+
+
+    .eco-item {
+
+        grid-template-columns:
+            42px
+            minmax(0, 1fr);
+
+        gap:
+            0
+            12px;
+
+        padding:
+            15px;
+
+        border-radius:
+            19px;
+
+    }
+
+
+    .eco-item__avatar {
+
+        width: 42px;
+        height: 42px;
+
+        font-size:
+            .85rem;
+
+    }
+
+
+    .eco-item__autor {
+
+        font-size:
+            .94rem;
+
+    }
+
+
+    .eco-item__mensaje {
+
+        font-size:
+            .93rem;
+
+    }
+
+
+    .ecos-panel__formulario {
+
+        padding:
+            17px
+            16px
+            max(
+                20px,
+                env(safe-area-inset-bottom)
+            );
+
+    }
+
+
+    .ecos-panel textarea {
+
+        min-height:
+            105px;
+
+    }
+
+}
+
+
