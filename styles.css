@@ -195,7 +195,7 @@ body > footer {
 }
 
 
-.banner img{
+.banner > img{
 
     position:absolute;
 
@@ -224,6 +224,8 @@ body > footer {
         object-position .6s ease;
 
 }
+
+
 /* Pantallas de escritorio amplias */
 
 @media(min-width:1600px){
@@ -239,6 +241,7 @@ body > footer {
 
 }
 
+
 @media(min-width:2200px){
 
     :root{
@@ -252,6 +255,7 @@ body > footer {
 
 }
 
+
 @media(min-width:1600px){
 
     .banner::after{
@@ -261,6 +265,7 @@ body > footer {
 
 }
 
+
 @media(min-width:2200px){
 
     .banner::after{
@@ -269,6 +274,7 @@ body > footer {
     }
 
 }
+
 
 /* Degradado final que une el banner con el fondo */
 
@@ -303,6 +309,7 @@ body > footer {
 
 }
 
+
 /* Capa oscura general */
 
 .overlay{
@@ -327,26 +334,252 @@ body > footer {
 
 
 /* =========================
-   03. TÍTULO DE LA BANDA
+   03. LOGOTIPO DE LA BANDA
 ========================= */
 
 .titulo-blog{
+
+    position:relative;
+
     text-align:center;
+
     margin-top:80px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
 }
 
-.titulo-blog h1{
-    font-size:60px;
-    letter-spacing:6px;
-    text-transform:uppercase;
-    font-weight:700;
+
+.logo-banner{
+
+    position:relative;
+
+    display:block;
+
+    width:min(760px,90vw);
+
+    max-width:100%;
+
+    height:auto;
+
+    margin:0 auto;
+
+    z-index:2;
+
+    object-fit:contain;
+
+    user-select:none;
+
+    -webkit-user-drag:none;
+
+    filter:
+        drop-shadow(
+            0 0 10px
+            rgba(255,255,255,.15)
+        );
+
 }
+
 
 .titulo-blog p{
+
+    position:relative;
+
+    z-index:2;
+
     font-size:22px;
+
     margin-top:15px;
+
     letter-spacing:3px;
+
     color:#ddd;
+
+}
+
+
+/* Destellos alrededor del logotipo */
+
+.titulo-blog::before,
+.titulo-blog::after{
+
+    content:"✦";
+
+    position:absolute;
+
+    z-index:3;
+
+    color:white;
+
+    font-size:26px;
+
+    line-height:1;
+
+    pointer-events:none;
+
+    text-shadow:
+        0 0 8px rgba(255,255,255,.85),
+        0 0 18px rgba(255,255,255,.45);
+
+    animation:
+        brilloTitulo
+        2.8s ease-in-out infinite;
+
+}
+
+
+.titulo-blog::before{
+
+    left:14%;
+
+    top:20%;
+
+}
+
+
+.titulo-blog::after{
+
+    right:14%;
+
+    top:30%;
+
+    animation-delay:1.2s;
+
+}
+
+
+@keyframes brilloTitulo{
+
+    0%,
+    100%{
+
+        opacity:.18;
+
+        transform:scale(.75) rotate(0deg);
+
+    }
+
+    50%{
+
+        opacity:1;
+
+        transform:scale(1.25) rotate(12deg);
+
+    }
+
+}
+
+
+/* =========================
+   RESPONSIVE DEL LOGOTIPO
+========================= */
+
+@media(max-width:768px){
+
+    .overlay{
+
+        padding:
+            24px
+            18px;
+
+    }
+
+
+    .titulo-blog{
+
+        margin-top:55px;
+
+    }
+
+
+    .logo-banner{
+
+        width:92%;
+
+        max-width:560px;
+
+    }
+
+
+    .titulo-blog p{
+
+        max-width:620px;
+
+        font-size:18px;
+
+        line-height:1.65;
+
+        letter-spacing:2px;
+
+        margin-top:18px;
+
+    }
+
+
+    .titulo-blog::before{
+
+        left:4%;
+
+        top:18%;
+
+        font-size:20px;
+
+    }
+
+
+    .titulo-blog::after{
+
+        right:4%;
+
+        top:30%;
+
+        font-size:20px;
+
+    }
+
+}
+
+
+@media(max-width:480px){
+
+    .titulo-blog{
+
+        margin-top:50px;
+
+    }
+
+
+    .logo-banner{
+
+        width:100%;
+
+    }
+
+
+    .titulo-blog p{
+
+        font-size:16px;
+
+        line-height:1.6;
+
+        letter-spacing:1.5px;
+
+        margin-top:14px;
+
+    }
+
+
+    .titulo-blog::before,
+    .titulo-blog::after{
+
+        font-size:17px;
+
+    }
+
 }
 
 
