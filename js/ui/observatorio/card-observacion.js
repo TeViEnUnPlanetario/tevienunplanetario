@@ -813,8 +813,8 @@ function crearContenido(
             "observacion-card__tipo";
 
 
-        tipo.textContent =
-            "Observación oficial";
+       tipo.textContent =
+    "Observación oficial · Sistema Planetario";
 
 
         contenido.appendChild(

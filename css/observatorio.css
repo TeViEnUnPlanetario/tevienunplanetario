@@ -1371,21 +1371,99 @@ body.observatorio-pagina {
 }
 
 
+/* ==================================================
+   PUBLICACIÓN OFICIAL — SISTEMA PLANETARIO
+================================================== */
+
 .observacion-card--oficial {
-    border-color:
-        rgba(255, 255, 255, 0.19);
+
+    position:
+        relative;
+
+    isolation:
+        isolate;
+
+    border:
+        1px solid
+        rgba(255, 214, 102, 0.52);
+
+    background:
+        l  linear-gradient(
+            145deg,
+            rgba(0,0,0,.76),
+            rgba(4,4,7,.58)
+        );
+
+    box-shadow:
+        0 26px 80px
+        rgba(0, 0, 0, 0.42),
+
+        inset 0 1px 0
+        rgba(255, 234, 169, 0.22),
+
+        0 0 18px
+        rgba(255, 201, 70, 0.16),
+
+        0 0 42px
+        rgba(255, 188, 46, 0.08);
+
+}
+
+.observacion-card--oficial
+.observacion-card__contenido p{
+
+    border:
+        1px solid
+        rgba(255,214,102,.18);
 
     background:
         linear-gradient(
             145deg,
-            rgba(255, 255, 255, 0.095),
-            rgba(255, 255, 255, 0.03)
+            rgba(39,28,8,.82),
+            rgba(17,12,4,.72)
         );
 
     box-shadow:
-        0 26px 80px rgba(0, 0, 0, 0.42),
-        inset 0 1px 0 rgba(255, 255, 255, 0.13),
-        0 0 45px rgba(255, 255, 255, 0.035);
+        inset 0 1px 0
+        rgba(255,232,170,.05);
+
+}
+
+.observacion-card--oficial::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        -1px;
+
+    z-index:
+        -1;
+
+    border-radius:
+        inherit;
+
+    pointer-events:
+        none;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 226, 139, 0.52),
+            rgba(255, 184, 43, 0.08) 38%,
+            transparent 62%,
+            rgba(255, 210, 90, 0.2)
+        );
+
+    filter:
+        blur(14px);
+
+    opacity:
+        0.42;
+
 }
 
 
@@ -1516,71 +1594,104 @@ body.observatorio-pagina {
 
 
 .observacion-card__contenido {
-    position:
-        relative;
-
-    z-index:
-        1;
-
-    margin-top:
-        22px;
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    margin-top: 22px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
 }
 
 
+.observacion-card--oficial
 .observacion-card__tipo {
-    display:
-        inline-flex;
-
-    margin-bottom:
-        13px;
-
-    padding:
-        6px 9px;
-
-    border:
-        1px solid rgba(255, 255, 255, 0.12);
-
-    border-radius:
-        999px;
 
     color:
-        rgba(255, 255, 255, 0.58);
+        rgba(255, 226, 145, 0.9);
+
+    border-color:
+        rgba(255, 210, 92, 0.38);
 
     background:
-        rgba(255, 255, 255, 0.035);
+        linear-gradient(
+            145deg,
+            rgba(255, 204, 70, 0.12),
+            rgba(255, 180, 40, 0.045)
+        );
 
-    font-size:
-        0.59rem;
+    box-shadow:
+        inset 0 1px 0
+        rgba(255, 244, 204, 0.11),
 
-    font-weight:
-        650;
+        0 0 16px
+        rgba(255, 194, 54, 0.08);
 
-    letter-spacing:
-        0.1em;
+}
 
-    text-transform:
-        uppercase;
+.observacion-card--oficial
+.observacion-card__verificado {
+
+    color:
+        #ffe59a;
+
+    border-color:
+        rgba(255, 218, 110, 0.45);
+
+    background:
+        rgba(255, 193, 48, 0.14);
+
+    box-shadow:
+        0 0 14px
+        rgba(255, 197, 55, 0.25);
+
+}
+
+.observacion-card--oficial:hover {
+
+    border-color:
+        rgba(255, 222, 126, 0.78);
+
+    box-shadow:
+        0 32px 90px
+        rgba(0, 0, 0, 0.48),
+
+        inset 0 1px 0
+        rgba(255, 242, 194, 0.3),
+
+        0 0 25px
+        rgba(255, 205, 80, 0.24),
+
+        0 0 60px
+        rgba(255, 183, 28, 0.12);
+
 }
 
 
 .observacion-card__contenido p {
-    margin:
-        0;
-
-    color:
-        rgba(255, 255, 255, 0.78);
-
-    font-size:
-        0.94rem;
-
-    line-height:
-        1.82;
-
-    white-space:
-        pre-wrap;
-
-    overflow-wrap:
-        anywhere;
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 20px 22px;
+    border: 1px solid rgba(255, 255, 255, 0.065);
+    border-radius: 18px;
+    color: rgba(255, 255, 255, 0.82);
+    background: linear-gradient(
+        145deg,
+        rgba(0, 0, 0, 0.76),
+        rgba(4, 4, 7, 0.58)
+    );
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.025),
+        0 12px 28px rgba(0, 0, 0, 0.15);
+    font-size: 0.94rem;
+    line-height: 1.75;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
 }
 
 
@@ -1984,6 +2095,11 @@ body.observatorio-pagina {
         320px;
     }
 
+    .observacion-card__contenido p {
+        padding: 17px 18px;
+        border-radius: 16px;
+    }
+
 }
 
 
@@ -2095,74 +2211,6 @@ body.observatorio-pagina
 }
 
 
-/* Contenido */
-
-body.observatorio-pagina
-.observacion-card
-.observacion-card__contenido {
-    position: relative !important;
-
-    display: block !important;
-
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-
-    margin: 22px 0 0 !important;
-    padding: 0 !important;
-
-    background: transparent !important;
-
-    text-align: left !important;
-}
-
-
-/* Texto */
-
-body.observatorio-pagina
-.observacion-card
-.observacion-card__contenido p {
-    position: static !important;
-
-    display: block !important;
-
-    width: 100% !important;
-    max-width: 680px !important;
-
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    color:
-        rgba(255, 255, 255, 0.78) !important;
-
-    background:
-        transparent !important;
-
-    font-size:
-        0.94rem !important;
-
-    line-height:
-        1.82 !important;
-
-    text-align:
-        left !important;
-
-    white-space:
-        normal !important;
-
-    overflow-wrap:
-        anywhere !important;
-
-    transform:
-        none !important;
-}
-
-
 /* Acciones */
 
 body.observatorio-pagina
@@ -2234,7 +2282,7 @@ body.observatorio-pagina
     .observacion-card
     .observacion-card__contenido {
         margin-top:
-            18px !important;
+            28px !important;
     }
 
 
@@ -2256,22 +2304,8 @@ body.observatorio-pagina
 
 body.observatorio-pagina
 .observacion-card
-.observacion-card__contenido,
-
-body.observatorio-pagina
-.observacion-card
 .observacion-card__acciones {
-    background:
-        transparent !important;
-}
-
-body.observatorio-pagina
-.observacion-card__contenido {
-    box-shadow:
-        none !important;
-
-    border:
-        none !important;
+    background: transparent !important;
 }
 
 .crear-observacion__contador--limite {
@@ -2404,15 +2438,11 @@ body.observatorio-pagina
 }
 
 
-/* Elimina cualquier panel negro heredado dentro de la tarjeta */
+/* Mantiene transparentes encabezado, acciones e identidad */
 
 body.observatorio-pagina
 .observacion-card
 .observacion-card__header,
-
-body.observatorio-pagina
-.observacion-card
-.observacion-card__contenido,
 
 body.observatorio-pagina
 .observacion-card
@@ -4656,3 +4686,171 @@ body.ecos-panel-abierto {
         1px solid rgba(255,255,255,.08);
 
 }
+
+
+/* ==================================================
+   AJUSTE FINAL DEL CONTENIDO DE OBSERVACIONES
+   Texto integrado, sin recuadro negro
+================================================== */
+
+body.observatorio-pagina
+.observatorio-feed
+.observacion-card
+.observacion-card__contenido {
+
+    position:
+        relative !important;
+
+    display:
+        block !important;
+
+    box-sizing:
+        border-box !important;
+
+    width:
+        100% !important;
+
+    height:
+        auto !important;
+
+    min-height:
+        0 !important;
+
+    max-height:
+        none !important;
+
+    margin:
+        22px 0 0 !important;
+
+    padding:
+        0 !important;
+
+    border:
+        0 !important;
+
+    border-radius:
+        0 !important;
+
+    background:
+        none !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    box-shadow:
+        none !important;
+
+}
+
+
+body.observatorio-pagina
+.observatorio-feed
+.observacion-card
+.observacion-card__contenido p {
+
+    position:
+        static !important;
+
+    display:
+        block !important;
+
+    box-sizing:
+        border-box !important;
+
+    width:
+        100% !important;
+
+    max-width:
+        none !important;
+
+    height:
+        auto !important;
+
+    min-height:
+        0 !important;
+
+    margin:
+        0 !important;
+
+    padding:
+        0 !important;
+
+    border:
+        0 !important;
+
+    border-radius:
+        0 !important;
+
+    outline:
+        0 !important;
+
+    color:
+        rgba(255, 255, 255, 0.82) !important;
+
+    background:
+        none !important;
+
+    background-color:
+        transparent !important;
+
+    background-image:
+        none !important;
+
+    box-shadow:
+        none !important;
+
+    font-size:
+        0.94rem !important;
+
+    line-height:
+        1.75 !important;
+
+    white-space:
+        pre-wrap !important;
+
+    overflow-wrap:
+        anywhere !important;
+
+}
+
+body.observatorio-pagina
+.observatorio-feed
+.observacion-card
+.observacion-card__brillo {
+
+    display:
+        none !important;
+
+}
+
+/* ==================================================
+   PROTECCIÓN DEL FOOTER DE LAS TARJETAS
+   Evita reglas del footer principal de styles.css
+================================================== */
+
+body.observatorio-pagina
+.observacion-card
+.observacion-card__acciones::before,
+
+body.observatorio-pagina
+.observacion-card
+.observacion-card__acciones::after {
+
+    content:
+        none !important;
+
+    display:
+        none !important;
+
+}
+
+
+
+/* ==================================================
+   NOTA DE MANTENIMIENTO
+   El panel del mensaje se define una sola vez en
+   .observacion-card__contenido p.
+================================================== */

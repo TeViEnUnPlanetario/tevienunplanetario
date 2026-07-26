@@ -7,10 +7,12 @@ import {
     db
 } from "./firebase-config.js";
 
+
 import {
     doc,
     setDoc,
     getDoc,
+    updateDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
@@ -32,6 +34,7 @@ async function crearPerfilUsuario(
 
     }
 
+
     const referenciaUsuario =
         doc(
             db,
@@ -39,10 +42,20 @@ async function crearPerfilUsuario(
             usuario.uid
         );
 
+
+    const nombreSeguro =
+        String(
+            nombre ||
+            usuario.displayName ||
+            usuario.email?.split("@")[0] ||
+            "Nuevo viajero"
+        ).trim();
+
+
     const datosUsuario = {
 
         nombre:
-            nombre.trim(),
+            nombreSeguro,
 
         correo:
             usuario.email || "",
@@ -69,19 +82,25 @@ async function crearPerfilUsuario(
             false,
 
         rol:
-            "usuario"
+            "viajero",
+
+        oficial:
+            false
 
     };
+
 
     await setDoc(
         referenciaUsuario,
         datosUsuario
     );
 
+
     console.log(
         "Perfil creado en Firestore:",
         usuario.uid
     );
+
 
     return datosUsuario;
 
@@ -102,6 +121,7 @@ async function obtenerPerfilUsuario(
 
     }
 
+
     const referenciaUsuario =
         doc(
             db,
@@ -109,10 +129,12 @@ async function obtenerPerfilUsuario(
             uid
         );
 
+
     const documento =
         await getDoc(
             referenciaUsuario
         );
+
 
     if (!documento.exists()) {
 
@@ -120,11 +142,14 @@ async function obtenerPerfilUsuario(
 
     }
 
+
     return {
+
         uid:
             documento.id,
 
         ...documento.data()
+
     };
 
 }
@@ -139,27 +164,103 @@ async function asegurarPerfilUsuario(
     usuario
 ) {
 
+    if (!usuario) {
+
+        throw new Error(
+            "No se recibió un usuario válido."
+        );
+
+    }
+
+
     const perfilExistente =
         await obtenerPerfilUsuario(
             usuario.uid
         );
 
+
     if (perfilExistente) {
+
+        const actualizaciones = {};
+
+
+        if (
+            !perfilExistente.rol ||
+            perfilExistente.rol ===
+                "usuario"
+        ) {
+
+            actualizaciones.rol =
+                "viajero";
+
+        }
+
+
+        if (
+            typeof perfilExistente.oficial !==
+            "boolean"
+        ) {
+
+            actualizaciones.oficial =
+                false;
+
+        }
+
+
+        if (
+            typeof perfilExistente.verificado !==
+            "boolean"
+        ) {
+
+            actualizaciones.verificado =
+                false;
+
+        }
+
+
+        if (
+            Object.keys(
+                actualizaciones
+            ).length > 0
+        ) {
+
+            const referenciaUsuario =
+                doc(
+                    db,
+                    "usuarios",
+                    usuario.uid
+                );
+
+
+            await updateDoc(
+                referenciaUsuario,
+                actualizaciones
+            );
+
+
+            return obtenerPerfilUsuario(
+                usuario.uid
+            );
+
+        }
+
 
         return perfilExistente;
 
     }
 
+
     const nombrePredeterminado =
         usuario.displayName ||
-        usuario.email
-            ?.split("@")[0] ||
+        usuario.email?.split("@")[0] ||
         "Nuevo viajero";
+
 
     await crearPerfilUsuario(
         usuario,
         nombrePredeterminado
     );
+
 
     return obtenerPerfilUsuario(
         usuario.uid

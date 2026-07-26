@@ -25,6 +25,10 @@ import {
     db
 } from "./firebase-config.js";
 
+import {
+    asegurarPerfilUsuario
+} from "./firestore.js";
+
 
 import {
     addDoc,
@@ -83,6 +87,21 @@ export async function guardarObservacion(
     }
 
 
+    const perfil =
+        await asegurarPerfilUsuario(
+            usuario
+        );
+
+
+    if (!perfil) {
+
+        throw new Error(
+            "No fue posible obtener el perfil del viajero."
+        );
+
+    }
+
+
     const texto =
         normalizarTexto(
             datos.texto
@@ -114,8 +133,8 @@ export async function guardarObservacion(
      * Las imágenes en formato Base64 no deben guardarse
      * directamente dentro del documento.
      *
-     * Más adelante se subirán a Firebase Storage y aquí
-     * solamente se guardará su URL.
+     * Cuando Firebase Storage esté disponible,
+     * aquí solamente se guardará la URL final.
      */
 
     if (
@@ -134,33 +153,67 @@ export async function guardarObservacion(
     }
 
 
+    const nombreAutor =
+        normalizarTexto(
+            perfil.nombre
+        ) ||
+        normalizarTexto(
+            usuario.displayName
+        ) ||
+        "Viajero";
+
+
+   const esSistemaPlanetario =
+    perfil.rol ===
+    "sistema-planetario";
+
+const esOficial =
+    esSistemaPlanetario &&
+    perfil.oficial === true;
+
+const estaVerificado =
+    esSistemaPlanetario &&
+    perfil.verificado === true;
+
+
+    const rangoAutor =
+        esOficial
+            ? "Sistema Planetario"
+            : normalizarTexto(
+                perfil.rango
+            ) || "Viajero";
+
+
+    const avatarAutor =
+        normalizarTexto(
+            perfil.foto
+        ) ||
+        normalizarTexto(
+            perfil.avatar
+        ) ||
+        obtenerIniciales(
+            nombreAutor
+        );
+
+
     const observacion = {
 
         autorId:
             usuario.uid,
 
         autorNombre:
-            normalizarTexto(
-                datos.autorNombre ||
-                usuario.displayName ||
-                "Viajero"
-            ),
+            nombreAutor,
 
         autorRango:
-            normalizarTexto(
-                datos.autorRango ||
-                "🌠 Viajero"
-            ),
+            rangoAutor,
 
         autorAvatar:
+            avatarAutor,
+
+        autorRol:
             normalizarTexto(
-                datos.autorAvatar ||
-                obtenerIniciales(
-                    datos.autorNombre ||
-                    usuario.displayName ||
-                    "Viajero"
-                )
-            ),
+                perfil.rol
+            ) || "viajero",
 
         texto:
             texto,
@@ -177,14 +230,10 @@ export async function guardarObservacion(
             0,
 
         oficial:
-            Boolean(
-                datos.oficial
-            ),
+            esOficial,
 
         verificado:
-            Boolean(
-                datos.verificado
-            ),
+            estaVerificado,
 
         editada:
             false,
@@ -212,6 +261,7 @@ export async function guardarObservacion(
 
 }
 
+   
 
 /* ==================================================
    ESCUCHAR OBSERVACIONES
