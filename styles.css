@@ -489,29 +489,22 @@ body > footer {
 
 @media(max-width:768px){
 
-    .overlay{
-
-        padding:
-            24px
-            18px;
-
-    }
-
-
     .titulo-blog{
 
-        margin-top:55px;
+        margin-top:60px;
 
     }
-
 
     .logo-banner{
 
-        width:92%;
+        width:94vw;
+        max-width:580px;
 
-        max-width:560px;
+        height:auto;
 
     }
+
+}
 
 
     .titulo-blog p{
