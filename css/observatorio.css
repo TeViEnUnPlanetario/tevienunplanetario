@@ -3571,67 +3571,122 @@ body.ecos-panel-abierto {
     cursor: default;
 }
 
-
 /* =====================================================
-   CONTENEDOR
+   MODAL DE ECOS — ESTILO OBSERVATORIO
 ===================================================== */
 
-.ecos-panel__contenedor {
-    
-    .ecos-panel__contenedor,
+.ecos-panel__contenedor,
 .ecos-panel__contenedor * {
     box-sizing: border-box;
 }
 
-
 .ecos-panel__contenedor {
-    color: #ffffff;
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    width: min(720px, calc(100% - 24px));
+    max-height: min(88dvh, 900px);
+
+    overflow: hidden;
+
+    color:
+        var(--observatorio-texto);
+
+    border:
+        1px solid
+        var(--observatorio-borde);
+
+    border-radius:
+        var(--observatorio-radio);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.078),
+            rgba(255, 255, 255, 0.028)
+        );
+
+    box-shadow:
+        var(--observatorio-sombra),
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.10),
+        0 0 40px
+        rgba(255, 255, 255, 0.025);
+
+    backdrop-filter:
+        blur(26px);
+
+    -webkit-backdrop-filter:
+        blur(26px);
+
+    isolation:
+        isolate;
+}
+
+
+/* Brillo superior equivalente al de las tarjetas */
+
+.ecos-panel__contenedor::before {
+    content: "";
+
+    position: absolute;
+
+    top: -175px;
+    right: -115px;
+
+    z-index: -1;
+
+    width: 255px;
+    height: 255px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.065);
+
+    filter:
+        blur(52px);
+
+    pointer-events:
+        none;
+}
+
+
+/* Luz ambiental secundaria */
+
+.ecos-panel__contenedor::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: -190px;
+    left: -150px;
+
+    z-index: -1;
+
+    width: 280px;
+    height: 280px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(108, 75, 175, 0.045);
+
+    filter:
+        blur(68px);
+
+    pointer-events:
+        none;
 }
 
 
 .ecos-panel__contenedor button,
 .ecos-panel__contenedor textarea {
-    font-family: inherit;
-}
-
-.ecos-panel__contenedor {
-    color: #ffffff;
-}
-
-.ecos-panel__titulo,
-.eco-item__nombre,
-.eco-item__texto,
-.ecos-formulario__label {
-    color: #ffffff;
-}
-
-    position: relative;
-    z-index: 1;
-
-    width: min(100%, 720px);
-    max-height: min(88dvh, 900px);
-
-    display: flex;
-    flex-direction: column;
-
-    overflow: hidden;
-
-    border:
-        1px solid
-        rgba(255, 255, 255, .13);
-
-    border-radius: 30px;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(24, 19, 40, .98),
-            rgba(12, 12, 18, .98)
-        );
-
-    box-shadow:
-        0 35px 90px
-        rgba(0, 0, 0, .65);
+    font-family:
+        inherit;
 }
 
 
@@ -3641,6 +3696,7 @@ body.ecos-panel-abierto {
 
 .ecos-panel__header {
     position: relative;
+    z-index: 1;
 
     display: flex;
     align-items: flex-start;
@@ -3655,73 +3711,136 @@ body.ecos-panel-abierto {
 
     border-bottom:
         1px solid
-        rgba(255, 255, 255, .09);
+        rgba(255, 255, 255, 0.075);
+
+    background:
+        transparent;
 }
 
 
 .ecos-panel__etiqueta {
     display: block;
 
-    margin-bottom: 5px;
+    margin-bottom:
+        5px;
 
     color:
-        rgba(255, 255, 255, .62);
+        var(--observatorio-texto-suave);
 
-    font-size: .88rem;
-    letter-spacing: .04em;
+    font-size:
+        0.88rem;
+
+    font-weight:
+        400;
+
+    letter-spacing:
+        0.035em;
 }
 
 
 .ecos-panel__titulo {
-    margin: 0;
+    margin:
+        0;
 
-    color: #ffffff;
+    color:
+        var(--observatorio-texto);
 
     font-size:
         clamp(2rem, 6vw, 2.7rem);
 
-    line-height: 1;
+    font-weight:
+        650;
+
+    line-height:
+        1;
+
+    letter-spacing:
+        -0.025em;
+
+    text-shadow:
+        0 0 28px
+        rgba(255, 255, 255, 0.07);
 }
 
 
+/* Botón cerrar */
+
 .ecos-panel__cerrar {
-    flex: 0 0 auto;
+    flex:
+        0 0 auto;
 
-    width: 52px;
-    height: 52px;
+    display:
+        grid;
 
-    display: grid;
-    place-items: center;
+    place-items:
+        center;
 
-    padding: 0;
+    width:
+        52px;
+
+    height:
+        52px;
+
+    padding:
+        0;
 
     border:
         1px solid
-        rgba(255, 255, 255, .10);
+        rgba(255, 255, 255, 0.16);
 
-    border-radius: 50%;
+    border-radius:
+        50%;
+
+    color:
+        rgba(255, 255, 255, 0.94);
 
     background:
-        rgba(255, 255, 255, .08);
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.12),
+            rgba(255, 255, 255, 0.045)
+        );
 
-    color: #ffffff;
+    box-shadow:
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.12),
+        0 10px 26px
+        rgba(0, 0, 0, 0.18);
 
-    font-size: 2rem;
-    line-height: 1;
+    font-size:
+        2rem;
 
-    cursor: pointer;
+    line-height:
+        1;
+
+    cursor:
+        pointer;
 
     transition:
-        transform .2s ease,
-        background .2s ease;
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
 
 .ecos-panel__cerrar:hover {
-    transform: scale(1.05);
+    border-color:
+        var(--observatorio-borde-activo);
 
     background:
-        rgba(255, 255, 255, .14);
+        rgba(255, 255, 255, 0.11);
+
+    transform:
+        scale(1.05);
+
+    box-shadow:
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.16),
+        0 12px 28px
+        rgba(0, 0, 0, 0.24),
+        0 0 24px
+        rgba(255, 255, 255, 0.055);
 }
 
 
@@ -3730,35 +3849,62 @@ body.ecos-panel-abierto {
 ===================================================== */
 
 .ecos-panel__contenido {
-    flex: 1;
+    position:
+        relative;
 
-    min-height: 0;
+    z-index:
+        1;
 
-    overflow-y: auto;
-    overscroll-behavior: contain;
+    flex:
+        1;
+
+    min-height:
+        0;
+
+    overflow-y:
+        auto;
+
+    overscroll-behavior:
+        contain;
+
+    background:
+        transparent;
 }
 
 
 .ecos-panel__estado {
-    margin: 0;
+    margin:
+        0;
 
-    padding: 28px 24px;
+    padding:
+        48px 28px;
 
     color:
-        rgba(255, 255, 255, .58);
+        var(--observatorio-texto-suave);
 
-    text-align: center;
-    line-height: 1.5;
+    text-align:
+        center;
+
+    font-size:
+        1rem;
+
+    line-height:
+        1.6;
 }
 
 
 .ecos-lista {
-    display: flex;
-    flex-direction: column;
+    display:
+        flex;
 
-    gap: 14px;
+    flex-direction:
+        column;
 
-    padding: 22px 24px;
+    gap:
+        14px;
+
+    padding:
+        22px 24px;
 }
 
 
@@ -3767,164 +3913,234 @@ body.ecos-panel-abierto {
 ===================================================== */
 
 .eco-item {
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         48px
         minmax(0, 1fr);
 
-    gap: 14px;
+    gap:
+        14px;
 
-    padding: 18px;
+    padding:
+        18px;
 
     border:
         1px solid
-        rgba(255, 255, 255, .09);
+        rgba(255, 255, 255, 0.09);
 
-    border-radius: 22px;
+    border-radius:
+        20px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(255, 255, 255, .055),
-            rgba(255, 255, 255, .018)
+            rgba(255, 255, 255, 0.055),
+            rgba(255, 255, 255, 0.018)
         );
 
     box-shadow:
         inset 0 1px 0
-        rgba(255, 255, 255, .035);
+        rgba(255, 255, 255, 0.04);
+
+    transition:
+        border-color 0.3s ease,
+        background 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.eco-item:hover {
+    border-color:
+        rgba(255, 255, 255, 0.16);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.075),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.075),
+        0 14px 38px
+        rgba(0, 0, 0, 0.18);
 }
 
 
 .eco-item__avatar {
-    width: 48px;
-    height: 48px;
+    display:
+        grid;
 
-    display: grid;
-    place-items: center;
+    place-items:
+        center;
+
+    width:
+        48px;
+
+    height:
+        48px;
+
+    overflow:
+        hidden;
 
     border:
         1px solid
-        rgba(255, 255, 255, .14);
+        rgba(255, 255, 255, 0.17);
 
-    border-radius: 50%;
+    border-radius:
+        50%;
+
+    color:
+        #ffffff;
 
     background:
-        rgba(255, 255, 255, .08);
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.16),
+            rgba(255, 255, 255, 0.045)
+        );
 
-    color: #ffffff;
+    box-shadow:
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.14),
+        0 0 22px
+        rgba(255, 255, 255, 0.05);
 
-    font-size: .9rem;
-    font-weight: 700;
+    font-size:
+        0.9rem;
 
-    overflow: hidden;
+    font-weight:
+        700;
 }
 
 
 .eco-item__avatar img {
-    width: 100%;
-    height: 100%;
+    display:
+        block;
 
-    object-fit: cover;
+    width:
+        100%;
+
+    height:
+        100%;
+
+    object-fit:
+        cover;
 }
 
 
 .eco-item__contenido {
-    min-width: 0;
+    min-width:
+        0;
 }
 
 
 .eco-item__encabezado {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
+    display:
+        flex;
 
-    gap: 14px;
+    align-items:
+        flex-start;
+
+    justify-content:
+        space-between;
+
+    gap:
+        14px;
 }
 
 
 .eco-item__autor {
-    min-width: 0;
+    display:
+        flex;
 
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+    align-items:
+        center;
 
-    column-gap: 8px;
-    row-gap: 4px;
+    flex-wrap:
+        wrap;
+
+    min-width:
+        0;
+
+    column-gap:
+        8px;
+
+    row-gap:
+        4px;
 }
 
 
 .eco-item__nombre {
-    color: #ffffff;
+    color:
+        rgba(255, 255, 255, 0.93);
 
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1.25;
+    font-size:
+        1rem;
 
-    overflow-wrap: anywhere;
+    font-weight:
+        700;
+
+    line-height:
+        1.25;
+
+    overflow-wrap:
+        anywhere;
 }
 
 
 .eco-item__rango {
     color:
-        rgba(255, 255, 255, .56);
+        var(--observatorio-texto-tenue);
 
-    font-size: .84rem;
-    line-height: 1.25;
+    font-size:
+        0.84rem;
 
-    white-space: nowrap;
+    line-height:
+        1.25;
+
+    white-space:
+        nowrap;
 }
 
 
 .eco-item__acciones {
-    flex: 0 0 auto;
+    display:
+        flex;
 
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+    flex:
+        0 0 auto;
 
-    gap: 8px;
+    align-items:
+        center;
+
+    flex-wrap:
+        wrap;
+
+    justify-content:
+        flex-end;
+
+    gap:
+        8px;
 }
 
 
 .eco-item__fecha {
     color:
-        rgba(255, 255, 255, .42);
+        var(--observatorio-texto-tenue);
 
-    font-size: .78rem;
-    white-space: nowrap;
-}
+    font-size:
+        0.78rem;
 
-
-.eco-item__eliminar {
-    padding:
-        6px
-        10px;
-
-    border:
-        1px solid
-        rgba(255, 120, 140, .22);
-
-    border-radius: 999px;
-
-    background:
-        rgba(255, 90, 115, .08);
-
-    color:
-        rgba(255, 185, 195, .88);
-
-    font-size: .74rem;
-    font-weight: 600;
-
-    cursor: pointer;
-}
-
-
-.eco-item__eliminar:disabled {
-    opacity: .45;
-    cursor: not-allowed;
+    white-space:
+        nowrap;
 }
 
 
@@ -3935,13 +4151,57 @@ body.ecos-panel-abierto {
         0;
 
     color:
-        rgba(255, 255, 255, .88);
+        rgba(255, 255, 255, 0.78);
 
-    font-size: .97rem;
-    line-height: 1.55;
+    font-size:
+        0.97rem;
 
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
+    line-height:
+        1.6;
+
+    white-space:
+        pre-wrap;
+
+    overflow-wrap:
+        anywhere;
+}
+
+
+.eco-item__eliminar {
+    padding:
+        6px
+        10px;
+
+    border:
+        1px solid
+        rgba(255, 120, 140, 0.22);
+
+    border-radius:
+        999px;
+
+    color:
+        rgba(255, 185, 195, 0.88);
+
+    background:
+        rgba(255, 90, 115, 0.08);
+
+    font-size:
+        0.74rem;
+
+    font-weight:
+        600;
+
+    cursor:
+        pointer;
+}
+
+
+.eco-item__eliminar:disabled {
+    opacity:
+        0.45;
+
+    cursor:
+        not-allowed;
 }
 
 
@@ -3950,7 +4210,14 @@ body.ecos-panel-abierto {
 ===================================================== */
 
 .ecos-formulario {
-    flex-shrink: 0;
+    position:
+        relative;
+
+    z-index:
+        1;
+
+    flex-shrink:
+        0;
 
     padding:
         20px
@@ -3959,129 +4226,208 @@ body.ecos-panel-abierto {
 
     border-top:
         1px solid
-        rgba(255, 255, 255, .09);
+        rgba(255, 255, 255, 0.075);
 
     background:
-        rgba(9, 8, 15, .55);
+        rgba(0, 0, 0, 0.13);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
 }
 
 
 .ecos-formulario__label {
-    display: block;
+    display:
+        block;
 
-    margin-bottom: 12px;
+    margin-bottom:
+        12px;
 
-    color: #ffffff;
+    color:
+        rgba(255, 255, 255, 0.9);
 
-    font-size: 1rem;
-    font-weight: 600;
+    font-size:
+        1rem;
+
+    font-weight:
+        650;
 }
 
 
 .ecos-formulario__textarea {
-    width: 100%;
-    min-height: 115px;
+    box-sizing:
+        border-box;
 
-    resize: vertical;
+    width:
+        100%;
+
+    min-height:
+        115px;
 
     padding:
         16px
         17px;
 
+    resize:
+        vertical;
+
     border:
         1px solid
-        rgba(255, 255, 255, .13);
+        rgba(255, 255, 255, 0.10);
 
-    border-radius: 20px;
+    border-radius:
+        19px;
 
-    outline: none;
+    outline:
+        none;
+
+    color:
+        var(--observatorio-texto);
 
     background:
-        rgba(255, 255, 255, .065);
+        rgba(0, 0, 0, 0.17);
 
-    color: #ffffff;
+    box-shadow:
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.025);
 
-    font: inherit;
-    line-height: 1.5;
+    font:
+        inherit;
+
+    font-size:
+        0.92rem;
+
+    line-height:
+        1.55;
 
     transition:
-        border-color .2s ease,
-        box-shadow .2s ease,
-        background .2s ease;
+        border-color 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
 
 .ecos-formulario__textarea::placeholder {
     color:
-        rgba(255, 255, 255, .38);
+        rgba(255, 255, 255, 0.28);
 }
 
 
 .ecos-formulario__textarea:focus {
     border-color:
-        rgba(148, 112, 255, .62);
+        rgba(255, 255, 255, 0.25);
 
     background:
-        rgba(255, 255, 255, .08);
+        rgba(0, 0, 0, 0.24);
 
     box-shadow:
         0 0 0 4px
-        rgba(123, 82, 255, .12);
+        rgba(255, 255, 255, 0.035),
+        0 0 30px
+        rgba(255, 255, 255, 0.025);
 }
 
 
 .ecos-formulario__pie {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display:
+        flex;
 
-    gap: 16px;
+    align-items:
+        center;
 
-    margin-top: 14px;
+    justify-content:
+        space-between;
+
+    gap:
+        16px;
+
+    margin-top:
+        14px;
 }
 
 
 .ecos-formulario__contador {
     color:
-        rgba(255, 255, 255, .48);
+        var(--observatorio-texto-tenue);
 
-    font-size: .84rem;
+    font-size:
+        0.84rem;
 }
 
 
 .ecos-formulario__enviar {
-    min-width: 128px;
+    min-width:
+        128px;
+
+    min-height:
+        43px;
 
     padding:
-        12px
+        0
         21px;
 
     border:
         1px solid
-        rgba(255, 255, 255, .10);
+        rgba(255, 255, 255, 0.82);
 
-    border-radius: 999px;
+    border-radius:
+        999px;
+
+    color:
+        #09090d;
 
     background:
-        linear-gradient(
-            135deg,
-            rgba(111, 78, 220, .96),
-            rgba(74, 48, 155, .96)
-        );
+        rgba(255, 255, 255, 0.94);
 
-    color: #ffffff;
+    box-shadow:
+        0 0 26px
+        rgba(255, 255, 255, 0.10);
 
-    font-weight: 700;
+    font:
+        inherit;
 
-    cursor: pointer;
+    font-size:
+        0.7rem;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease,
+        opacity 0.3s ease;
+}
+
+
+.ecos-formulario__enviar:not(:disabled):hover {
+    background:
+        #ffffff;
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 10px 30px
+        rgba(0, 0, 0, 0.22),
+        0 0 30px
+        rgba(255, 255, 255, 0.14);
 }
 
 
 .ecos-formulario__enviar:disabled {
-    opacity: .38;
-    cursor: not-allowed;
-}
+    opacity:
+        0.30;
 
+    cursor:
+        not-allowed;
+}
 
 /* =====================================================
    MÓVIL
@@ -4199,3 +4545,114 @@ body.ecos-panel-abierto {
 
 }
 
+/* ==================================================
+   VISTA PREVIA DE ECOS
+================================================== */
+
+.observacion-card__ecos-ver-todos {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    margin-top: 12px;
+    padding: 10px 18px;
+
+    width: fit-content;
+
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.015)
+        );
+
+    color: var(--observatorio-texto-suave);
+
+    font: inherit;
+    font-size: .88rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    backdrop-filter: blur(12px);
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+
+}
+
+.observacion-card__ecos-ver-todos:hover {
+
+    transform: translateY(-2px);
+
+    color: white;
+
+    border-color:
+        rgba(255,255,255,.18);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.08),
+            rgba(255,255,255,.025)
+        );
+
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.20),
+        0 0 18px rgba(255,255,255,.04);
+
+}
+
+.observacion-card__ecos-ver-todos:focus-visible {
+
+    outline: none;
+
+    border-color:
+        var(--observatorio-borde-activo);
+
+    box-shadow:
+        0 0 0 3px rgba(255,255,255,.08);
+
+}
+
+.observacion-card__ecos-ver-todos:active {
+
+    transform: scale(.97);
+
+}
+
+.observacion-card__ecos-total {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 22px;
+    height: 22px;
+
+    padding: 0 8px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    color: white;
+
+    font-size: .78rem;
+    font-weight: 700;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+}

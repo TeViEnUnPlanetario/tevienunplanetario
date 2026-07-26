@@ -120,9 +120,10 @@ export function crearCardObservacion(
     if (datos.id) {
 
         cargarVistaPreviaEcos(
-            datos.id,
-            vistaEcos
-        );
+    datos.id,
+    vistaEcos,
+    datos.ecos
+);
 
     }
 
@@ -134,7 +135,8 @@ export function crearCardObservacion(
 
 async function cargarVistaPreviaEcos(
     observacionId,
-    contenedor
+    contenedor,
+    totalEcos = 0
 ) {
 
     try {
@@ -188,10 +190,6 @@ async function cargarVistaPreviaEcos(
                         "observacion-card__eco-previo";
 
 
-                    elemento.dataset.accion =
-                        "eco";
-
-
                     elemento.innerHTML = `
 
                         <span
@@ -229,6 +227,23 @@ async function cargarVistaPreviaEcos(
                     `;
 
 
+                    elemento.addEventListener(
+                        "click",
+                        function (
+                            evento
+                        ) {
+
+                            evento.preventDefault();
+                            evento.stopPropagation();
+
+                            solicitarAbrirEcos(
+                                observacionId
+                            );
+
+                        }
+                    );
+
+
                     contenedor.appendChild(
                         elemento
                     );
@@ -251,12 +266,45 @@ async function cargarVistaPreviaEcos(
             "observacion-card__ecos-ver-todos";
 
 
-        verTodos.dataset.accion =
-            "eco";
-
-
         verTodos.textContent =
             "Ver todos los Ecos";
+
+
+        verTodos.addEventListener(
+            "click",
+            function (
+                evento
+            ) {
+
+                evento.preventDefault();
+                evento.stopPropagation();
+
+                solicitarAbrirEcos(
+                    observacionId
+                );
+
+            }
+        );
+
+        verTodos.innerHTML = `
+
+    <span
+        aria-hidden="true">
+        
+    </span>
+
+    <span>
+        ✦ Ver todos los Ecos
+    </span>
+
+    <span
+        class="observacion-card__ecos-total">
+
+        ${totalEcos}
+
+    </span>
+
+`;
 
 
         contenedor.appendChild(
@@ -271,10 +319,46 @@ async function cargarVistaPreviaEcos(
             error
         );
 
+
         contenedor.hidden =
             true;
 
     }
+
+}
+
+function solicitarAbrirEcos(
+    observacionId
+) {
+
+    const id =
+        String(
+            observacionId ?? ""
+        ).trim();
+
+
+    if (!id) {
+
+        console.error(
+            "No se pudo abrir Ecos: falta el ID de la observación."
+        );
+
+        return;
+
+    }
+
+
+    document.dispatchEvent(
+        new CustomEvent(
+            "observatorio:abrir-ecos",
+            {
+                detail: {
+                    observacionId:
+                        id
+                }
+            }
+        )
+    );
 
 }
 
