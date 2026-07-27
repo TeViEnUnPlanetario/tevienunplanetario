@@ -38,6 +38,7 @@ const bannerImg =
 
 const imagenes = [
 
+    "img/banner12.jpg",
     "img/banner1.jpg",
     "img/banner2.jpg",
     "img/banner3.jpg",
