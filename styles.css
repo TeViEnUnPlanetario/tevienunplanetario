@@ -10286,3 +10286,75 @@ transform:
         text-align: center;
     }
 }
+
+/* =========================
+   SHOWS — CORRECCIÓN MÓVIL
+========================= */
+
+@media screen and (max-width: 768px) {
+
+    section.shows {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 50px auto !important;
+        padding: 0 18px !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+    }
+
+    section.shows h2 {
+        width: 100% !important;
+        margin: 0 0 30px !important;
+
+        font-size: clamp(30px, 9vw, 42px) !important;
+        line-height: 1.08 !important;
+
+        overflow-wrap: normal !important;
+        word-break: normal !important;
+    }
+
+    section.shows .tarjetas-shows {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+
+        width: 100% !important;
+        max-width: 430px !important;
+
+        margin: 0 auto !important;
+        gap: 32px !important;
+    }
+
+    section.shows .show {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+
+        margin: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    section.shows .show img {
+        display: block !important;
+
+        width: 100% !important;
+        height: auto !important;
+
+        object-fit: contain !important;
+    }
+
+    section.shows .show > div {
+        width: 100% !important;
+        padding: 22px !important;
+        box-sizing: border-box !important;
+    }
+
+    section.shows .btn-boletos {
+        display: block !important;
+
+        width: 100% !important;
+        padding: 13px 18px !important;
+
+        box-sizing: border-box !important;
+        text-align: center !important;
+    }
+}
