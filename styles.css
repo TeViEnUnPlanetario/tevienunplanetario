@@ -1943,6 +1943,58 @@ z-index:auto;
 
 }
 
+/* =====================================================
+   ESCENA LUNAR — CONFIGURACIÓN LIMPIA
+===================================================== */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+> footer > *:not(.escena-lunar-footer){
+
+    position:relative;
+    z-index:6;
+
+}
+
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.escena-lunar-footer{
+
+    position:absolute;
+
+    left:50%;
+    right:auto;
+    bottom:0;
+
+    width:100vw;
+    max-width:none;
+
+    height:560px;
+
+    margin:0;
+    padding:0;
+
+    transform:translateX(-50%);
+
+    overflow:hidden;
+
+    z-index:2;
+    isolation:isolate;
+
+    pointer-events:none;
+
+    background:#000;
+
+}
+
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.escena-lunar-footer::before{
+
+    content:none;
+    display:none;
+
+}
+
 
 /* = 
 DEGRADADO QUE SUBE SOBRE CONTACTO 
@@ -2005,37 +2057,10 @@ content:none;
 }
 
 
-/* Contenido textual sobre el fondo */
-
-body:not(.pagina-musica-body):not(.pagina-galeria-body)
-footer > *:not(.escena-lunar-footer){
-
-position:relative;
-
-z-index:5;
-}
 
 
-/* La escena lunar permanece dentro del footer */
 
-body:not(.pagina-musica-body):not(.pagina-galeria-body) 
-.escena-lunar-footer{
 
-position:absolute;
-
-left:0;
-right:0;
-bottom:0;
-
-width:100%;
-height:650px;
-
-z-index:20;
-
-overflow:hidden;
-
-pointer-events:none;
-}
 
 
 /* Textos del footer */
@@ -2218,35 +2243,7 @@ box-shadow:
 
 
 
-/* Superficie lunar */
 
-.suelo-lunar{
-
-position:absolute;
-
-left:50%;
-bottom:0;
-
-width:100%;
-min-width:1700px;
-height:auto;
-
-display:block;
-
-z-index:1;
-
-transform:translateX(-50%);
-
-object-fit:cover;
-object-position:center bottom;
-
-filter:
-    brightness(.72)
-    contrast(1.12);
-
-user-select:none;
--webkit-user-drag:none;
-}
 
 /* Anuncio sobre la Luna */
 
@@ -3606,6 +3603,9 @@ MÓVIL
 }
 }
 
+
+
+
 /* Animaciones más suaves en móvil */
 
 @media(max-width:900px){
@@ -3806,21 +3806,9 @@ footer{
 
 }
 
-.escena-lunar-footer{
 
-    height:520px;
 
-}
 
-.suelo-lunar{
-
-    width:125%;
-
-    min-width:900px;
-
-    bottom:-5px;
-
-}
 
 .anuncio-lunar{
 
@@ -3868,13 +3856,7 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body) > footer{
 
 }
 
-body:not(.pagina-musica-body):not(.pagina-galeria-body)
-> footer > *:not(.escena-lunar-footer){
 
-    position:relative;
-    z-index:5;
-
-}
 
 body:not(.pagina-musica-body):not(.pagina-galeria-body)
 footer p{
@@ -3884,59 +3866,10 @@ footer p{
 
 }
 
-.escena-lunar-footer{
-
-    position:relative;
-
-    left:auto;
-    right:auto;
-    bottom:auto;
-
-    width:calc(100% + 36px);
-    height:360px;
-
-    margin:
-        55px
-        -18px
-        0;
-
-    padding:0;
-
-    overflow:hidden;
-
-    z-index:auto;
-    isolation:auto;
-
-    pointer-events:none;
 
 }
-}
 
-.suelo-lunar{
 
-position:absolute;
-
-left:50%;
-bottom:0;
-
-width:auto;
-height:230px;
-min-width:760px;
-
-display:block;
-
-transform:translateX(-50%);
-
-object-fit:cover;
-object-position:center bottom;
-
-z-index:6;
-
-filter:
-    brightness(.72)
-    contrast(1.12)
-    saturate(.70);
-}
 
 .halo-anuncio-lunar{
 
@@ -4392,36 +4325,6 @@ body.pagina-galeria-body::before{
 
 
 
-/* Footer negro */
-
-body:not(.pagina-musica-body):not(.pagina-galeria-body)
-> footer{
-
-    position:relative;
-
-    width:100%;
-
-    min-height:1050px;
-
-    padding:
-        70px
-        20px
-        560px;
-
-    margin:0;
-
-    /*
-       Debe ser visible para permitir que el degradado
-       suba hacia la nebulosa.
-    */
-    overflow:visible;
-
-    background:#000;
-
-    isolation:isolate;
-
-}
-
 @media (max-width:900px){
 
     .menu{
@@ -4495,91 +4398,15 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
 }
 
 
-/* Contenido por encima del fondo y de la Luna */
-
-body:not(.pagina-musica-body):not(.pagina-galeria-body)
-> footer > *:not(.escena-lunar-footer){
-
-    position:relative;
-
-    z-index:6;
-
-}
 
 
-/* =====================================================
-   ESCENA LUNAR
-===================================================== */
-
-body:not(.pagina-musica-body):not(.pagina-galeria-body)
-.escena-lunar-footer{
-
-    position:absolute;
-
-    left:50%;
-    bottom:0;
-
-    width:100vw;
-    height:540px;
-
-    margin:0;
-
-    transform:translateX(-50%);
-
-    overflow:hidden;
-
-    z-index:2;
-
-    pointer-events:none;
-
-    background:#000;
-
-}
 
 
-/*
-   El degradado ya no debe estar sobre la Luna.
-*/
-
-body:not(.pagina-musica-body):not(.pagina-galeria-body)
-.escena-lunar-footer::before{
-
-    content:none;
-
-    display:none;
-
-}
 
 
-/* Superficie lunar limpia */
 
-body:not(.pagina-musica-body):not(.pagina-galeria-body)
-.suelo-lunar{
 
-    position:absolute;
 
-    left:50%;
-    bottom:-4px;
-
-    width:calc(100vw + 12px);
-    min-width:1000px;
-
-    height:auto;
-    min-height:460px;
-
-    display:block;
-
-    transform:translateX(-50%);
-
-    object-fit:cover;
-    object-position:center bottom;
-
-    max-width:none;
-
-    -webkit-mask-image:none;
-    mask-image:none;
-
-}
 
 
 /* Anuncio */
@@ -4615,6 +4442,204 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
     transform:translateX(-50%);
 
     z-index:2;
+
+}
+
+/* =========================================================
+   CAPA GLOBAL DE ESTRELLAS FUGACES
+========================================================= */
+
+.estrellas-fugaces{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:3;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    contain:layout paint;
+
+}
+
+
+/* =========================================================
+   ESTRELLA FUGAZ
+========================================================= */
+
+.estrella-fugaz{
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:
+        var(
+            --longitud-estrella,
+            130px
+        );
+
+    height:1px;
+
+    opacity:0;
+
+    border-radius:999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(200,180,255,.10) 22%,
+            rgba(232,220,255,.65) 72%,
+            rgba(255,255,255,1) 100%
+        );
+
+    filter:
+        drop-shadow(
+            0 0 4px
+            rgba(190,150,255,.55)
+        )
+        drop-shadow(
+            0 0 9px
+            rgba(135,90,220,.30)
+        );
+
+    transform-origin:right center;
+
+    transform:
+        translate3d(
+            var(--inicio-x),
+            var(--inicio-y),
+            0
+        )
+        rotate(
+            var(--angulo-estrella)
+        );
+
+    animation:
+        cruzarUniverso
+        var(
+            --duracion-estrella,
+            1.4s
+        )
+        cubic-bezier(
+            .16,
+            .65,
+            .30,
+            1
+        )
+        forwards;
+
+    will-change:
+        transform,
+        opacity;
+
+}
+
+
+.estrella-fugaz::after{
+
+    content:"";
+
+    position:absolute;
+
+    right:-2px;
+    top:50%;
+
+    width:4px;
+    height:4px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.95);
+
+    box-shadow:
+        0 0 6px
+        rgba(255,255,255,.95),
+        0 0 14px
+        rgba(175,130,255,.75);
+
+    transform:
+        translateY(-50%);
+
+}
+
+
+@keyframes cruzarUniverso{
+
+    0%{
+
+        opacity:0;
+
+        transform:
+            translate3d(
+                var(--inicio-x),
+                var(--inicio-y),
+                0
+            )
+            rotate(
+                var(--angulo-estrella)
+            )
+            scaleX(.65);
+
+    }
+
+    12%{
+
+        opacity:
+            var(
+                --brillo-estrella,
+                .8
+            );
+
+    }
+
+    68%{
+
+        opacity:
+            var(
+                --brillo-estrella,
+                .8
+            );
+
+    }
+
+    100%{
+
+        opacity:0;
+
+        transform:
+            translate3d(
+                calc(
+                    var(--inicio-x) +
+                    var(--recorrido-x)
+                ),
+                calc(
+                    var(--inicio-y) +
+                    var(--recorrido-y)
+                ),
+                0
+            )
+            rotate(
+                var(--angulo-estrella)
+            )
+            scaleX(1);
+
+    }
+
+}
+
+
+@media(prefers-reduced-motion:reduce){
+
+    .estrella-fugaz{
+        display:none;
+    }
 
 }
 
@@ -4698,16 +4723,7 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
 }
 
 
-/* Contenido visible encima */
 
-body:not(.pagina-musica-body):not(.pagina-galeria-body)
-> footer > *:not(.escena-lunar-footer){
-
-    position:relative;
-
-    z-index:6;
-
-}
 
 
 /* Título de plataformas */
@@ -4852,80 +4868,9 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
 }
 
 
-/* =====================================================
-   ESCENA LUNAR
-===================================================== */
-
-body:not(.pagina-musica-body):not(.pagina-galeria-body)
-.escena-lunar-footer{
-
-    position:absolute;
-
-    left:50%;
-    right:auto;
-    bottom:0;
-
-    width:100vw;
-    height:490px;
-
-    margin:0;
-
-    transform:translateX(-50%);
-
-    overflow:hidden;
-
-    z-index:2;
-
-    pointer-events:none;
-
-    background:#000;
-
-}
 
 
-/*
-   Elimina totalmente el degradado sobre la superficie.
-*/
 
-body:not(.pagina-musica-body):not(.pagina-galeria-body)
-.escena-lunar-footer::before{
-
-    content:none;
-
-    display:none;
-
-}
-
-
-/* Superficie lunar de lado a lado */
-
-body:not(.pagina-musica-body):not(.pagina-galeria-body)
-.suelo-lunar{
-
-    position:absolute;
-
-    left:50%;
-    bottom:-5px;
-
-    width:calc(100vw + 16px);
-    min-width:780px;
-
-    height:auto;
-    min-height:440px;
-
-    max-width:none;
-
-    display:block;
-
-    transform:translateX(-50%);
-
-    object-fit:cover;
-    object-position:center bottom;
-
-    -webkit-mask-image:none;
-    mask-image:none;
-
-}
 
 
 /* Anuncio sobre la superficie */
@@ -5100,46 +5045,96 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
 }
 
 
-/* Escena lunar */
+/* =====================================================
+   CONTENEDOR DE LA ESCENA LUNAR
+===================================================== */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+> footer{
+
+    position:relative !important;
+
+    min-height:900px !important;
+    height:auto !important;
+
+    padding:
+        80px
+        20px
+        0 !important;
+
+    margin:0 !important;
+
+    overflow:hidden !important;
+
+}
+/* =====================================================
+   ESCENA LUNAR — ESCRITORIO
+===================================================== */
 
 body:not(.pagina-musica-body):not(.pagina-galeria-body)
 .escena-lunar-footer{
 
+    position:absolute;
+
     left:50%;
+    right:auto;
+    bottom:0;
 
     width:100vw;
-    height:420px;
+    height:560px;
+
+    margin:0;
+    padding:0;
 
     transform:translateX(-50%);
+
+    overflow:hidden;
+
+    z-index:2;
+    isolation:isolate;
+
+    pointer-events:none;
+
+    background-color:#000;
+
+    background-image:
+        url("img/footer/superficie-lunar.png");
+
+    background-repeat:no-repeat;
+
+    background-position:
+        center bottom;
+
+    background-size:
+        cover;
+
+}
+
+/* =====================================================
+   SUELO LUNAR — MÓVIL
+===================================================== */
+
+@media(max-width:900px){
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .suelo-lunar{
+
+        bottom:-5px;
+
+        width:auto;
+        min-width:760px;
+
+        height:230px;
+        min-height:0;
+
+        object-fit:cover;
+        object-position:center bottom;
+
+    }
 
 }
 
 
-/* Superficie sin franja lateral */
-
-body:not(.pagina-musica-body):not(.pagina-galeria-body)
-.suelo-lunar{
-
-    left:50%;
-    bottom:-5px;
-
-    width:calc(100vw + 18px);
-    min-width:1100px;
-
-    height:auto;
-    min-height:380px;
-
-    max-width:none;
-
-    transform:translateX(-50%);
-
-    object-fit:cover;
-    object-position:center bottom;
-
-    -webkit-mask-image:none;
-    mask-image:none;
-
-}
 
 
 /* Anuncio */
@@ -5692,20 +5687,7 @@ text-shadow:
 }
 
 
-/* Superficie con mayor riqueza tonal */
 
-body:not(.pagina-musica-body):not(.pagina-galeria-body) 
-.suelo-lunar{
-
-filter:
-    brightness(.77)
-    contrast(1.15)
-    saturate(.76)
-    drop-shadow(
-        0 -16px 34px
-        rgba(0,0,0,.34)
-    );
-}
 
 
 /* 
@@ -6306,39 +6288,13 @@ animation:
 overflow:visible !important;
 }
 
-/* La escena lunar cubre cualquier partícula residual */
 
-.escena-lunar-footer{
-
-position:relative;
-
-z-index:10;
-
-isolation:isolate;
-
-overflow:hidden;
-}
 
 /* = 
 CAPAS DE LA ESCENA LUNAR 
 = */
 
-.escena-lunar-footer{
 
-position:relative;
-
-/*
-   No colocar z-index aquí.
-   Así los hijos pueden competir
-   con las partículas globales.
-*/
-}
-
-.suelo-lunar{
-
-position:absolute;
-z-index:6;
-}
 
 .halo-anuncio-lunar{
 
@@ -6368,15 +6324,6 @@ isolation:auto !important;
 }
 
 
-/* 
-Tampoco debe encerrar las capas internas. 
-*/
-
-.escena-lunar-footer{ 
-position:relative; 
-z-index:auto !important; 
-isolation:auto !important; 
-}
 
 
 /* Halo encima de las partículas */
@@ -6387,12 +6334,7 @@ z-index:5 !important;
 }
 
 
-/* Suelo lunar encima de partículas y estrellas PNG */
 
-.suelo-lunar{ 
-position:absolute; 
-z-index:6 !important; 
-}
 
 
 /* Anuncio por encima de todo */
@@ -6541,21 +6483,14 @@ footer{
     isolation:auto !important;
 }
 
-.escena-lunar-footer{
-    position:relative;
-    z-index:auto !important;
-    isolation:auto !important;
-}
+
 
 .halo-anuncio-lunar{
     position:absolute;
     z-index:5 !important;
 }
 
-.suelo-lunar{
-    position:absolute;
-    z-index:6 !important;
-}
+
 
 .anuncio-lunar{
     position:absolute;
@@ -6566,18 +6501,11 @@ footer{
 @media(max-width:900px){
 
 footer,
-.escena-lunar-footer{
-    z-index:auto !important;
-    isolation:auto !important;
-}
-
 .halo-anuncio-lunar{
     z-index:5 !important;
 }
 
-.suelo-lunar{
-    z-index:6 !important;
-}
+
 
 .anuncio-lunar{
     z-index:7 !important;
@@ -6611,51 +6539,10 @@ visibility:visible !important;
 }
 
 
-/* Escritorio y ventanas amplias */ 
-@media(min-width:901px){
 
-body:not(.pagina-musica-body):not(.pagina-galeria-body)
-.escena-lunar-footer{
 
-    position:absolute !important;
 
-    left:50% !important;
-    right:auto !important;
-    bottom:0 !important;
 
-    width:100vw !important;
-    max-width:none !important;
-
-    transform:translateX(-50%) !important;
-
-    overflow:hidden;
-
-}
-
-body:not(.pagina-musica-body):not(.pagina-galeria-body)
-.suelo-lunar{
-
-    position:absolute !important;
-
-    left:50% !important;
-    bottom:-5px !important;
-
-    width:calc(100vw + 20px) !important;
-    min-width:calc(100vw + 20px) !important;
-    max-width:none !important;
-
-    height:auto !important;
-    min-height:0 !important;
-
-    transform:translateX(-50%) !important;
-
-    object-fit:cover;
-    object-position:center bottom;
-
-    z-index:6 !important;
-
-}
-}
 
 
 /*  
@@ -8420,10 +8307,11 @@ position: relative;
 
 
 .menu-usuario { 
-position: absolute;
+position:fixed;
 
-top: calc(100% + 14px);
-right: 0;
+top:auto;
+right:20px;
+bottom:20px;
 
 z-index: 10000;
 
@@ -10357,4 +10245,224 @@ transform:
         box-sizing: border-box !important;
         text-align: center !important;
     }
+}
+
+
+/* =========================================================
+   CORRECCIÓN DEFINITIVA — FORMA DE ESTRELLAS FUGACES
+========================================================= */
+
+.estrellas-fugaces .estrella-fugaz{
+
+    display:block !important;
+
+    width:
+        var(
+            --longitud-estrella,
+            130px
+        ) !important;
+
+    height:2px !important;
+
+    min-width:0 !important;
+    min-height:0 !important;
+
+    padding:0 !important;
+    margin:0 !important;
+
+    border:0 !important;
+    border-radius:999px !important;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(200,180,255,.08) 20%,
+            rgba(225,210,255,.55) 68%,
+            rgba(255,255,255,1) 100%
+        ) !important;
+
+    box-shadow:none !important;
+
+    filter:
+        drop-shadow(
+            0 0 3px
+            rgba(255,255,255,.85)
+        )
+        drop-shadow(
+            0 0 7px
+            rgba(170,120,255,.48)
+        ) !important;
+
+    overflow:visible !important;
+
+}
+
+
+/* Cabeza pequeña y luminosa */
+
+.estrellas-fugaces .estrella-fugaz::after{
+
+    content:"" !important;
+
+    position:absolute !important;
+
+    top:50% !important;
+    right:-2px !important;
+
+    width:4px !important;
+    height:4px !important;
+
+    padding:0 !important;
+    margin:0 !important;
+
+    border-radius:50% !important;
+
+    background:#fff !important;
+
+    box-shadow:
+        0 0 5px rgba(255,255,255,.95),
+        0 0 11px rgba(175,130,255,.65) !important;
+
+    filter:none !important;
+
+    transform:
+        translateY(-50%) !important;
+
+}
+
+@media(max-width:900px){
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .escena-lunar-footer{
+
+        height:420px;
+
+    }
+
+}
+
+
+/* =====================================================
+   ESCENA LUNAR
+===================================================== */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+> footer{
+
+    position:relative;
+
+    min-height:1050px;
+
+    padding:
+        80px
+        20px
+        0;
+
+    margin:0;
+
+    overflow:visible;
+
+    text-align:center;
+
+    background:#000;
+}
+
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.escena-lunar-footer{
+
+    position:absolute;
+
+    left:50%;
+    bottom:0;
+
+    width:100vw;
+    height:560px;
+
+    margin:0;
+    padding:0;
+
+    transform:translateX(-50%);
+
+    overflow:hidden;
+
+    z-index:2;
+
+    pointer-events:none;
+
+    background:#000;
+}
+
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.suelo-lunar{
+
+    position:absolute;
+
+    left:50%;
+    bottom:-5px;
+
+    display:block;
+
+    width:calc(100vw + 20px);
+    min-width:1700px;
+    max-width:none;
+
+    height:auto;
+
+    transform:translateX(-50%);
+
+    z-index:3;
+
+    pointer-events:none;
+
+    user-select:none;
+    -webkit-user-drag:none;
+}
+
+
+/* =====================================================
+   CAPAS DE ESTRELLAS
+===================================================== */
+
+.particulas-fondo,
+.estrellas-fugaces{
+
+    position:fixed;
+
+    inset:0;
+
+    width:100vw;
+    height:100vh;
+
+    overflow:hidden;
+
+    pointer-events:none;
+}
+
+
+.estrellas-pintadas-fondo{
+
+    position:absolute;
+
+    left:0;
+
+    width:100%;
+
+    pointer-events:none;
+
+    visibility:visible;
+
+    z-index:1;
+}
+
+
+.estrella-pintada{
+
+    display:block;
+
+    visibility:visible;
+
+    pointer-events:none;
 }

@@ -13,21 +13,42 @@ document.addEventListener("DOMContentLoaded", function(){
     window.innerWidth > 900;
 
 
-    // =========================
-    // CIELO ESTRELLADO
+// =========================
+// CIELO ESTRELLADO
 // =========================
 
 {
 
     const contenedorParticulas =
-        document.createElement("div");
+    document.createElement("div");
 
-    contenedorParticulas.className =
-        "particulas-fondo";
+contenedorParticulas.className =
+    "particulas-fondo";
 
-    document.body.prepend(
-        contenedorParticulas
-    );
+document.body.prepend(
+    contenedorParticulas
+);
+
+
+// =========================
+// CAPA DE ESTRELLAS FUGACES
+// =========================
+
+const contenedorFugaces =
+    document.createElement("div");
+
+contenedorFugaces.className =
+    "estrellas-fugaces";
+
+contenedorFugaces.setAttribute(
+    "aria-hidden",
+    "true"
+);
+
+contenedorParticulas.insertAdjacentElement(
+    "afterend",
+    contenedorFugaces
+);
 
 
     const cantidadEstrellas =
@@ -131,110 +152,7 @@ if (escenaLunar) {
     }
 
 
-    function crearEstrellaFugaz() {
-
-    const estrellaFugaz =
-        document.createElement(
-            "span"
-        );
-
-
-    estrellaFugaz.className =
-        "observatorio-estrella-fugaz";
-
-
-    estrellaFugaz.style.left =
-        numeroAleatorio(
-            8,
-            82
-        ) + "%";
-
-
-    estrellaFugaz.style.top =
-        numeroAleatorio(
-            -6,
-            28
-        ) + "%";
-
-
-    estrellaFugaz.style.setProperty(
-        "--fugaz-duracion",
-        numeroAleatorio(
-            1.1,
-            1.65
-        ) + "s"
-    );
-
-
-    estrellaFugaz.style.setProperty(
-        "--fugaz-longitud",
-        numeroAleatorio(
-            85,
-            135
-        ) + "px"
-    );
-
-
-    const fondo =
-        document.querySelector(
-            ".observatorio-fondo"
-        );
-
-
-    if (!fondo) {
-
-        return;
-
-    }
-
-
-    fondo.appendChild(
-        estrellaFugaz
-    );
-
-
-    estrellaFugaz.addEventListener(
-        "animationend",
-        function () {
-
-            estrellaFugaz.remove();
-
-        },
-        {
-            once:
-                true
-        }
-    );
-
 }
-
-
-    function programarEstrellaFugaz(){
-
-        const espera =
-            8000 + Math.random() * 9000;
-
-
-        setTimeout(function(){
-
-            crearEstrellaFugaz();
-
-            programarEstrellaFugaz();
-
-        },espera);
-
-    }
-
-
-    if(!reduceMotion){
-
-        programarEstrellaFugaz();
-
-    }
-
-}
-
-
 
 // =========================
 // ESTRELLAS PINTADAS PNG
@@ -300,41 +218,73 @@ function crearEstrellasPintadas(){
         "estrellas-pintadas-fondo";
 
 
-    /*
-       La capa comienza exactamente después
-       del borde inferior del banner.
-    */
+/*
+   La capa comienza exactamente después
+   del borde inferior del banner.
+*/
 
-    const inicioEstrellas =
-        bannerPrincipal.offsetTop +
-        bannerPrincipal.offsetHeight;
+const inicioEstrellas =
+    bannerPrincipal
+        .getBoundingClientRect()
+        .bottom +
+    window.scrollY;
 
 
-    const alturaDocumento =
+/*
+   La capa termina al comenzar el footer.
+
+   Usamos el footer y no la escena lunar,
+   porque la escena está posicionada de
+   forma absoluta dentro de él.
+*/
+
+const footerPrincipal =
+    document.querySelector(
+        "body:not(.pagina-musica-body):not(.pagina-galeria-body) > footer"
+    );
+
+
+let finalEstrellas;
+
+
+if (footerPrincipal) {
+
+    finalEstrellas =
+        footerPrincipal
+            .getBoundingClientRect()
+            .top +
+        window.scrollY;
+
+} else {
+
+    finalEstrellas =
         Math.max(
             document.body.scrollHeight,
             document.documentElement.scrollHeight
         );
 
-
-    const alturaDisponible =
-        Math.max(
-            0,
-            alturaDocumento - inicioEstrellas
-        );
+}
 
 
-    capaEstrellas.style.top =
-        inicioEstrellas + "px";
-
-
-    capaEstrellas.style.height =
-        alturaDisponible + "px";
-
-
-    document.body.appendChild(
-        capaEstrellas
+const alturaDisponible =
+    Math.max(
+        0,
+        finalEstrellas -
+        inicioEstrellas
     );
+
+
+capaEstrellas.style.top =
+    inicioEstrellas + "px";
+
+
+capaEstrellas.style.height =
+    alturaDisponible + "px";
+
+
+document.body.appendChild(
+    capaEstrellas
+);
 
 
     const esMovil =
@@ -786,77 +736,325 @@ document.addEventListener(
 );
 
 
+
 // =========================================================
-// GENERADOR DE ESTRELLAS FUGACES
+// GENERADOR CINEMATOGRÁFICO DE ESTRELLAS FUGACES
 // =========================================================
 
 document.addEventListener(
     "DOMContentLoaded",
-    function () {
+    function(){
 
         const contenedor =
             document.querySelector(
-                ".particulas-fondo"
+                ".estrellas-fugaces"
             );
 
+
         if (!contenedor) {
+
             console.warn(
-                "No se encontró .particulas-fondo"
+                "No se encontró .estrellas-fugaces"
             );
 
             return;
+
         }
 
-        function crearEstrellaFugaz() {
+
+        const movimientoReducido =
+            window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            );
+
+
+        let temporizador = null;
+
+
+        function numeroAleatorio(
+            minimo,
+            maximo
+        ){
+
+            return (
+                Math.random() *
+                (maximo - minimo) +
+                minimo
+            );
+
+        }
+
+
+        function crearEstrellaFugaz(){
+
+            if (
+                movimientoReducido.matches ||
+                document.hidden
+            ) {
+
+                return;
+
+            }
+
 
             const estrella =
                 document.createElement(
-                    "div"
+                    "span"
                 );
 
-            estrella.classList.add(
-                "estrella-fugaz"
+
+            estrella.className =
+                "estrella-fugaz";
+
+
+            /*
+                La estrella puede comenzar ligeramente
+                fuera de la pantalla o dentro de ella.
+            */
+
+            const inicioX =
+                numeroAleatorio(
+                    -20,
+                    72
+                );
+
+
+            const inicioY =
+                numeroAleatorio(
+                    -8,
+                    58
+                );
+
+
+            /*
+                Recorrido diagonal hacia la derecha
+                y hacia abajo.
+            */
+
+            const recorridoX =
+                numeroAleatorio(
+                    38,
+                    78
+                );
+
+
+            const recorridoY =
+                numeroAleatorio(
+                    20,
+                    52
+                );
+
+
+            const angulo =
+                numeroAleatorio(
+                    22,
+                    38
+                );
+
+
+            const longitud =
+                numeroAleatorio(
+                    90,
+                    190
+                );
+
+
+            const duracion =
+                numeroAleatorio(
+                    1.05,
+                    1.85
+                );
+
+
+            const brillo =
+                numeroAleatorio(
+                    .52,
+                    .90
+                );
+
+
+            estrella.style.setProperty(
+                "--inicio-x",
+                `${inicioX}vw`
             );
 
-            estrella.style.top =
-                `${Math.random() * 30}%`;
 
-            estrella.style.left =
-                `${-15 + Math.random() * 20}%`;
+            estrella.style.setProperty(
+                "--inicio-y",
+                `${inicioY}vh`
+            );
 
-            estrella.style.animationDuration =
-                `${1.35 + Math.random() * 0.7}s`;
+
+            estrella.style.setProperty(
+                "--recorrido-x",
+                `${recorridoX}vw`
+            );
+
+
+            estrella.style.setProperty(
+                "--recorrido-y",
+                `${recorridoY}vh`
+            );
+
+
+            estrella.style.setProperty(
+                "--angulo-estrella",
+                `${angulo}deg`
+            );
+
+
+            estrella.style.setProperty(
+                "--longitud-estrella",
+                `${longitud}px`
+            );
+
+
+            estrella.style.setProperty(
+                "--duracion-estrella",
+                `${duracion}s`
+            );
+
+
+            estrella.style.setProperty(
+                "--brillo-estrella",
+                brillo.toFixed(2)
+            );
+
 
             contenedor.appendChild(
                 estrella
             );
 
+
             estrella.addEventListener(
                 "animationend",
-                function () {
+                function(){
+
                     estrella.remove();
-                }
-            );
-        }
-
-        function programarEstrella() {
-
-            const espera =
-                3500 +
-                Math.random() *
-                6000;
-
-            setTimeout(
-                function () {
-
-                    crearEstrellaFugaz();
-                    programarEstrella();
 
                 },
-                espera
+                {
+                    once:true
+                }
             );
+
         }
 
-        programarEstrella();
+
+        function programarSiguienteEstrella(){
+
+            clearTimeout(
+                temporizador
+            );
+
+
+            if (
+                movimientoReducido.matches ||
+                document.hidden
+            ) {
+
+                return;
+
+            }
+
+
+            /*
+                Una estrella cada 4.5 a 9 segundos.
+            */
+
+            const espera =
+                numeroAleatorio(
+                    4500,
+                    9000
+                );
+
+
+            temporizador =
+                setTimeout(
+                    function(){
+
+                        crearEstrellaFugaz();
+
+
+                        /*
+                            En algunas ocasiones aparecerá
+                            una segunda estrella poco después.
+                        */
+
+                        if (
+                            Math.random() < .14
+                        ) {
+
+                            setTimeout(
+                                crearEstrellaFugaz,
+                                numeroAleatorio(
+                                    450,
+                                    1300
+                                )
+                            );
+
+                        }
+
+
+                        programarSiguienteEstrella();
+
+                    },
+                    espera
+                );
+
+        }
+
+
+        document.addEventListener(
+            "visibilitychange",
+            function(){
+
+                if (document.hidden) {
+
+                    clearTimeout(
+                        temporizador
+                    );
+
+                    return;
+
+                }
+
+
+                programarSiguienteEstrella();
+
+            }
+        );
+
+
+        movimientoReducido.addEventListener(
+            "change",
+            function(){
+
+                programarSiguienteEstrella();
+
+            }
+        );
+
+
+        /*
+            Primera estrella ligeramente más rápida
+            para comprobar que el sistema funciona.
+        */
+
+        temporizador =
+            setTimeout(
+                function(){
+
+                    crearEstrellaFugaz();
+
+                    programarSiguienteEstrella();
+
+                },
+                numeroAleatorio(
+                    1800,
+                    3200
+                )
+            );
+
     }
 );
