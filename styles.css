@@ -10467,69 +10467,83 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
     pointer-events:none;
 }
 
+
 /* =====================================================
-   FOOTER MÓVIL — REDES FUERA DE LA SUPERFICIE LUNAR
+   AJUSTE MÓVIL — BOTONES DEL FOOTER
+   SIN ALTERAR LA ESCENA LUNAR
 ===================================================== */
 
 @media (max-width:600px){
 
     body:not(.pagina-musica-body):not(.pagina-galeria-body)
-    > footer{
+    > footer h2{
 
-        /*
-           560px corresponden a la escena lunar.
-           Los 90px adicionales crean una separación
-           negra antes de que comience la superficie.
-        */
+        max-width:320px;
 
-        padding:
-            55px
-            16px
-            650px
-            !important;
+        margin:
+            0
+            auto
+            22px;
 
-        overflow:hidden !important;
+        font-size:24px;
+        line-height:1.3;
     }
 
 
-    /* Título de redes */
+    .botones-portada{
+
+        width:100%;
+        max-width:310px;
+
+        margin:
+            0
+            auto;
+
+        gap:12px;
+    }
+
+
+    .botones-portada a{
+
+        width:100%;
+
+        min-height:50px;
+
+        padding:
+            12px
+            18px;
+
+        font-size:15px;
+
+        border-radius:999px;
+    }
+
 
     body:not(.pagina-musica-body):not(.pagina-galeria-body)
     > footer h3{
 
         margin:
-            42px
-            0
-            20px;
+            38px
+            auto
+            18px;
 
-        font-size:22px;
+        font-size:21px;
         line-height:1.25;
     }
 
 
-    /* Contenedor de las redes */
-
     .botones-redes{
 
-        display:flex;
-
-        flex-direction:column;
-
-        align-items:center;
-        justify-content:center;
-
-        gap:12px;
-
         width:100%;
-        max-width:300px;
+        max-width:310px;
 
         margin:
             0
             auto;
+
+        gap:12px;
     }
 
-
-    /* Botones más pequeños */
 
     .botones-redes a{
 
@@ -10541,70 +10555,18 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
             11px
             18px;
 
-        border-radius:999px;
-
         font-size:15px;
-        line-height:1;
 
-        backdrop-filter:
-            blur(10px);
-
-        -webkit-backdrop-filter:
-            blur(10px);
+        border-radius:999px;
     }
 
-
-    .botones-redes i{
-
-        margin-right:8px;
-
-        font-size:17px;
-    }
-
-
-    /* Copyright compacto */
 
     body:not(.pagina-musica-body):not(.pagina-galeria-body)
     > footer p{
 
-        width:max-content;
-        max-width:90%;
-
-        margin:
-            24px
-            auto
-            0;
-
-        padding:
-            9px
-            18px;
+        margin-top:22px;
 
         font-size:13px;
-        line-height:1.3;
-
-        border-radius:999px;
-    }
-
-
-    /* La escena lunar permanece limpia */
-
-    body:not(.pagina-musica-body):not(.pagina-galeria-body)
-    .escena-lunar-footer{
-
-        bottom:0 !important;
-
-        height:560px !important;
-
-        z-index:2;
-    }
-
-
-    body:not(.pagina-musica-body):not(.pagina-galeria-body)
-    .suelo-lunar{
-
-        bottom:-5px !important;
-
-        z-index:3;
     }
 
 }
