@@ -195,7 +195,7 @@ if(banner && bannerImg){
 // Ejemplo: 15 de septiembre de 2026 a las 00:00.
 
 const fechaNuevoEP =
-new Date("2026-11-19T00:00:00").getTime();
+new Date("2026-09-04T00:00:00").getTime();
 
 const existeContador =
     document.getElementById("dias") &&
