@@ -5273,66 +5273,73 @@ text-shadow:
 2. MENÚ PRINCIPAL — CRISTAL TIPO APPLE 
 = */
 
-body:not(.pagina-musica-body):not(.pagina-galeria-body) 
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
 .menu{
 
-position:absolute;
+    position:fixed;
 
-display:flex;
+    top:18px;
+    left:50%;
 
-align-items:center;
-justify-content:center;
+    transform:translateX(-50%);
 
-width:max-content;
-max-width:100%;
+    z-index:9999;
 
-margin:auto;
+    display:flex;
 
-padding:15px 28px;
+    align-items:center;
+    justify-content:center;
 
-gap:30px;
+    width:max-content;
+    max-width:calc(100% - 32px);
 
-border:
-    1px solid
-    rgba(255,255,255,.24);
+    margin:0;
 
-border-radius:999px;
+    padding:15px 28px;
 
-background:
-    linear-gradient(
-        135deg,
-        rgba(255,255,255,.16) 0%,
-        rgba(255,255,255,.075) 42%,
-        rgba(15,15,22,.24) 100%
-    );
+    gap:30px;
 
--webkit-backdrop-filter:
-    blur(22px)
-    saturate(175%);
+    border:
+        1px solid
+        rgba(255,255,255,.24);
 
-backdrop-filter:
-    blur(22px)
-    saturate(175%);
+    border-radius:999px;
 
-box-shadow:
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.16) 0%,
+            rgba(255,255,255,.075) 42%,
+            rgba(15,15,22,.24) 100%
+        );
 
-    0 1px 0
-    rgba(255,255,255,.20)
-    inset,
+    -webkit-backdrop-filter:
+        blur(22px)
+        saturate(175%);
 
-    0 -1px 0
-    rgba(0,0,0,.42)
-    inset,
+    backdrop-filter:
+        blur(22px)
+        saturate(175%);
 
-    0 8px 30px
-    rgba(0,0,0,.28),
+    box-shadow:
 
-    0 0 24px
-    rgba(170,120,255,.10);
+        0 1px 0
+        rgba(255,255,255,.20)
+        inset,
 
-overflow:hidden;
+        0 -1px 0
+        rgba(0,0,0,.42)
+        inset,
 
-isolation:isolate;
+        0 8px 30px
+        rgba(0,0,0,.28),
+
+        0 0 24px
+        rgba(170,120,255,.10);
+
+    overflow:hidden;
+
+    isolation:isolate;
 }
 
 
@@ -10566,9 +10573,10 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
    Sustituye los ajustes provisionales y evita reglas en conflicto.
 ========================================================= */
 
-/* El menú permanece centrado dentro del banner. */
+/* El menú permanece fijo durante todo el recorrido. */
 .banner .menu {
-    position: absolute;
+    position: fixed;
+
     top: 28px;
     left: 50%;
     right: auto;
@@ -10582,7 +10590,7 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
 
     justify-content: center;
 
-    z-index: 50;
+    z-index: 9999;
 }
 
 /* Los destellos pueden sobresalir del rectángulo del logotipo. */
@@ -10712,4 +10720,60 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
     .logo-banner {
         width: 82vw;
     }
+}
+
+
+@media (max-width:768px){
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .menu{
+
+        position:fixed;
+
+        top:12px;
+        left:50%;
+        right:auto;
+
+        width:max-content;
+        max-width:calc(100% - 20px);
+
+        margin:0;
+
+        padding:12px 14px;
+
+        gap:14px;
+
+        transform:translateX(-50%);
+
+        justify-content:flex-start;
+
+        overflow-x:auto;
+        overflow-y:hidden;
+
+        scrollbar-width:none;
+
+        z-index:9999;
+
+    }
+
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .menu::-webkit-scrollbar{
+
+        display:none;
+
+    }
+
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .menu a,
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .boton-comunidad{
+
+        flex:0 0 auto;
+
+        font-size:14px;
+
+    }
+
 }

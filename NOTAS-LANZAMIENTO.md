@@ -135,3 +135,102 @@ de la comunidad oficial de Te Vi En Un Planetario.
 
 También se adoptó una arquitectura basada en componentes
 que permitirá escalar el proyecto durante los próximos años.
+
+
+
+v0.5 — Experiencia de bienvenida
+
+Fecha
+28 de julio de 2026
+
+Estado
+🚧 En desarrollo
+
+✨ Añadido
+Nueva experiencia de bienvenida antes de ingresar al proyecto.
+Narrativa introductoria dividida en múltiples escenas.
+Página bienvenida.html.
+Sistema de revelado progresivo mediante scroll.
+Fondo espacial dinámico con nebulosas, partículas y estrellas.
+Indicadores interactivos para avanzar entre cada escena.
+Sección de dedicatoria para Alexis e Ilka.
+Presentación del desarrollador integrada en la experiencia.
+Acceso final hacia el proyecto principal.
+Transición cinematográfica entre la bienvenida y el sitio.
+🎨 Mejoras visuales
+
+Se realizó una renovación completa de la experiencia visual de la bienvenida.
+
+Entre las mejoras destacan:
+
+Botones con efecto Glassmorphism.
+Iluminación dinámica.
+Resplandor progresivo del universo.
+Animaciones suaves en cada escena.
+Logo con respiración sutil.
+Nebulosas con mayor profundidad.
+Fondo espacial más inmersivo.
+Mayor consistencia visual con el resto del proyecto.
+Adaptación responsive para escritorio y dispositivos móviles.
+🌌 Experiencia narrativa
+
+La página de bienvenida deja de ser únicamente una pantalla de acceso.
+
+Ahora funciona como una pequeña introducción al universo de Te Vi En Un Planetario, permitiendo que el visitante descubra gradualmente la historia detrás del proyecto antes de ingresar al sitio principal.
+
+La narrativa se desarrolla en ocho momentos:
+
+✦ Presentación.
+Logotipo.
+Antes de comenzar.
+Tómense un minuto.
+Este pequeño universo tiene una historia.
+Antes de entrar...
+Dedicatoria.
+Acceso al proyecto.
+🏗 Decisiones técnicas
+
+Durante esta versión se reorganizó completamente la estructura de la página de bienvenida.
+
+Se implementaron:
+
+Componentes reutilizables para cada bloque narrativo.
+Sistema uniforme de centrado y composición.
+Animaciones desacopladas de la estructura HTML.
+Preparación para efectos visuales independientes mediante módulos JavaScript.
+Compatibilidad con futuras transiciones avanzadas.
+💡 Filosofía
+
+La bienvenida no busca únicamente dirigir al usuario hacia otra página.
+
+Busca crear una pausa.
+
+Un pequeño momento para preparar al visitante antes de entrar al universo del proyecto.
+
+Cada transición, cada estrella y cada animación tienen la intención de transmitir la misma sensación que inspira la música de Te Vi En Un Planetario:
+
+detenerse un momento, observar el cielo y dejarse llevar.
+
+🚀 Próximo objetivo
+
+Implementar la versión cinematográfica de la transición final:
+
+Salto al hiperespacio.
+Constelación dinámica en la escena final.
+Estrellas generadas de forma completamente aleatoria.
+Desintegración progresiva del universo.
+Apertura del proyecto mediante una transición inmersiva.
+📓 Diario de desarrollo
+
+28 de julio de 2026
+
+Hoy la página de bienvenida dejó de ser una simple pantalla de acceso y comenzó a convertirse en una experiencia.
+
+Durante esta sesión se trabajó principalmente en la narrativa, el ritmo visual y la composición de cada escena. Se reorganizó el HTML, se reconstruyó gran parte del CSS para mantener una estructura consistente y se diseñó una secuencia donde el visitante avanza poco a poco antes de descubrir el proyecto.
+
+También nació una nueva idea que probablemente definirá la identidad de la bienvenida: un salto al hiperespacio que conecte visualmente esta introducción con la página principal, haciendo que el ingreso al universo de Te Vi En Un Planetario se sienta como un verdadero viaje.
+
+"Todo viaje comienza mucho antes del primer paso. A veces comienza simplemente mirando hacia las estrellas."
+
+
+vamos por la version 1.0!!!!!! 🤗🥳
