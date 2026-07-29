@@ -4,9 +4,9 @@ CONFIGURACIÓN GENERAL
 
 
 
-:root{ 
---negro-fondo:#000000; 
---alto-banner:clamp(520px, 62vh, 760px); 
+:root {
+    --negro-fondo: #000000;
+    --alto-banner: clamp(620px, 72vh, 760px);
 }
 
 *{ 
@@ -243,8 +243,8 @@ z-index: auto;
 
     position: absolute;
 
-    left:50%;
-    top:58%;
+    left: 50%;
+    top: 53%;
 
     width: 100%;
 
@@ -269,7 +269,7 @@ z-index: auto;
 
     display: block;
 
-    width: min(680px, 88vw);
+    width: min(620px, 82vw);
     max-width: 100%;
 
     height: auto;
@@ -287,8 +287,6 @@ z-index: auto;
             rgba(255, 255, 255, .18)
         );
 }
-
-
 
 
 /* Evita que el párrafo vacío genere espacio */
@@ -329,12 +327,6 @@ z-index: auto;
             #000 100%
         );
 }
-
-
-
-
-
-
 
 
 /* =========================
@@ -773,8 +765,6 @@ z-index: auto;
 }
 
 
-
-
 /* = 
 05. PRESENTACIÓN / HISTORIA 
 = */
@@ -791,8 +781,6 @@ margin:70px auto;
 
 text-align:center;
 }
-
-
 
 
 .presentacion h2{ 
@@ -2057,12 +2045,6 @@ content:none;
 }
 
 
-
-
-
-
-
-
 /* Textos del footer */
 
 body:not(.pagina-musica-body):not(.pagina-galeria-body)
@@ -2241,10 +2223,6 @@ box-shadow:
 }
 
 
-
-
-
-
 /* Anuncio sobre la Luna */
 
 .anuncio-lunar{
@@ -2324,8 +2302,6 @@ filter:blur(42px);
     margin-bottom:-4px;
 
 }
-
-
 
 
 .banner::after{
@@ -2761,8 +2737,6 @@ transition-delay:.24s;
 }
 
 
-
-
 /* = 
 AURA DEL CURSOR 
 = */
@@ -2924,9 +2898,6 @@ background:
         transparent 74%
     );
 }
-
-
-
 
 
 .titulo-blog h1::after{
@@ -3604,8 +3575,6 @@ MÓVIL
 }
 
 
-
-
 /* Animaciones más suaves en móvil */
 
 @media(max-width:900px){
@@ -3805,9 +3774,6 @@ footer{
         0;
 
 }
-
-
-
 
 
 .anuncio-lunar{
@@ -4398,17 +4364,6 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 /* Anuncio */
 
 body:not(.pagina-musica-body):not(.pagina-galeria-body)
@@ -4678,6 +4633,82 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
 
 }
 
+/* =====================================================
+   REFUERZO DEL CIELO — MÓVIL
+   No modifica la geometría del footer ni la Luna
+===================================================== */
+
+.particulas-fondo,
+.estrellas-pintadas-fondo,
+.estrellas-fugaces{
+
+    opacity:1 !important;
+    visibility:visible !important;
+}
+
+
+/*
+   Hace que la capa de estrellas pintadas
+   cubra toda la altura disponible del footer.
+*/
+
+.estrellas-pintadas-fondo{
+
+    position:absolute !important;
+
+    top:0 !important;
+    right:0 !important;
+    bottom:0 !important;
+    left:0 !important;
+
+    width:100% !important;
+    height:100% !important;
+
+    background-size:
+        100% 100% !important;
+
+    background-position:
+        center top !important;
+
+    background-repeat:
+        no-repeat !important;
+}
+
+
+/*
+   Mantiene las estrellas fugaces
+   distribuidas en toda la zona negra.
+*/
+
+.estrellas-fugaces{
+
+    position:absolute !important;
+
+    inset:0 !important;
+
+    width:100% !important;
+    height:100% !important;
+
+    overflow:hidden !important;
+}
+
+
+/*
+   Refuerzo visual ligero en pantallas estrechas.
+*/
+
+.estrella-pintada{
+
+    transform:
+        scale(1.2);
+
+    filter:
+        brightness(1.25)
+        drop-shadow(
+            0 0 7px
+            rgba(255,255,255,0.55)
+        );
+}
 
 /* =====================================================
    TRANSICIÓN SUAVE NEBULOSA → NEGRO
@@ -4721,9 +4752,6 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
         );
 
 }
-
-
-
 
 
 /* Título de plataformas */
@@ -4866,11 +4894,6 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
     order:3;
 
 }
-
-
-
-
-
 
 
 /* Anuncio sobre la superficie */
@@ -5133,8 +5156,6 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
     }
 
 }
-
-
 
 
 /* Anuncio */
@@ -5685,9 +5706,6 @@ text-shadow:
     0 0 15px rgba(255,255,255,.08),
     0 0 28px rgba(155,100,235,.08);
 }
-
-
-
 
 
 /* 
@@ -6324,17 +6342,12 @@ isolation:auto !important;
 }
 
 
-
-
 /* Halo encima de las partículas */
 
 .halo-anuncio-lunar{ 
 position:absolute; 
 z-index:5 !important; 
 }
-
-
-
 
 
 /* Anuncio por encima de todo */
@@ -6537,12 +6550,6 @@ display:block !important;
 
 visibility:visible !important;
 }
-
-
-
-
-
-
 
 
 /*  
@@ -9965,23 +9972,6 @@ transform:
 }
 
 
-.banner .titulo-blog {
-    position: absolute;
-
-    top: 90%;
-    left: 50%;
-
-    width: 100%;
-
-    margin: 0;
-
-    transform: translate(-50%, -50%);
-}
-
-
-
-
-
 /* =========================
    DESTELLOS FIJOS DEL LOGO
 ========================= */
@@ -10569,4 +10559,157 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
         font-size:13px;
     }
 
+}
+
+/* =========================================================
+   HERO / LOGOTIPO — CONFIGURACIÓN FINAL CONSOLIDADA
+   Sustituye los ajustes provisionales y evita reglas en conflicto.
+========================================================= */
+
+/* El menú permanece centrado dentro del banner. */
+.banner .menu {
+    position: absolute;
+    top: 28px;
+    left: 50%;
+    right: auto;
+
+    width: max-content;
+    max-width: calc(100% - 40px);
+
+    margin: 0;
+
+    transform: translateX(-50%);
+
+    justify-content: center;
+
+    z-index: 50;
+}
+
+/* Los destellos pueden sobresalir del rectángulo del logotipo. */
+.destellos-logo {
+    overflow: visible;
+}
+
+/* Escritorio estándar */
+@media (min-width: 769px) and (max-width: 1599px) {
+
+    .titulo-blog {
+        position: absolute;
+
+        left: 50%;
+        top: 44%;
+        bottom: auto;
+
+        width: 100%;
+
+        margin: 0;
+        padding: 0 20px;
+
+        text-align: center;
+
+        transform: translate(-50%, -50%);
+
+        overflow: visible;
+
+        z-index: 4;
+
+        pointer-events: none;
+    }
+
+    .logo-banner {
+        display: block;
+
+        width: min(620px, 44vw);
+        max-width: 620px;
+        height: auto;
+
+        margin: 0 auto;
+
+        object-fit: contain;
+
+        transform: none;
+    }
+}
+
+/* Pantallas grandes */
+@media (min-width: 1600px) and (max-width: 2199px) {
+
+    .titulo-blog {
+        top: 44%;
+    }
+
+    .logo-banner {
+        width: min(760px, 42vw);
+        max-width: 760px;
+    }
+}
+
+/* Pantallas ultraanchas */
+@media (min-width: 2200px) {
+
+    .titulo-blog {
+        top: 44%;
+    }
+
+    .logo-banner {
+        width: min(840px, 40vw);
+        max-width: 840px;
+    }
+}
+
+/* Tablet y móvil */
+@media (max-width: 768px) {
+
+    .titulo-blog {
+        position: absolute;
+
+        top: auto !important;
+        right: auto;
+        bottom: 45px !important;
+        left: 50%;
+
+        width: 100%;
+
+        margin: 0;
+        padding: 0 20px;
+
+        text-align: center;
+
+        transform: translateX(-50%) !important;
+
+        overflow: visible;
+
+        z-index: 4;
+
+        pointer-events: none;
+    }
+
+    .logo-banner {
+        position: relative;
+
+        display: block;
+
+        width: min(520px, 86vw);
+        max-width: 100%;
+        height: auto;
+
+        margin: 0 auto;
+
+        object-fit: contain;
+
+        transform: none !important;
+    }
+}
+
+/* Teléfonos compactos */
+@media (max-width: 480px) {
+
+    .titulo-blog {
+        bottom: 55px !important;
+        padding-inline: 16px;
+    }
+
+    .logo-banner {
+        width: 82vw;
+    }
 }

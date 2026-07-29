@@ -1,0 +1,729 @@
+/* =========================================================
+   UNIVERSO FINAL — CIELO ALEATORIO + HIPERESPACIO
+   Cargar después de bienvenida.css
+========================================================= */
+
+
+/* =========================
+   CIELO ALEATORIO
+========================= */
+
+.estrellas-fondo {
+
+    position: absolute;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    background: none !important;
+
+}
+
+
+.estrella-cielo-random {
+
+    position: absolute;
+
+    left: var(--x);
+
+    top: var(--y);
+
+    width: var(--tamano);
+
+    height: var(--tamano);
+
+    border-radius: 50%;
+
+    opacity: var(--opacidad);
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .96
+        );
+
+    box-shadow:
+
+        0 0 4px
+        rgba(
+            255,
+            255,
+            255,
+            .66
+        ),
+
+        0 0 9px
+        rgba(
+            202,
+            167,
+            255,
+            .30
+        );
+
+    transform:
+        translate3d(
+            -50%,
+            -50%,
+            0
+        );
+
+    animation:
+
+        titilarCieloRandom
+
+        var(--duracion)
+
+        ease-in-out
+
+        var(--retraso)
+
+        infinite alternate;
+
+}
+
+
+/* =========================
+   CONSTELACIÓN FINAL
+========================= */
+
+.constelacion-final {
+
+    position: absolute;
+
+    left: 50%;
+
+    top:
+        clamp(
+            88px,
+            12vw,
+            155px
+        );
+
+    width:
+        clamp(
+            220px,
+            31vw,
+            430px
+        );
+
+    height:
+        clamp(
+            220px,
+            31vw,
+            430px
+        );
+
+    z-index: 1;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transform:
+
+        translateX(-50%)
+
+        scale(.72);
+
+    filter:
+
+        blur(6px)
+
+        drop-shadow(
+            0 0 18px
+            rgba(
+                197,
+                151,
+                255,
+                .34
+            )
+        );
+
+    transition:
+
+        opacity
+        1.2s
+        ease,
+
+        transform
+        1.5s
+        var(--curva-suave),
+
+        filter
+        1.2s
+        ease;
+
+}
+
+
+body[data-nivel-universo="8"]
+.constelacion-final {
+
+    opacity: 1;
+
+    transform:
+
+        translateX(-50%)
+
+        scale(1);
+
+    filter:
+
+        blur(0)
+
+        drop-shadow(
+            0 0 24px
+            rgba(
+                215,
+                181,
+                255,
+                .48
+            )
+        );
+
+}
+
+
+.estrella-pintada-final {
+
+    position: absolute;
+
+    left: var(--x);
+
+    top: var(--y);
+
+    color: #ffffff;
+
+    font-size: var(--tamano);
+
+    line-height: 1;
+
+    text-shadow:
+
+        0 0 6px
+        rgba(
+            255,
+            255,
+            255,
+            .95
+        ),
+
+        0 0 16px
+        rgba(
+            220,
+            190,
+            255,
+            .78
+        ),
+
+        0 0 34px
+        rgba(
+            154,
+            91,
+            238,
+            .52
+        );
+
+    transform:
+
+        translate3d(
+            -50%,
+            -50%,
+            0
+        )
+
+        rotate(
+            var(--rotacion)
+        );
+
+    animation:
+
+        respirarEstrellaPintada
+
+        var(--duracion)
+
+        ease-in-out
+
+        var(--retraso)
+
+        infinite alternate;
+
+}
+
+
+/* =========================
+   SALTO AL HIPERESPACIO
+========================= */
+
+body.salto-hiperespacio {
+
+    overflow: hidden;
+
+}
+
+
+body.salto-hiperespacio
+.estrella-cielo-random,
+body.salto-hiperespacio
+.estrella-pintada-final,
+body.salto-hiperespacio
+.estrella-fugaz {
+
+    animation:
+
+        estrellaHiperespacio
+
+        var(
+            --duracion-salida,
+            1s
+        )
+
+        cubic-bezier(
+            .12,
+            .72,
+            .14,
+            1
+        )
+
+        forwards !important;
+
+}
+
+
+body.salto-hiperespacio
+.particulas-fondo {
+
+    animation:
+
+        particulasHiperespacio
+
+        1.15s
+
+        cubic-bezier(
+            .12,
+            .72,
+            .14,
+            1
+        )
+
+        forwards !important;
+
+}
+
+
+body.salto-hiperespacio
+.nebulosa {
+
+    animation:
+
+        nebulosaHiperespacio
+
+        1.25s
+
+        cubic-bezier(
+            .12,
+            .72,
+            .14,
+            1
+        )
+
+        forwards !important;
+
+}
+
+
+body.salto-hiperespacio
+.bienvenida,
+body.salto-hiperespacio
+.bienvenida-footer {
+
+    animation:
+
+        contenidoHiperespacio
+
+        .70s
+
+        ease
+
+        forwards;
+
+}
+
+
+body.salto-hiperespacio
+.fondo-universo {
+
+    animation:
+
+        fondoHiperespacio
+
+        1.35s
+
+        ease
+
+        forwards;
+
+}
+
+
+body.salto-destello::after {
+
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 999999;
+
+    pointer-events: none;
+
+    background: #ffffff;
+
+    animation:
+
+        destelloHiperespacio
+
+        .72s
+
+        ease
+
+        forwards;
+
+}
+
+
+/* =========================
+   ANIMACIONES
+========================= */
+
+@keyframes titilarCieloRandom {
+
+    from {
+
+        opacity:
+            calc(
+                var(--opacidad) * .48
+            );
+
+        transform:
+
+            translate3d(
+                -50%,
+                -50%,
+                0
+            )
+
+            scale(.74);
+
+    }
+
+
+    to {
+
+        opacity:
+            var(--opacidad);
+
+        transform:
+
+            translate3d(
+                -50%,
+                -50%,
+                0
+            )
+
+            scale(1.18);
+
+    }
+
+}
+
+
+@keyframes respirarEstrellaPintada {
+
+    from {
+
+        opacity: .48;
+
+        transform:
+
+            translate3d(
+                -50%,
+                -50%,
+                0
+            )
+
+            rotate(
+                var(--rotacion)
+            )
+
+            scale(.82);
+
+    }
+
+
+    to {
+
+        opacity: 1;
+
+        transform:
+
+            translate3d(
+                -50%,
+                -50%,
+                0
+            )
+
+            rotate(
+                calc(
+                    var(--rotacion) + 8deg
+                )
+            )
+
+            scale(1.18);
+
+    }
+
+}
+
+
+@keyframes estrellaHiperespacio {
+
+    0% {
+
+        opacity: 1;
+
+        filter:
+            brightness(1);
+
+    }
+
+
+    20% {
+
+        opacity: 1;
+
+        filter:
+            brightness(2.1);
+
+    }
+
+
+    100% {
+
+        opacity: 0;
+
+        width:
+            max(
+                var(--tamano, 1px),
+                2px
+            );
+
+        height: 2px;
+
+        filter:
+            brightness(3)
+            blur(.45px);
+
+        transform:
+
+            translate3d(
+                calc(
+                    -50% +
+                    var(--salida-x)
+                ),
+                calc(
+                    -50% +
+                    var(--salida-y)
+                ),
+                0
+            )
+
+            rotate(
+                var(--angulo-salida)
+            )
+
+            scaleX(48)
+
+            scaleY(.72);
+
+    }
+
+}
+
+
+@keyframes particulasHiperespacio {
+
+    from {
+
+        opacity:
+            var(
+                --opacidad-particulas,
+                .48
+            );
+
+        transform:
+            scale(1);
+
+    }
+
+
+    to {
+
+        opacity: 0;
+
+        transform:
+            scale(3.2);
+
+        filter:
+            blur(5px)
+            brightness(2.2);
+
+    }
+
+}
+
+
+@keyframes nebulosaHiperespacio {
+
+    from {
+
+        opacity:
+            var(
+                --opacidad-nebulosa,
+                .24
+            );
+
+    }
+
+
+    to {
+
+        opacity: 0;
+
+        transform:
+            scale(2.6);
+
+        filter:
+            blur(170px)
+            brightness(2);
+
+    }
+
+}
+
+
+@keyframes contenidoHiperespacio {
+
+    to {
+
+        opacity: 0;
+
+        transform:
+            scale(.94);
+
+        filter:
+            blur(9px);
+
+    }
+
+}
+
+
+@keyframes fondoHiperespacio {
+
+    0% {
+
+        filter:
+            brightness(1);
+
+    }
+
+
+    72% {
+
+        filter:
+            brightness(2.1);
+
+    }
+
+
+    100% {
+
+        filter:
+            brightness(.10);
+
+    }
+
+}
+
+
+@keyframes destelloHiperespacio {
+
+    0% {
+
+        opacity: 0;
+
+    }
+
+
+    30% {
+
+        opacity: .96;
+
+    }
+
+
+    100% {
+
+        opacity: 0;
+
+    }
+
+}
+
+
+/* =========================
+   MÓVIL
+========================= */
+
+@media (max-width: 600px) {
+
+    .constelacion-final {
+
+        top: 92px;
+
+        width: 250px;
+
+        height: 250px;
+
+    }
+
+}
+
+
+/* =========================
+   MOVIMIENTO REDUCIDO
+========================= */
+
+@media (
+    prefers-reduced-motion: reduce
+) {
+
+    body.salto-hiperespacio
+    .estrella-cielo-random,
+    body.salto-hiperespacio
+    .estrella-pintada-final {
+
+        animation:
+            contenidoHiperespacio
+            .35s
+            ease
+            forwards !important;
+
+    }
+
+}

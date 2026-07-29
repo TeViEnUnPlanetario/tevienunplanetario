@@ -1,55 +1,83 @@
-/* =========================
-   CONFIGURACIÓN GENERAL
-========================= */
+/* =========================================================
+   BIENVENIDA — TE VI EN UN PLANETARIO
+   Versión cinematográfica / experimental
+   Compatible con el HTML y bienvenida.js actuales
+========================================================= */
+
+
+/* =========================================================
+   01. VARIABLES
+========================================================= */
 
 :root {
 
     --fondo-principal: #000000;
+    --fondo-profundo: #030106;
+    --fondo-violeta: #08030d;
 
     --texto-principal: #ffffff;
+    --texto-secundario: rgba(255, 255, 255, .76);
+    --texto-suave: rgba(255, 255, 255, .48);
 
-    --texto-secundario:
-        rgba(255, 255, 255, .72);
+    --morado-claro: #d7bcff;
+    --morado-medio: #a66cff;
+    --morado-profundo: #6d35d9;
+    --rosa-cosmico: #da6fc7;
+    --azul-cosmico: #726cff;
 
-    --texto-suave:
-        rgba(255, 255, 255, .48);
+    --borde-suave: rgba(255, 255, 255, .14);
+    --borde-activo: rgba(226, 205, 255, .76);
+
+    --curva-suave: cubic-bezier(.22, 1, .36, 1);
+    --curva-elastica: cubic-bezier(.2, .85, .25, 1.35);
+
+    --radio-grande: 30px;
+    --radio-medio: 20px;
+    --radio-boton: 999px;
+
+    --sombra-profunda:
+        0 30px 90px rgba(0, 0, 0, .66);
+
+    --halo-morado:
+        0 0 18px rgba(215, 188, 255, .28),
+        0 0 45px rgba(166, 108, 255, .23),
+        0 0 90px rgba(109, 53, 217, .14);
 
 }
 
+
+/* =========================================================
+   02. REINICIO Y DOCUMENTO
+========================================================= */
 
 * {
-
     margin: 0;
-
     padding: 0;
-
     box-sizing: border-box;
-
 }
-
 
 html {
-
     width: 100%;
-
     min-height: 100%;
-
     scroll-behavior: smooth;
-
+    scroll-padding-top: 3vh;
     background: var(--fondo-principal);
-
 }
 
-
 body {
+    position: relative;
 
     width: 100%;
-
     min-height: 100%;
 
     color: var(--texto-principal);
-
-    background: var(--fondo-principal);
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(91, 40, 150, .10),
+            transparent 36%
+        ),
+        #000;
 
     font-family:
         "Segoe UI",
@@ -57,71 +85,109 @@ body {
         sans-serif;
 
     overflow-x: hidden;
+    isolation: isolate;
+}
 
+button,
+a {
+    font: inherit;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+    color: #fff;
+    background: rgba(166, 108, 255, .46);
 }
 
 
-/* =========================
-   FONDO GENERAL
-========================= */
+/* =========================================================
+   03. UNIVERSO FIJO
+========================================================= */
 
 .fondo-universo {
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 0;
-
-    pointer-events: none;
-
-    background: #000;
-
-}
-
-
-/* =========================
-   UNIVERSO DE FONDO
-========================= */
-
-.fondo-universo {
-
     --despertar-universo: 0;
 
     position: fixed;
-
     inset: 0;
 
     z-index: 0;
 
     overflow: hidden;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 42%,
+            rgba(23, 12, 37, .28),
+            transparent 52%
+        ),
+        linear-gradient(
+            180deg,
+            #000 0%,
+            #020104 46%,
+            #050208 100%
+        );
+
+    transform: translateZ(0);
+}
+
+.fondo-universo::before {
+    content: "";
+
+    position: absolute;
+    inset: -20%;
+
+    opacity: calc(.10 + var(--despertar-universo) * .20);
+
+    background:
+        conic-gradient(
+            from 180deg at 50% 50%,
+            transparent,
+            rgba(133, 80, 214, .04),
+            transparent 28%,
+            rgba(218, 111, 199, .035),
+            transparent 58%,
+            rgba(114, 108, 255, .035),
+            transparent
+        );
+
+    filter: blur(60px);
+
+    animation:
+        rotacionCosmica
+        42s
+        linear
+        infinite;
+}
+
+.fondo-universo::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: 10;
 
     pointer-events: none;
 
     background:
-
         radial-gradient(
-            circle at 50% 45%,
-            rgba(18, 10, 30, .18),
-            transparent 48%
-        ),
-
-        linear-gradient(
-            180deg,
-            #000 0%,
-            #020104 50%,
-            #050208 100%
+            circle at center,
+            transparent 35%,
+            rgba(0, 0, 0, .18) 72%,
+            rgba(0, 0, 0, .62) 100%
         );
-
 }
 
 
-/* =========================
-   NEBULOSAS
-========================= */
+/* =========================================================
+   04. NEBULOSAS
+========================================================= */
 
 .nebulosa {
-
     position: absolute;
 
     width: 75vw;
@@ -139,7 +205,8 @@ body {
         );
 
     filter:
-        blur(110px);
+        blur(110px)
+        saturate(118%);
 
     transform:
         translate3d(0, 0, 0)
@@ -152,94 +219,69 @@ body {
 
     transition:
         opacity 1.8s ease,
-        transform 2.2s ease;
+        transform 2.2s ease,
+        filter 2s ease;
 
     will-change:
         opacity,
         transform;
 
+    animation:
+        respirarNebulosaBienvenida
+        15s
+        ease-in-out
+        infinite alternate;
 }
 
 .nebulosa--izquierda {
-
-    top: 8%;
-
-    left: -25%;
+    top: 5%;
+    left: -27%;
 
     background:
-
         radial-gradient(
             circle,
-            rgba(110, 55, 175, .72) 0%,
-            rgba(75, 31, 130, .28) 38%,
-            transparent 72%
+            rgba(135, 72, 214, .74) 0%,
+            rgba(89, 38, 151, .32) 38%,
+            transparent 73%
         );
 
+    animation-delay: -4s;
 }
-
 
 .nebulosa--derecha {
-
     right: -30%;
-
-    bottom: -10%;
+    bottom: -12%;
 
     background:
-
         radial-gradient(
             circle,
-            rgba(52, 40, 145, .55) 0%,
-            rgba(78, 35, 112, .22) 42%,
-            transparent 72%
+            rgba(76, 62, 187, .58) 0%,
+            rgba(116, 46, 148, .26) 41%,
+            transparent 73%
         );
 
+    animation-delay: -10s;
 }
 
 
-/* =========================
-   ESTRELLAS TENUES
-========================= */
+/* =========================================================
+   05. ESTRELLAS Y PARTÍCULAS
+========================================================= */
 
 .estrellas-fondo {
-
     position: absolute;
-
     inset: 0;
 
     opacity: 0;
 
-    background-image:
+    overflow: hidden;
 
-        radial-gradient(
-            circle,
-            rgba(255, 255, 255, .80) 0 1px,
-            transparent 1.5px
-        ),
-
-        radial-gradient(
-            circle,
-            rgba(210, 192, 255, .62) 0 1px,
-            transparent 1.5px
-        ),
-
-        radial-gradient(
-            circle,
-            rgba(255, 255, 255, .42) 0 .8px,
-            transparent 1.3px
-        );
-
-    background-size:
-        180px 180px,
-        270px 270px,
-        120px 120px;
-
-    background-position:
-        20px 40px,
-        90px 130px,
-        40px 80px;
+    background: none;
 
     transition:
-        opacity 1.5s ease;
+        opacity 1.5s ease,
+        transform 1.25s cubic-bezier(.22, 1, .36, 1),
+        filter 1.25s ease;
 
     animation:
         estrellasRespirar
@@ -247,17 +289,14 @@ body {
         ease-in-out
         infinite alternate;
 
+    will-change:
+        opacity,
+        transform,
+        filter;
 }
 
-
-/* =========================
-   PARTÍCULAS LEJANAS
-========================= */
-
 .particulas-fondo {
-
     position: absolute;
-
     inset: -15%;
 
     opacity:
@@ -267,13 +306,11 @@ body {
         );
 
     background-image:
-
         radial-gradient(
             circle,
             rgba(226, 211, 255, .95) 0 1.4px,
             transparent 2px
         ),
-
         radial-gradient(
             circle,
             rgba(255, 255, 255, .70) 0 .9px,
@@ -309,39 +346,24 @@ body {
         linear
         infinite;
 
-    pointer-events: none;
-
     will-change:
         opacity,
         transform,
         background-position;
-
 }
 
-
-/* =========================
-   ESTRELLAS FUGACES
-========================= */
-
 .estrellas-fugaces {
-
     position: absolute;
-
     inset: 0;
-
-    overflow: hidden;
-
-    pointer-events: none;
 
     z-index: 4;
 
+    overflow: hidden;
+    pointer-events: none;
 }
 
-
 .estrella-fugaz {
-
     position: absolute;
-
     top: 0;
     left: 0;
 
@@ -358,76 +380,56 @@ body {
     border-radius: 999px;
 
     background:
-
         linear-gradient(
             90deg,
             transparent 0%,
             rgba(200, 180, 255, .10) 22%,
-            rgba(232, 220, 255, .65) 72%,
+            rgba(232, 220, 255, .68) 72%,
             rgba(255, 255, 255, 1) 100%
         );
 
     filter:
-
         drop-shadow(
             0 0 4px
-            rgba(190, 150, 255, .55)
+            rgba(190, 150, 255, .62)
         )
-
         drop-shadow(
-            0 0 9px
-            rgba(135, 90, 220, .30)
+            0 0 11px
+            rgba(135, 90, 220, .36)
         );
 
-    transform-origin:
-        right center;
+    transform-origin: right center;
 
     transform:
-
         translate3d(
             var(--inicio-x),
             var(--inicio-y),
             0
         )
-
         rotate(
             var(--angulo-estrella)
         );
 
     animation:
-
         cruzarUniverso
-
         var(
             --duracion-estrella,
             1.4s
         )
-
-        cubic-bezier(
-            .16,
-            .65,
-            .30,
-            1
-        )
-
+        cubic-bezier(.16, .65, .30, 1)
         forwards;
 
     will-change:
         transform,
         opacity;
-
 }
 
-
 .estrella-fugaz::after {
-
     content: "";
 
     position: absolute;
-
-    right: -2px;
-
     top: 50%;
+    right: -2px;
 
     width: 4px;
     height: 4px;
@@ -435,70 +437,2028 @@ body {
     border-radius: 50%;
 
     background:
-        rgba(255, 255, 255, .95);
+        rgba(255, 255, 255, .98);
 
     box-shadow:
-
         0 0 6px
-        rgba(255, 255, 255, .95),
+        rgba(255, 255, 255, 1),
 
-        0 0 14px
-        rgba(175, 130, 255, .75);
+        0 0 16px
+        rgba(175, 130, 255, .86);
 
     transform:
         translateY(-50%);
-
 }
 
+
+/* =========================================================
+   06. CONTENIDO PRINCIPAL
+========================================================= */
+
+.bienvenida {
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+}
+
+.bienvenida-seccion {
+    position: relative;
+
+    width: 100%;
+
+    padding:
+        0
+        24px;
+
+    text-align: center;
+}
+
+.bienvenida-portada {
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+}
+
+
+/* =========================================================
+   07. BLOQUES DE PORTADA
+========================================================= */
+
+.portada-bloque {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 1100px;
+    min-height: 82vh;
+
+    margin: 0 auto;
+
+    padding:
+        90px
+        20px;
+
+    isolation: isolate;
+}
+
+.portada-bloque::before {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width:
+        min(
+            780px,
+            84vw
+        );
+
+    height:
+        min(
+            480px,
+            60vw
+        );
+
+    z-index: -1;
+
+    opacity: 0;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(153, 94, 236, .10) 0%,
+            rgba(101, 55, 176, .04) 42%,
+            transparent 72%
+        );
+
+    filter: blur(35px);
+
+    transform:
+        translate(-50%, -50%)
+        scale(.78);
+
+    transition:
+        opacity 1.4s ease,
+        transform 1.8s var(--curva-suave);
+}
+
+.portada-bloque.visible::before {
+    opacity: 1;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+}
+
+.portada-bloque:first-child,
+.portada-bloque:nth-child(2) {
+    min-height: 100vh;
+    min-height: 100svh;
+}
+
+.portada-bloque:last-child {
+    min-height: 72vh;
+}
+
+
+/* =========================================================
+   08. ESTRELLA INICIAL — BRILLO SUAVE
+========================================================= */
+
+.simbolo-inicial {
+    position: relative;
+
+    display: grid;
+
+    place-items: center;
+
+    width: 110px;
+    height: 110px;
+
+    color:
+        rgba(255, 255, 255, .92);
+
+    font-size:
+        clamp(
+            38px,
+            5vw,
+            66px
+        );
+
+    font-weight: 300;
+    line-height: 1;
+
+    text-shadow:
+        0 0 8px
+        rgba(255, 255, 255, .62),
+
+        0 0 22px
+        rgba(216, 188, 255, .44),
+
+        0 0 50px
+        rgba(135, 80, 220, .22);
+
+    filter:
+        drop-shadow(
+            0 0 14px
+            rgba(205, 175, 255, .28)
+        );
+
+    animation:
+        estrellaInicialRespira
+        3.8s
+        ease-in-out
+        infinite;
+}
+
+.simbolo-inicial::before,
+.simbolo-inicial::after {
+    content: "";
+
+    position: absolute;
+    inset: 50% auto auto 50%;
+
+    z-index: -1;
+
+    border-radius: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    pointer-events: none;
+}
+
+.simbolo-inicial::before {
+    width: 70px;
+    height: 70px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 255, 255, .18),
+            rgba(184, 135, 255, .08) 42%,
+            transparent 72%
+        );
+
+    filter: blur(10px);
+}
+
+.simbolo-inicial::after {
+    width: 150px;
+    height: 150px;
+
+    border:
+        1px solid
+        rgba(211, 188, 255, .08);
+
+    box-shadow:
+        inset 0 0 25px
+        rgba(166, 108, 255, .06);
+
+    animation:
+        orbitaInicial
+        7s
+        linear
+        infinite;
+}
+
+
+/* =========================================================
+   09. LOGOTIPO
+========================================================= */
+
+.bienvenida-logo {
+    display: block;
+
+    width:
+        min(
+            720px,
+            88vw
+        );
+
+    max-width: 100%;
+    height: auto;
+
+    margin: 0 auto;
+
+    object-fit: contain;
+
+    user-select: none;
+    -webkit-user-drag: none;
+
+    filter:
+        drop-shadow(
+            0 0 12px
+            rgba(238, 225, 255, .18)
+        )
+        drop-shadow(
+            0 0 40px
+            rgba(125, 72, 205, .17)
+        );
+
+    transform:
+        translateZ(0);
+
+    animation:
+        respirarLogo
+        6s
+        ease-in-out
+        infinite alternate;
+}
+
+
+/* =========================================================
+   10. TIPOGRAFÍA DE PORTADA
+========================================================= */
+
+.bienvenida-etiqueta {
+    color: var(--texto-secundario);
+
+    font-size:
+        clamp(
+            15px,
+            2vw,
+            22px
+        );
+
+    font-weight: 500;
+    line-height: 1.6;
+    letter-spacing: 4px;
+
+    text-transform: uppercase;
+
+    text-shadow:
+        0 0 16px
+        rgba(203, 166, 255, .14);
+}
+
+.bienvenida-pausa {
+    color: var(--texto-principal);
+
+    font-size:
+        clamp(
+            27px,
+            4vw,
+            50px
+        );
+
+    font-weight: 300;
+    line-height: 1.4;
+    letter-spacing: .5px;
+
+    text-shadow:
+        0 0 24px
+        rgba(221, 203, 255, .12);
+}
+
+.bienvenida-introduccion {
+    max-width: 850px;
+
+    color: var(--texto-secundario);
+
+    font-size:
+        clamp(
+            31px,
+            5vw,
+            66px
+        );
+
+    font-weight: 300;
+    line-height: 1.32;
+    letter-spacing: -.8px;
+
+    text-wrap: balance;
+
+    text-shadow:
+        0 0 28px
+        rgba(184, 139, 255, .12);
+}
+
+.bienvenida-titulo {
+    max-width: 1000px;
+
+    color: var(--texto-principal);
+
+    font-size:
+        clamp(
+            46px,
+            8vw,
+            108px
+        );
+
+    font-weight: 620;
+    line-height: 1.02;
+    letter-spacing: -3px;
+
+    text-wrap: balance;
+
+    text-shadow:
+        0 0 18px
+        rgba(255, 255, 255, .14),
+
+        0 0 52px
+        rgba(156, 91, 236, .18);
+}
+
+
+/* =========================================================
+   11. BOTONES CONTINUAR — CENTRADOS CON CADA ESCENA
+========================================================= */
+
+.portada-bloque {
+    gap:
+        clamp(
+            38px,
+            6vh,
+            72px
+        );
+}
+
+.indicador-continuar {
+    position: relative;
+
+    left: auto;
+    bottom: auto;
+
+    z-index: 5;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    min-width: 178px;
+
+    margin:
+        0
+        auto;
+
+    padding:
+        13px
+        28px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, .30);
+
+    border-radius: var(--radio-boton);
+
+    color:
+        rgba(255, 255, 255, .82);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, .10),
+            rgba(255, 255, 255, .035)
+        );
+
+    -webkit-backdrop-filter:
+        blur(14px)
+        saturate(145%);
+
+    backdrop-filter:
+        blur(14px)
+        saturate(145%);
+
+    box-shadow:
+        0 0 10px
+        rgba(255, 255, 255, .16),
+
+        0 0 26px
+        rgba(171, 118, 255, .12),
+
+        inset 0 1px 0
+        rgba(255, 255, 255, .18),
+
+        inset 0 -1px 0
+        rgba(0, 0, 0, .38);
+
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 2.2px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+    overflow: hidden;
+    isolation: isolate;
+
+    transition:
+        color .35s ease,
+        border-color .35s ease,
+        background .35s ease,
+        box-shadow .45s ease,
+        transform .45s var(--curva-suave);
+
+    animation:
+        botonFlotante
+        4s
+        ease-in-out
+        infinite;
+}
+
+.indicador-continuar::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: -2;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            115deg,
+            transparent 0%,
+            rgba(255, 255, 255, .04) 30%,
+            rgba(255, 255, 255, .28) 48%,
+            rgba(197, 156, 255, .16) 58%,
+            transparent 78%
+        );
+
+    transform:
+        translateX(-135%);
+
+    transition:
+        transform .85s var(--curva-suave);
+}
+
+.indicador-continuar::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    bottom: -42px;
+
+    width: 190px;
+    height: 84px;
+
+    z-index: -3;
+
+    border-radius: 50%;
+
+    opacity: .25;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(181, 128, 255, .50),
+            transparent 68%
+        );
+
+    filter: blur(16px);
+
+    transform:
+        translateX(-50%)
+        scale(.72);
+
+    transition:
+        opacity .4s ease,
+        transform .5s var(--curva-suave);
+}
+
+.indicador-continuar:hover,
+.indicador-continuar:focus-visible {
+    color: #fff;
+
+    border-color:
+        rgba(228, 207, 255, .82);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, .22),
+            rgba(143, 92, 255, .17)
+        );
+
+    box-shadow:
+        0 0 12px
+        rgba(255, 255, 255, .68),
+
+        0 0 32px
+        rgba(201, 163, 255, .64),
+
+        0 0 72px
+        rgba(135, 75, 226, .34),
+
+        inset 0 1px 0
+        rgba(255, 255, 255, .34);
+
+    transform:
+        translateY(-6px)
+        scale(1.025);
+
+    outline: none;
+}
+
+.indicador-continuar:hover::before,
+.indicador-continuar:focus-visible::before {
+    transform:
+        translateX(135%);
+}
+
+.indicador-continuar:hover::after,
+.indicador-continuar:focus-visible::after {
+    opacity: .78;
+
+    transform:
+        translateX(-50%)
+        scale(1.15);
+}
+
+.flecha-continuar {
+    display: block;
+
+    font-size: 20px;
+    line-height: .8;
+
+    text-shadow:
+        0 0 12px
+        rgba(210, 180, 255, .72);
+
+    animation:
+        flechaRespira
+        1.65s
+        ease-in-out
+        infinite;
+
+    transition:
+        transform .35s ease,
+        text-shadow .35s ease;
+}
+
+.indicador-continuar:hover .flecha-continuar {
+    transform:
+        translateY(4px);
+
+    text-shadow:
+        0 0 8px
+        rgba(255, 255, 255, 1),
+
+        0 0 22px
+        rgba(191, 142, 255, .95);
+}
+
+
+/* =========================================================
+   12. DEDICATORIA
+========================================================= */
+
+.bienvenida-dedicatoria,
+.bienvenida-autor,
+.bienvenida-acceso {
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    max-width: 1120px;
+    min-height: 100vh;
+    min-height: 100svh;
+
+    margin: 0 auto;
+
+    padding:
+        150px
+        34px;
+
+    isolation: isolate;
+}
+
+/* Composición centrada y consistente de las tres escenas finales */
+
+.bienvenida-dedicatoria,
+.bienvenida-autor,
+.bienvenida-acceso {
+    width: 100%;
+
+    text-align: center;
+}
+
+.bienvenida-dedicatoria > *,
+.bienvenida-autor > *,
+.bienvenida-acceso > * {
+    flex-shrink: 0;
+}
+
+.bienvenida-dedicatoria .bienvenida-etiqueta,
+.bienvenida-acceso .bienvenida-etiqueta {
+    width: 100%;
+
+    margin:
+        0
+        auto;
+}
+
+.bienvenida-dedicatoria .bienvenida-etiqueta {
+    margin-bottom: 34px;
+}
+
+.bienvenida-acceso .bienvenida-etiqueta {
+    margin-bottom: 28px;
+}
+
+.bienvenida-dedicatoria::before {
+    content: "";
+
+    position: absolute;
+    inset: 9% 3%;
+
+    z-index: -2;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, .10);
+
+    border-radius:
+        clamp(
+            24px,
+            4vw,
+            44px
+        );
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, .055),
+            rgba(255, 255, 255, .018)
+        );
+
+    -webkit-backdrop-filter:
+        blur(18px)
+        saturate(125%);
+
+    backdrop-filter:
+        blur(18px)
+        saturate(125%);
+
+    box-shadow:
+        var(--sombra-profunda),
+
+        inset 0 1px 0
+        rgba(255, 255, 255, .11);
+}
+
+.bienvenida-dedicatoria::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 48%;
+
+    width: 85%;
+    height: 65%;
+
+    z-index: -3;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(149, 86, 226, .18),
+            rgba(91, 44, 160, .06) 44%,
+            transparent 72%
+        );
+
+    filter: blur(55px);
+
+    transform:
+        translate(-50%, -50%);
+
+    animation:
+        haloCarta
+        8s
+        ease-in-out
+        infinite alternate;
+}
+
+.dedicatoria-titulo {
+    width: 100%;
+    max-width: 930px;
+
+    margin:
+        0
+        auto
+        52px;
+
+    color: #fff;
+
+    font-size:
+        clamp(
+            35px,
+            5vw,
+            66px
+        );
+
+    font-weight: 520;
+    line-height: 1.18;
+    letter-spacing: -1.7px;
+
+    text-wrap: balance;
+
+    text-shadow:
+        0 0 30px
+        rgba(195, 153, 255, .13);
+}
+
+.dedicatoria-texto {
+    position: relative;
+
+    width: 100%;
+    max-width: 780px;
+
+    margin:
+        0
+        auto;
+
+    text-align: center;
+
+    color:
+        rgba(255, 255, 255, .72);
+
+    font-size:
+        clamp(
+            17px,
+            1.75vw,
+            21px
+        );
+
+    font-weight: 350;
+    line-height: 1.9;
+    letter-spacing: .15px;
+}
+
+.dedicatoria-texto::before {
+    content: "";
+
+    display: block;
+
+    width: 86px;
+    height: 1px;
+
+    margin:
+        0
+        auto
+        46px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(218, 188, 255, .82),
+            transparent
+        );
+
+    box-shadow:
+        0 0 16px
+        rgba(179, 126, 255, .58);
+}
+
+.dedicatoria-texto p {
+    margin-bottom: 28px;
+
+    opacity: .94;
+
+    text-wrap: pretty;
+
+    transition:
+        color .35s ease,
+        text-shadow .35s ease,
+        transform .35s ease;
+}
+
+.dedicatoria-texto p:hover {
+    color:
+        rgba(255, 255, 255, .92);
+
+    text-shadow:
+        0 0 20px
+        rgba(200, 163, 255, .12);
+
+    transform:
+        translateY(-2px);
+}
+
+.dedicatoria-cierre {
+    margin-top: 48px;
+    margin-bottom: 0 !important;
+
+    color:
+        rgba(255, 255, 255, .94);
+
+    font-size:
+        clamp(
+            21px,
+            2.2vw,
+            29px
+        );
+
+    font-style: italic;
+    line-height: 1.6;
+
+    text-shadow:
+        0 0 24px
+        rgba(190, 145, 255, .20);
+}
+
+
+/* =========================================================
+   13. AUTOR
+========================================================= */
+
+.bienvenida-autor {
+    min-height: 88vh;
+    min-height: 88svh;
+
+    gap: 18px;
+}
+
+.bienvenida-autor::before {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width:
+        min(
+            760px,
+            86vw
+        );
+
+    height:
+        min(
+            520px,
+            68vw
+        );
+
+    z-index: -2;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(121, 70, 201, .13),
+            transparent 68%
+        );
+
+    filter: blur(48px);
+
+    transform:
+        translate(-50%, -50%);
+}
+
+.autor-simbolo {
+    position: relative;
+
+    flex: 0 0 auto;
+
+    display: grid;
+
+    place-items: center;
+
+    width: 102px;
+    height: 102px;
+
+    margin-bottom: 36px;
+
+    color:
+        rgba(255, 255, 255, .96);
+
+    font-size:
+        clamp(
+            38px,
+            5vw,
+            64px
+        );
+
+    line-height: 1;
+
+    text-shadow:
+        0 0 10px
+        rgba(255, 255, 255, .80),
+
+        0 0 28px
+        rgba(220, 193, 255, .65),
+
+        0 0 62px
+        rgba(161, 100, 243, .38);
+
+    animation:
+        estrellaAutor
+        4.5s
+        ease-in-out
+        infinite;
+}
+
+.autor-simbolo::before {
+    content: "";
+
+    position: absolute;
+
+    width: 150px;
+    height: 150px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 255, 255, .13),
+            rgba(184, 129, 255, .07) 42%,
+            transparent 72%
+        );
+
+    filter: blur(10px);
+
+    animation:
+        pulsoAutor
+        4.5s
+        ease-in-out
+        infinite;
+}
+
+.autor-introduccion {
+    color: var(--texto-suave);
+
+    font-size:
+        clamp(
+            15px,
+            1.6vw,
+            19px
+        );
+
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.autor-nombre {
+    margin:
+        24px
+        0
+        18px;
+
+    color: #fff;
+
+    font-size:
+        clamp(
+            43px,
+            7vw,
+            90px
+        );
+
+    font-weight: 620;
+    line-height: 1.04;
+    letter-spacing: -2.6px;
+
+    text-shadow:
+        0 0 22px
+        rgba(255, 255, 255, .12),
+
+        0 0 52px
+        rgba(151, 89, 228, .17);
+}
+
+.autor-descripcion {
+    color: var(--texto-secundario);
+
+    font-size:
+        clamp(
+            17px,
+            2vw,
+            23px
+        );
+
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   14. ACCESO FINAL
+========================================================= */
+
+.bienvenida-acceso {
+    min-height: 110vh;
+    min-height: 110svh;
+
+    gap: 0;
+
+    overflow: visible;
+}
+
+.bienvenida-acceso::before {
+    content: "✦";
+
+    position: relative;
+
+    display: grid;
+
+    place-items: center;
+
+    width:
+        clamp(
+            170px,
+            19vw,
+            260px
+        );
+
+    height:
+        clamp(
+            170px,
+            19vw,
+            260px
+        );
+
+    margin-bottom:
+        clamp(
+            30px,
+            5vh,
+            58px
+        );
+
+    color: #fff;
+
+    font-size:
+        clamp(
+            72px,
+            9vw,
+            132px
+        );
+
+    line-height: 1;
+
+    text-shadow:
+        0 0 8px
+        rgba(255, 255, 255, 1),
+
+        0 0 24px
+        rgba(255, 255, 255, .98),
+
+        0 0 58px
+        rgba(232, 216, 255, .92),
+
+        0 0 108px
+        rgba(197, 151, 255, .78),
+
+        0 0 170px
+        rgba(132, 70, 228, .60),
+
+        0 0 250px
+        rgba(101, 49, 189, .42);
+
+    filter:
+        brightness(1.35)
+        drop-shadow(
+            0 0 30px
+            rgba(255, 255, 255, .78)
+        );
+
+    animation:
+        solFinal
+        5s
+        ease-in-out
+        infinite;
+
+    z-index: 2;
+}
+
+.bienvenida-acceso::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top:
+        clamp(
+            105px,
+            15vw,
+            185px
+        );
+
+    width:
+        clamp(
+            300px,
+            45vw,
+            680px
+        );
+
+    height:
+        clamp(
+            300px,
+            45vw,
+            680px
+        );
+
+    z-index: -2;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 255, 255, .20) 0%,
+            rgba(225, 199, 255, .17) 12%,
+            rgba(179, 119, 255, .16) 26%,
+            rgba(118, 65, 208, .10) 44%,
+            transparent 70%
+        );
+
+    filter: blur(24px);
+
+    transform:
+        translateX(-50%);
+
+    animation:
+        coronaSolar
+        5s
+        ease-in-out
+        infinite;
+}
+
+.acceso-titulo {
+    width: 100%;
+    max-width: 900px;
+
+    margin:
+        0
+        auto;
+
+    color: #fff;
+
+    font-size:
+        clamp(
+            44px,
+            7vw,
+            94px
+        );
+
+    font-weight: 650;
+    line-height: 1.04;
+    letter-spacing: -3px;
+
+    text-wrap: balance;
+
+    text-shadow:
+        0 0 20px
+        rgba(255, 255, 255, .15),
+
+        0 0 56px
+        rgba(177, 117, 255, .21);
+}
+
+.acceso-descripcion {
+    max-width: 650px;
+
+    margin:
+        28px
+        auto
+        48px;
+
+    color: var(--texto-secundario);
+
+    font-size:
+        clamp(
+            17px,
+            2vw,
+            22px
+        );
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   15. BOTÓN ENTRAR — PUERTA AL UNIVERSO
+========================================================= */
+
+.boton-entrar {
+    position: relative;
+
+    align-self: center;
+
+    margin:
+        0
+        auto;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 18px;
+
+    min-width:
+        min(
+            420px,
+            88vw
+        );
+
+    padding:
+        20px
+        34px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, .48);
+
+    border-radius: var(--radio-boton);
+
+    color: #fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, .16),
+            rgba(149, 87, 237, .16)
+        );
+
+    -webkit-backdrop-filter:
+        blur(18px)
+        saturate(165%);
+
+    backdrop-filter:
+        blur(18px)
+        saturate(165%);
+
+    box-shadow:
+        0 0 12px
+        rgba(255, 255, 255, .36),
+
+        0 0 34px
+        rgba(199, 158, 255, .42),
+
+        0 0 80px
+        rgba(132, 73, 224, .25),
+
+        inset 0 1px 0
+        rgba(255, 255, 255, .28),
+
+        inset 0 -1px 0
+        rgba(0, 0, 0, .38);
+
+    font-size:
+        clamp(
+            16px,
+            1.8vw,
+            20px
+        );
+
+    font-weight: 750;
+    letter-spacing: 1.1px;
+    text-decoration: none;
+
+    overflow: hidden;
+    isolation: isolate;
+
+    transition:
+        color .4s ease,
+        border-color .4s ease,
+        background .4s ease,
+        box-shadow .55s ease,
+        transform .5s var(--curva-suave);
+
+    animation:
+        respirarBotonFinal
+        4s
+        ease-in-out
+        infinite;
+}
+
+.boton-entrar::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: -2;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            110deg,
+            transparent 0%,
+            rgba(255, 255, 255, .08) 25%,
+            rgba(255, 255, 255, .50) 48%,
+            rgba(213, 181, 255, .24) 59%,
+            transparent 82%
+        );
+
+    transform:
+        translateX(-145%);
+
+    transition:
+        transform .95s var(--curva-suave);
+}
+
+.boton-entrar::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    bottom: -80px;
+
+    width: 110%;
+    height: 150px;
+
+    z-index: -3;
+
+    opacity: .50;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(186, 125, 255, .75),
+            transparent 67%
+        );
+
+    filter: blur(24px);
+
+    transform:
+        translateX(-50%)
+        scale(.74);
+
+    transition:
+        opacity .45s ease,
+        transform .55s var(--curva-suave);
+}
+
+.boton-entrar:hover,
+.boton-entrar:focus-visible {
+    color: #fff;
+
+    border-color:
+        rgba(255, 255, 255, .90);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, .34),
+            rgba(153, 91, 239, .34)
+        );
+
+    box-shadow:
+        0 0 16px
+        rgba(255, 255, 255, .92),
+
+        0 0 42px
+        rgba(219, 187, 255, .90),
+
+        0 0 96px
+        rgba(158, 94, 240, .62),
+
+        0 0 150px
+        rgba(104, 50, 197, .34),
+
+        inset 0 1px 0
+        rgba(255, 255, 255, .46);
+
+    transform:
+        translateY(-8px)
+        scale(1.035);
+
+    outline: none;
+}
+
+.boton-entrar:hover::before,
+.boton-entrar:focus-visible::before {
+    transform:
+        translateX(145%);
+}
+
+.boton-entrar:hover::after,
+.boton-entrar:focus-visible::after {
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        scale(1.12);
+}
+
+.boton-entrar__icono,
+.boton-entrar__flecha {
+    flex: 0 0 auto;
+
+    font-size: 21px;
+
+    text-shadow:
+        0 0 12px
+        rgba(221, 191, 255, .72);
+
+    transition:
+        transform .45s var(--curva-elastica),
+        text-shadow .4s ease;
+}
+
+.boton-entrar:hover .boton-entrar__icono {
+    transform:
+        rotate(90deg)
+        scale(1.18);
+
+    text-shadow:
+        0 0 8px
+        rgba(255, 255, 255, 1),
+
+        0 0 25px
+        rgba(204, 160, 255, 1);
+}
+
+.boton-entrar:hover .boton-entrar__flecha {
+    transform:
+        translateX(8px);
+
+    text-shadow:
+        0 0 8px
+        rgba(255, 255, 255, 1),
+
+        0 0 24px
+        rgba(204, 160, 255, .94);
+}
+
+
+/* =========================================================
+   16. FOOTER
+========================================================= */
+
+.bienvenida-footer {
+    position: relative;
+
+    z-index: 2;
+
+    padding:
+        90px
+        24px
+        110px;
+
+    color: var(--texto-suave);
+
+    text-align: center;
+}
+
+.bienvenida-footer::before {
+    content: "";
+
+    display: block;
+
+    width:
+        min(
+            220px,
+            45vw
+        );
+
+    height: 1px;
+
+    margin:
+        0
+        auto
+        42px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(204, 167, 255, .45),
+            transparent
+        );
+
+    box-shadow:
+        0 0 14px
+        rgba(170, 111, 255, .24);
+}
+
+.bienvenida-footer p {
+    max-width: 620px;
+
+    margin:
+        0
+        auto
+        14px;
+
+    font-size:
+        clamp(
+            14px,
+            1.5vw,
+            17px
+        );
+
+    line-height: 1.7;
+}
+
+.bienvenida-footer span {
+    display: block;
+
+    color:
+        rgba(255, 255, 255, .30);
+
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   17. TRANSICIÓN DE SALIDA
+   Se activa añadiendo la clase .activa desde JavaScript.
+========================================================= */
+
+.transicion-universo {
+    position: fixed;
+    inset: 0;
+
+    z-index: 99999;
+
+    display: grid;
+
+    place-items: center;
+
+    visibility: hidden;
+    opacity: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(103, 52, 179, .22),
+            transparent 32%
+        ),
+        #000;
+
+    -webkit-backdrop-filter:
+        blur(20px);
+
+    backdrop-filter:
+        blur(20px);
+
+    pointer-events: none;
+
+    transition:
+        opacity .85s ease,
+        visibility .85s ease;
+}
+
+.transicion-universo.activa {
+    visibility: visible;
+    opacity: 1;
+
+    pointer-events: auto;
+}
+
+.transicion-universo__contenido {
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+
+    gap: 28px;
+
+    color:
+        rgba(255, 255, 255, .78);
+
+    text-align: center;
+
+    transform:
+        translateY(18px)
+        scale(.94);
+
+    opacity: 0;
+
+    transition:
+        opacity .8s .2s ease,
+        transform 1s .2s var(--curva-suave);
+}
+
+.transicion-universo.activa
+.transicion-universo__contenido {
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+.transicion-universo__simbolo {
+    color: #fff;
+
+    font-size:
+        clamp(
+            64px,
+            8vw,
+            110px
+        );
+
+    text-shadow:
+        0 0 10px
+        rgba(255, 255, 255, 1),
+
+        0 0 32px
+        rgba(232, 212, 255, .96),
+
+        0 0 78px
+        rgba(169, 104, 255, .72);
+
+    animation:
+        simboloTransicion
+        2.4s
+        ease-in-out
+        infinite;
+}
+
+.transicion-universo__contenido p {
+    font-size:
+        clamp(
+            15px,
+            2vw,
+            20px
+        );
+
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   18. AURA DEL CURSOR
+   Queda preparada para bienvenida.js.
+========================================================= */
+
+.cursor-aura {
+    position: fixed;
+
+    left: 0;
+    top: 0;
+
+    z-index: 9998;
+
+    width: 340px;
+    height: 340px;
+
+    border-radius: 50%;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(210, 180, 255, .14) 0%,
+            rgba(157, 101, 235, .08) 32%,
+            transparent 70%
+        );
+
+    filter: blur(18px);
+
+    transform:
+        translate3d(-50%, -50%, 0)
+        scale(.82);
+
+    transition:
+        opacity .4s ease,
+        transform .5s var(--curva-suave);
+
+    mix-blend-mode: screen;
+}
+
+.cursor-aura.visible {
+    opacity: 1;
+
+    transform:
+        translate3d(-50%, -50%, 0)
+        scale(1);
+}
+
+.cursor-aura.interactuando {
+    opacity: .95;
+
+    transform:
+        translate3d(-50%, -50%, 0)
+        scale(1.30);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 255, 255, .20) 0%,
+            rgba(205, 159, 255, .17) 25%,
+            rgba(143, 83, 228, .09) 48%,
+            transparent 72%
+        );
+}
+
+
+/* =========================================================
+   19. REVELADO AL HACER SCROLL
+========================================================= */
+
+.revelar {
+    opacity: 0;
+
+    transform:
+        translate3d(
+            0,
+            54px,
+            0
+        )
+        scale(.985);
+
+    filter:
+        blur(8px);
+
+    transition:
+        opacity
+        1.35s
+        var(--curva-suave),
+
+        transform
+        1.55s
+        var(--curva-suave),
+
+        filter
+        1.3s
+        ease;
+
+    will-change:
+        opacity,
+        transform,
+        filter;
+}
+
+.revelar.visible {
+    opacity: 1;
+
+    transform:
+        translate3d(
+            0,
+            0,
+            0
+        )
+        scale(1);
+
+    filter:
+        blur(0);
+}
+
+.revelar.visible > * {
+    animation:
+        contenidoAparece
+        1.15s
+        var(--curva-suave)
+        both;
+}
+
+
+/* =========================================================
+   20. DESPERTAR DEL UNIVERSO POR NIVEL
+========================================================= */
+
+body[data-nivel-universo="0"] .estrellas-fondo {
+    opacity: 0;
+}
+
+body[data-nivel-universo="1"] .estrellas-fondo {
+    opacity: .08;
+}
+
+body[data-nivel-universo="2"] .estrellas-fondo {
+    opacity: .16;
+}
+
+body[data-nivel-universo="3"] .estrellas-fondo {
+    opacity: .28;
+}
+
+body[data-nivel-universo="4"] .estrellas-fondo {
+    opacity: .42;
+}
+
+body[data-nivel-universo="5"] .estrellas-fondo {
+    opacity: .58;
+}
+
+body[data-nivel-universo="6"] .estrellas-fondo {
+    opacity: .72;
+}
+
+body[data-nivel-universo="7"] .estrellas-fondo {
+    opacity: .86;
+}
+
+body[data-nivel-universo="8"] .estrellas-fondo {
+    opacity: 1;
+}
+
+body[data-nivel-universo="0"] {
+    --opacidad-nebulosa: .015;
+    --escala-nebulosa: .90;
+}
+
+body[data-nivel-universo="1"] {
+    --opacidad-nebulosa: .035;
+    --escala-nebulosa: .92;
+}
+
+body[data-nivel-universo="2"] {
+    --opacidad-nebulosa: .060;
+    --escala-nebulosa: .94;
+}
+
+body[data-nivel-universo="3"] {
+    --opacidad-nebulosa: .090;
+    --escala-nebulosa: .96;
+}
+
+body[data-nivel-universo="4"] {
+    --opacidad-nebulosa: .125;
+    --escala-nebulosa: .98;
+}
+
+body[data-nivel-universo="5"] {
+    --opacidad-nebulosa: .155;
+    --escala-nebulosa: 1;
+}
+
+body[data-nivel-universo="6"] {
+    --opacidad-nebulosa: .180;
+    --escala-nebulosa: 1.015;
+}
+
+body[data-nivel-universo="7"] {
+    --opacidad-nebulosa: .205;
+    --escala-nebulosa: 1.03;
+}
+
+body[data-nivel-universo="8"] {
+    --opacidad-nebulosa: .250;
+    --escala-nebulosa: 1.06;
+}
+
+body[data-nivel-universo="0"],
+body[data-nivel-universo="1"],
+body[data-nivel-universo="2"] {
+    --opacidad-particulas: 0;
+    --escala-particulas: .98;
+    --velocidad-particulas: 52s;
+}
+
+body[data-nivel-universo="3"] {
+    --opacidad-particulas: .08;
+    --escala-particulas: .99;
+    --velocidad-particulas: 48s;
+}
+
+body[data-nivel-universo="4"] {
+    --opacidad-particulas: .14;
+    --escala-particulas: 1;
+    --velocidad-particulas: 44s;
+}
+
+body[data-nivel-universo="5"] {
+    --opacidad-particulas: .20;
+    --escala-particulas: 1.01;
+    --velocidad-particulas: 40s;
+}
+
+body[data-nivel-universo="6"] {
+    --opacidad-particulas: .27;
+    --escala-particulas: 1.02;
+    --velocidad-particulas: 37s;
+}
+
+body[data-nivel-universo="7"] {
+    --opacidad-particulas: .34;
+    --escala-particulas: 1.03;
+    --velocidad-particulas: 34s;
+}
+
+body[data-nivel-universo="8"] {
+    --opacidad-particulas: .48;
+    --escala-particulas: 1.05;
+    --velocidad-particulas: 29s;
+}
+
+
+/* =========================================================
+   21. ANIMACIONES
+========================================================= */
 
 @keyframes cruzarUniverso {
 
     0% {
-
         opacity: 0;
 
         transform:
-
             translate3d(
                 var(--inicio-x),
                 var(--inicio-y),
                 0
             )
-
             rotate(
                 var(--angulo-estrella)
             )
-
             scaleX(.65);
-
     }
 
     12% {
-
         opacity:
             var(
                 --brillo-estrella,
                 .8
             );
-
     }
 
     68% {
-
         opacity:
             var(
                 --brillo-estrella,
                 .8
             );
-
     }
 
     100% {
-
         opacity: 0;
 
         transform:
-
             translate3d(
                 calc(
                     var(--inicio-x) +
@@ -510,670 +2470,550 @@ body {
                 ),
                 0
             )
-
             rotate(
                 var(--angulo-estrella)
             )
-
             scaleX(1);
-
     }
-
 }
-
-
-/* =========================
-   ANIMACIONES DEL FONDO
-========================= */
 
 @keyframes estrellasRespirar {
-
     from {
-
-        filter: brightness(.82);
-
+        filter:
+            brightness(.82);
     }
 
     to {
-
-        filter: brightness(1.12);
-
+        filter:
+            brightness(1.16);
     }
-
 }
 
-
 @keyframes particulasFlotando {
-
     from {
-
         transform:
-            translate3d(
-                0,
-                0,
-                0
-            );
-
+            translate3d(0, 0, 0);
     }
 
     to {
-
         transform:
             translate3d(
                 -80px,
                 -100px,
                 0
             );
+    }
+}
 
+@keyframes rotacionCosmica {
+    to {
+        transform:
+            rotate(360deg);
+    }
+}
+
+@keyframes respirarNebulosaBienvenida {
+    from {
+        filter:
+            blur(110px)
+            saturate(110%);
     }
 
+    to {
+        filter:
+            blur(120px)
+            saturate(132%);
+    }
 }
 
+@keyframes estrellaInicialRespira {
 
-/* =========================
-   CONTENIDO PRINCIPAL
-========================= */
+    0%,
+    100% {
+        transform:
+            scale(.95);
 
-.bienvenida {
+        opacity: .74;
+    }
 
-    position: relative;
+    50% {
+        transform:
+            scale(1.06);
 
-    z-index: 2;
-
-    width: 100%;
-
+        opacity: 1;
+    }
 }
 
-
-/* =========================
-   SECCIONES GENERALES
-========================= */
-
-.bienvenida-seccion {
-
-    position: relative;
-
-    width: 100%;
-
-    padding:
-        0
-        24px;
-
-    text-align: center;
-
+@keyframes orbitaInicial {
+    to {
+        transform:
+            translate(-50%, -50%)
+            rotate(360deg);
+    }
 }
 
+@keyframes respirarLogo {
+    from {
+        transform:
+            scale(.985);
 
-/* =========================
-   PORTADA
-========================= */
+        filter:
+            drop-shadow(
+                0 0 10px
+                rgba(238, 225, 255, .15)
+            )
+            drop-shadow(
+                0 0 32px
+                rgba(125, 72, 205, .14)
+            );
+    }
 
-.bienvenida-portada {
+    to {
+        transform:
+            scale(1.015);
 
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    width: 100%;
-
+        filter:
+            drop-shadow(
+                0 0 14px
+                rgba(255, 255, 255, .22)
+            )
+            drop-shadow(
+                0 0 52px
+                rgba(144, 82, 230, .23)
+            );
+    }
 }
 
+@keyframes botonFlotante {
 
-/* =========================
-   BLOQUES DEL RECORRIDO
-========================= */
+    0%,
+    100% {
+        translate: 0 0;
+    }
 
-.portada-bloque {
-
-    position: relative;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    flex-direction: column;
-
-    width: 100%;
-
-    max-width: 1100px;
-
-    min-height: 82vh;
-
-    margin: 0 auto;
-
-    padding:
-        70px
-        20px;
-
+    50% {
+        translate: 0 -5px;
+    }
 }
 
+@keyframes flechaRespira {
 
-/*
-    El primer bloque ocupa
-    prácticamente una pantalla.
-*/
+    0%,
+    100% {
+        opacity: .55;
 
-.portada-bloque:first-child {
+        transform:
+            translateY(0);
+    }
 
-    min-height: 100vh;
+    50% {
+        opacity: 1;
 
+        transform:
+            translateY(4px);
+    }
 }
 
+@keyframes haloCarta {
+    from {
+        opacity: .62;
 
-/*
-    El bloque del logotipo
-    también tendrá protagonismo.
-*/
+        transform:
+            translate(-50%, -50%)
+            scale(.94);
+    }
 
-.portada-bloque:nth-child(2) {
+    to {
+        opacity: 1;
 
-    min-height: 100vh;
-
+        transform:
+            translate(-50%, -50%)
+            scale(1.08);
+    }
 }
 
+@keyframes estrellaAutor {
 
-/*
-    Último bloque de la portada.
-*/
+    0%,
+    100% {
+        transform:
+            scale(.96)
+            rotate(-2deg);
+    }
 
-.portada-bloque:last-child {
-
-    min-height: 65vh;
-
+    50% {
+        transform:
+            scale(1.08)
+            rotate(2deg);
+    }
 }
 
+@keyframes pulsoAutor {
 
-/* =========================
-   ESTRELLA INICIAL
-========================= */
+    0%,
+    100% {
+        opacity: .55;
 
-.simbolo-inicial {
+        transform:
+            scale(.88);
+    }
 
-    display: block;
+    50% {
+        opacity: 1;
 
-    color: rgba(255, 255, 255, .92);
-
-    font-size:
-        clamp(
-            34px,
-            5vw,
-            64px
-        );
-
-    font-weight: 300;
-
-    line-height: 1;
-
+        transform:
+            scale(1.10);
+    }
 }
 
+@keyframes solFinal {
 
-/* =========================
-   LOGOTIPO
-========================= */
+    0%,
+    100% {
+        transform:
+            scale(.94)
+            rotate(-2deg);
 
-.bienvenida-logo {
+        filter:
+            brightness(1.18)
+            drop-shadow(
+                0 0 24px
+                rgba(255, 255, 255, .70)
+            );
+    }
 
-    display: block;
+    50% {
+        transform:
+            scale(1.08)
+            rotate(2deg);
 
-    width:
-        min(
-            720px,
-            88vw
-        );
+        filter:
+            brightness(1.62)
+            drop-shadow(
+                0 0 52px
+                rgba(255, 255, 255, 1)
+            );
+    }
+}
 
-    max-width: 100%;
+@keyframes coronaSolar {
 
-    height: auto;
+    0%,
+    100% {
+        opacity: .64;
 
-    margin: 0 auto;
+        transform:
+            translateX(-50%)
+            scale(.88);
+    }
 
-    object-fit: contain;
+    50% {
+        opacity: 1;
 
-    user-select: none;
+        transform:
+            translateX(-50%)
+            scale(1.14);
+    }
+}
 
-    -webkit-user-drag: none;
+@keyframes respirarBotonFinal {
 
+    0%,
+    100% {
+        box-shadow:
+            0 0 12px
+            rgba(255, 255, 255, .32),
 
-    /* Resplandor muy tenue */
-
-    filter:
-
-        drop-shadow(
-            0 0 10px
-            rgba(218, 204, 255, .12)
-        )
-
-        drop-shadow(
             0 0 34px
-            rgba(112, 65, 190, .12)
-        );
+            rgba(199, 158, 255, .34),
 
+            0 0 75px
+            rgba(132, 73, 224, .20);
+    }
+
+    50% {
+        box-shadow:
+            0 0 15px
+            rgba(255, 255, 255, .58),
+
+            0 0 45px
+            rgba(213, 177, 255, .54),
+
+            0 0 100px
+            rgba(145, 82, 235, .34);
+    }
+}
+
+@keyframes simboloTransicion {
+
+    0%,
+    100% {
+        transform:
+            scale(.92);
+
+        opacity: .72;
+    }
+
+    50% {
+        transform:
+            scale(1.10);
+
+        opacity: 1;
+    }
+}
+
+@keyframes contenidoAparece {
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(22px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
 }
 
 
-/* =========================
-   TEXTO INICIAL
-========================= */
-
-.bienvenida-etiqueta {
-
-    color: var(--texto-secundario);
-
-    font-size:
-        clamp(
-            17px,
-            2vw,
-            23px
-        );
-
-    font-weight: 400;
-
-    line-height: 1.6;
-
-    letter-spacing: 3px;
-
-}
-
-
-/* =========================
-   PAUSA
-========================= */
-
-.bienvenida-pausa {
-
-    color: var(--texto-principal);
-
-    font-size:
-        clamp(
-            25px,
-            4vw,
-            46px
-        );
-
-    font-weight: 300;
-
-    line-height: 1.4;
-
-    letter-spacing: .5px;
-
-}
-
-
-/* =========================
-   INTRODUCCIÓN
-========================= */
-
-.bienvenida-introduccion {
-
-    max-width: 850px;
-
-    color: var(--texto-secundario);
-
-    font-size:
-        clamp(
-            29px,
-            5vw,
-            62px
-        );
-
-    font-weight: 300;
-
-    line-height: 1.35;
-
-    letter-spacing: -.5px;
-
-}
-
-
-/* =========================
-   TÍTULO PRINCIPAL
-========================= */
-
-.bienvenida-titulo {
-
-    max-width: 1000px;
-
-    color: var(--texto-principal);
-
-    font-size:
-        clamp(
-            42px,
-            8vw,
-            100px
-        );
-
-    font-weight: 600;
-
-    line-height: 1.05;
-
-    letter-spacing: -2px;
-
-}
-
-
-/* =========================
-   BOTÓN CONTINUAR
-========================= */
-
-.boton-continuar {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    flex-direction: column;
-
-    gap: 12px;
-
-    padding:
-        16px
-        28px;
-
-    color: var(--texto-secundario);
-
-    font-size: 16px;
-
-    font-weight: 500;
-
-    line-height: 1;
-
-    letter-spacing: 2px;
-
-    text-decoration: none;
-
-}
-
-
-/* =========================
-   RESTO DE LA PÁGINA
-========================= */
-
-/*
-    Por ahora dejamos las demás
-    secciones con una apariencia
-    básica para no interferir
-    con el diseño de la portada.
-*/
-
-.bienvenida-dedicatoria,
-.bienvenida-autor,
-.bienvenida-acceso {
-
-    max-width: 1000px;
-
-    min-height: 100vh;
-
-    margin: 0 auto;
-
-    padding:
-        120px
-        24px;
-
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-.bienvenida-footer {
-
-    position: relative;
-
-    z-index: 2;
-
-    padding:
-        80px
-        24px;
-
-    color: var(--texto-suave);
-
-    text-align: center;
-
-}
-
-
-/* =========================
-   TRANSICIÓN
-========================= */
-
-.transicion-universo {
-
-    display: none;
-
-}
-
-
-/* =========================
-   AURA DEL CURSOR
-========================= */
-
-.cursor-aura {
-
-    display: none;
-
-}
-
-
-/* =========================
-   TABLET
-========================= */
+/* =========================================================
+   22. TABLET
+========================================================= */
 
 @media (max-width: 900px) {
 
     .portada-bloque {
-
         min-height: 78vh;
+        min-height: 78svh;
 
         padding:
-            60px
+            70px
             20px;
-
     }
-
 
     .portada-bloque:first-child,
     .portada-bloque:nth-child(2) {
-
+        min-height: 100vh;
         min-height: 100svh;
-
     }
 
-
     .bienvenida-logo {
-
         width:
             min(
                 640px,
                 90vw
             );
+    }
 
+    .bienvenida-dedicatoria,
+    .bienvenida-autor,
+    .bienvenida-acceso {
+        padding:
+            120px
+            26px;
+    }
+
+    .bienvenida-dedicatoria::before {
+        inset:
+            6%
+            12px;
     }
 
 }
 
 
-/* =========================
-   TELÉFONOS
-========================= */
+/* =========================================================
+   23. TELÉFONOS
+========================================================= */
 
 @media (max-width: 600px) {
 
     .bienvenida-seccion {
-
         padding:
             0
             18px;
-
     }
 
-
     .portada-bloque {
-
+        min-height: 82vh;
         min-height: 82svh;
 
         padding:
-            50px
+            60px
             10px;
-
     }
-
 
     .portada-bloque:first-child,
     .portada-bloque:nth-child(2) {
-
+        min-height: 100vh;
         min-height: 100svh;
-
     }
-
 
     .portada-bloque:last-child {
-
-        min-height: 70svh;
-
+        min-height: 76vh;
+        min-height: 76svh;
     }
-
 
     .bienvenida-logo {
-
         width: 92vw;
-
     }
-
 
     .bienvenida-etiqueta {
-
-        letter-spacing: 2px;
-
+        font-size: 14px;
+        letter-spacing: 2.2px;
     }
-
 
     .bienvenida-introduccion {
-
-        line-height: 1.28;
-
+        line-height: 1.24;
     }
 
-
     .bienvenida-titulo {
+        letter-spacing: -1.6px;
+    }
+
+    .indicador-continuar {
+        min-width: 160px;
+
+        padding:
+            12px
+            21px;
+
+        font-size: 11px;
+        letter-spacing: 1.7px;
+    }
+
+    .bienvenida-dedicatoria,
+    .bienvenida-autor,
+    .bienvenida-acceso {
+        min-height: 100vh;
+        min-height: 100svh;
+
+        padding:
+            105px
+            20px;
+    }
+
+    .bienvenida-dedicatoria::before {
+        inset:
+            4%
+            4px;
+    }
+
+    .dedicatoria-titulo {
+        margin:
+            28px
+            auto
+            38px;
 
         letter-spacing: -1px;
+    }
 
+    .dedicatoria-texto {
+        line-height: 1.78;
+    }
+
+    .dedicatoria-texto p {
+        margin-bottom: 23px;
+    }
+
+    .autor-nombre,
+    .acceso-titulo {
+        letter-spacing: -1.6px;
+    }
+
+    .bienvenida-acceso {
+        min-height: 108vh;
+        min-height: 108svh;
+    }
+
+    .bienvenida-acceso::after {
+        top: 115px;
+    }
+
+    .boton-entrar {
+        width: 100%;
+        min-width: 0;
+
+        gap: 13px;
+
+        padding:
+            18px
+            22px;
+    }
+
+    .bienvenida-footer {
+        padding:
+            70px
+            20px
+            90px;
+    }
+
+    .cursor-aura {
+        display: none;
     }
 
 }
 
 
-/* =========================
-   TELÉFONOS PEQUEÑOS
-========================= */
+/* =========================================================
+   24. TELÉFONOS PEQUEÑOS
+========================================================= */
 
 @media (max-width: 390px) {
 
     .portada-bloque {
-
         padding:
-            44px
+            54px
             8px;
-
     }
-
 
     .bienvenida-logo {
-
         width: 94vw;
+    }
 
+    .indicador-continuar {
+        min-width: 148px;
+
+        font-size: 10px;
+    }
+
+    .bienvenida-dedicatoria,
+    .bienvenida-autor,
+    .bienvenida-acceso {
+        padding-inline: 15px;
+    }
+
+    .dedicatoria-texto {
+        font-size: 16px;
     }
 
 }
 
-/* =========================
-   REVELADO AL HACER SCROLL
-========================= */
 
-.revelar {
-
-    opacity: 0;
-
-    transform:
-        translate3d(
-            0,
-            42px,
-            0
-        );
-
-    filter: blur(5px);
-
-    transition:
-
-        opacity
-        1.25s
-        cubic-bezier(
-            .22,
-            1,
-            .36,
-            1
-        ),
-
-        transform
-        1.35s
-        cubic-bezier(
-            .22,
-            1,
-            .36,
-            1
-        ),
-
-        filter
-        1.2s
-        ease;
-
-    will-change:
-        opacity,
-        transform,
-        filter;
-
-}
-
-
-.revelar.visible {
-
-    opacity: 1;
-
-    transform:
-        translate3d(
-            0,
-            0,
-            0
-        );
-
-    filter: blur(0);
-
-}
-
-/* =========================
-   MOVIMIENTO REDUCIDO
-========================= */
+/* =========================================================
+   25. MOVIMIENTO REDUCIDO
+========================================================= */
 
 @media (
     prefers-reduced-motion: reduce
 ) {
 
     html {
-
         scroll-behavior: auto;
-
     }
 
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+    }
 
     .revelar {
-
         opacity: 1;
 
         transform: none;
@@ -1181,230 +3021,479 @@ body {
         filter: none;
 
         transition: none;
-
     }
-
-
-    .estrellas-fondo,
-    .particulas-fondo {
-
-        animation: none;
-
-    }
-
 
     .nebulosa {
-
         transition: none;
-
     }
 
-     .estrella-fugaz {
-
+    .estrella-fugaz {
         display: none;
-
     }
 
 }
 
-/* =========================
-   DESPERTAR DEL UNIVERSO
-========================= */
 
-body[data-nivel-universo="0"] .estrellas-fondo {
+/* =========================================================
+   26. DISPOSITIVOS SIN HOVER
+========================================================= */
+
+@media (hover: none) {
+
+    .indicador-continuar:hover {
+        transform: none;
+    }
+
+    .boton-entrar:hover {
+        transform: none;
+    }
+
+    .dedicatoria-texto p:hover {
+        transform: none;
+    }
+
+}
+
+
+/* =========================================================
+   27. CIELO ALEATORIO SIN PATRÓN
+========================================================= */
+
+.estrella-cielo {
+    position: absolute;
+
+    left: var(--estrella-x);
+    top: var(--estrella-y);
+
+    width: var(--estrella-tamano);
+    height: var(--estrella-tamano);
+
+    border-radius: 50%;
+
+    opacity: var(--estrella-opacidad);
+
+    background:
+        rgba(
+            var(--estrella-color),
+            1
+        );
+
+    box-shadow:
+        0 0
+        var(--estrella-halo)
+        rgba(
+            var(--estrella-color),
+            .72
+        );
+
+    transform:
+        translate3d(-50%, -50%, 0)
+        scale(var(--estrella-escala));
+
+    animation:
+        titilarEstrella
+        var(--estrella-duracion)
+        ease-in-out
+        var(--estrella-retraso)
+        infinite alternate;
+
+    will-change:
+        opacity,
+        transform;
+}
+
+
+/* =========================================================
+   28. CONSTELACIÓN COMPACTA DEL BLOQUE FINAL
+========================================================= */
+
+.constelacion-final {
+    position: absolute;
+
+    left: 50%;
+    top:
+        clamp(
+            85px,
+            12vw,
+            150px
+        );
+
+    width:
+        clamp(
+            220px,
+            30vw,
+            430px
+        );
+
+    height:
+        clamp(
+            220px,
+            30vw,
+            430px
+        );
+
+    z-index: 1;
+
+    pointer-events: none;
+
+    transform:
+        translateX(-50%);
 
     opacity: 0;
 
+    transition:
+        opacity 1.2s ease,
+        transform 1.5s var(--curva-suave),
+        filter 1.2s ease;
+
+    filter:
+        drop-shadow(
+            0 0 18px
+            rgba(203, 165, 255, .34)
+        );
 }
 
-body[data-nivel-universo="1"] .estrellas-fondo {
-
-    opacity: .08;
-
-}
-
-body[data-nivel-universo="2"] .estrellas-fondo {
-
-    opacity: .16;
-
-}
-
-body[data-nivel-universo="3"] .estrellas-fondo {
-
-    opacity: .28;
-
-}
-
-body[data-nivel-universo="4"] .estrellas-fondo {
-
-    opacity: .42;
-
-}
-
-body[data-nivel-universo="5"] .estrellas-fondo {
-
-    opacity: .58;
-
-}
-
-body[data-nivel-universo="6"] .estrellas-fondo {
-
-    opacity: .72;
-
-}
-
-body[data-nivel-universo="7"] .estrellas-fondo {
-
-    opacity: .86;
-
-}
-
-body[data-nivel-universo="8"] .estrellas-fondo {
-
+body[data-nivel-universo="8"]
+.constelacion-final {
     opacity: 1;
 
+    transform:
+        translateX(-50%)
+        scale(1);
+}
+
+.estrella-pintada {
+    position: absolute;
+
+    left: var(--estrella-x);
+    top: var(--estrella-y);
+
+    display: grid;
+
+    place-items: center;
+
+    color:
+        rgba(255, 255, 255, var(--estrella-opacidad));
+
+    font-size:
+        var(--estrella-tamano);
+
+    line-height: 1;
+
+    text-shadow:
+        0 0 6px
+        rgba(255, 255, 255, .82),
+
+        0 0 16px
+        rgba(218, 190, 255, .74),
+
+        0 0 34px
+        rgba(155, 94, 237, .46);
+
+    transform:
+        translate3d(-50%, -50%, 0)
+        rotate(var(--estrella-rotacion))
+        scale(var(--estrella-escala));
+
+    animation:
+        flotarEstrellaPintada
+        var(--estrella-duracion)
+        ease-in-out
+        var(--estrella-retraso)
+        infinite alternate;
+
+    will-change:
+        transform,
+        opacity;
 }
 
 
-/* =========================
-   DESPERTAR DE LAS NEBULOSAS
-========================= */
+/* =========================================================
+   29. EXPULSIÓN FINAL DEL UNIVERSO
+========================================================= */
 
-body[data-nivel-universo="0"] {
+body.universo-expulsado {
+    overflow: hidden;
+}
 
-    --opacidad-nebulosa: .015;
-    --escala-nebulosa: .90;
+body.universo-expulsado
+.estrella-cielo,
+body.universo-expulsado
+.estrella-pintada,
+body.universo-expulsado
+.estrella-fugaz {
+    animation:
+        expulsarEstrella
+        var(
+            --duracion-expulsion,
+            1.15s
+        )
+        cubic-bezier(.12, .74, .16, 1)
+        forwards !important;
+}
+
+body.universo-expulsado
+.particulas-fondo {
+    animation:
+        expulsarParticulas
+        1.25s
+        cubic-bezier(.12, .74, .16, 1)
+        forwards !important;
+}
+
+body.universo-expulsado
+.nebulosa {
+    animation:
+        expulsarNebulosa
+        1.35s
+        cubic-bezier(.12, .74, .16, 1)
+        forwards !important;
+}
+
+body.universo-expulsado
+.bienvenida,
+body.universo-expulsado
+.bienvenida-footer {
+    animation:
+        desvanecerContenidoFinal
+        .78s
+        ease
+        forwards;
+}
+
+body.universo-expulsado
+.fondo-universo::after {
+    animation:
+        destelloFinal
+        1.35s
+        ease
+        forwards;
+}
+
+
+/* =========================================================
+   30. ANIMACIONES DEL CIELO Y EXPULSIÓN
+========================================================= */
+
+@keyframes titilarEstrella {
+
+    0% {
+        opacity:
+            calc(
+                var(--estrella-opacidad) * .52
+            );
+
+        transform:
+            translate3d(-50%, -50%, 0)
+            scale(
+                calc(
+                    var(--estrella-escala) * .82
+                )
+            );
+    }
+
+    100% {
+        opacity:
+            var(--estrella-opacidad);
+
+        transform:
+            translate3d(-50%, -50%, 0)
+            scale(
+                calc(
+                    var(--estrella-escala) * 1.16
+                )
+            );
+    }
+
+}
+
+@keyframes flotarEstrellaPintada {
+
+    0% {
+        opacity: .58;
+
+        transform:
+            translate3d(
+                -50%,
+                -50%,
+                0
+            )
+            rotate(var(--estrella-rotacion))
+            scale(
+                calc(
+                    var(--estrella-escala) * .88
+                )
+            );
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            translate3d(
+                calc(-50% + var(--flotacion-x)),
+                calc(-50% + var(--flotacion-y)),
+                0
+            )
+            rotate(
+                calc(
+                    var(--estrella-rotacion) + 8deg
+                )
+            )
+            scale(
+                calc(
+                    var(--estrella-escala) * 1.12
+                )
+            );
+    }
+
+}
+
+@keyframes expulsarEstrella {
+
+    0% {
+        opacity: 1;
+    }
+
+    22% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translate3d(
+                calc(-50% + var(--salida-x)),
+                calc(-50% + var(--salida-y)),
+                0
+            )
+            rotate(
+                var(
+                    --salida-rotacion,
+                    210deg
+                )
+            )
+            scale(
+                var(
+                    --salida-escala,
+                    2.2
+                )
+            );
+    }
+
+}
+
+@keyframes expulsarParticulas {
+
+    0% {
+        opacity:
+            var(
+                --opacidad-particulas,
+                .48
+            );
+
+        transform:
+            scale(
+                var(
+                    --escala-particulas,
+                    1.05
+                )
+            );
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            scale(2.35)
+            rotate(7deg);
+
+        filter:
+            blur(5px)
+            brightness(1.9);
+    }
+
+}
+
+@keyframes expulsarNebulosa {
+
+    0% {
+        opacity:
+            var(
+                --opacidad-nebulosa,
+                .25
+            );
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            scale(2.15);
+
+        filter:
+            blur(150px)
+            brightness(1.7);
+    }
+
+}
+
+@keyframes desvanecerContenidoFinal {
+
+    to {
+        opacity: 0;
+
+        transform:
+            scale(.96);
+
+        filter:
+            blur(8px);
+    }
+
+}
+
+@keyframes destelloFinal {
+
+    0% {
+        background:
+            radial-gradient(
+                circle at center,
+                transparent 28%,
+                rgba(0, 0, 0, .18) 72%,
+                rgba(0, 0, 0, .62) 100%
+            );
+    }
+
+    68% {
+        background:
+            radial-gradient(
+                circle at center,
+                rgba(255, 255, 255, .78) 0%,
+                rgba(225, 203, 255, .42) 18%,
+                rgba(100, 54, 181, .16) 38%,
+                rgba(0, 0, 0, .74) 78%
+            );
+    }
+
+    100% {
+        background: #000;
+    }
 
 }
 
 
-body[data-nivel-universo="1"] {
+/* =========================================================
+   31. AJUSTES MÓVILES DEL CÚMULO FINAL
+========================================================= */
 
-    --opacidad-nebulosa: .035;
-    --escala-nebulosa: .92;
+@media (max-width: 600px) {
 
-}
+    .constelacion-final {
+        top: 92px;
 
-
-body[data-nivel-universo="2"] {
-
-    --opacidad-nebulosa: .060;
-    --escala-nebulosa: .94;
-
-}
-
-
-body[data-nivel-universo="3"] {
-
-    --opacidad-nebulosa: .090;
-    --escala-nebulosa: .96;
-
-}
-
-
-body[data-nivel-universo="4"] {
-
-    --opacidad-nebulosa: .125;
-    --escala-nebulosa: .98;
-
-}
-
-
-body[data-nivel-universo="5"] {
-
-    --opacidad-nebulosa: .155;
-    --escala-nebulosa: 1;
-
-}
-
-
-body[data-nivel-universo="6"] {
-
-    --opacidad-nebulosa: .180;
-    --escala-nebulosa: 1.015;
-
-}
-
-
-body[data-nivel-universo="7"] {
-
-    --opacidad-nebulosa: .205;
-    --escala-nebulosa: 1.03;
-
-}
-
-
-body[data-nivel-universo="8"] {
-
-    --opacidad-nebulosa: .220;
-    --escala-nebulosa: 1.04;
-
-}
-
-/* =========================
-   DESPERTAR DE LAS PARTÍCULAS
-========================= */
-
-body[data-nivel-universo="0"],
-body[data-nivel-universo="1"],
-body[data-nivel-universo="2"] {
-
-    --opacidad-particulas: 0;
-    --escala-particulas: .98;
-    --velocidad-particulas: 52s;
-
-}
-
-
-body[data-nivel-universo="3"] {
-
-    --opacidad-particulas: .08;
-    --escala-particulas: .99;
-    --velocidad-particulas: 48s;
-
-}
-
-
-body[data-nivel-universo="4"] {
-
-    --opacidad-particulas: .14;
-    --escala-particulas: 1;
-    --velocidad-particulas: 44s;
-
-}
-
-
-body[data-nivel-universo="5"] {
-
-    --opacidad-particulas: .20;
-    --escala-particulas: 1.01;
-    --velocidad-particulas: 40s;
-
-}
-
-
-body[data-nivel-universo="6"] {
-
-    --opacidad-particulas: .27;
-    --escala-particulas: 1.02;
-    --velocidad-particulas: 37s;
-
-}
-
-
-body[data-nivel-universo="7"] {
-
-    --opacidad-particulas: .34;
-    --escala-particulas: 1.03;
-    --velocidad-particulas: 34s;
-
-}
-
-
-body[data-nivel-universo="8"] {
-
-    --opacidad-particulas: .42;
-    --escala-particulas: 1.04;
-    --velocidad-particulas: 31s;
+        width: 250px;
+        height: 250px;
+    }
 
 }
