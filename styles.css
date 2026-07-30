@@ -11216,52 +11216,434 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
     pointer-events: none;
 }
 
-/* Portada principal */
 
-.portada-lanzamiento {
+
+/* =========================================================
+   NUEVO LANZAMIENTO — ESTILO CONSOLIDADO
+========================================================= */
+
+.nuevo-lanzamiento {
+    --rojo-portada: 220, 28, 48;
+
+    position: relative !important;
+    isolation: isolate !important;
+    overflow: hidden !important;
+
+    background: #09040b !important;
+
+    border:
+        1px solid
+        rgba(var(--rojo-portada), 0.65) !important;
+
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.75),
+        0 0 35px rgba(var(--rojo-portada), 0.30),
+        0 0 80px rgba(var(--rojo-portada), 0.16) !important;
+}
+
+/* Fondo desenfocado */
+
+.nuevo-lanzamiento
+.fondo-lanzamiento {
+    position: absolute !important;
+    inset: -35px !important;
+
+    z-index: 0 !important;
+
+    background:
+        url("img/lanzamientos/nueva-cancion.jpg")
+        center / cover
+        no-repeat !important;
+
+    opacity: 0.60 !important;
+
+    filter:
+        blur(30px)
+        saturate(180%)
+        contrast(125%) !important;
+
+    transform:
+        scale(1.16) !important;
+
+    pointer-events: none;
+}
+
+/* Capa oscura e iluminación roja */
+
+.nuevo-lanzamiento::after {
+    content: "" !important;
+
+    position: absolute !important;
+    inset: 0 !important;
+
+    z-index: 1 !important;
+
+    background:
+        radial-gradient(
+            circle at 50% 27%,
+            rgba(var(--rojo-portada), 0.34),
+            transparent 34%
+        ),
+        linear-gradient(
+            to bottom,
+            rgba(8, 2, 8, 0.42),
+            rgba(8, 2, 10, 0.78) 62%,
+            rgba(5, 1, 7, 0.94)
+        ) !important;
+
+    pointer-events: none;
+}
+
+/* Contenido por encima del fondo */
+
+.nuevo-lanzamiento
+> *:not(.fondo-lanzamiento) {
     position: relative;
+    z-index: 2;
+}
 
-    display: block;
+/* =========================================================
+   MARCO INTERACTIVO
+========================================================= */
+
+.nuevo-lanzamiento
+.marco-portada-lanzamiento {
+    position: relative;
+    z-index: 3;
 
     width: min(280px, 76vw);
-    aspect-ratio: 1;
 
     margin:
         24px
         auto
         32px;
 
+    border-radius: 20px;
+
+    isolation: isolate;
+    overflow: hidden;
+
+    cursor: pointer;
+
+    outline:
+        1px solid
+        rgba(255, 175, 184, 0.22);
+
+    box-shadow:
+        0 22px 45px rgba(0, 0, 0, 0.72),
+        0 0 14px rgba(var(--rojo-portada), 0.95),
+        0 0 35px rgba(var(--rojo-portada), 0.70),
+        0 0 75px rgba(var(--rojo-portada), 0.42);
+
+    transform:
+        translateY(0)
+        scale(1);
+
+    transition:
+        transform 0.45s
+        cubic-bezier(0.22, 1, 0.36, 1),
+
+        box-shadow 0.45s ease;
+
+    will-change:
+        transform;
+}
+
+/* Imagen dentro del marco */
+
+.nuevo-lanzamiento
+.marco-portada-lanzamiento
+.portada-lanzamiento {
+    position: relative;
+
+    display: block;
+
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+
+    margin: 0;
+
     object-fit: cover;
     object-position: center;
 
     border:
-        1px solid
-        rgba(255, 255, 255, 0.30);
+        2px solid
+        rgba(255, 75, 92, 0.92) !important;
 
-    border-radius: 20px;
+    border-radius: inherit;
 
-    box-shadow:
-        0 22px 55px rgba(0, 0, 0, 0.58),
-        0 0 36px rgba(160, 105, 240, 0.30);
+    outline: none;
+
+    box-shadow: none !important;
+
+    filter:
+        saturate(112%)
+        contrast(108%) !important;
+
+    transition:
+        filter 0.45s ease,
+        border-color 0.45s ease;
 }
 
-/* Ajuste para teléfonos */
+/* Destello que cruza la portada */
+
+.nuevo-lanzamiento
+.marco-portada-lanzamiento::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: 2;
+
+    border-radius: inherit;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            115deg,
+            transparent 20%,
+            rgba(255, 255, 255, 0.08) 38%,
+            rgba(255, 215, 220, 0.58) 49%,
+            rgba(255, 65, 86, 0.18) 58%,
+            transparent 76%
+        );
+
+    transform:
+        translateX(-110%);
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.70s
+        cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Hover aplicado al marco */
+
+.nuevo-lanzamiento
+.marco-portada-lanzamiento:hover {
+    transform:
+        translateY(-10px)
+        scale(1.045);
+
+    box-shadow:
+        0 30px 55px rgba(0, 0, 0, 0.75),
+        0 0 12px rgba(255, 255, 255, 0.78),
+        0 0 26px rgba(var(--rojo-portada), 1),
+        0 0 58px rgba(var(--rojo-portada), 0.82),
+        0 0 105px rgba(var(--rojo-portada), 0.48);
+}
+
+.nuevo-lanzamiento
+.marco-portada-lanzamiento:hover::after {
+    opacity: 1;
+
+    transform:
+        translateX(110%);
+}
+
+.nuevo-lanzamiento
+.marco-portada-lanzamiento:hover
+.portada-lanzamiento {
+    border-color:
+        rgba(255, 220, 224, 0.96) !important;
+
+    filter:
+        brightness(1.08)
+        contrast(1.10)
+        saturate(1.22) !important;
+}
+
+/* Respuesta táctil */
+
+.nuevo-lanzamiento
+.marco-portada-lanzamiento:active {
+    transform:
+        translateY(-4px)
+        scale(1.025);
+
+    box-shadow:
+        0 22px 45px rgba(0, 0, 0, 0.72),
+        0 0 35px rgba(var(--rojo-portada), 0.90),
+        0 0 75px rgba(var(--rojo-portada), 0.52);
+}
+
+/* =========================================================
+   TEXTOS Y CONTADOR
+========================================================= */
+
+.nuevo-lanzamiento
+.etiqueta-lanzamiento {
+    color: #ff9aaa !important;
+
+    text-shadow:
+        0 0 8px rgba(var(--rojo-portada), 1),
+        0 0 24px rgba(var(--rojo-portada), 0.72) !important;
+}
+
+.nuevo-lanzamiento h2 {
+    color: #ffffff;
+
+    text-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.90),
+        0 0 18px rgba(var(--rojo-portada), 0.25);
+}
+
+.nuevo-lanzamiento
+.unidad-contador {
+    border-color:
+        rgba(var(--rojo-portada), 0.34);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(var(--rojo-portada), 0.12),
+            rgba(12, 6, 18, 0.58)
+        );
+
+    box-shadow:
+        0 14px 30px rgba(0, 0, 0, 0.30),
+        0 0 20px rgba(var(--rojo-portada), 0.11),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.nuevo-lanzamiento
+.unidad-contador span {
+    text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.50),
+        0 0 22px rgba(var(--rojo-portada), 0.42);
+}
+
+/* =========================================================
+   MÓVIL
+========================================================= */
 
 @media (max-width: 600px) {
-    .portada-lanzamiento {
+
+    .nuevo-lanzamiento
+    .marco-portada-lanzamiento {
         width: min(240px, 72vw);
 
-        margin-top: 20px;
-        margin-bottom: 28px;
+        margin:
+            20px
+            auto
+            28px;
 
         border-radius: 16px;
     }
 
+    .nuevo-lanzamiento
     .fondo-lanzamiento {
+        opacity: 0.42 !important;
+
         filter:
             blur(22px)
-            saturate(120%);
-
-        opacity: 0.38;
+            saturate(140%)
+            contrast(115%) !important;
     }
+}
+
+/* Accesibilidad */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .nuevo-lanzamiento
+    .marco-portada-lanzamiento,
+
+    .nuevo-lanzamiento
+    .marco-portada-lanzamiento::after,
+
+    .nuevo-lanzamiento
+    .portada-lanzamiento {
+        transition-duration:
+            0.01ms !important;
+    }
+}
+
+/* =========================================================
+   CONTADORES — CONTORNO ILUMINADO ROJO
+========================================================= */
+
+.nuevo-lanzamiento
+.unidad-contador {
+    border:
+        1px solid
+        rgba(var(--rojo-portada), 0.72);
+
+    box-shadow:
+        0 14px 30px rgba(0, 0, 0, 0.38),
+
+        0 0 7px
+        rgba(var(--rojo-portada), 0.58),
+
+        0 0 18px
+        rgba(var(--rojo-portada), 0.34),
+
+        0 0 38px
+        rgba(var(--rojo-portada), 0.16),
+
+        inset 0 0 12px
+        rgba(var(--rojo-portada), 0.08),
+
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.14);
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease,
+        background 0.35s ease;
+}
+
+/* Intensificación al pasar el cursor */
+
+.nuevo-lanzamiento
+.unidad-contador:hover {
+    transform:
+        translateY(-5px)
+        scale(1.025);
+
+    border-color:
+        rgba(255, 115, 130, 0.96);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(var(--rojo-portada), 0.20),
+            rgba(12, 6, 18, 0.68)
+        );
+
+    box-shadow:
+        0 20px 38px rgba(0, 0, 0, 0.48),
+
+        0 0 10px
+        rgba(255, 90, 108, 0.90),
+
+        0 0 26px
+        rgba(var(--rojo-portada), 0.66),
+
+        0 0 55px
+        rgba(var(--rojo-portada), 0.32),
+
+        inset 0 0 18px
+        rgba(var(--rojo-portada), 0.15),
+
+        inset 0 1px 0
+        rgba(255, 255, 255, 0.20);
+}
+
+/* Números con iluminación relacionada */
+
+.nuevo-lanzamiento
+.unidad-contador span {
+    color: #ffffff;
+
+    text-shadow:
+        0 0 7px rgba(255, 255, 255, 0.90),
+        0 0 16px rgba(255, 105, 120, 0.66),
+        0 0 30px rgba(var(--rojo-portada), 0.40);
 }
