@@ -21,7 +21,7 @@
     >
 
     <link
-        rel="stylesheet"href="styles.css?v=83"
+        rel="stylesheet"href="styles.css?v=87"
     >
 
     <link
@@ -160,14 +160,17 @@
 </section>
 
 
-
 <!-- =========================
      CONTADOR NUEVO LANZAMIENTO
 ========================= -->
 
-
-
 <section class="nuevo-lanzamiento">
+
+    <!-- Fondo desenfocado -->
+    <div
+        class="fondo-lanzamiento"
+        aria-hidden="true"
+    ></div>
 
     <div class="luz-lanzamiento"></div>
 
@@ -175,15 +178,25 @@
         PRÓXIMO LANZAMIENTO
     </span>
 
+    <!-- Portada nítida -->
+    <img
+        class="portada-lanzamiento"
+        src="img/lanzamientos/nueva-cancion.jpg"
+        alt="Portada de Nombre de la canción"
+    >
+
     <h2>
-        Un nuevo EP está por llegar
+        Nombre de la nueva canción
     </h2>
 
     <p class="descripcion-lanzamiento">
-        Pronto lanzaremos nueva música, estén atentos. <3
+        Perdón - Nuevo Sencillo.
     </p>
 
-    <div class="contador-lanzamiento" id="contadorLanzamiento">
+    <div
+        class="contador-lanzamiento"
+        id="contadorLanzamiento"
+    >
 
         <div class="unidad-contador">
             <span id="dias">00</span>
@@ -216,31 +229,29 @@
     <div class="preguardar-lanzamiento">
 
         <p class="texto-preguardar">
-            Sé de los primeros en escuchar el nuevo EP.
+            Sé de los primeros en escuchar el nuevo sencillo.
         </p>
 
         <div class="botones-preguardar">
 
-            <a href="#"
-               class="btn-preguardar spotify-preguardar"
-               target="_blank"
-               rel="noopener noreferrer">
-
+            <a
+                href="#"
+                class="btn-preguardar spotify-preguardar"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
                 <i class="fa-brands fa-spotify"></i>
-
                 PREGUARDAR EN SPOTIFY
-
             </a>
 
-            <a href="#"
-               class="btn-preguardar apple-preguardar"
-               target="_blank"
-               rel="noopener noreferrer">
-
+            <a
+                href="#"
+                class="btn-preguardar apple-preguardar"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
                 <i class="fa-brands fa-apple"></i>
-
                 PREGUARDAR EN APPLE MUSIC
-
             </a>
 
         </div>

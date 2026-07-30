@@ -364,36 +364,28 @@ z-index: auto;
 
     border-radius: 999px;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 255, 255, .14),
-            rgba(255, 255, 255, .05)
-        );
+   background:
+    linear-gradient(
+        135deg,
+        rgba(28, 16, 48, 0.68),
+        rgba(7, 5, 16, 0.52)
+    ) !important;
 
-    -webkit-backdrop-filter:
-        blur(20px)
-        saturate(170%);
+-webkit-backdrop-filter:
+    blur(22px)
+    saturate(175%)
+    brightness(0.82) !important;
 
-    backdrop-filter:
-        blur(20px)
-        saturate(170%);
+backdrop-filter:
+    blur(22px)
+    saturate(175%)
+    brightness(0.82) !important;
 
-    box-shadow:
-        0 0 1px
-        rgba(255, 255, 255, .75),
-
-        0 0 18px
-        rgba(195, 155, 255, .18),
-
-        0 0 38px
-        rgba(115, 70, 210, .10),
-
-        inset 0 1px 0
-        rgba(255, 255, 255, .22),
-
-        inset 0 -1px 0
-        rgba(0, 0, 0, .45);
+box-shadow:
+    0 8px 26px rgba(0, 0, 0, 0.48),
+    0 0 20px rgba(145, 95, 230, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.30) !important;
 
     overflow: hidden;
 
@@ -5240,36 +5232,27 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
     border-radius:999px;
 
     background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.16) 0%,
-            rgba(255,255,255,.075) 42%,
-            rgba(15,15,22,.24) 100%
-        );
+    linear-gradient(
+        135deg,
+        rgba(28, 16, 48, 0.68),
+        rgba(7, 5, 16, 0.52)
+    ) !important;
 
-    -webkit-backdrop-filter:
-        blur(22px)
-        saturate(175%);
+-webkit-backdrop-filter:
+    blur(22px)
+    saturate(175%)
+    brightness(0.82) !important;
 
-    backdrop-filter:
-        blur(22px)
-        saturate(175%);
+backdrop-filter:
+    blur(22px)
+    saturate(175%)
+    brightness(0.82) !important;
 
-    box-shadow:
-
-        0 1px 0
-        rgba(255,255,255,.20)
-        inset,
-
-        0 -1px 0
-        rgba(0,0,0,.42)
-        inset,
-
-        0 8px 30px
-        rgba(0,0,0,.28),
-
-        0 0 24px
-        rgba(170,120,255,.10);
+box-shadow:
+    0 8px 26px rgba(0, 0, 0, 0.48),
+    0 0 20px rgba(145, 95, 230, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.30) !important;
 
     overflow:hidden;
 
@@ -10633,39 +10616,67 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
 }
 
 
+/* =========================================================
+   MENÚ MÓVIL FIJO — VISIBILIDAD SOBRE TODAS LAS SECCIONES
+========================================================= */
+
 @media (max-width: 768px) {
 
     body:not(.pagina-musica-body):not(.pagina-galeria-body)
-    .menu {
-        top: calc(10px + env(safe-area-inset-top));
-
-        width: calc(100vw - 20px);
-        max-width: 500px;
-
-        padding: 12px 14px;
-        gap: 14px;
-
-        justify-content: flex-start;
-
-        overflow-x: auto;
-        overflow-y: hidden;
-
-        overscroll-behavior-x: contain;
-        scrollbar-width: none;
-
-        -webkit-overflow-scrolling: touch;
+    .banner {
+        overflow: visible;
+        z-index: 10000 !important;
     }
 
     body:not(.pagina-musica-body):not(.pagina-galeria-body)
-    .menu::-webkit-scrollbar {
-        display: none;
-    }
+    .menu {
+        position: fixed !important;
+
+        top: max(12px, env(safe-area-inset-top)) !important;
+        left: 50% !important;
+
+        transform: translateX(-50%) !important;
+
+        z-index: 10001 !important;
+
+        opacity: 1 !important;
+        visibility: visible !important;
+
+        border: 1px solid rgba(255, 255, 255, 0.32) !important;
+
+        background:
+    linear-gradient(
+        135deg,
+        rgba(28, 16, 48, 0.68),
+        rgba(7, 5, 16, 0.52)
+    ) !important;
+
+-webkit-backdrop-filter:
+    blur(22px)
+    saturate(175%)
+    brightness(0.82) !important;
+
+backdrop-filter:
+    blur(22px)
+    saturate(175%)
+    brightness(0.82) !important;
+
+box-shadow:
+    0 8px 26px rgba(0, 0, 0, 0.48),
+    0 0 20px rgba(145, 95, 230, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.30) !important;
 
     body:not(.pagina-musica-body):not(.pagina-galeria-body)
     .menu a,
     body:not(.pagina-musica-body):not(.pagina-galeria-body)
     .boton-comunidad {
-        flex: 0 0 auto;
+        color: #ffffff !important;
+        opacity: 1 !important;
+
+        text-shadow:
+            0 1px 3px rgba(0, 0, 0, 0.95),
+            0 0 8px rgba(255, 255, 255, 0.22) !important;
     }
 }
 
@@ -11137,4 +11148,120 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
 .contacto > * {
     position: relative;
     z-index: 2;
+}
+
+/* Menú fijo visible durante el desplazamiento móvil */
+@media (max-width: 768px) {
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .banner {
+        overflow: visible;
+    }
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .menu {
+        position: fixed !important;
+        top: max(12px, env(safe-area-inset-top)) !important;
+        z-index: 9999 !important;
+    }
+}}
+
+
+/* Fondo desenfocado del nuevo lanzamiento */
+
+.nuevo-lanzamiento {
+    isolation: isolate;
+}
+
+.fondo-lanzamiento {
+    position: absolute;
+    inset: 0;
+
+    z-index: -2;
+
+    background:
+        url("img/lanzamientos/nueva-cancion.jpg")
+        center / cover
+        no-repeat;
+
+    filter:
+        blur(28px)
+        saturate(125%);
+
+    transform: scale(1.14);
+
+    opacity: 0.42;
+
+    pointer-events: none;
+}
+
+/* Capa oscura para conservar la legibilidad */
+
+.nuevo-lanzamiento::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: -1;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(8, 6, 15, 0.70),
+            rgba(8, 5, 16, 0.88)
+        );
+
+    pointer-events: none;
+}
+
+/* Portada principal */
+
+.portada-lanzamiento {
+    position: relative;
+
+    display: block;
+
+    width: min(280px, 76vw);
+    aspect-ratio: 1;
+
+    margin:
+        24px
+        auto
+        32px;
+
+    object-fit: cover;
+    object-position: center;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.30);
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 22px 55px rgba(0, 0, 0, 0.58),
+        0 0 36px rgba(160, 105, 240, 0.30);
+}
+
+/* Ajuste para teléfonos */
+
+@media (max-width: 600px) {
+    .portada-lanzamiento {
+        width: min(240px, 72vw);
+
+        margin-top: 20px;
+        margin-bottom: 28px;
+
+        border-radius: 16px;
+    }
+
+    .fondo-lanzamiento {
+        filter:
+            blur(22px)
+            saturate(120%);
+
+        opacity: 0.38;
+    }
 }
