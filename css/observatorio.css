@@ -3364,54 +3364,67 @@ body.ecos-panel-abierto {
 ================================================== */
 
 .observatorio-estrella-fugaz {
-    position:
-        absolute;
+    position: absolute;
 
-    z-index:
-        4;
+    z-index: 4;
 
-    width:
-        2px;
-
+    width: 2px;
     height:
-        var(--fugaz-longitud);
+        var(
+            --fugaz-longitud,
+            105px
+        );
 
-    border-radius:
-        999px;
+    border-radius: 999px;
 
-    opacity:
-        0;
+    opacity: 0;
 
-    pointer-events:
-        none;
+    pointer-events: none;
 
+    /*
+     * La cola comienza transparente y concentra
+     * la iluminación en el extremo inferior.
+     */
     background:
         linear-gradient(
             to bottom,
-            rgba(255, 255, 255, 0),
-            rgba(255, 255, 255, 0.34) 34%,
-            rgba(255, 255, 255, 0.88) 78%,
-            rgba(197, 157, 255, 0.58) 100%
+            transparent 0%,
+            rgba(200, 180, 255, 0.10) 20%,
+            rgba(225, 210, 255, 0.55) 68%,
+            rgba(255, 255, 255, 1) 100%
         );
 
     box-shadow:
-        0 0 4px rgba(255, 255, 255, 0.5),
-        0 0 9px rgba(170, 110, 255, 0.24);
+        0 0 5px
+        rgba(255, 255, 255, 0.62),
+
+        0 0 12px
+        rgba(190, 150, 255, 0.42),
+
+        0 0 22px
+        rgba(135, 90, 220, 0.22);
+
+    filter:
+        blur(0.25px);
 
     transform:
+        translate3d(0, 0, 0)
         rotate(-42deg)
-        translate3d(0, 0, 0);
+        scaleY(0.75);
 
     transform-origin:
         center bottom;
 
     animation:
         observatorioEstrellaFugaz
-        var(--fugaz-duracion)
+        var(
+            --fugaz-duracion,
+            1.7s
+        )
         cubic-bezier(
-            0.2,
-            0.55,
-            0.4,
+            0.18,
+            0.72,
+            0.28,
             1
         )
         forwards;
@@ -3422,74 +3435,164 @@ body.ecos-panel-abierto {
 }
 
 
+/* ==================================================
+   CABEZA BRILLANTE
+================================================== */
+
+.observatorio-estrella-fugaz::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    bottom: -2px;
+
+    z-index: 1;
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 1);
+
+    box-shadow:
+        0 0 5px
+        rgba(255, 255, 255, 1),
+
+        0 0 12px
+        rgba(255, 255, 255, 0.95),
+
+        0 0 22px
+        rgba(190, 150, 255, 0.82),
+
+        0 0 38px
+        rgba(135, 90, 220, 0.48);
+
+    transform:
+        translateX(-50%);
+
+    pointer-events: none;
+}
+
+
+/* ==================================================
+   RECORRIDO
+================================================== */
+
 @keyframes observatorioEstrellaFugaz {
 
     0% {
-        opacity:
-            0;
+        opacity: 0;
 
         transform:
-            rotate(-42deg)
             translate3d(
-                -18px,
-                -28px,
+                0,
+                0,
                 0
             )
+            rotate(-42deg)
             scaleY(0.72);
     }
 
-    12% {
-        opacity:
-            0.42;
+    10% {
+        opacity: 0.90;
     }
 
-    34% {
-        opacity:
-            0.82;
+    28% {
+        opacity: 1;
 
         transform:
-            rotate(-42deg)
             translate3d(
-                18px,
-                22px,
+                20vw,
+                15vh,
                 0
             )
+            rotate(-42deg)
             scaleY(1);
     }
 
+    50% {
+        opacity: 0.66;
+    }
+
     72% {
-        opacity:
-            0.38;
+        opacity: 0.24;
+
+        transform:
+            translate3d(
+                46vw,
+                34vh,
+                0
+            )
+            rotate(-42deg)
+            scaleY(0.88);
     }
 
     100% {
-        opacity:
-            0;
+        opacity: 0;
 
         transform:
-            rotate(-42deg)
             translate3d(
-                105px,
-                145px,
+                60vw,
+                45vh,
                 0
             )
-            scaleY(0.82);
+            rotate(-42deg)
+            scaleY(0.72);
     }
-
 }
 
+
+/* ==================================================
+   AJUSTE MÓVIL
+================================================== */
 
 @media (max-width: 760px) {
 
     .observatorio-estrella-fugaz {
         --fugaz-longitud:
-            76px !important;
+            72px !important;
 
         box-shadow:
             0 0 5px
-            rgba(255, 255, 255, 0.7),
+            rgba(255, 255, 255, 0.70),
+
             0 0 11px
-            rgba(170, 110, 255, 0.36);
+            rgba(190, 150, 255, 0.42),
+
+            0 0 18px
+            rgba(135, 90, 220, 0.22);
+    }
+
+    .observatorio-estrella-fugaz::after {
+        width: 4px;
+        height: 4px;
+
+        box-shadow:
+            0 0 4px
+            rgba(255, 255, 255, 1),
+
+            0 0 10px
+            rgba(255, 255, 255, 0.90),
+
+            0 0 18px
+            rgba(190, 150, 255, 0.70);
+    }
+
+}
+
+
+/* ==================================================
+   MOVIMIENTO REDUCIDO
+================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .observatorio-estrella-fugaz {
+        display: none;
+        animation: none;
     }
 
 }
