@@ -4710,48 +4710,7 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
         );
 }
 
-/* =====================================================
-   TRANSICIÓN SUAVE NEBULOSA → NEGRO
-===================================================== */
 
-body:not(.pagina-musica-body):not(.pagina-galeria-body)
-> footer::before {
-
-    content:"";
-
-    position:absolute;
-
-    left:50%;
-    top:-350px;
-
-    width:100vw;
-    height:355px;
-
-    transform:translateX(-50%);
-
-    z-index:0;
-
-    pointer-events:none;
-
-    background:
-        linear-gradient(
-            to bottom,
-
-            rgba(0,0,0,0) 0%,
-            rgba(0,0,0,.015) 8%,
-            rgba(0,0,0,.045) 17%,
-            rgba(0,0,0,.10) 27%,
-            rgba(0,0,0,.20) 38%,
-            rgba(0,0,0,.34) 50%,
-            rgba(0,0,0,.52) 62%,
-            rgba(0,0,0,.70) 74%,
-            rgba(0,0,0,.85) 84%,
-            rgba(0,0,0,.94) 92%,
-            rgba(0,0,0,.985) 97%,
-            #000 100%
-        );
-
-}
 
 
 /* Título de plataformas */
@@ -5002,32 +4961,7 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
 }
 
 
-/* Transición nebulosa → negro */
 
-body:not(.pagina-musica-body):not(.pagina-galeria-body)
-> footer::before {
-
-    top:-280px;
-
-    width:100vw;
-    height:285px;
-
-    background:
-        linear-gradient(
-            to bottom,
-
-            rgba(0,0,0,0) 0%,
-            rgba(0,0,0,.03) 14%,
-            rgba(0,0,0,.10) 28%,
-            rgba(0,0,0,.23) 43%,
-            rgba(0,0,0,.43) 58%,
-            rgba(0,0,0,.66) 72%,
-            rgba(0,0,0,.85) 85%,
-            rgba(0,0,0,.97) 95%,
-            #000 100%
-        );
-
-}
 
 
 /* Botones de plataformas más compactos */
@@ -9955,28 +9889,6 @@ transform:
 }
 
 
-/* =========================================
-   AJUSTE FINAL HERO
-========================================= */
-
-.banner .menu {
-    position: absolute;
-
-    top: 28px;
-    left: 50%;
-    right: auto;
-
-    width: max-content;
-    max-width: calc(100% - 40px);
-
-    margin: 0;
-
-    transform: translateX(-50%);
-
-    justify-content: center;
-
-    z-index: 50;
-}
 
 
 /* =========================
@@ -10569,28 +10481,26 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
 }
 
 /* =========================================================
-   HERO / LOGOTIPO — CONFIGURACIÓN FINAL CONSOLIDADA
-   Sustituye los ajustes provisionales y evita reglas en conflicto.
+   NAVEGACIÓN FIJA
 ========================================================= */
 
-/* El menú permanece fijo durante todo el recorrido. */
-.banner .menu {
-    position: fixed;
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.menu {
+    position: fixed !important;
 
-    top: 28px;
+    top: calc(18px + env(safe-area-inset-top));
     left: 50%;
-    right: auto;
-
-    width: max-content;
-    max-width: calc(100% - 40px);
-
-    margin: 0;
 
     transform: translateX(-50%);
 
-    justify-content: center;
+    width: max-content;
+    max-width: calc(100vw - 32px);
 
-    z-index: 9999;
+    margin: 0;
+
+    z-index: 10000;
+
+    pointer-events: auto;
 }
 
 /* Los destellos pueden sobresalir del rectángulo del logotipo. */
@@ -10723,57 +10633,508 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
 }
 
 
-@media (max-width:768px){
+@media (max-width: 768px) {
 
     body:not(.pagina-musica-body):not(.pagina-galeria-body)
-    .menu{
+    .menu {
+        top: calc(10px + env(safe-area-inset-top));
 
-        position:fixed;
+        width: calc(100vw - 20px);
+        max-width: 500px;
 
-        top:12px;
-        left:50%;
-        right:auto;
+        padding: 12px 14px;
+        gap: 14px;
 
-        width:max-content;
-        max-width:calc(100% - 20px);
+        justify-content: flex-start;
 
-        margin:0;
+        overflow-x: auto;
+        overflow-y: hidden;
 
-        padding:12px 14px;
+        overscroll-behavior-x: contain;
+        scrollbar-width: none;
 
-        gap:14px;
-
-        transform:translateX(-50%);
-
-        justify-content:flex-start;
-
-        overflow-x:auto;
-        overflow-y:hidden;
-
-        scrollbar-width:none;
-
-        z-index:9999;
-
+        -webkit-overflow-scrolling: touch;
     }
-
 
     body:not(.pagina-musica-body):not(.pagina-galeria-body)
-    .menu::-webkit-scrollbar{
-
-        display:none;
-
+    .menu::-webkit-scrollbar {
+        display: none;
     }
-
 
     body:not(.pagina-musica-body):not(.pagina-galeria-body)
     .menu a,
     body:not(.pagina-musica-body):not(.pagina-galeria-body)
-    .boton-comunidad{
+    .boton-comunidad {
+        flex: 0 0 auto;
+    }
+}
 
-        flex:0 0 auto;
+/* =========================================================
+   99. CONTACTO + FOOTER — CONFIGURACIÓN DEFINITIVA
+   Sustituye los ajustes experimentales anteriores.
+   No modifica la geometría original de .contacto.
+========================================================= */
 
-        font-size:14px;
+/* ---------------------------------------------------------
+   CONTACTO
+   Conserva width, max-width, margin, padding y grid originales.
+--------------------------------------------------------- */
 
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.contacto{
+    position:relative;
+    isolation:isolate;
+    overflow:visible;
+}
+
+/*
+   La sección ya contiene un padding inferior amplio.
+   Usamos ese espacio para convertir la nebulosa en negro
+   sin mover ni redimensionar las tarjetas.
+*/
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.contacto::after{
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    right:auto;
+    bottom:-1px;
+
+    width:100vw;
+    height:clamp(360px, 34vw, 560px);
+
+    transform:translateX(-50%);
+
+    z-index:0;
+
+    pointer-events:none;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 4%,
+            rgba(119,70,204,.12) 0%,
+            rgba(75,38,137,.07) 30%,
+            transparent 67%
+        ),
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,0) 0%,
+            rgba(4,2,7,.03) 10%,
+            rgba(7,3,12,.09) 22%,
+            rgba(8,3,14,.19) 34%,
+            rgba(7,3,12,.34) 47%,
+            rgba(5,2,9,.52) 60%,
+            rgba(3,1,5,.71) 72%,
+            rgba(1,0,2,.87) 83%,
+            rgba(0,0,0,.97) 94%,
+            #000 100%
+        );
+}
+
+/* El contenido de contacto permanece sobre el desvanecido. */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.contacto > *{
+    position:relative;
+    z-index:2;
+}
+
+
+/* ---------------------------------------------------------
+   FOOTER PRINCIPAL DEL INDEX
+--------------------------------------------------------- */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+> footer{
+    position:relative;
+
+    min-height:clamp(1120px, 120vh, 1420px);
+    height:auto;
+
+    margin:0;
+    padding:80px 20px 0;
+
+    overflow:hidden;
+
+    text-align:center;
+
+    background:#000;
+
+    isolation:isolate;
+    z-index:3;
+}
+
+/* No necesitamos otra capa entre Contacto y el footer. */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+> footer::before,
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+> footer::after{
+    content:none;
+    display:none;
+}
+
+
+/* Contenido del footer por encima del paisaje. */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+> footer > *:not(.escena-lunar-footer){
+    position:relative;
+    z-index:6;
+}
+
+
+/* ---------------------------------------------------------
+   PAISAJE NOCTURNO
+--------------------------------------------------------- */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.escena-lunar-footer{
+    position:absolute;
+
+    left:50%;
+    right:auto;
+    bottom:0;
+
+    width:100vw;
+    max-width:none;
+
+    height:clamp(900px, 94vh, 1160px);
+
+    margin:0;
+    padding:0;
+
+    transform:translateX(-50%);
+
+    overflow:hidden;
+
+    z-index:2;
+
+    background:#000;
+
+    isolation:isolate;
+    pointer-events:none;
+
+    /*
+       La imagen comienza invisible sobre negro y se revela
+       gradualmente. Esto elimina la línea horizontal.
+    */
+
+    -webkit-mask-image:
+        linear-gradient(
+            to bottom,
+            transparent 0%,
+            rgba(0,0,0,.01) 8%,
+            rgba(0,0,0,.04) 17%,
+            rgba(0,0,0,.11) 27%,
+            rgba(0,0,0,.23) 38%,
+            rgba(0,0,0,.42) 49%,
+            rgba(0,0,0,.64) 60%,
+            rgba(0,0,0,.82) 70%,
+            rgba(0,0,0,.95) 79%,
+            #000 87%,
+            #000 100%
+        );
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            transparent 0%,
+            rgba(0,0,0,.01) 8%,
+            rgba(0,0,0,.04) 17%,
+            rgba(0,0,0,.11) 27%,
+            rgba(0,0,0,.23) 38%,
+            rgba(0,0,0,.42) 49%,
+            rgba(0,0,0,.64) 60%,
+            rgba(0,0,0,.82) 70%,
+            rgba(0,0,0,.95) 79%,
+            #000 87%,
+            #000 100%
+        );
+
+    -webkit-mask-repeat:no-repeat;
+    mask-repeat:no-repeat;
+
+    -webkit-mask-size:100% 100%;
+    mask-size:100% 100%;
+}
+
+
+/* Desactiva pseudo-elementos antiguos de la escena. */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.escena-lunar-footer::before,
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.escena-lunar-footer::after{
+    content:none;
+    display:none;
+}
+
+
+/* Imagen del campo. */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.suelo-lunar{
+    position:absolute;
+
+    inset:0;
+
+    display:block;
+
+    width:100%;
+    min-width:0;
+    max-width:none;
+
+    height:100%;
+    min-height:0;
+
+    object-fit:cover;
+    object-position:center bottom;
+
+    transform:none;
+
+    z-index:1;
+
+    pointer-events:none;
+
+    user-select:none;
+    -webkit-user-drag:none;
+}
+
+
+/* El anuncio se retira sin borrar el archivo del proyecto. */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.anuncio-lunar,
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.halo-anuncio-lunar{
+    display:none !important;
+}
+
+
+/* Copyright al frente y cerca del borde inferior. */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+> footer > p:last-of-type{
+    position:absolute;
+
+    left:50%;
+    bottom:22px;
+
+    margin:0;
+
+    transform:translateX(-50%);
+
+    z-index:8;
+
+    white-space:nowrap;
+}
+
+
+/* ---------------------------------------------------------
+   TABLET
+--------------------------------------------------------- */
+
+@media (max-width:900px){
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .contacto::after{
+        height:440px;
     }
 
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    > footer{
+        min-height:1160px;
+    }
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .escena-lunar-footer{
+        height:760px;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   MÓVIL
+--------------------------------------------------------- */
+
+@media (max-width:600px){
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .contacto::after{
+        height:360px;
+
+        background:
+            radial-gradient(
+                ellipse at 50% 5%,
+                rgba(119,70,204,.10) 0%,
+                rgba(69,34,126,.05) 36%,
+                transparent 68%
+            ),
+            linear-gradient(
+                to bottom,
+                rgba(0,0,0,0) 0%,
+                rgba(7,3,12,.11) 27%,
+                rgba(6,2,10,.31) 48%,
+                rgba(3,1,5,.61) 69%,
+                rgba(1,0,2,.88) 87%,
+                #000 100%
+            );
+    }
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    > footer{
+        min-height:1120px;
+
+        padding:
+            55px
+            18px
+            0;
+    }
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .escena-lunar-footer{
+        height:650px;
+    }
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .suelo-lunar{
+        object-position:50% bottom;
+    }
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    > footer > p:last-of-type{
+        bottom:18px;
+        max-width:calc(100vw - 32px);
+        white-space:normal;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   ACCESIBILIDAD
+--------------------------------------------------------- */
+
+@media (prefers-reduced-motion:reduce){
+
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    .escena-lunar-footer{
+        -webkit-mask-image:
+            linear-gradient(
+                to bottom,
+                transparent,
+                #000 78%
+            );
+
+        mask-image:
+            linear-gradient(
+                to bottom,
+                transparent,
+                #000 78%
+            );
+    }
+}
+
+/* =========================================================
+   CORRECCIÓN MÍNIMA — CONTACTO → FOOTER
+
+   Colocar al final de styles-optimizado.css.
+   No modifica la geometría de .contacto ni otras secciones.
+========================================================= */
+
+/* El desvanecido no debe pertenecer al contenedor limitado
+   de Contacto (85% / 1000px). */
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.contacto::after {
+    content: none;
+    display: none;
+}
+
+/* El footer debe permitir que su puente visual sobresalga
+   hacia la parte inferior de Contacto. */
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+> footer {
+    overflow: visible;
+}
+
+
+/* Puente sin bordes:
+   nebulosa global → morado oscuro → negro */
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+> footer::before {
+    content: "";
+    display: block;
+
+    position: absolute;
+    top: -620px;
+    left: 50%;
+
+    width: 100vw;
+    height: 622px;
+
+    transform: translateX(-50%);
+
+    pointer-events: none;
+    z-index: 0;
+
+    /* Una sola capa para evitar el borde del radial-gradient */
+    background:
+        linear-gradient(
+            to bottom,
+
+            transparent 0%,
+            transparent 8%,
+
+            rgba(8, 4, 14, .02) 18%,
+            rgba(10, 5, 18, .07) 30%,
+            rgba(11, 5, 20, .16) 42%,
+            rgba(10, 4, 18, .30) 54%,
+            rgba(8, 3, 14, .48) 66%,
+            rgba(5, 2, 9, .68) 77%,
+            rgba(3, 1, 5, .84) 86%,
+            rgba(1, 0, 2, .96) 95%,
+            #000 100%
+        );
+}
+
+/* Conserva el paisaje recortado dentro de su propio contenedor. */
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.escena-lunar-footer {
+    overflow: hidden;
+}
+
+@media (max-width: 600px) {
+    body:not(.pagina-musica-body):not(.pagina-galeria-body)
+    > footer::before {
+        top: -360px;
+        height: 362px;
+    }
+}
+
+
+/* =========================================================
+   CONTACTO TRANSPARENTE
+   La nebulosa global continúa detrás de la sección
+========================================================= */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.contacto {
+    background: transparent;
+}
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.contacto::before,
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.contacto::after {
+    content: none !important;
+    display: none !important;
+}
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.contacto > * {
+    position: relative;
+    z-index: 2;
 }
