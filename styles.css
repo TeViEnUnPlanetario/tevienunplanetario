@@ -10645,27 +10645,28 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
         border: 1px solid rgba(255, 255, 255, 0.32) !important;
 
         background:
-    linear-gradient(
-        135deg,
-        rgba(28, 16, 48, 0.68),
-        rgba(7, 5, 16, 0.52)
-    ) !important;
+            linear-gradient(
+                135deg,
+                rgba(28, 16, 48, 0.68),
+                rgba(7, 5, 16, 0.52)
+            ) !important;
 
--webkit-backdrop-filter:
-    blur(22px)
-    saturate(175%)
-    brightness(0.82) !important;
+        -webkit-backdrop-filter:
+            blur(22px)
+            saturate(175%)
+            brightness(0.82) !important;
 
-backdrop-filter:
-    blur(22px)
-    saturate(175%)
-    brightness(0.82) !important;
+        backdrop-filter:
+            blur(22px)
+            saturate(175%)
+            brightness(0.82) !important;
 
-box-shadow:
-    0 8px 26px rgba(0, 0, 0, 0.48),
-    0 0 20px rgba(145, 95, 230, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.24),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.30) !important;
+        box-shadow:
+            0 8px 26px rgba(0, 0, 0, 0.48),
+            0 0 20px rgba(145, 95, 230, 0.22),
+            inset 0 1px 0 rgba(255, 255, 255, 0.24),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.30) !important;
+    }
 
     body:not(.pagina-musica-body):not(.pagina-galeria-body)
     .menu a,
@@ -11163,7 +11164,7 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
         top: max(12px, env(safe-area-inset-top)) !important;
         z-index: 9999 !important;
     }
-}}
+}
 
 
 /* Fondo desenfocado del nuevo lanzamiento */
