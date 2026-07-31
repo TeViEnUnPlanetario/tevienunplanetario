@@ -11648,3 +11648,60 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
         0 0 16px rgba(255, 105, 120, 0.66),
         0 0 30px rgba(var(--rojo-portada), 0.40);
 }
+
+/* =========================================================
+   NUEVO LANZAMIENTO — ALTURA CORREGIDA EN MÓVIL
+========================================================= */
+
+@media (max-width: 900px) {
+
+    /* La luz no debe ocupar espacio dentro del contenedor */
+
+    .nuevo-lanzamiento
+    > .luz-lanzamiento {
+        position: absolute !important;
+
+        top: 50% !important;
+        left: 50% !important;
+
+        width: 280px;
+        height: 280px;
+
+        z-index: 1;
+
+        transform:
+            translate(-50%, -50%) !important;
+
+        pointer-events: none;
+    }
+
+
+    /* Contenedor más compacto */
+
+    .nuevo-lanzamiento {
+        margin:
+            65px
+            auto !important;
+
+        padding:
+            48px
+            18px !important;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .nuevo-lanzamiento {
+        width: calc(100% - 28px);
+
+        margin:
+            50px
+            auto !important;
+
+        padding:
+            40px
+            16px !important;
+
+        border-radius: 24px;
+    }
+}
