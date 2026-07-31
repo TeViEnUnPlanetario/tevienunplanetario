@@ -10624,9 +10624,9 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
 
     body:not(.pagina-musica-body):not(.pagina-galeria-body)
     .banner {
-        overflow: visible;
-        z-index: 10000 !important;
-    }
+    overflow: hidden;
+    z-index: 4 !important;
+}
 
     body:not(.pagina-musica-body):not(.pagina-galeria-body)
     .menu {
@@ -11155,8 +11155,8 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
 @media (max-width: 768px) {
     body:not(.pagina-musica-body):not(.pagina-galeria-body)
     .banner {
-        overflow: visible;
-    }
+    overflow: hidden;
+}
 
     body:not(.pagina-musica-body):not(.pagina-galeria-body)
     .menu {
@@ -11705,3 +11705,4 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
         border-radius: 24px;
     }
 }
+
