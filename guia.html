@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guía de instalación, edición y publicación de Te Vi En Un Planetario.">
+    <title>Guía del sitio | Te Vi En Un Planetario</title>
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="stylesheet" href="guia.css">
+</head>
+
+<body>
+    <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+    <div class="universo" aria-hidden="true">
+        <div class="nebulosa nebulosa--uno"></div>
+        <div class="nebulosa nebulosa--dos"></div>
+        <div class="campo-estelar"></div>
+        <div class="estrellas-fugaces" id="estrellas-fugaces"></div>
+    </div>
+
+    <header class="cabecera">
+        <a class="marca" href="bienvenida.html" aria-label="Volver a la bienvenida">
+            <span class="marca__estrella" aria-hidden="true">✦</span>
+            <span>Te Vi En Un Planetario</span>
+        </a>
+
+        <nav class="cabecera__acciones" aria-label="Acciones principales">
+            <button class="boton boton--tenue" id="abrir-indice" type="button" aria-controls="indice" aria-expanded="false">
+                Índice
+            </button>
+            <a class="boton" href="index.html">Ver el sitio <span aria-hidden="true">↗</span></a>
+        </nav>
+    </header>
+
+    <aside class="indice" id="indice" aria-label="Índice de la guía">
+        <div class="indice__encabezado">
+            <strong>Guía de inicio</strong>
+            <button id="cerrar-indice" type="button" aria-label="Cerrar índice">×</button>
+        </div>
+        <nav>
+            <a href="#bienvenida">Introducción</a>
+            <a href="#antes">Antes de comenzar</a>
+            <a href="#alcance">Alcance de la entrega</a>
+            <a href="#instalacion">Instalación</a>
+            <a href="#estructura">Mapa de archivos</a>
+            <a href="#editar">Cambios frecuentes</a>
+            <a href="#publicar">Publicar cambios</a>
+            <a href="#seguridad">Seguridad y respaldos</a>
+            <a href="#problemas">Solución de problemas</a>
+            <a href="#roadmap">Próximas versiones</a>
+            <a href="#checklist">Lista final</a>
+        </nav>
+    </aside>
+    <div class="velo" id="velo" aria-hidden="true"></div>
+
+    <main id="contenido">
+        <section class="hero" id="bienvenida">
+            <span class="eyebrow">DOCUMENTACIÓN DEL PROYECTO</span>
+            <div class="hero__simbolo" aria-hidden="true">✦</div>
+            <h1>Tu guía para cuidar este pequeño universo.</h1>
+            <p>
+                Aquí encontrarás lo necesario para instalar, actualizar y publicar el sitio,
+                incluso si nunca antes has trabajado con código.
+            </p>
+            <div class="hero__acciones">
+                <a class="boton boton--grande" href="#antes">Comenzar la guía <span aria-hidden="true">↓</span></a>
+                <a class="boton boton--tenue boton--grande" href="#roadmap">Ver próximas funciones</a>
+            </div>
+            <p class="aviso"><strong>Consejo:</strong> lee la guía completa una vez antes de modificar archivos.</p>
+        </section>
+
+        <section class="seccion revelar" id="antes">
+            <header class="seccion__titulo">
+                <span>01 · PREPARACIÓN</span>
+                <h2>Antes de comenzar</h2>
+                <p>No necesitas saber programar, pero sí conviene reconocer estas herramientas.</p>
+            </header>
+            <div class="rejilla rejilla--3">
+                <article class="tarjeta"><span class="tarjeta__icono">⌘</span><h3>GitHub</h3><p>Guarda el proyecto en Internet, registra cambios y publica la versión oficial.</p></article>
+                <article class="tarjeta"><span class="tarjeta__icono">&lt;/&gt;</span><h3>Visual Studio Code</h3><p>Es el programa recomendado para abrir y editar los archivos del sitio.</p></article>
+                <article class="tarjeta"><span class="tarjeta__icono">◎</span><h3>Live Server</h3><p>Permite probar la web localmente antes de hacerla pública.</p></article>
+            </div>
+            <div class="nota nota--importante"><strong>Antes de recibir el proyecto:</strong> confirma que tienes acceso al repositorio, a GitHub Pages, al dominio y a cualquier servicio externo utilizado.</div>
+        </section>
+
+        <section class="seccion revelar" id="alcance">
+            <header class="seccion__titulo">
+                <span>02 · ALCANCE DE LA ENTREGA</span>
+                <h2>Una base funcional creada como regalo</h2>
+                <p>Información importante sobre la entrega, disponibilidad y continuidad del proyecto.</p>
+            </header>
+
+            <div class="alcance-proyecto">
+                <article class="tarjeta-alcance">
+                    <span class="tarjeta-alcance__icono" aria-hidden="true">✦</span>
+                    <h3>Naturaleza del proyecto</h3>
+                    <p>
+                        Este sitio fue desarrollado de manera independiente y se entrega como un regalo
+                        para Te Vi En Un Planetario.
+                    </p>
+                    <p>
+                        Corresponde a una versión inicial funcional y a una base sobre la que se podrá
+                        continuar trabajando. No representa un desarrollo profesional contratado ni
+                        incluye mantenimiento, soporte o alojamiento permanente.
+                    </p>
+                </article>
+
+                <article class="tarjeta-alcance">
+                    <span class="tarjeta-alcance__icono" aria-hidden="true">◷</span>
+                    <h3>Disponibilidad temporal</h3>
+                    <p>
+                        El repositorio y la demostración pública permanecerán disponibles durante un
+                        periodo inicial de <strong>30 días a partir de la entrega</strong>.
+                    </p>
+                    <p>
+                        Al finalizar este periodo, el repositorio podrá cambiarse a privado y la
+                        publicación podrá pausarse si no se ha acordado su continuidad.
+                    </p>
+                </article>
+
+                <article class="tarjeta-alcance">
+                    <span class="tarjeta-alcance__icono" aria-hidden="true">↓</span>
+                    <h3>Respaldo recomendado</h3>
+                    <p>
+                        Durante este periodo se recomienda descargar una copia completa del proyecto
+                        o aceptar una invitación al repositorio para conservar sus archivos y documentación.
+                    </p>
+                    <p>
+                        También se entrega una copia independiente que podrá conservarse como respaldo,
+                        aunque la demostración pública deje de estar disponible.
+                    </p>
+                </article>
+            </div>
+
+            <div class="nota nota--importante">
+                <strong>Consideración sobre la publicación:</strong>
+                <p>
+                    Durante el periodo de demostración, el repositorio es público. Esto significa que
+                    terceras personas o herramientas automatizadas pueden consultar o clonar sus archivos.
+                </p>
+                <p>
+                    Hasta la fecha no se han detectado forks públicos, estrellas ni seguidores del
+                    repositorio. GitHub muestra actividad de clonación posiblemente automatizada, pero no
+                    proporciona información suficiente para identificar a las personas o herramientas
+                    responsables.
+                </p>
+            </div>
+
+            <div class="nota">
+                <strong>Decisiones posteriores:</strong>
+                <p>
+                    Después de conocer la demostración, las responsables del proyecto podrán decidir si
+                    desean conservarla, elegir otro servicio de alojamiento, adquirir un dominio,
+                    contratar a una persona desarrolladora o ponerse en contacto con el autor para evaluar
+                    su continuidad.
+                </p>
+                <p>
+                    Cualquier mantenimiento, ampliación, migración o nueva funcionalidad deberá acordarse
+                    posteriormente y de manera independiente.
+                </p>
+            </div>
+        </section>
+
+        <section class="seccion revelar" id="instalacion">
+            <header class="seccion__titulo"><span>03 · INSTALACIÓN</span><h2>Instalar el sitio en una computadora</h2><p>Elige el método que resulte más cómodo.</p></header>
+
+            <div class="pestanas" role="tablist" aria-label="Métodos de instalación">
+                <button class="pestana activa" role="tab" aria-selected="true" aria-controls="metodo-git" id="tab-git">Con Git</button>
+                <button class="pestana" role="tab" aria-selected="false" aria-controls="metodo-zip" id="tab-zip">Descarga ZIP</button>
+            </div>
+
+            <div class="panel activa" id="metodo-git" role="tabpanel" aria-labelledby="tab-git">
+                <ol class="pasos">
+                    <li><strong>Instala Git y Visual Studio Code.</strong><span>Hazlo solamente desde sus páginas oficiales.</span></li>
+                    <li><strong>Abre una terminal en la carpeta donde guardarás el sitio.</strong></li>
+                    <li><strong>Clona el repositorio.</strong>
+                        <div class="codigo"><code>git clone https://github.com/TeViEnUnPlanetario/tevienunplanetario.git</code><button type="button" data-copiar>Copiar</button></div>
+                    </li>
+                    <li><strong>Entra a la carpeta y selecciona la rama publicada.</strong>
+                        <div class="codigo"><code>cd tevienunplanetario<br>git switch trabajo-casa-footer-menu</code><button type="button" data-copiar>Copiar</button></div>
+                    </li>
+                    <li><strong>Abre la carpeta en VS Code e inicia Live Server.</strong><span>Prueba primero <code>bienvenida.html</code> y luego <code>index.html</code>.</span></li>
+                </ol>
+            </div>
+
+            <div class="panel" id="metodo-zip" role="tabpanel" aria-labelledby="tab-zip" hidden>
+                <ol class="pasos">
+                    <li><strong>Abre el repositorio en GitHub.</strong></li>
+                    <li><strong>Presiona Code → Download ZIP.</strong></li>
+                    <li><strong>Descomprime el archivo y abre la carpeta en VS Code.</strong></li>
+                    <li><strong>Ejecuta Live Server.</strong><span>Este método sirve para consultar y probar. Para publicar cambios se recomienda Git.</span></li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="seccion revelar" id="estructura">
+            <header class="seccion__titulo"><span>04 · MAPA DEL PROYECTO</span><h2>Qué hace cada archivo</h2></header>
+            <div class="tabla-contenedor">
+                <table>
+                    <thead><tr><th>Archivo o carpeta</th><th>Función</th><th>Nivel de cuidado</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>bienvenida.html</code></td><td>Presentación y entrada al proyecto.</td><td><span class="nivel nivel--medio">Editar con cuidado</span></td></tr>
+                        <tr><td><code>index.html</code></td><td>Página principal, lanzamientos, shows y contacto.</td><td><span class="nivel nivel--medio">Editar con cuidado</span></td></tr>
+                        <tr><td><code>styles.css</code></td><td>Diseño visual principal y adaptación móvil.</td><td><span class="nivel nivel--alto">Hacer respaldo</span></td></tr>
+                        <tr><td><code>bienvenida.css</code></td><td>Diseño y efectos de la bienvenida.</td><td><span class="nivel nivel--alto">Hacer respaldo</span></td></tr>
+                        <tr><td><code>img/</code></td><td>Logos, portadas y fotografías.</td><td><span class="nivel nivel--bajo">Seguro si conservas nombres</span></td></tr>
+                        <tr><td><code>js/</code></td><td>Animaciones y funciones interactivas.</td><td><span class="nivel nivel--alto">No editar sin apoyo</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="seccion revelar" id="editar">
+            <header class="seccion__titulo"><span>05 · MANTENIMIENTO</span><h2>Cambios frecuentes</h2><p>Trabaja de uno en uno y revisa el resultado después de cada cambio.</p></header>
+            <div class="acordeon">
+                <details><summary>Cambiar textos, fechas y enlaces <span>+</span></summary><div><p>Abre el archivo HTML correspondiente, busca el texto actual y reemplaza solamente su contenido. No borres los signos <code>&lt;</code> y <code>&gt;</code>.</p></div></details>
+                <details><summary>Reemplazar una imagen <span>+</span></summary><div><p>Conserva una copia de la imagen anterior. Usa el mismo nombre y formato para evitar modificar el código, o actualiza exactamente la ruta indicada en <code>src="..."</code>.</p></div></details>
+                <details><summary>Actualizar un lanzamiento <span>+</span></summary><div><p>Revisa portada, nombre, descripción, fecha del contador y enlaces de preguardado. Pruébalo tanto en computadora como en teléfono.</p></div></details>
+                <details><summary>Agregar una presentación <span>+</span></summary><div><p>Duplica únicamente una tarjeta completa existente y sustituye fecha, ciudad, recinto y enlace. Evita copiar secciones incompletas.</p></div></details>
+            </div>
+        </section>
+
+        <section class="seccion revelar" id="publicar">
+            <header class="seccion__titulo"><span>06 · PUBLICACIÓN</span><h2>Guardar y publicar cambios</h2></header>
+            <div class="flujo">
+                <article><span>1</span><h3>Actualizar</h3><div class="codigo"><code>git pull</code><button type="button" data-copiar>Copiar</button></div></article>
+                <article><span>2</span><h3>Revisar</h3><div class="codigo"><code>git status</code><button type="button" data-copiar>Copiar</button></div></article>
+                <article><span>3</span><h3>Guardar</h3><div class="codigo"><code>git add .<br>git commit -m "Actualiza contenido"</code><button type="button" data-copiar>Copiar</button></div></article>
+                <article><span>4</span><h3>Publicar</h3><div class="codigo"><code>git push</code><button type="button" data-copiar>Copiar</button></div></article>
+            </div>
+            <div class="nota nota--peligro"><strong>No ejecutes <code>git reset --hard</code></strong> si tienes cambios que deseas conservar. Ese comando puede borrarlos.</div>
+        </section>
+
+        <section class="seccion revelar" id="seguridad">
+            <header class="seccion__titulo"><span>07 · PROTECCIÓN</span><h2>Seguridad y respaldos</h2></header>
+            <div class="lista-verificacion">
+                <label><input type="checkbox"> Activar verificación en dos pasos en GitHub.</label>
+                <label><input type="checkbox"> No compartir contraseñas, tokens ni archivos de credenciales.</label>
+                <label><input type="checkbox"> Crear una rama o copia antes de cambios grandes.</label>
+                <label><input type="checkbox"> Conservar originales de fotografías, portadas y logotipos.</label>
+                <label><input type="checkbox"> Revisar permisos y reglas de servicios externos.</label>
+            </div>
+        </section>
+
+        <section class="seccion revelar" id="problemas">
+            <header class="seccion__titulo"><span>08 · AYUDA</span><h2>Solución de problemas</h2></header>
+            <div class="acordeon">
+                <details><summary>GitHub Pages muestra una versión anterior <span>+</span></summary><div><p>Confirma que hiciste <code>git push</code>, revisa qué rama publica GitHub Pages, espera unos minutos y actualiza el navegador sin caché.</p></div></details>
+                <details><summary>Live Server abre otra versión <span>+</span></summary><div><p>Verifica que VS Code tenga abierta la carpeta correcta y que la terminal indique la rama esperada con <code>git branch --show-current</code>.</p></div></details>
+                <details><summary>Una imagen no aparece <span>+</span></summary><div><p>Comprueba mayúsculas, extensión y ruta. GitHub distingue entre <code>Portada.jpg</code> y <code>portada.jpg</code>.</p></div></details>
+                <details><summary>Apareció un conflicto de Git <span>+</span></summary><div><p>No elijas todos los cambios automáticamente. Haz una copia de seguridad y solicita apoyo antes de completar el merge.</p></div></details>
+            </div>
+        </section>
+
+        <section class="seccion revelar" id="roadmap">
+            <header class="seccion__titulo"><span>09 · HOJA DE RUTA</span><h2>Próximas versiones</h2><p>Estas funciones están planeadas y pueden cambiar durante el desarrollo.</p></header>
+            <div class="linea-tiempo">
+                <article class="version version--actual"><span class="version__numero">Versión 1.0</span><h3>Publicación estable</h3><ul><li>Experiencia completa de bienvenida.</li><li>Diseño adaptable a teléfonos y computadoras.</li><li>Lanzamientos, shows, galería, música y contacto.</li><li>Guía de instalación y mantenimiento.</li></ul></article>
+                <article class="version"><span class="version__numero">Versión 1.1</span><h3>Administración sencilla</h3><ul><li>Contenido más fácil de actualizar.</li><li>Mejoras de accesibilidad y rendimiento.</li><li>Mensajes claros cuando falte información.</li></ul></article>
+                <article class="version"><span class="version__numero">Versión 1.2</span><h3>Comunidad</h3><ul><li>Mejoras al observatorio y perfiles.</li><li>Favoritos o recuerdos guardados.</li><li>Nuevas formas de compartir contenido.</li></ul></article>
+                <article class="version"><span class="version__numero">Versión 2.0 · Idea futura</span><h3>Panel de control</h3><ul><li>Editar lanzamientos sin tocar código.</li><li>Administrar fechas, enlaces e imágenes.</li><li>Accesos y respaldos más automatizados.</li></ul></article>
+            </div>
+            <div class="nota"><strong>Importante:</strong> la hoja de ruta describe intenciones, no fechas prometidas. Actualízala conforme se aprueben nuevas funciones.</div>
+        </section>
+
+        <section class="seccion seccion--final revelar" id="checklist">
+            <header class="seccion__titulo"><span>10 · ANTES DE PUBLICAR</span><h2>Revisión final</h2></header>
+            <div class="lista-verificacion lista-verificacion--final">
+                <label><input type="checkbox"> Probé la página en computadora.</label>
+                <label><input type="checkbox"> Probé la página en teléfono.</label>
+                <label><input type="checkbox"> Revisé textos, fechas y enlaces.</label>
+                <label><input type="checkbox"> Guardé una copia de seguridad.</label>
+                <label><input type="checkbox"> Confirmé la rama publicada.</label>
+                <label><input type="checkbox"> Verifiqué que GitHub Pages se actualizó.</label>
+            </div>
+            <a class="boton boton--grande" href="#bienvenida">Volver al inicio <span aria-hidden="true">↑</span></a>
+        </section>
+    </main>
+
+    <footer>
+        <span>✦</span>
+        <p>Guía de Te Vi En Un Planetario</p>
+        <small>Conserva este documento junto con el proyecto.</small>
+    </footer>
+
+    <script src="guia.js"></script>
+</body>
+</html>
