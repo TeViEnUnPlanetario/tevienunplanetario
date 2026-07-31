@@ -9874,109 +9874,176 @@ transform:
 
 
 
-/* =========================
-   DESTELLOS FIJOS DEL LOGO
-========================= */
+/* Estrella luminosa de cuatro puntas */
 
-.destellos-logo {
-
+.destello-logo {
     position: absolute;
-    inset: 0;
 
-    z-index: 5;
+    width: 24px;
+    height: 24px;
+
+    opacity: 0;
+
+    transform:
+        translate(-50%, -50%)
+        scale(0.25);
+
+    animation:
+        brilloFijoLogo
+        4.2s
+        ease-in-out
+        infinite;
+
+    filter:
+        drop-shadow(
+            0 0 3px
+            rgba(255, 255, 255, 1)
+        )
+        drop-shadow(
+            0 0 8px
+            rgba(255, 255, 255, 0.95)
+        )
+        drop-shadow(
+            0 0 15px
+            rgba(175, 135, 255, 0.72)
+        );
 
     pointer-events: none;
 }
 
-.destello-logo {
+
+/* Punta vertical */
+
+.destello-logo::before {
+    content: "";
 
     position: absolute;
 
-    width: 6px;
-    height: 6px;
+    top: 0;
+    left: 50%;
 
-    border-radius: 50%;
+    width: 7px;
+    height: 24px;
 
-    background: #fff;
+    transform:
+        translateX(-50%);
 
-    opacity: 0;
+    clip-path:
+        polygon(
+            50% 0%,
+            100% 50%,
+            50% 100%,
+            0% 50%
+        );
 
-    transform: scale(.25);
-
-    box-shadow:
-        0 0 6px #fff,
-        0 0 14px #fff,
-        0 0 30px rgba(165,115,255,.7),
-        0 0 45px rgba(95,235,130,.45);
-
-    animation:
-        brilloFijoLogo
-        5.5s
-        ease-in-out
-        infinite;
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0),
+            #ffffff 42%,
+            #ffffff 58%,
+            rgba(255, 255, 255, 0)
+        );
 }
 
-.destello-logo.dl1 {
 
-    left: 18%;
-    top: 28%;
+/* Punta horizontal */
 
-    animation-delay: 0s;
-}
+.destello-logo::after {
+    content: "";
 
-.destello-logo.dl2 {
+    position: absolute;
 
-    left: 39%;
-    top: 18%;
+    top: 50%;
+    left: 0;
 
-    animation-delay: 1.2s;
-}
+    width: 24px;
+    height: 7px;
 
-.destello-logo.dl3 {
+    transform:
+        translateY(-50%);
 
-    left: 72%;
-    top: 42%;
+    clip-path:
+        polygon(
+            0% 50%,
+            50% 0%,
+            100% 50%,
+            50% 100%
+        );
 
-    animation-delay: 2.8s;
-}
-
-.destello-logo.dl4 {
-
-    left: 86%;
-    top: 70%;
-
-    animation-delay: 4.3s;
+    background:
+        linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0),
+            #ffffff 42%,
+            #ffffff 58%,
+            rgba(255, 255, 255, 0)
+        );
 }
 
 @keyframes brilloFijoLogo {
 
     0%,
     100% {
+        opacity: 0.28;
 
-        opacity: 0;
+        transform:
+            translate(-50%, -50%)
+            scale(0.65)
+            rotate(0deg);
 
-        transform: scale(.25);
+        filter:
+            brightness(0.85)
+            drop-shadow(
+                0 0 3px
+                rgba(255, 255, 255, 0.55)
+            )
+            drop-shadow(
+                0 0 7px
+                rgba(175, 135, 255, 0.32)
+            );
     }
 
-    2% {
+    42% {
+        opacity: 0.48;
 
+        transform:
+            translate(-50%, -50%)
+            scale(0.82)
+            rotate(-4deg);
+    }
+
+    50% {
         opacity: 1;
 
-        transform: scale(1.8);
+        transform:
+            translate(-50%, -50%)
+            scale(1.35)
+            rotate(6deg);
+
+        filter:
+            brightness(1.55)
+            drop-shadow(
+                0 0 4px
+                rgba(255, 255, 255, 1)
+            )
+            drop-shadow(
+                0 0 10px
+                rgba(255, 255, 255, 0.95)
+            )
+            drop-shadow(
+                0 0 18px
+                rgba(175, 135, 255, 0.75)
+            );
     }
 
-    5% {
+    60% {
+        opacity: 0.42;
 
-        opacity: .85;
-
-        transform: scale(1);
-    }
-
-    8% {
-
-        opacity: 0;
-
-        transform: scale(.3);
+        transform:
+            translate(-50%, -50%)
+            scale(0.78)
+            rotate(0deg);
     }
 }
 
@@ -11706,3 +11773,191 @@ body:not(.pagina-musica-body):not(.pagina-galeria-body)
     }
 }
 
+
+/* =========================================================
+   MENÚ — RESPLANDOR ÚNICAMENTE AL PASAR EL CURSOR
+========================================================= */
+
+.menu > a {
+    color: #ffffff;
+
+    filter:
+        brightness(1)
+        drop-shadow(
+            0 0 0
+            rgba(255, 255, 255, 0)
+        );
+
+    transition:
+        color 0.3s ease,
+        filter 0.4s ease;
+
+    animation: none !important;
+}
+
+
+/* Solo se ilumina el enlace seleccionado */
+
+@media (hover: hover) and (pointer: fine) {
+
+    .menu > a:hover,
+    .menu > a:focus-visible {
+        color: #ffffff;
+
+        filter:
+            brightness(1.5)
+            drop-shadow(
+                0 0 3px
+                rgba(255, 255, 255, 1)
+            )
+            drop-shadow(
+                0 0 8px
+                rgba(255, 255, 255, 0.90)
+            )
+            drop-shadow(
+                0 0 16px
+                rgba(210, 190, 255, 0.60)
+            ) !important;
+    }
+}
+
+/* =========================================================
+   ESTRELLAS FUGACES — REFUERZO EN MÓVILES
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .estrellas-fugaces {
+        position: fixed !important;
+
+        inset: 0 !important;
+
+        width: 100vw !important;
+        height: 100vh !important;
+
+        overflow: hidden !important;
+
+        opacity: 1 !important;
+        visibility: visible !important;
+
+        z-index: 3 !important;
+
+        pointer-events: none;
+    }
+
+    .estrellas-fugaces
+    .estrella-fugaz {
+        height: 3px !important;
+
+        min-width: 115px;
+
+        filter:
+            brightness(1.35)
+            drop-shadow(
+                0 0 4px
+                rgba(255, 255, 255, 1)
+            )
+            drop-shadow(
+                0 0 10px
+                rgba(190, 150, 255, 0.85)
+            )
+            drop-shadow(
+                0 0 18px
+                rgba(135, 90, 220, 0.52)
+            ) !important;
+    }
+
+    .estrellas-fugaces
+    .estrella-fugaz::after {
+        width: 6px !important;
+        height: 6px !important;
+
+        background: #ffffff !important;
+
+        box-shadow:
+            0 0 6px
+            rgba(255, 255, 255, 1),
+            0 0 14px
+            rgba(255, 255, 255, 0.95),
+            0 0 24px
+            rgba(175, 130, 255, 0.76) !important;
+    }
+}
+
+/* =========================================================
+   FOOTER — ESTRELLAS FUGACES ENTRE FONDO Y CONTENIDO
+========================================================= */
+
+/*
+   El footer deja de encerrar todas sus capas.
+   Así los z-index pueden ordenarse correctamente.
+*/
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+> footer {
+    position: relative;
+
+    isolation: auto !important;
+
+    z-index: auto !important;
+}
+
+
+/*
+   Paisaje y degradado:
+   permanecen debajo de las estrellas.
+*/
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.escena-lunar-footer {
+    z-index: 2 !important;
+}
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+> footer::before {
+    z-index: 1 !important;
+
+    pointer-events: none;
+}
+
+
+/*
+   Estrellas fugaces:
+   delante del degradado y del paisaje.
+*/
+
+.estrellas-fugaces {
+    position: fixed !important;
+
+    inset: 0 !important;
+
+    z-index: 4 !important;
+
+    pointer-events: none !important;
+}
+
+
+/*
+   Textos, títulos, botones y copyright:
+   permanecen delante de las estrellas.
+*/
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+> footer
+> *:not(.escena-lunar-footer) {
+    position: relative;
+
+    z-index: 6 !important;
+}
+
+
+/* Los botones tienen una capa adicional de protección */
+
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-portada,
+body:not(.pagina-musica-body):not(.pagina-galeria-body)
+.botones-redes {
+    position: relative;
+
+    z-index: 7 !important;
+}

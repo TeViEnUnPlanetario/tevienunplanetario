@@ -743,7 +743,7 @@ document.addEventListener(
 
 document.addEventListener(
     "DOMContentLoaded",
-    function(){
+    function () {
 
         const contenedor =
             document.querySelector(
@@ -758,7 +758,6 @@ document.addEventListener(
             );
 
             return;
-
         }
 
 
@@ -768,33 +767,46 @@ document.addEventListener(
             );
 
 
+        const consultaMovil =
+            window.matchMedia(
+                "(max-width: 900px)"
+            );
+
+
         let temporizador = null;
 
 
         function numeroAleatorio(
             minimo,
             maximo
-        ){
+        ) {
 
             return (
                 Math.random() *
                 (maximo - minimo) +
                 minimo
             );
-
         }
 
 
-        function crearEstrellaFugaz(){
+        function esPantallaMovil() {
+
+            return consultaMovil.matches;
+        }
+
+
+        function crearEstrellaFugaz() {
 
             if (
                 movimientoReducido.matches ||
                 document.hidden
             ) {
-
                 return;
-
             }
+
+
+            const movil =
+                esPantallaMovil();
 
 
             const estrella =
@@ -808,22 +820,33 @@ document.addEventListener(
 
 
             /*
-                La estrella puede comenzar ligeramente
-                fuera de la pantalla o dentro de ella.
+                En móvil ampliamos ligeramente la zona
+                de aparición para aprovechar la pantalla
+                vertical.
             */
 
             const inicioX =
-                numeroAleatorio(
-                    -20,
-                    72
-                );
+                movil
+                    ? numeroAleatorio(
+                        -32,
+                        74
+                    )
+                    : numeroAleatorio(
+                        -20,
+                        72
+                    );
 
 
             const inicioY =
-                numeroAleatorio(
-                    -8,
-                    58
-                );
+                movil
+                    ? numeroAleatorio(
+                        -5,
+                        70
+                    )
+                    : numeroAleatorio(
+                        -8,
+                        58
+                    );
 
 
             /*
@@ -832,45 +855,84 @@ document.addEventListener(
             */
 
             const recorridoX =
-                numeroAleatorio(
-                    38,
-                    78
-                );
+                movil
+                    ? numeroAleatorio(
+                        55,
+                        95
+                    )
+                    : numeroAleatorio(
+                        38,
+                        78
+                    );
 
 
             const recorridoY =
-                numeroAleatorio(
-                    20,
-                    52
-                );
+                movil
+                    ? numeroAleatorio(
+                        22,
+                        48
+                    )
+                    : numeroAleatorio(
+                        20,
+                        52
+                    );
 
 
             const angulo =
-                numeroAleatorio(
-                    22,
-                    38
-                );
+                movil
+                    ? numeroAleatorio(
+                        24,
+                        36
+                    )
+                    : numeroAleatorio(
+                        22,
+                        38
+                    );
 
+
+            /*
+                En móvil las estelas son un poco más
+                largas para que sean fáciles de percibir.
+            */
 
             const longitud =
-                numeroAleatorio(
-                    90,
-                    190
-                );
+                movil
+                    ? numeroAleatorio(
+                        120,
+                        210
+                    )
+                    : numeroAleatorio(
+                        90,
+                        190
+                    );
 
 
             const duracion =
-                numeroAleatorio(
-                    1.05,
-                    1.85
-                );
+                movil
+                    ? numeroAleatorio(
+                        1.20,
+                        1.85
+                    )
+                    : numeroAleatorio(
+                        1.05,
+                        1.85
+                    );
 
+
+            /*
+                Mayor brillo en pantallas pequeñas.
+            */
 
             const brillo =
-                numeroAleatorio(
-                    .52,
-                    .90
-                );
+                movil
+                    ? numeroAleatorio(
+                        0.78,
+                        1
+                    )
+                    : numeroAleatorio(
+                        0.52,
+                        0.90
+                    );
 
 
             estrella.style.setProperty(
@@ -928,20 +990,18 @@ document.addEventListener(
 
             estrella.addEventListener(
                 "animationend",
-                function(){
+                function () {
 
                     estrella.remove();
-
                 },
                 {
-                    once:true
+                    once: true
                 }
             );
-
         }
 
 
-        function programarSiguienteEstrella(){
+        function programarSiguienteEstrella() {
 
             clearTimeout(
                 temporizador
@@ -952,47 +1012,63 @@ document.addEventListener(
                 movimientoReducido.matches ||
                 document.hidden
             ) {
-
                 return;
-
             }
 
 
+            const movil =
+                esPantallaMovil();
+
+
             /*
-                Una estrella cada 4.5 a 9 segundos.
+                Escritorio: una cada 4.5–9 segundos.
+                Móvil: una cada 2.6–4.8 segundos.
             */
 
             const espera =
-                numeroAleatorio(
-                    4500,
-                    9000
-                );
+                movil
+                    ? numeroAleatorio(
+                        2600,
+                        4800
+                    )
+                    : numeroAleatorio(
+                        4500,
+                        9000
+                    );
 
 
             temporizador =
                 setTimeout(
-                    function(){
+                    function () {
 
                         crearEstrellaFugaz();
 
 
                         /*
-                            En algunas ocasiones aparecerá
-                            una segunda estrella poco después.
+                            En ocasiones aparece una segunda
+                            estrella poco después.
+
+                            La probabilidad es mayor en móvil.
                         */
 
+                        const probabilidadDoble =
+                            movil
+                                ? 0.24
+                                : 0.14;
+
+
                         if (
-                            Math.random() < .14
+                            Math.random() <
+                            probabilidadDoble
                         ) {
 
                             setTimeout(
                                 crearEstrellaFugaz,
                                 numeroAleatorio(
                                     450,
-                                    1300
+                                    1200
                                 )
                             );
-
                         }
 
 
@@ -1001,13 +1077,17 @@ document.addEventListener(
                     },
                     espera
                 );
-
         }
 
 
+        /*
+            Detiene el generador cuando la página queda
+            oculta y lo reactiva al regresar.
+        */
+
         document.addEventListener(
             "visibilitychange",
-            function(){
+            function () {
 
                 if (document.hidden) {
 
@@ -1016,45 +1096,91 @@ document.addEventListener(
                     );
 
                     return;
-
                 }
 
 
                 programarSiguienteEstrella();
-
-            }
-        );
-
-
-        movimientoReducido.addEventListener(
-            "change",
-            function(){
-
-                programarSiguienteEstrella();
-
             }
         );
 
 
         /*
-            Primera estrella ligeramente más rápida
-            para comprobar que el sistema funciona.
+            Respeta la preferencia de movimiento reducido.
         */
+
+        movimientoReducido.addEventListener(
+            "change",
+            function () {
+
+                clearTimeout(
+                    temporizador
+                );
+
+
+                if (
+                    movimientoReducido.matches
+                ) {
+
+                    contenedor
+                        .querySelectorAll(
+                            ".estrella-fugaz"
+                        )
+                        .forEach(
+                            function (estrella) {
+
+                                estrella.remove();
+                            }
+                        );
+
+                    return;
+                }
+
+
+                programarSiguienteEstrella();
+            }
+        );
+
+
+        /*
+            Reprograma la frecuencia cuando la pantalla
+            cambia entre móvil y escritorio.
+        */
+
+        consultaMovil.addEventListener(
+            "change",
+            function () {
+
+                programarSiguienteEstrella();
+            }
+        );
+
+
+        /*
+            Primera estrella más rápida para confirmar
+            visualmente que el sistema funciona.
+        */
+
+        const esperaInicial =
+            esPantallaMovil()
+                ? numeroAleatorio(
+                    900,
+                    1700
+                )
+                : numeroAleatorio(
+                    1800,
+                    3200
+                );
+
 
         temporizador =
             setTimeout(
-                function(){
+                function () {
 
                     crearEstrellaFugaz();
 
                     programarSiguienteEstrella();
-
                 },
-                numeroAleatorio(
-                    1800,
-                    3200
-                )
+                esperaInicial
             );
-
     }
 );
