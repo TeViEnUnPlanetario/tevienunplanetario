@@ -13,6 +13,8 @@ import {
 const REFERENCIA_LANZAMIENTO =
     doc(db, "configuracion", "proximo-lanzamiento");
 
+const HILO_LANZAMIENTO_INICIAL = "proximo-lanzamiento-inicial";
+
 
 function esPermisoDenegado(error) {
     const codigo = String(error?.code || "").toLowerCase();
@@ -35,7 +37,15 @@ async function leerProximoLanzamientoPublico() {
             return { estado: "oculto", datos: null };
         }
 
-        return { estado: "publicado", datos };
+        return {
+            estado: "publicado",
+            datos: {
+                ...datos,
+                hiloComentariosId: String(
+                    datos.hiloComentariosId || HILO_LANZAMIENTO_INICIAL
+                )
+            }
+        };
     } catch (error) {
         if (esPermisoDenegado(error)) {
             return { estado: "oculto", datos: null };
@@ -52,5 +62,6 @@ async function leerProximoLanzamientoPublico() {
 
 
 export {
+    HILO_LANZAMIENTO_INICIAL,
     leerProximoLanzamientoPublico
 };

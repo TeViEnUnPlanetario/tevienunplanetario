@@ -1,0 +1,14 @@
+Coloca en esta carpeta las imágenes de Noticias y chismecitos platanitos.
+
+Formatos recomendados: JPG, PNG o WebP.
+Proporción recomendada: 4:3.
+En el panel escribe una ruta por línea, por ejemplo:
+img/noticias/sesion-reactor.jpg
+img/noticias/sesion-reactor-2.jpg
+img/noticias/sesion-reactor-3.jpg
+
+Cada publicación admite entre 1 y 20 imágenes. El sitio las presenta juntas
+dentro de un carrusel automático con navegación manual.
+
+Firestore guarda la ruta y los datos de la publicación; la imagen permanece
+como archivo local dentro del proyecto y debe incluirse en cada despliegue.

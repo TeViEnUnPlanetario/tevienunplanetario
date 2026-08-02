@@ -3,8 +3,13 @@
 // ==================================================
 
 import {
+    HILO_LANZAMIENTO_INICIAL,
     leerProximoLanzamientoPublico
 } from "../firebase/firestore-lanzamiento.js";
+
+import {
+    crearComentariosContextuales
+} from "./comentarios-contextuales.js?v=11";
 
 
 const elementos = {
@@ -131,6 +136,17 @@ function mostrarSeccion(origen) {
 }
 
 
+function prepararComentarios(hiloId) {
+    if (elementos.seccion.querySelector(".comentarios-contextuales")) {
+        return;
+    }
+    crearComentariosContextuales(elementos.seccion, {
+        tipo: "lanzamiento",
+        id: hiloId || HILO_LANZAMIENTO_INICIAL
+    });
+}
+
+
 async function iniciarLanzamientoPublico() {
     if (!elementos.seccion) {
         return;
@@ -148,6 +164,7 @@ async function iniciarLanzamientoPublico() {
     }
 
     mostrarSeccion(resultado.estado);
+    prepararComentarios(resultado.datos?.hiloComentariosId);
 }
 
 

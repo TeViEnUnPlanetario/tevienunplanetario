@@ -1,0 +1,35 @@
+rules_version = '2';
+
+service firebase.storage {
+    match /b/{bucket}/o {
+
+        function sesionActiva() {
+            return request.auth != null;
+        }
+
+        function esAdministrador() {
+            return sesionActiva()
+                && firestore.exists(
+                    /databases/(default)/documents/usuarios/$(request.auth.uid)
+                )
+                && firestore.get(
+                    /databases/(default)/documents/usuarios/$(request.auth.uid)
+                ).data.rol in [
+                    "sistema-planetario",
+                    "administrador"
+                ];
+        }
+
+        match /presentaciones/{usuarioId}/{archivo} {
+            allow read: if true;
+
+            allow create, update: if esAdministrador()
+                && request.resource.size <= 5 * 1024 * 1024
+                && request.resource.contentType.matches(
+                    'image/(jpeg|png|webp)'
+                );
+
+            allow delete: if esAdministrador();
+        }
+    }
+}

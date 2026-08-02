@@ -57,6 +57,11 @@ button { color: inherit; }
 main { position: relative; z-index: 2; }
 .hero, .seccion { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
 .hero { display: flex; align-items: center; justify-content: center; flex-direction: column; min-height: calc(100svh - 80px); padding: 100px 20px; text-align: center; }
+.anuncio-actualizacion { display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 26px; padding: 10px 16px; border: 1px solid rgba(220,195,255,.58); border-radius: 999px; color: rgba(255,255,255,.84); background: linear-gradient(135deg, rgba(166,108,255,.22), rgba(219,98,186,.1)); box-shadow: 0 0 20px rgba(166,108,255,.2), inset 0 1px rgba(255,255,255,.12); text-decoration: none; font-size: 13px; letter-spacing: .04em; transition: transform .35s var(--curva), border-color .3s, box-shadow .3s; animation: anuncioActualizacion 2.8s ease-in-out infinite; }
+.anuncio-actualizacion strong { color: #fff; }
+.anuncio-actualizacion:hover, .anuncio-actualizacion:focus-visible { transform: translateY(-3px); border-color: rgba(255,255,255,.9); box-shadow: 0 0 18px rgba(255,255,255,.22), 0 0 42px rgba(166,108,255,.42); outline: none; }
+.anuncio-actualizacion__pulso { width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%; background: #d9bdff; box-shadow: 0 0 8px #fff, 0 0 16px var(--morado); }
+.anuncio-actualizacion__flecha { color: var(--morado-claro); font-weight: 800; }
 .eyebrow, .seccion__titulo > span { color: var(--morado-claro); font-size: 12px; font-weight: 800; letter-spacing: .28em; text-transform: uppercase; }
 .hero__simbolo { margin: 24px 0; font-size: 52px; text-shadow: 0 0 16px #fff, 0 0 48px var(--morado); animation: brillo 3s ease-in-out infinite; }
 .hero h1 { max-width: 960px; font-size: clamp(45px, 8vw, 92px); line-height: 1.02; letter-spacing: -.045em; text-wrap: balance; text-shadow: 0 0 45px rgba(166,108,255,.22); }
@@ -82,6 +87,8 @@ main { position: relative; z-index: 2; }
 
 .nota { margin-top: 24px; padding: 20px 24px; border: 1px solid rgba(166,108,255,.27); border-radius: 18px; color: var(--suave); background: rgba(166,108,255,.07); }
 .nota--importante { border-color: rgba(231,187,91,.3); background: rgba(231,187,91,.06); }
+.nota--positiva { border-color: rgba(57,224,218,.48); background: linear-gradient(145deg, rgba(26,190,196,.11), rgba(27,113,160,.045)); box-shadow: 0 0 24px rgba(39,210,211,.1), inset 0 1px rgba(174,255,251,.06); }
+.nota--positiva > strong:first-child { color: #8ff9f2; text-shadow: 0 0 14px rgba(57,224,218,.32); }
 .nota--peligro { border-color: rgba(255,90,110,.35); background: rgba(255,60,90,.07); }
 
 .pestanas { display: inline-flex; gap: 6px; margin-bottom: 22px; padding: 6px; border: 1px solid var(--borde); border-radius: 99px; background: rgba(255,255,255,.035); }
@@ -130,8 +137,10 @@ details > div { padding: 0 24px 22px; color: var(--suave); }
 .lista-verificacion label:has(input:checked) { color: #fff; border-color: rgba(166,108,255,.45); }
 
 .linea-tiempo { position: relative; display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-.version { padding: 28px; border: 1px solid var(--borde); border-radius: var(--radio); background: var(--panel); }
-.version--actual { border-color: rgba(166,108,255,.55); box-shadow: 0 0 40px rgba(166,108,255,.12); }
+.version { position: relative; padding: 28px; border: 1px solid var(--borde); border-radius: var(--radio); background: var(--panel); }
+.version--actual { border-color: rgba(196,151,255,.8); background: linear-gradient(145deg, rgba(166,108,255,.14), rgba(255,255,255,.025)); box-shadow: 0 0 22px rgba(166,108,255,.2), 0 0 55px rgba(166,108,255,.12); }
+.version__estado { display: inline-flex; align-items: center; min-height: 28px; margin: 0 0 18px; padding: 0 12px; border: 1px solid rgba(220,195,255,.55); border-radius: 999px; color: #fff; background: rgba(166,108,255,.2); box-shadow: 0 0 18px rgba(166,108,255,.24); font-size: 11px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.version__estado::before { content: ""; width: 7px; height: 7px; margin-right: 8px; border-radius: 50%; background: #d9bdff; box-shadow: 0 0 10px #c193ff; }
 .version__numero { color: var(--morado-claro); font-size: 12px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
 .version h3 { margin: 8px 0 14px; font-size: 25px; }
 .version ul { padding-left: 20px; color: var(--suave); }
@@ -190,6 +199,7 @@ footer > span { color: var(--morado-claro); font-size: 30px; text-shadow: 0 0 18
 @keyframes deriva { to { transform: translate3d(-80px, -60px, 0); } }
 @keyframes brillo { 50% { opacity: .65; transform: scale(.9); } }
 @keyframes fugaz { 0% { opacity: 0; } 15% { opacity: .9; } 100% { opacity: 0; transform: translate(calc(var(--x) + 360px), calc(var(--y) + 260px)) rotate(-35deg); } }
+@keyframes anuncioActualizacion { 50% { box-shadow: 0 0 28px rgba(166,108,255,.34), 0 0 52px rgba(219,98,186,.12), inset 0 1px rgba(255,255,255,.16); } }
 
 @media (max-width: 850px) {
     .rejilla--3, .flujo, .linea-tiempo, .alcance-proyecto { grid-template-columns: 1fr; }
@@ -203,6 +213,7 @@ footer > span { color: var(--morado-claro); font-size: 30px; text-shadow: 0 0 18
     .cabecera__acciones .boton { padding: 9px 13px; font-size: 13px; }
     .hero { min-height: 92svh; padding-inline: 4px; }
     .hero h1 { font-size: clamp(42px, 13vw, 64px); }
+    .anuncio-actualizacion { width: min(100%, 350px); padding-inline: 13px; font-size: 12px; }
     .hero__acciones { flex-direction: column; width: 100%; }
     .hero__acciones .boton { width: 100%; }
     .aviso { border-radius: 18px; }

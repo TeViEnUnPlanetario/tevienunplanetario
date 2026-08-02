@@ -18,6 +18,14 @@ import {
     verificarAdministrador
 } from "../firebase/firestore-administracion.js";
 
+import {
+    inicializarAdministracionShows
+} from "./sistema-planetario-shows.js";
+
+import {
+    inicializarAdministracionContenido
+} from "./sistema-planetario-contenido.js";
+
 
 const elementos = {
     carga: document.getElementById("estado-carga"),
@@ -76,7 +84,11 @@ const elementos = {
 
 const TITULOS_VISTA = {
     resumen: "Resumen del sistema",
-    lanzamiento: "Editor de lanzamiento"
+    lanzamiento: "Editor de lanzamiento",
+    shows: "Administración de Shows",
+    noticias: "Administración de Noticias",
+    galeria: "Administración de Galería",
+    musica: "Administración de Música"
 };
 
 let valoresCargados = null;
@@ -328,7 +340,10 @@ async function guardarLanzamiento(evento) {
     mostrarMensaje("Verificando permisos y guardando en Firestore…", "carga");
 
     try {
-        const guardado = await guardarProximoLanzamiento(leerFormulario());
+        const guardado = await guardarProximoLanzamiento({
+            ...leerFormulario(),
+            hiloComentariosId: valoresCargados?.hiloComentariosId
+        });
         valoresCargados = { ...guardado };
         llenarFormulario(valoresCargados);
         actualizarResumen(
@@ -484,6 +499,8 @@ onAuthStateChanged(auth, async (usuario) => {
         mostrarSolo(elementos.panel);
         cambiarVista("resumen");
         await cargarLanzamiento();
+        await inicializarAdministracionShows();
+        await inicializarAdministracionContenido();
     } catch (error) {
         console.warn("Acceso administrativo rechazado:", error);
         mostrarAccesoDenegado(error?.code, error?.message);

@@ -83,6 +83,7 @@ service cloud.firestore {
                     "disponibilidad",
                     "spotify",
                     "appleMusic",
+                    "hiloComentariosId",
                     "visible",
                     "actualizadoEn",
                     "actualizadoPor",
@@ -98,6 +99,7 @@ service cloud.firestore {
                         "disponibilidad",
                         "spotify",
                         "appleMusic",
+                        "hiloComentariosId",
                         "visible",
                         "actualizadoEn",
                         "actualizadoPor",
@@ -152,6 +154,19 @@ service cloud.firestore {
                 && request.resource.data.appleMusic.size()
                     <= 1000
 
+                && request.resource.data.hiloComentariosId
+                    is string
+
+                && request.resource.data.hiloComentariosId.size()
+                    > 0
+
+                && request.resource.data.hiloComentariosId.size()
+                    <= 120
+
+                && request.resource.data.hiloComentariosId.matches(
+                    '^[A-Za-z0-9_-]+$'
+                )
+
                 && request.resource.data.visible
                     is bool
 
@@ -166,6 +181,313 @@ service cloud.firestore {
 
                 && request.resource.data.actualizadoPorNombre.size()
                     <= 120;
+
+        }
+
+
+        function comentarioContextualValido() {
+
+            return request.resource.data.keys().hasAll([
+                    "texto",
+                    "autorId",
+                    "autorNombre",
+                    "autorFoto",
+                    "creadoEn",
+                    "actualizadoEn"
+                ])
+                && request.resource.data.keys().hasOnly([
+                    "texto",
+                    "autorId",
+                    "autorNombre",
+                    "autorFoto",
+                    "creadoEn",
+                    "actualizadoEn"
+                ])
+                && request.resource.data.texto is string
+                && request.resource.data.texto.size() > 0
+                && request.resource.data.texto.size() <= 500
+                && request.resource.data.autorId == request.auth.uid
+                && request.resource.data.autorNombre is string
+                && request.resource.data.autorNombre.size() > 0
+                && request.resource.data.autorNombre.size() <= 120
+                && request.resource.data.autorFoto is string
+                && request.resource.data.autorFoto.size() <= 1000
+                && request.resource.data.creadoEn == request.time
+                && request.resource.data.actualizadoEn == request.time;
+
+        }
+
+
+        function autorContextualCoincideConPerfil() {
+
+            return exists(
+                    /databases/$(database)/documents/usuarios/$(request.auth.uid)
+                )
+                && request.resource.data.autorNombre
+                    == perfilActual().nombre
+                && request.resource.data.autorFoto
+                    == perfilActual().get("foto", "");
+
+        }
+
+
+        function edicionComentarioContextualValida() {
+
+            return request.resource.data
+                    .diff(resource.data)
+                    .affectedKeys()
+                    .hasOnly(["texto", "actualizadoEn"])
+                && request.resource.data.texto is string
+                && request.resource.data.texto.size() > 0
+                && request.resource.data.texto.size() <= 500
+                && request.resource.data.actualizadoEn == request.time
+                && request.resource.data.autorId == resource.data.autorId
+                && request.resource.data.creadoEn == resource.data.creadoEn;
+
+        }
+
+
+        function estrellaContextualValida(usuarioId) {
+
+            return sesionActiva()
+                && usuarioId == request.auth.uid
+                && request.resource.data.keys().hasAll([
+                    "autorId", "creadoEn"
+                ])
+                && request.resource.data.keys().hasOnly([
+                    "autorId", "creadoEn"
+                ])
+                && request.resource.data.autorId == request.auth.uid
+                && request.resource.data.creadoEn == request.time;
+
+        }
+
+
+        /*
+         * Contrato de cada presentación pública.
+         */
+
+        function presentacionValida() {
+
+            return request.resource.data.keys()
+                .hasAll([
+                    "nombre",
+                    "fecha",
+                    "descripcion",
+                    "imagen",
+                    "imagenAlt",
+                    "boletos",
+                    "imagenStorageRuta",
+                    "visible",
+                    "creadoEn",
+                    "actualizadoEn",
+                    "actualizadoPor"
+                ])
+
+                && request.resource.data.keys()
+                    .hasOnly([
+                        "nombre",
+                        "fecha",
+                        "descripcion",
+                        "imagen",
+                        "imagenAlt",
+                        "boletos",
+                        "imagenStorageRuta",
+                        "visible",
+                        "creadoEn",
+                        "actualizadoEn",
+                        "actualizadoPor"
+                    ])
+
+                && request.resource.data.nombre is string
+                && request.resource.data.nombre.size() > 0
+                && request.resource.data.nombre.size() <= 100
+
+                && request.resource.data.fecha is timestamp
+
+                && request.resource.data.descripcion is string
+                && request.resource.data.descripcion.size() > 0
+                && request.resource.data.descripcion.size() <= 600
+
+                && request.resource.data.imagen is string
+                && request.resource.data.imagen.size() <= 1000
+                && (
+                    request.resource.data.imagen == ""
+                    || request.resource.data.imagen.matches('^https?://.+')
+                    || request.resource.data.imagen.matches('^(img/|\\./|\\.\\./).+')
+                )
+
+                && request.resource.data.imagenAlt is string
+                && request.resource.data.imagenAlt.size() > 0
+                && request.resource.data.imagenAlt.size() <= 160
+
+                && request.resource.data.boletos is string
+                && request.resource.data.boletos.size() <= 1000
+                && (
+                    request.resource.data.boletos == ""
+                    || request.resource.data.boletos.matches('^https?://.+')
+                )
+
+                && request.resource.data.imagenStorageRuta is string
+                && request.resource.data.imagenStorageRuta.size() <= 500
+                && (
+                    request.resource.data.imagenStorageRuta == ""
+                    || request.resource.data.imagenStorageRuta.matches(
+                        '^presentaciones/.+'
+                    )
+                )
+
+                && request.resource.data.visible is bool
+                && request.resource.data.creadoEn is timestamp
+                && request.resource.data.actualizadoEn == request.time
+                && request.resource.data.actualizadoPor == request.auth.uid;
+
+        }
+
+
+        /*
+         * Contratos del contenido administrable de Galería y Música.
+         * Se aceptan URLs públicas o rutas relativas incluidas en el sitio.
+         */
+
+        function elementoGaleriaValido() {
+
+            return request.resource.data.keys().hasAll([
+                    "titulo", "descripcion", "imagen", "imagenAlt",
+                    "tamano", "orden", "visible", "creadoEn",
+                    "actualizadoEn", "actualizadoPor"
+                ])
+                && request.resource.data.keys().hasOnly([
+                    "titulo", "descripcion", "imagen", "imagenAlt",
+                    "tamano", "orden", "visible", "creadoEn",
+                    "actualizadoEn", "actualizadoPor"
+                ])
+                && request.resource.data.titulo is string
+                && request.resource.data.titulo.size() > 0
+                && request.resource.data.titulo.size() <= 120
+                && request.resource.data.descripcion is string
+                && request.resource.data.descripcion.size() <= 600
+                && request.resource.data.imagen is string
+                && request.resource.data.imagen.size() > 0
+                && request.resource.data.imagen.size() <= 1000
+                && (
+                    request.resource.data.imagen.matches('^https?://.+')
+                    || request.resource.data.imagen.matches('^(img/|\\./|\\.\\./).+')
+                )
+                && request.resource.data.imagenAlt is string
+                && request.resource.data.imagenAlt.size() > 0
+                && request.resource.data.imagenAlt.size() <= 180
+                && request.resource.data.tamano in ["normal", "grande"]
+                && request.resource.data.orden is int
+                && request.resource.data.orden >= 0
+                && request.resource.data.orden <= 10000
+                && request.resource.data.visible is bool
+                && request.resource.data.creadoEn is timestamp
+                && request.resource.data.actualizadoEn == request.time
+                && request.resource.data.actualizadoPor == request.auth.uid;
+
+        }
+
+
+        function elementoMusicaValido() {
+
+            return request.resource.data.keys().hasAll([
+                    "tipo", "titulo", "lanzamiento", "imagen", "imagenAlt",
+                    "enlace", "orden", "visible", "creadoEn",
+                    "actualizadoEn", "actualizadoPor"
+                ])
+                && request.resource.data.keys().hasOnly([
+                    "tipo", "titulo", "lanzamiento", "imagen", "imagenAlt",
+                    "enlace", "orden", "visible", "creadoEn",
+                    "actualizadoEn", "actualizadoPor"
+                ])
+                && request.resource.data.tipo is string
+                && request.resource.data.tipo.size() > 0
+                && request.resource.data.tipo.size() <= 80
+                && request.resource.data.titulo is string
+                && request.resource.data.titulo.size() > 0
+                && request.resource.data.titulo.size() <= 120
+                && request.resource.data.lanzamiento is string
+                && request.resource.data.lanzamiento.size() <= 120
+                && request.resource.data.imagen is string
+                && request.resource.data.imagen.size() > 0
+                && request.resource.data.imagen.size() <= 1000
+                && (
+                    request.resource.data.imagen.matches('^https?://.+')
+                    || request.resource.data.imagen.matches('^(img/|\\./|\\.\\./).+')
+                )
+                && request.resource.data.imagenAlt is string
+                && request.resource.data.imagenAlt.size() > 0
+                && request.resource.data.imagenAlt.size() <= 180
+                && request.resource.data.enlace is string
+                && request.resource.data.enlace.size() <= 1000
+                && (
+                    request.resource.data.enlace == ""
+                    || request.resource.data.enlace.matches('^https?://.+')
+                )
+                && request.resource.data.orden is int
+                && request.resource.data.orden >= 0
+                && request.resource.data.orden <= 10000
+                && request.resource.data.visible is bool
+                && request.resource.data.creadoEn is timestamp
+                && request.resource.data.actualizadoEn == request.time
+                && request.resource.data.actualizadoPor == request.auth.uid;
+
+        }
+
+
+        function elementoNoticiaValido() {
+
+            return request.resource.data.keys().hasAll([
+                    "titulo", "descripcion", "fecha", "imagen", "imagenes", "imagenAlt",
+                    "instagram", "facebook", "x", "tiktok", "orden", "visible",
+                    "creadoEn", "actualizadoEn", "actualizadoPor"
+                ])
+                && request.resource.data.keys().hasOnly([
+                    "titulo", "descripcion", "fecha", "imagen", "imagenes", "imagenAlt",
+                    "instagram", "facebook", "x", "tiktok", "orden", "visible",
+                    "creadoEn", "actualizadoEn", "actualizadoPor"
+                ])
+                && request.resource.data.titulo is string
+                && request.resource.data.titulo.size() > 0
+                && request.resource.data.titulo.size() <= 120
+                && request.resource.data.descripcion is string
+                && request.resource.data.descripcion.size() > 0
+                && request.resource.data.descripcion.size() <= 1200
+                && request.resource.data.fecha is string
+                && request.resource.data.fecha.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+                && request.resource.data.imagen is string
+                && request.resource.data.imagen.size() > 0
+                && request.resource.data.imagen.size() <= 1000
+                && request.resource.data.imagen.matches('^(img/|\\./|\\.\\./).+')
+                && request.resource.data.imagenes is list
+                && request.resource.data.imagenes.size() > 0
+                && request.resource.data.imagenes.size() <= 20
+                && request.resource.data.imagenes[0] == request.resource.data.imagen
+                && request.resource.data.imagenes.toSet().size()
+                    == request.resource.data.imagenes.size()
+                && request.resource.data.imagenAlt is string
+                && request.resource.data.imagenAlt.size() > 0
+                && request.resource.data.imagenAlt.size() <= 180
+                && request.resource.data.instagram is string
+                && request.resource.data.instagram.size() <= 1000
+                && request.resource.data.facebook is string
+                && request.resource.data.facebook.size() <= 1000
+                && request.resource.data.x is string
+                && request.resource.data.x.size() <= 1000
+                && request.resource.data.tiktok is string
+                && request.resource.data.tiktok.size() <= 1000
+                && (request.resource.data.instagram == "" || request.resource.data.instagram.matches('^https?://.+'))
+                && (request.resource.data.facebook == "" || request.resource.data.facebook.matches('^https?://.+'))
+                && (request.resource.data.x == "" || request.resource.data.x.matches('^https?://.+'))
+                && (request.resource.data.tiktok == "" || request.resource.data.tiktok.matches('^https?://.+'))
+                && request.resource.data.orden is int
+                && request.resource.data.orden >= 0
+                && request.resource.data.orden <= 10000
+                && request.resource.data.visible is bool
+                && request.resource.data.creadoEn is timestamp
+                && request.resource.data.actualizadoEn == request.time
+                && request.resource.data.actualizadoPor == request.auth.uid;
 
         }
 
@@ -266,6 +588,397 @@ service cloud.firestore {
 
             allow delete:
                 if false;
+
+
+            match /hilos/{hiloId}/comentarios/{comentarioId} {
+
+                allow read:
+                    if (
+                        get(
+                            /databases/$(database)/documents/configuracion/proximo-lanzamiento
+                        ).data.visible == true
+                        && get(
+                            /databases/$(database)/documents/configuracion/proximo-lanzamiento
+                        ).data.get(
+                            "hiloComentariosId",
+                            "proximo-lanzamiento-inicial"
+                        ) == hiloId
+                    )
+                    || esAdministrador();
+
+                allow create:
+                    if sesionActiva()
+                    && get(
+                        /databases/$(database)/documents/configuracion/proximo-lanzamiento
+                    ).data.visible == true
+                    && get(
+                        /databases/$(database)/documents/configuracion/proximo-lanzamiento
+                    ).data.get(
+                        "hiloComentariosId",
+                        "proximo-lanzamiento-inicial"
+                    ) == hiloId
+                    && comentarioContextualValido()
+                    && autorContextualCoincideConPerfil();
+
+                allow update:
+                    if sesionActiva()
+                    && resource.data.autorId == request.auth.uid
+                    && edicionComentarioContextualValida();
+
+                allow delete:
+                    if sesionActiva()
+                    && (
+                        resource.data.autorId == request.auth.uid
+                        || esAdministrador()
+                    );
+
+                match /respuestas/{respuestaId} {
+                    allow read:
+                        if (
+                            get(/databases/$(database)/documents/configuracion/proximo-lanzamiento).data.visible == true
+                            && get(/databases/$(database)/documents/configuracion/proximo-lanzamiento).data.get(
+                                "hiloComentariosId", "proximo-lanzamiento-inicial"
+                            ) == hiloId
+                        ) || esAdministrador();
+                    allow create:
+                        if sesionActiva()
+                        && get(/databases/$(database)/documents/configuracion/proximo-lanzamiento).data.visible == true
+                        && comentarioContextualValido()
+                        && autorContextualCoincideConPerfil();
+                    allow update:
+                        if sesionActiva()
+                        && resource.data.autorId == request.auth.uid
+                        && edicionComentarioContextualValida();
+                    allow delete:
+                        if sesionActiva()
+                        && (resource.data.autorId == request.auth.uid || esAdministrador());
+                }
+
+                match /estrellas/{usuarioId} {
+                    allow read:
+                        if get(/databases/$(database)/documents/configuracion/proximo-lanzamiento).data.visible == true
+                        || esAdministrador();
+                    allow create:
+                        if estrellaContextualValida(usuarioId)
+                        && get(/databases/$(database)/documents/configuracion/proximo-lanzamiento).data.visible == true;
+                    allow update: if false;
+                    allow delete:
+                        if sesionActiva() && usuarioId == request.auth.uid;
+                }
+
+            }
+
+            match /hilos/{hiloId}/estrellas/{usuarioId} {
+
+                allow read:
+                    if (
+                        get(
+                            /databases/$(database)/documents/configuracion/proximo-lanzamiento
+                        ).data.visible == true
+                        && get(
+                            /databases/$(database)/documents/configuracion/proximo-lanzamiento
+                        ).data.get(
+                            "hiloComentariosId",
+                            "proximo-lanzamiento-inicial"
+                        ) == hiloId
+                    )
+                    || esAdministrador();
+
+                allow create:
+                    if estrellaContextualValida(usuarioId)
+                    && get(
+                        /databases/$(database)/documents/configuracion/proximo-lanzamiento
+                    ).data.visible == true
+                    && get(
+                        /databases/$(database)/documents/configuracion/proximo-lanzamiento
+                    ).data.get(
+                        "hiloComentariosId",
+                        "proximo-lanzamiento-inicial"
+                    ) == hiloId;
+
+                allow update:
+                    if false;
+
+                allow delete:
+                    if sesionActiva()
+                    && usuarioId == request.auth.uid;
+
+            }
+
+        }
+
+
+        // =========================================
+        // PRESENTACIONES
+        // =========================================
+
+        match /presentaciones/{presentacionId} {
+
+            allow read:
+                if resource.data.visible == true
+                || esAdministrador();
+
+
+            allow create:
+                if esAdministrador()
+                && presentacionValida()
+                && request.resource.data.creadoEn == request.time;
+
+
+            allow update:
+                if esAdministrador()
+                && presentacionValida()
+                && request.resource.data.creadoEn
+                    == resource.data.creadoEn;
+
+
+            allow delete:
+                if esAdministrador();
+
+
+            match /comentarios/{comentarioId} {
+
+                allow read:
+                    if get(
+                        /databases/$(database)/documents/presentaciones/$(presentacionId)
+                    ).data.visible == true
+                    || esAdministrador();
+
+                allow create:
+                    if sesionActiva()
+                    && get(
+                        /databases/$(database)/documents/presentaciones/$(presentacionId)
+                    ).data.visible == true
+                    && comentarioContextualValido()
+                    && autorContextualCoincideConPerfil();
+
+                allow update:
+                    if sesionActiva()
+                    && resource.data.autorId == request.auth.uid
+                    && edicionComentarioContextualValida();
+
+                allow delete:
+                    if sesionActiva()
+                    && (
+                        resource.data.autorId == request.auth.uid
+                        || esAdministrador()
+                    );
+
+                match /respuestas/{respuestaId} {
+                    allow read:
+                        if get(/databases/$(database)/documents/presentaciones/$(presentacionId)).data.visible == true
+                        || esAdministrador();
+                    allow create:
+                        if sesionActiva()
+                        && get(/databases/$(database)/documents/presentaciones/$(presentacionId)).data.visible == true
+                        && comentarioContextualValido()
+                        && autorContextualCoincideConPerfil();
+                    allow update:
+                        if sesionActiva()
+                        && resource.data.autorId == request.auth.uid
+                        && edicionComentarioContextualValida();
+                    allow delete:
+                        if sesionActiva()
+                        && (resource.data.autorId == request.auth.uid || esAdministrador());
+                }
+
+                match /estrellas/{usuarioId} {
+                    allow read:
+                        if get(/databases/$(database)/documents/presentaciones/$(presentacionId)).data.visible == true
+                        || esAdministrador();
+                    allow create:
+                        if estrellaContextualValida(usuarioId)
+                        && get(/databases/$(database)/documents/presentaciones/$(presentacionId)).data.visible == true;
+                    allow update: if false;
+                    allow delete:
+                        if sesionActiva() && usuarioId == request.auth.uid;
+                }
+
+            }
+
+            match /estrellas/{usuarioId} {
+
+                allow read:
+                    if get(
+                        /databases/$(database)/documents/presentaciones/$(presentacionId)
+                    ).data.visible == true
+                    || esAdministrador();
+
+                allow create:
+                    if estrellaContextualValida(usuarioId)
+                    && get(
+                        /databases/$(database)/documents/presentaciones/$(presentacionId)
+                    ).data.visible == true;
+
+                allow update:
+                    if false;
+
+                allow delete:
+                    if sesionActiva()
+                    && usuarioId == request.auth.uid;
+
+            }
+
+        }
+
+
+        // =========================================
+        // NOTICIAS
+        // =========================================
+
+        match /noticias/{noticiaId} {
+
+            allow read:
+                if resource.data.visible == true
+                || esAdministrador();
+
+            allow create:
+                if esAdministrador()
+                && elementoNoticiaValido()
+                && request.resource.data.creadoEn == request.time;
+
+            allow update:
+                if esAdministrador()
+                && elementoNoticiaValido()
+                && request.resource.data.creadoEn == resource.data.creadoEn;
+
+            allow delete:
+                if esAdministrador();
+
+            match /comentarios/{comentarioId} {
+
+                allow read:
+                    if get(
+                        /databases/$(database)/documents/noticias/$(noticiaId)
+                    ).data.visible == true
+                    || esAdministrador();
+
+                allow create:
+                    if sesionActiva()
+                    && get(
+                        /databases/$(database)/documents/noticias/$(noticiaId)
+                    ).data.visible == true
+                    && comentarioContextualValido()
+                    && autorContextualCoincideConPerfil();
+
+                allow update:
+                    if sesionActiva()
+                    && resource.data.autorId == request.auth.uid
+                    && edicionComentarioContextualValida();
+
+                allow delete:
+                    if sesionActiva()
+                    && (
+                        resource.data.autorId == request.auth.uid
+                        || esAdministrador()
+                    );
+
+                match /respuestas/{respuestaId} {
+                    allow read:
+                        if get(/databases/$(database)/documents/noticias/$(noticiaId)).data.visible == true
+                        || esAdministrador();
+                    allow create:
+                        if sesionActiva()
+                        && get(/databases/$(database)/documents/noticias/$(noticiaId)).data.visible == true
+                        && comentarioContextualValido()
+                        && autorContextualCoincideConPerfil();
+                    allow update:
+                        if sesionActiva()
+                        && resource.data.autorId == request.auth.uid
+                        && edicionComentarioContextualValida();
+                    allow delete:
+                        if sesionActiva()
+                        && (resource.data.autorId == request.auth.uid || esAdministrador());
+                }
+
+                match /estrellas/{usuarioId} {
+                    allow read:
+                        if get(/databases/$(database)/documents/noticias/$(noticiaId)).data.visible == true
+                        || esAdministrador();
+                    allow create:
+                        if estrellaContextualValida(usuarioId)
+                        && get(/databases/$(database)/documents/noticias/$(noticiaId)).data.visible == true;
+                    allow update: if false;
+                    allow delete:
+                        if sesionActiva() && usuarioId == request.auth.uid;
+                }
+
+            }
+
+            match /estrellas/{usuarioId} {
+
+                allow read:
+                    if get(
+                        /databases/$(database)/documents/noticias/$(noticiaId)
+                    ).data.visible == true
+                    || esAdministrador();
+
+                allow create:
+                    if estrellaContextualValida(usuarioId)
+                    && get(
+                        /databases/$(database)/documents/noticias/$(noticiaId)
+                    ).data.visible == true;
+
+                allow update:
+                    if false;
+
+                allow delete:
+                    if sesionActiva()
+                    && usuarioId == request.auth.uid;
+
+            }
+
+        }
+
+
+        // =========================================
+        // GALERÍA
+        // =========================================
+
+        match /galeria/{elementoId} {
+
+            allow read:
+                if resource.data.visible == true
+                || esAdministrador();
+
+            allow create:
+                if esAdministrador()
+                && elementoGaleriaValido()
+                && request.resource.data.creadoEn == request.time;
+
+            allow update:
+                if esAdministrador()
+                && elementoGaleriaValido()
+                && request.resource.data.creadoEn == resource.data.creadoEn;
+
+            allow delete:
+                if esAdministrador();
+
+        }
+
+
+        // =========================================
+        // MÚSICA
+        // =========================================
+
+        match /musica/{elementoId} {
+
+            allow read:
+                if resource.data.visible == true
+                || esAdministrador();
+
+            allow create:
+                if esAdministrador()
+                && elementoMusicaValido()
+                && request.resource.data.creadoEn == request.time;
+
+            allow update:
+                if esAdministrador()
+                && elementoMusicaValido()
+                && request.resource.data.creadoEn == resource.data.creadoEn;
+
+            allow delete:
+                if esAdministrador();
 
         }
 

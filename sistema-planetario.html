@@ -77,6 +77,18 @@
                 <button class="navegacion-panel__item" type="button" data-vista="lanzamiento">
                     <span aria-hidden="true">☄</span> Próximo lanzamiento
                 </button>
+                <button class="navegacion-panel__item" type="button" data-vista="shows">
+                    <span aria-hidden="true">◎</span> Shows
+                </button>
+                <button class="navegacion-panel__item" type="button" data-vista="noticias">
+                    <span aria-hidden="true">✦</span> Noticias
+                </button>
+                <button class="navegacion-panel__item" type="button" data-vista="galeria">
+                    <span aria-hidden="true">▧</span> Galería
+                </button>
+                <button class="navegacion-panel__item" type="button" data-vista="musica">
+                    <span aria-hidden="true">♫</span> Música
+                </button>
             </nav>
             <div class="usuario-panel">
                 <span class="usuario-panel__avatar" id="admin-avatar">A</span>
@@ -209,9 +221,238 @@
                     </aside>
                 </div>
             </section>
+
+            <section class="vista-panel vista-shows" id="vista-shows" data-seccion="shows" hidden>
+                <div class="shows-panel__cabecera">
+                    <div>
+                        <p class="cabecera-panel__etiqueta">Agenda pública</p>
+                        <h2>Presentaciones</h2>
+                        <p>Administra fechas, carteles y enlaces de boletos.</p>
+                    </div>
+                    <button class="boton boton--principal" id="crear-show" type="button">Nueva presentación</button>
+                </div>
+
+                <div class="mensaje-formulario" id="mensaje-shows" role="status" aria-live="polite"></div>
+
+                <div class="shows-panel__migracion" id="migracion-shows" hidden>
+                    <p>La colección está vacía. Puedes copiar de forma segura las tres presentaciones actuales del sitio.</p>
+                    <button class="boton boton--secundario" id="importar-shows" type="button">
+                        Importar presentaciones actuales
+                    </button>
+                </div>
+
+                <div class="shows-panel__lista" id="lista-shows" aria-live="polite">
+                    <p class="shows-panel__vacio">Cargando presentaciones…</p>
+                </div>
+
+                <div class="shows-editor" id="editor-show" hidden>
+                    <form class="formulario-panel" id="formulario-show" novalidate>
+                        <input id="show-id" type="hidden">
+
+                        <div class="bloque-panel">
+                            <div class="bloque-panel__cabecera">
+                                <div>
+                                    <p>Presentación</p>
+                                    <h2 id="show-editor-titulo">Nueva presentación</h2>
+                                </div>
+                                <label class="interruptor">
+                                    <input type="checkbox" id="show-visible" checked>
+                                    <span class="interruptor__control"><i></i></span>
+                                    <span id="show-visible-texto">Visible</span>
+                                </label>
+                            </div>
+
+                            <div class="campos-dobles">
+                                <label class="campo-panel">
+                                    <span>Nombre o ciudad</span>
+                                    <input id="show-nombre" type="text" maxlength="100" required>
+                                </label>
+                                <label class="campo-panel">
+                                    <span>Fecha y hora</span>
+                                    <input id="show-fecha" type="datetime-local" required>
+                                </label>
+                            </div>
+
+                            <label class="campo-panel">
+                                <span>Descripción</span>
+                                <textarea id="show-descripcion" rows="4" maxlength="600" required></textarea>
+                                <small><span id="show-descripcion-contador">0</span>/600</small>
+                            </label>
+
+                            <label class="campo-panel">
+                                <span>Cartel desde el dispositivo</span>
+                                <input id="show-archivo" type="file" accept="image/jpeg,image/png,image/webp">
+                                <small>JPG, PNG o WebP. Máximo 5 MB. Requiere reglas de Firebase Storage publicadas.</small>
+                            </label>
+
+                            <label class="campo-panel">
+                                <span>URL o ruta local del cartel</span>
+                                <input id="show-imagen" type="text" maxlength="1000" placeholder="img/shows/cartel.jpg">
+                                <small>Se conserva como respaldo mientras Storage no esté habilitado.</small>
+                            </label>
+
+                            <label class="campo-panel">
+                                <span>Texto alternativo</span>
+                                <input id="show-imagen-alt" type="text" maxlength="160" required>
+                            </label>
+
+                            <label class="campo-panel">
+                                <span>Enlace de compra de boletos</span>
+                                <input id="show-boletos" type="url" maxlength="1000" placeholder="https://…">
+                            </label>
+                        </div>
+
+                        <div class="mensaje-formulario" id="mensaje-show-editor" role="status" aria-live="polite"></div>
+                        <div class="acciones-formulario">
+                            <button class="boton boton--secundario" id="cancelar-show" type="button">Cancelar</button>
+                            <button class="boton boton--principal" id="guardar-show" type="submit">
+                                <span class="boton__texto">Guardar presentación</span>
+                                <span class="boton__carga" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <aside class="vista-previa show-preview-real" aria-labelledby="show-preview-titulo-panel">
+                        <div class="vista-previa__cabecera">
+                            <div>
+                                <p>Vista previa</p>
+                                <h2 id="show-preview-titulo-panel">Tarjeta pública</h2>
+                            </div>
+                            <span id="show-preview-estado">Visible</span>
+                        </div>
+
+                        <article class="show">
+                            <img id="show-preview-imagen" src="img/shows/cdneza.jpg" alt="Vista previa del cartel">
+                            <div>
+                                <span id="show-preview-fecha">Fecha por confirmar</span>
+                                <h3 id="show-preview-nombre">Nombre o ciudad</h3>
+                                <p id="show-preview-descripcion">Descripción de la presentación.</p>
+                                <a id="show-preview-boletos" href="#" target="_blank" rel="noopener noreferrer" class="btn-boletos">🎟 Comprar boletos</a>
+                            </div>
+                        </article>
+                    </aside>
+                </div>
+            </section>
+
+            <section class="vista-panel vista-contenido" id="vista-noticias" data-seccion="noticias" hidden>
+                <div class="shows-panel__cabecera">
+                    <div><p class="cabecera-panel__etiqueta">Chismecitos platanitos</p><h2>Noticias</h2><p>Publica imágenes, descripciones, fechas y enlaces sociales en el inicio.</p></div>
+                    <button class="boton boton--principal" id="crear-noticias" type="button">Nueva noticia</button>
+                </div>
+                <div class="mensaje-formulario" id="mensaje-noticias" role="status" aria-live="polite"></div>
+                <div class="shows-panel__migracion" id="migracion-noticias" hidden><p>La colección todavía está vacía. Crea la primera noticia desde este panel.</p><button class="boton boton--secundario" id="importar-noticias" type="button">Preparar colección</button></div>
+                <div class="contenido-panel__lista" id="lista-noticias" aria-live="polite"></div>
+                <div class="shows-editor contenido-editor" id="editor-noticias" hidden>
+                    <form class="formulario-panel" id="formulario-noticias" novalidate>
+                        <input id="noticias-id" type="hidden">
+                        <div class="bloque-panel">
+                            <div class="bloque-panel__cabecera"><div><p>Publicación</p><h2>Noticia o chismecito</h2></div><label class="interruptor"><input id="noticias-visible" type="checkbox" checked><span class="interruptor__control"><i></i></span><span>Visible</span></label></div>
+                            <label class="campo-panel"><span>Título</span><input id="noticias-titulo" type="text" maxlength="120" required></label>
+                            <label class="campo-panel"><span>Descripción</span><textarea id="noticias-descripcion" rows="5" maxlength="1200" required></textarea></label>
+                            <div class="campos-dobles"><label class="campo-panel"><span>Fecha de adición</span><input id="noticias-fecha" type="date" required></label><label class="campo-panel"><span>Orden</span><input id="noticias-orden" type="number" min="0" max="10000" required></label></div>
+                            <label class="campo-panel"><span>Rutas de las imágenes</span><textarea id="noticias-imagenes" rows="7" maxlength="8000" placeholder="img/noticias/sesion-reactor.jpg&#10;img/noticias/sesion-reactor-2.jpg&#10;img/noticias/sesion-reactor-3.jpg" required></textarea><small>Escribe una ruta local por línea. Todas formarán parte del mismo carrusel.</small></label>
+                            <label class="campo-panel"><span>Texto alternativo del carrusel</span><input id="noticias-imagen-alt" type="text" maxlength="180" placeholder="Te Vi En Un Planetario durante la sesión Reactor" required></label>
+                            <div class="campos-dobles"><label class="campo-panel"><span>Instagram</span><input id="noticias-instagram" type="url" maxlength="1000" placeholder="https://instagram.com/..."></label><label class="campo-panel"><span>Facebook</span><input id="noticias-facebook" type="url" maxlength="1000" placeholder="https://facebook.com/..."></label></div>
+                            <div class="campos-dobles"><label class="campo-panel"><span>X / Twitter</span><input id="noticias-x" type="url" maxlength="1000" placeholder="https://x.com/..."></label><label class="campo-panel"><span>TikTok</span><input id="noticias-tiktok" type="url" maxlength="1000" placeholder="https://tiktok.com/..."></label></div>
+                        </div>
+                        <div class="acciones-formulario"><button class="boton boton--secundario" id="cancelar-noticias" type="button">Cancelar</button><button class="boton boton--principal" type="submit">Guardar noticia</button></div>
+                    </form>
+                </div>
+            </section>
+
+            <section class="vista-panel vista-contenido" id="vista-galeria" data-seccion="galeria" hidden>
+                <div class="shows-panel__cabecera">
+                    <div>
+                        <p class="cabecera-panel__etiqueta">Universo visual</p>
+                        <h2>Galería</h2>
+                        <p>Agrega fotografías, cambia su orden o decide cuáles aparecen en el sitio.</p>
+                    </div>
+                    <button class="boton boton--principal" id="crear-galeria" type="button">Nueva fotografía</button>
+                </div>
+
+                <div class="mensaje-formulario" id="mensaje-galeria" role="status" aria-live="polite"></div>
+                <div class="shows-panel__migracion" id="migracion-galeria" hidden>
+                    <p>La colección está vacía. Puedes copiar las fotografías que actualmente aparecen en la galería.</p>
+                    <button class="boton boton--secundario" id="importar-galeria" type="button">Importar galería actual</button>
+                </div>
+                <div class="contenido-panel__lista" id="lista-galeria" aria-live="polite"></div>
+
+                <div class="shows-editor contenido-editor" id="editor-galeria" hidden>
+                    <form class="formulario-panel" id="formulario-galeria" novalidate>
+                        <input id="galeria-id" type="hidden">
+                        <div class="bloque-panel">
+                            <div class="bloque-panel__cabecera">
+                                <div><p>Fotografía</p><h2>Contenido de galería</h2></div>
+                                <label class="interruptor">
+                                    <input id="galeria-visible" type="checkbox" checked>
+                                    <span class="interruptor__control"><i></i></span><span>Visible</span>
+                                </label>
+                            </div>
+                            <label class="campo-panel"><span>Título</span><input id="galeria-titulo" type="text" maxlength="120" required></label>
+                            <label class="campo-panel"><span>Descripción</span><textarea id="galeria-descripcion" rows="4" maxlength="600"></textarea></label>
+                            <label class="campo-panel"><span>URL o ruta local de la imagen</span><input id="galeria-imagen" type="text" maxlength="1000" placeholder="img/galeria/foto.jpg" required><small>Puedes usar una URL pública o una imagen incluida en la carpeta del sitio.</small></label>
+                            <label class="campo-panel"><span>Texto alternativo</span><input id="galeria-imagen-alt" type="text" maxlength="180" required></label>
+                            <div class="campos-dobles">
+                                <label class="campo-panel"><span>Tamaño de tarjeta</span><select id="galeria-tamano"><option value="normal">Normal</option><option value="grande">Grande</option></select></label>
+                                <label class="campo-panel"><span>Orden</span><input id="galeria-orden" type="number" min="0" max="10000" required></label>
+                            </div>
+                        </div>
+                        <div class="acciones-formulario">
+                            <button class="boton boton--secundario" id="cancelar-galeria" type="button">Cancelar</button>
+                            <button class="boton boton--principal" type="submit">Guardar fotografía</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <section class="vista-panel vista-contenido" id="vista-musica" data-seccion="musica" hidden>
+                <div class="shows-panel__cabecera">
+                    <div>
+                        <p class="cabecera-panel__etiqueta">Universo sonoro</p>
+                        <h2>Música</h2>
+                        <p>Administra discos, EP, sencillos, portadas y enlaces para escucharlos.</p>
+                    </div>
+                    <button class="boton boton--principal" id="crear-musica" type="button">Nueva publicación</button>
+                </div>
+
+                <div class="mensaje-formulario" id="mensaje-musica" role="status" aria-live="polite"></div>
+                <div class="shows-panel__migracion" id="migracion-musica" hidden>
+                    <p>La colección está vacía. Puedes copiar las publicaciones que actualmente aparecen en Música.</p>
+                    <button class="boton boton--secundario" id="importar-musica" type="button">Importar música actual</button>
+                </div>
+                <div class="contenido-panel__lista" id="lista-musica" aria-live="polite"></div>
+
+                <div class="shows-editor contenido-editor" id="editor-musica" hidden>
+                    <form class="formulario-panel" id="formulario-musica" novalidate>
+                        <input id="musica-id" type="hidden">
+                        <div class="bloque-panel">
+                            <div class="bloque-panel__cabecera">
+                                <div><p>Publicación musical</p><h2>Contenido de música</h2></div>
+                                <label class="interruptor">
+                                    <input id="musica-visible" type="checkbox" checked>
+                                    <span class="interruptor__control"><i></i></span><span>Visible</span>
+                                </label>
+                            </div>
+                            <div class="campos-dobles">
+                                <label class="campo-panel"><span>Título</span><input id="musica-titulo" type="text" maxlength="120" required></label>
+                                <label class="campo-panel"><span>Tipo</span><input id="musica-tipo" type="text" maxlength="80" placeholder="Sencillo, EP o álbum" required></label>
+                            </div>
+                            <label class="campo-panel"><span>Fecha o texto de lanzamiento</span><input id="musica-lanzamiento" type="text" maxlength="120" placeholder="2026"></label>
+                            <label class="campo-panel"><span>URL o ruta local de la portada</span><input id="musica-imagen" type="text" maxlength="1000" placeholder="img/musica/portada.jpg" required></label>
+                            <label class="campo-panel"><span>Texto alternativo</span><input id="musica-imagen-alt" type="text" maxlength="180" required></label>
+                            <label class="campo-panel"><span>Enlace para escuchar</span><input id="musica-enlace" type="url" maxlength="1000" placeholder="https://..."></label>
+                            <label class="campo-panel"><span>Orden</span><input id="musica-orden" type="number" min="0" max="10000" required></label>
+                        </div>
+                        <div class="acciones-formulario">
+                            <button class="boton boton--secundario" id="cancelar-musica" type="button">Cancelar</button>
+                            <button class="boton boton--principal" type="submit">Guardar publicación</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
         </div>
     </div>
 
-    <script type="module" src="js/ui/sistema-planetario.js"></script>
+    <script type="module" src="js/ui/sistema-planetario.js?v=5"></script>
 </body>
 </html>

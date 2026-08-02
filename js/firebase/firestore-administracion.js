@@ -30,8 +30,17 @@ const VALORES_RESPALDO_LANZAMIENTO = Object.freeze({
     disponibilidad: "DISPONIBLE EL 04 DE SEPTIEMBRE DE 2026",
     spotify: "https://open.spotify.com/intl-es/artist/1tLZIDlRNgWyQlu5qrqLvm",
     appleMusic: "https://music.apple.com/es/artist/te-vi-en-un-planetario/1675162556",
+    hiloComentariosId: "proximo-lanzamiento-inicial",
     visible: true
 });
+
+
+function generarHiloComentariosId() {
+    const unico = typeof globalThis.crypto?.randomUUID === "function"
+        ? globalThis.crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    return `lanzamiento-${unico}`;
+}
 
 
 function crearError(codigo, mensaje, causa) {
@@ -141,6 +150,9 @@ function normalizarLanzamiento(datos = {}) {
         ),
         spotify: String(datos.spotify ?? respaldo.spotify),
         appleMusic: String(datos.appleMusic ?? respaldo.appleMusic),
+        hiloComentariosId: String(
+            datos.hiloComentariosId ?? respaldo.hiloComentariosId
+        ).trim().slice(0, 120),
         visible: typeof datos.visible === "boolean"
             ? datos.visible
             : respaldo.visible
@@ -251,6 +263,10 @@ function prepararLanzamiento(datos = {}) {
         disponibilidad,
         spotify: validarUrl(datos.spotify, "El enlace de Spotify"),
         appleMusic: validarUrl(datos.appleMusic, "El enlace de Apple Music"),
+        hiloComentariosId: limpiarTexto(
+            datos.hiloComentariosId || VALORES_RESPALDO_LANZAMIENTO.hiloComentariosId,
+            120
+        ),
         visible: Boolean(datos.visible)
     };
 }
@@ -293,6 +309,7 @@ async function guardarProximoLanzamiento(datos) {
 export {
     VALORES_RESPALDO_LANZAMIENTO,
     esRolAdministrador,
+    generarHiloComentariosId,
     guardarProximoLanzamiento,
     obtenerProximoLanzamiento,
     verificarAdministrador

@@ -12,7 +12,6 @@ import {
     doc,
     setDoc,
     getDoc,
-    updateDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
@@ -180,71 +179,8 @@ async function asegurarPerfilUsuario(
 
 
     if (perfilExistente) {
-
-        const actualizaciones = {};
-
-
-        if (
-            !perfilExistente.rol ||
-            perfilExistente.rol ===
-                "usuario"
-        ) {
-
-            actualizaciones.rol =
-                "viajero";
-
-        }
-
-
-        if (
-            typeof perfilExistente.oficial !==
-            "boolean"
-        ) {
-
-            actualizaciones.oficial =
-                false;
-
-        }
-
-
-        if (
-            typeof perfilExistente.verificado !==
-            "boolean"
-        ) {
-
-            actualizaciones.verificado =
-                false;
-
-        }
-
-
-        if (
-            Object.keys(
-                actualizaciones
-            ).length > 0
-        ) {
-
-            const referenciaUsuario =
-                doc(
-                    db,
-                    "usuarios",
-                    usuario.uid
-                );
-
-
-            await updateDoc(
-                referenciaUsuario,
-                actualizaciones
-            );
-
-
-            return obtenerPerfilUsuario(
-                usuario.uid
-            );
-
-        }
-
-
+        // Los campos de autorizacion (rol, oficial y verificado)
+        // solo deben modificarse desde un entorno administrativo.
         return perfilExistente;
 
     }

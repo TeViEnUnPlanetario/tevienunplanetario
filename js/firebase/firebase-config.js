@@ -10,6 +10,10 @@ import {
     getFirestore
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
+import {
+    getStorage
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
+
 
 const firebaseConfig = {
 
@@ -46,8 +50,13 @@ const db =
     getFirestore(app);
 
 
+const storage =
+    getStorage(app);
+
+
 export {
     app,
     auth,
-    db
+    db,
+    storage
 };

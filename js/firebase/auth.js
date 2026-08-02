@@ -32,6 +32,41 @@ let botonComunidad = null;
 let perfilActivo = null;
 
 
+function actualizarAccesosRequierenSesion(conectado) {
+
+    document
+        .querySelectorAll("[data-requiere-sesion]")
+        .forEach((elemento) => {
+            elemento.hidden = !conectado;
+            elemento.setAttribute(
+                "aria-hidden",
+                String(!conectado)
+            );
+        });
+
+}
+
+
+function obtenerIniciales(nombre) {
+
+    const partes = String(nombre || "")
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+
+    if (partes.length === 0) {
+        return "✦";
+    }
+
+    return partes
+        .slice(0, 2)
+        .map((parte) => parte.charAt(0))
+        .join("")
+        .toLocaleUpperCase("es-MX");
+
+}
+
+
 function esPerfilAdministrador(perfil) {
 
     return [
@@ -114,6 +149,7 @@ function crearMenuUsuario() {
 
             <span
                 class="menu-usuario__simbolo"
+                id="menu-usuario-iniciales"
                 aria-hidden="true"
             >
                 ✦
@@ -196,6 +232,8 @@ function mostrarUsuarioConectado(
     perfil
 ) {
 
+    actualizarAccesosRequierenSesion(true);
+
     perfilActivo =
         perfil;
 
@@ -216,16 +254,41 @@ function mostrarUsuarioConectado(
         "false"
     );
 
-    botonComunidad.innerHTML = `
-        <span aria-hidden="true">✦</span>
+    const nombrePerfil =
+        perfil.nombre ||
+        "Viajero";
 
-        <span class="boton-comunidad__nombre">
-            ${escaparHTML(
-                perfil.nombre ||
-                "Viajero"
-            )}
-        </span>
-    `;
+    const fotoPerfil =
+        String(perfil.foto || "").trim();
+
+    botonComunidad.setAttribute(
+        "aria-label",
+        `Abrir menú de ${nombrePerfil}`
+    );
+
+    botonComunidad.innerHTML = fotoPerfil
+        ? `
+            <img
+                class="identidad-universo__foto"
+                src="${escaparHTML(fotoPerfil)}"
+                alt=""
+            >
+        `
+        : `
+            <span class="identidad-universo__iniciales" aria-hidden="true">
+                ${obtenerIniciales(nombrePerfil)}
+            </span>
+        `;
+
+    botonComunidad
+        .querySelector(".identidad-universo__foto")
+        ?.addEventListener("error", () => {
+            botonComunidad.innerHTML = `
+                <span class="identidad-universo__iniciales" aria-hidden="true">
+                    ${obtenerIniciales(nombrePerfil)}
+                </span>
+            `;
+        }, { once: true });
 
     const menu =
         crearMenuUsuario();
@@ -233,6 +296,11 @@ function mostrarUsuarioConectado(
     const nombre =
         menu.querySelector(
             "#menu-usuario-nombre"
+        );
+
+    const iniciales =
+        menu.querySelector(
+            "#menu-usuario-iniciales"
         );
 
     const rango =
@@ -255,6 +323,26 @@ function mostrarUsuarioConectado(
 
     }
 
+    if (iniciales) {
+
+        iniciales.textContent =
+            obtenerIniciales(
+                perfil.nombre ||
+                "Viajero"
+            );
+
+    }
+
+    const rolNormalizado = String(perfil?.rol || "viajero")
+        .trim()
+        .toLowerCase();
+
+    menu.dataset.rol = rolNormalizado;
+    menu.classList.toggle(
+        "menu-usuario--administrativo",
+        esPerfilAdministrador(perfil)
+    );
+
     actualizarAccesoAdministrativo(perfil);
 
 }
@@ -265,6 +353,8 @@ function mostrarUsuarioConectado(
 // =========================================
 
 function mostrarUsuarioDesconectado() {
+
+    actualizarAccesosRequierenSesion(false);
 
     perfilActivo =
         null;
@@ -280,13 +370,17 @@ function mostrarUsuarioDesconectado() {
     botonComunidad.dataset.sesionActiva =
         "false";
 
+    botonComunidad.setAttribute(
+        "aria-label",
+        "Entrar a la comunidad"
+    );
+
     botonComunidad.removeAttribute(
         "aria-expanded"
     );
 
     botonComunidad.innerHTML = `
-        <span aria-hidden="true">✦</span>
-        Comunidad
+        <span class="identidad-universo__estrella" aria-hidden="true">✦</span>
     `;
 
     cerrarMenuUsuario();
@@ -349,13 +443,13 @@ function alternarMenuUsuario() {
         menu.style.top =
             `${posicionBoton.bottom + 12}px`;
 
-        menu.style.right =
-            `${window.innerWidth - posicionBoton.right}px`;
+        menu.style.left =
+            `${Math.max(14, posicionBoton.left)}px`;
 
-        menu.style.bottom =
+        menu.style.right =
             "auto";
 
-        menu.style.left =
+        menu.style.bottom =
             "auto";
 
     }

@@ -389,6 +389,24 @@ function mostrarRespaldoLanzamiento() {
 
 };
 
+
+// Respaldo público de Shows cuando Firebase no está disponible.
+window.mostrarRespaldoShows =
+function mostrarRespaldoShows() {
+
+    const seccion =
+        document.getElementById("shows");
+
+    if (!seccion) {
+        return;
+    }
+
+    seccion.hidden = false;
+    seccion.removeAttribute("data-shows-pendientes");
+    seccion.dataset.origenShows = "respaldo";
+
+};
+
 // =========================
 // AURA DEL CURSOR
 // =========================

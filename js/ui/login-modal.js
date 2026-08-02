@@ -877,30 +877,28 @@ document.addEventListener(
                     const usuario =
                         credencial.user;
 
-                    const perfil =
-                        await asegurarPerfilUsuario(
-                            usuario
+                    let perfil = null;
+
+                    try {
+                        perfil = await asegurarPerfilUsuario(usuario);
+                    } catch (errorPerfil) {
+                        // La sesion ya fue iniciada. Un fallo al leer el
+                        // perfil no debe mostrarse como contraseña incorrecta.
+                        console.warn(
+                            "La sesion inicio, pero el perfil no pudo cargarse:",
+                            errorPerfil
                         );
+                    }
 
-                        mostrarMensaje(
-                            mensajeLogin,
-                         `Bienvenido nuevamente, ${perfil.nombre}.`,
-                         "exito"
-                        );
-
-                        window.setTimeout(
-                           function () {
-
-                               window.location.href =
-                                "perfil.html";
-
-                            },
-                            800
-                        );
+                    const nombre =
+                        perfil?.nombre ||
+                        usuario.displayName ||
+                        usuario.email?.split("@")[0] ||
+                        "viajero";
 
                     mostrarMensaje(
                         mensajeLogin,
-                        "Acceso concedido. Bienvenido nuevamente.",
+                        `Bienvenido nuevamente, ${nombre}.`,
                         "exito"
                     );
 
@@ -911,11 +909,10 @@ document.addEventListener(
 
                     window.setTimeout(
                         function () {
-
                             cerrarPortal();
-
+                            window.location.href = "perfil.html";
                         },
-                        900
+                        800
                     );
 
                 } catch (error) {
