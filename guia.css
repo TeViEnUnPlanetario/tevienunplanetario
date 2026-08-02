@@ -57,11 +57,122 @@ button { color: inherit; }
 main { position: relative; z-index: 2; }
 .hero, .seccion { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
 .hero { display: flex; align-items: center; justify-content: center; flex-direction: column; min-height: calc(100svh - 80px); padding: 100px 20px; text-align: center; }
-.anuncio-actualizacion { display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 26px; padding: 10px 16px; border: 1px solid rgba(220,195,255,.58); border-radius: 999px; color: rgba(255,255,255,.84); background: linear-gradient(135deg, rgba(166,108,255,.22), rgba(219,98,186,.1)); box-shadow: 0 0 20px rgba(166,108,255,.2), inset 0 1px rgba(255,255,255,.12); text-decoration: none; font-size: 13px; letter-spacing: .04em; transition: transform .35s var(--curva), border-color .3s, box-shadow .3s; animation: anuncioActualizacion 2.8s ease-in-out infinite; }
-.anuncio-actualizacion strong { color: #fff; }
-.anuncio-actualizacion:hover, .anuncio-actualizacion:focus-visible { transform: translateY(-3px); border-color: rgba(255,255,255,.9); box-shadow: 0 0 18px rgba(255,255,255,.22), 0 0 42px rgba(166,108,255,.42); outline: none; }
-.anuncio-actualizacion__pulso { width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%; background: #d9bdff; box-shadow: 0 0 8px #fff, 0 0 16px var(--morado); }
-.anuncio-actualizacion__flecha { color: var(--morado-claro); font-weight: 800; }
+.anuncio-actualizacion {
+    position: relative;
+    isolation: isolate;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    margin-bottom: 26px;
+    padding: 11px 18px;
+    overflow: hidden;
+
+    border: 1px solid rgba(188, 242, 255, .82);
+    border-radius: 999px;
+
+    color: rgba(255, 255, 255, .92);
+    background:
+        radial-gradient(circle at 18% 50%, rgba(96, 229, 255, .22), transparent 34%),
+        linear-gradient(135deg, rgba(123, 78, 224, .38), rgba(32, 194, 224, .16));
+
+    box-shadow:
+        0 0 8px rgba(255, 255, 255, .28),
+        0 0 25px rgba(87, 221, 255, .48),
+        0 0 56px rgba(166, 108, 255, .40),
+        0 0 92px rgba(87, 221, 255, .16),
+        inset 0 1px rgba(255, 255, 255, .24);
+
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: .04em;
+
+    transition:
+        transform .35s var(--curva),
+        border-color .3s,
+        box-shadow .3s,
+        filter .3s;
+
+    animation: anuncioActualizacion 2.4s ease-in-out infinite;
+}
+
+.anuncio-actualizacion::before {
+    content: "";
+
+    position: absolute;
+    inset: -70% auto -70% -32%;
+    z-index: -1;
+
+    width: 24%;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, .72),
+        transparent
+    );
+
+    filter: blur(3px);
+    transform: skewX(-20deg);
+    animation: anuncioDestello 3.8s ease-in-out infinite;
+}
+
+.anuncio-actualizacion strong {
+    color: #fff;
+    text-shadow:
+        0 0 8px rgba(255, 255, 255, .72),
+        0 0 20px rgba(85, 222, 255, .34);
+}
+
+.anuncio-actualizacion:hover,
+.anuncio-actualizacion:focus-visible {
+    transform: translateY(-4px) scale(1.035);
+    border-color: #fff;
+    filter: brightness(1.12) saturate(1.14);
+    box-shadow:
+        0 0 12px rgba(255, 255, 255, .62),
+        0 0 34px rgba(72, 226, 255, .78),
+        0 0 72px rgba(166, 108, 255, .68),
+        0 0 115px rgba(72, 226, 255, .28),
+        inset 0 1px rgba(255, 255, 255, .32);
+    outline: none;
+}
+
+.anuncio-actualizacion__pulso {
+    position: relative;
+
+    width: 9px;
+    height: 9px;
+    flex: 0 0 auto;
+
+    border-radius: 50%;
+    background: #dffaff;
+
+    box-shadow:
+        0 0 7px #fff,
+        0 0 17px #54e4ff,
+        0 0 31px var(--morado);
+}
+
+.anuncio-actualizacion__pulso::after {
+    content: "";
+
+    position: absolute;
+    inset: -5px;
+
+    border: 1px solid rgba(110, 230, 255, .75);
+    border-radius: 50%;
+
+    animation: anuncioOnda 2.2s ease-out infinite;
+}
+
+.anuncio-actualizacion__flecha {
+    color: #baf6ff;
+    font-weight: 800;
+    text-shadow: 0 0 12px rgba(80, 226, 255, .82);
+}
 .eyebrow, .seccion__titulo > span { color: var(--morado-claro); font-size: 12px; font-weight: 800; letter-spacing: .28em; text-transform: uppercase; }
 .hero__simbolo { margin: 24px 0; font-size: 52px; text-shadow: 0 0 16px #fff, 0 0 48px var(--morado); animation: brillo 3s ease-in-out infinite; }
 .hero h1 { max-width: 960px; font-size: clamp(45px, 8vw, 92px); line-height: 1.02; letter-spacing: -.045em; text-wrap: balance; text-shadow: 0 0 45px rgba(166,108,255,.22); }
@@ -199,7 +310,27 @@ footer > span { color: var(--morado-claro); font-size: 30px; text-shadow: 0 0 18
 @keyframes deriva { to { transform: translate3d(-80px, -60px, 0); } }
 @keyframes brillo { 50% { opacity: .65; transform: scale(.9); } }
 @keyframes fugaz { 0% { opacity: 0; } 15% { opacity: .9; } 100% { opacity: 0; transform: translate(calc(var(--x) + 360px), calc(var(--y) + 260px)) rotate(-35deg); } }
-@keyframes anuncioActualizacion { 50% { box-shadow: 0 0 28px rgba(166,108,255,.34), 0 0 52px rgba(219,98,186,.12), inset 0 1px rgba(255,255,255,.16); } }
+@keyframes anuncioActualizacion {
+    50% {
+        box-shadow:
+            0 0 11px rgba(255, 255, 255, .46),
+            0 0 36px rgba(87, 221, 255, .66),
+            0 0 74px rgba(166, 108, 255, .54),
+            0 0 110px rgba(87, 221, 255, .22),
+            inset 0 1px rgba(255, 255, 255, .28);
+    }
+}
+
+@keyframes anuncioDestello {
+    0%, 30% { left: -32%; opacity: 0; }
+    42% { opacity: .92; }
+    64%, 100% { left: 118%; opacity: 0; }
+}
+
+@keyframes anuncioOnda {
+    0% { opacity: .9; transform: scale(.55); }
+    75%, 100% { opacity: 0; transform: scale(1.85); }
+}
 
 @media (max-width: 850px) {
     .rejilla--3, .flujo, .linea-tiempo, .alcance-proyecto { grid-template-columns: 1fr; }
