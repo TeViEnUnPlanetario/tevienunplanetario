@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Panel administrativo de Te Vi En Un Planetario">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Sistema Planetario | Te Vi En Un Planetario</title>
+    <link rel="icon" href="img/favicon.png" type="image/png">
+    <style>
+        body.sistema--comprobando { visibility: hidden; }
+    </style>
+    <link rel="stylesheet" href="css/sistema-planetario.css">
+</head>
+<body class="sistema sistema--comprobando">
+    <div class="sistema-fondo" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <main class="estado-acceso" id="estado-carga" aria-live="polite" hidden>
+        <div class="orbita-carga" aria-hidden="true"><span></span></div>
+        <p class="estado-acceso__etiqueta">Sistema Planetario</p>
+        <h1>Verificando coordenadas</h1>
+        <p>Estamos confirmando tu sesión y permisos de acceso.</p>
+    </main>
+
+    <main class="estado-acceso" id="estado-login" hidden>
+        <span class="estado-acceso__icono" aria-hidden="true">✦</span>
+        <p class="estado-acceso__etiqueta">Sistema Planetario</p>
+        <h1>Iniciar sesión</h1>
+        <p>Identifícate para comprobar si tu cuenta puede entrar al centro de control.</p>
+
+        <form class="acceso-formulario" id="formulario-acceso" novalidate>
+            <label class="campo-panel">
+                <span>Correo electrónico</span>
+                <input id="acceso-correo" name="correo" type="email" autocomplete="email" required>
+            </label>
+            <label class="campo-panel">
+                <span>Contraseña</span>
+                <input id="acceso-contrasena" name="contrasena" type="password" autocomplete="current-password" minlength="6" required>
+            </label>
+            <div class="mensaje-formulario" id="mensaje-acceso" role="status" aria-live="polite"></div>
+            <button class="boton boton--principal" id="boton-acceso" type="submit">
+                <span class="boton__texto">Entrar al sistema</span>
+                <span class="boton__carga" aria-hidden="true"></span>
+            </button>
+            <a class="acceso-formulario__regreso" href="index.html">Volver al universo</a>
+        </form>
+    </main>
+
+    <main class="estado-acceso" id="estado-denegado" hidden>
+        <span class="estado-acceso__icono" aria-hidden="true">⊘</span>
+        <p class="estado-acceso__etiqueta">Acceso restringido</p>
+        <h1 id="denegado-titulo">No puedes entrar a esta órbita</h1>
+        <p id="denegado-mensaje">Esta zona está reservada para administradores.</p>
+        <div class="estado-acceso__acciones">
+            <a class="boton boton--principal" href="index.html">Volver al universo</a>
+            <button class="boton boton--secundario" id="denegado-cerrar-sesion" type="button" hidden>Cerrar sesión</button>
+        </div>
+    </main>
+
+    <div class="panel" id="panel-administracion" hidden>
+        <button class="menu-movil" id="abrir-menu" type="button" aria-controls="barra-lateral" aria-expanded="false">
+            <span aria-hidden="true">☰</span><span>Menú</span>
+        </button>
+        <button class="menu-fondo" id="cerrar-menu-fondo" type="button" aria-label="Cerrar menú" hidden></button>
+
+        <aside class="barra-lateral" id="barra-lateral" aria-label="Navegación administrativa">
+            <div class="marca-panel">
+                <span class="marca-panel__simbolo" aria-hidden="true">✦</span>
+                <div><strong>Sistema Planetario</strong><small>Centro de control</small></div>
+            </div>
+            <nav class="navegacion-panel">
+                <button class="navegacion-panel__item navegacion-panel__item--activo" type="button" data-vista="resumen">
+                    <span aria-hidden="true">◉</span> Resumen
+                </button>
+                <button class="navegacion-panel__item" type="button" data-vista="lanzamiento">
+                    <span aria-hidden="true">☄</span> Próximo lanzamiento
+                </button>
+            </nav>
+            <div class="usuario-panel">
+                <span class="usuario-panel__avatar" id="admin-avatar">A</span>
+                <div><strong id="admin-nombre">Administrador</strong><small id="admin-correo"></small></div>
+            </div>
+            <div class="barra-lateral__acciones">
+                <a href="index.html">Ver sitio público</a>
+                <button id="cerrar-sesion" type="button">Cerrar sesión</button>
+            </div>
+        </aside>
+
+        <div class="contenido-panel">
+            <header class="cabecera-panel">
+                <div>
+                    <p class="cabecera-panel__etiqueta">Te Vi En Un Planetario</p>
+                    <h1 id="titulo-vista">Resumen del sistema</h1>
+                </div>
+                <span class="conexion" id="estado-conexion"><i></i><span>Conectando</span></span>
+            </header>
+
+            <section class="vista-panel vista-panel--activa" id="vista-resumen" data-seccion="resumen">
+                <div class="bienvenida-panel">
+                    <div>
+                        <p class="bienvenida-panel__sobrelinea">Órbita administrativa</p>
+                        <h2>Bienvenido, <span id="resumen-nombre">administrador</span>.</h2>
+                        <p>Desde aquí puedes preparar la información que más adelante alimentará la experiencia pública del sitio.</p>
+                    </div>
+                    <span class="bienvenida-panel__planeta" aria-hidden="true"><i></i></span>
+                </div>
+
+                <div class="tarjetas-resumen">
+                    <article class="tarjeta-resumen">
+                        <span class="tarjeta-resumen__icono" aria-hidden="true">☄</span>
+                        <p>Próximo lanzamiento</p>
+                        <strong id="resumen-lanzamiento">Cargando…</strong>
+                        <button type="button" data-ir-lanzamiento>Editar lanzamiento <span aria-hidden="true">→</span></button>
+                    </article>
+                    <article class="tarjeta-resumen">
+                        <span class="tarjeta-resumen__icono" aria-hidden="true">◉</span>
+                        <p>Visibilidad</p>
+                        <strong id="resumen-visibilidad">—</strong>
+                        <small>Estado configurado en Firestore</small>
+                    </article>
+                    <article class="tarjeta-resumen">
+                        <span class="tarjeta-resumen__icono" aria-hidden="true">✦</span>
+                        <p>Fuente de datos</p>
+                        <strong id="resumen-origen">Verificando</strong>
+                        <small id="resumen-origen-detalle">Conectando con Firebase</small>
+                    </article>
+                </div>
+            </section>
+
+            <section class="vista-panel" id="vista-lanzamiento" data-seccion="lanzamiento" hidden>
+                <div class="editor-grid">
+                    <form class="formulario-panel" id="formulario-lanzamiento" novalidate>
+                        <div class="bloque-panel">
+                            <div class="bloque-panel__cabecera">
+                                <div><p>Contenido</p><h2>Próximo lanzamiento</h2></div>
+                                <label class="interruptor">
+                                    <input type="checkbox" id="lanzamiento-visible" name="visible">
+                                    <span class="interruptor__control"><i></i></span>
+                                    <span id="texto-visibilidad">Visible</span>
+                                </label>
+                            </div>
+
+                            <label class="campo-panel">
+                                <span>Título</span>
+                                <input id="lanzamiento-titulo" name="titulo" type="text" maxlength="120" required>
+                            </label>
+                            <label class="campo-panel">
+                                <span>Descripción</span>
+                                <textarea id="lanzamiento-descripcion" name="descripcion" rows="4" maxlength="600" required></textarea>
+                                <small><span id="contador-descripcion">0</span>/600</small>
+                            </label>
+                            <div class="campos-dobles">
+                                <label class="campo-panel">
+                                    <span>Fecha y hora</span>
+                                    <input id="lanzamiento-fecha" name="fecha" type="datetime-local" required>
+                                </label>
+                                <label class="campo-panel">
+                                    <span>Texto de disponibilidad</span>
+                                    <input id="lanzamiento-disponibilidad" name="disponibilidad" type="text" maxlength="160" required>
+                                </label>
+                            </div>
+                            <label class="campo-panel">
+                                <span>Imagen de portada <em>URL o ruta local</em></span>
+                                <input id="lanzamiento-imagen" name="imagen" type="text" maxlength="1000" placeholder="img/lanzamientos/portada.jpg">
+                                <small>Firebase Storage todavía no está integrado; guarda una URL pública o una ruta dentro del sitio.</small>
+                            </label>
+                            <label class="campo-panel">
+                                <span>Enlace de Spotify</span>
+                                <input id="lanzamiento-spotify" name="spotify" type="url" maxlength="1000" placeholder="https://open.spotify.com/…">
+                            </label>
+                            <label class="campo-panel">
+                                <span>Enlace de Apple Music</span>
+                                <input id="lanzamiento-apple" name="appleMusic" type="url" maxlength="1000" placeholder="https://music.apple.com/…">
+                            </label>
+                        </div>
+
+                        <div class="mensaje-formulario" id="mensaje-formulario" role="status" aria-live="polite"></div>
+                        <div class="acciones-formulario">
+                            <button class="boton boton--secundario" id="restaurar-valores" type="button">Restaurar valores cargados</button>
+                            <button class="boton boton--principal" id="guardar-lanzamiento" type="submit">
+                                <span class="boton__texto">Guardar en Firestore</span><span class="boton__carga" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </form>
+
+                    <aside class="vista-previa" aria-labelledby="titulo-vista-previa">
+                        <div class="vista-previa__cabecera">
+                            <div><p>Vista previa</p><h2 id="titulo-vista-previa">Así se verá el lanzamiento</h2></div>
+                            <span id="preview-estado">Visible</span>
+                        </div>
+                        <article class="lanzamiento-preview">
+                            <div class="lanzamiento-preview__halo"></div>
+                            <span class="lanzamiento-preview__etiqueta">PRÓXIMO LANZAMIENTO</span>
+                            <div class="lanzamiento-preview__portada">
+                                <img id="preview-imagen" src="img/lanzamientos/nueva-cancion.jpg" alt="Vista previa de la portada">
+                                <span id="preview-imagen-error" hidden>La imagen no está disponible</span>
+                            </div>
+                            <h3 id="preview-titulo">Perdón</h3>
+                            <p id="preview-descripcion">Nuevo sencillo.</p>
+                            <time id="preview-fecha">04 · 09 · 2026</time>
+                            <strong id="preview-disponibilidad">DISPONIBLE EL 04 DE SEPTIEMBRE DE 2026</strong>
+                            <div class="lanzamiento-preview__enlaces">
+                                <a id="preview-spotify" href="#" target="_blank" rel="noopener noreferrer">Spotify</a>
+                                <a id="preview-apple" href="#" target="_blank" rel="noopener noreferrer">Apple Music</a>
+                            </div>
+                        </article>
+                    </aside>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script type="module" src="js/ui/sistema-planetario.js"></script>
+</body>
+</html>

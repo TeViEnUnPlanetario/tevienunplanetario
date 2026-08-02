@@ -1,0 +1,546 @@
+rules_version = '2';
+
+service cloud.firestore {
+
+    match /databases/{database}/documents {
+
+
+        // =========================================
+        // FUNCIONES REUTILIZABLES
+        // =========================================
+
+        function sesionActiva() {
+
+            return request.auth != null;
+
+        }
+
+
+        function esPropietario(usuarioId) {
+
+            return sesionActiva()
+                && request.auth.uid == usuarioId;
+
+        }
+
+
+        function perfilActual() {
+
+            return get(
+                /databases/$(database)/documents/usuarios/$(request.auth.uid)
+            ).data;
+
+        }
+
+
+        function esSistemaPlanetario() {
+
+            return sesionActiva()
+                && perfilActual().rol == "sistema-planetario"
+                && perfilActual().oficial == true
+                && perfilActual().verificado == true;
+
+        }
+
+
+        /*
+         * Permiso administrativo del panel.
+         * A diferencia de esSistemaPlanetario(), no exige que la cuenta
+         * sea oficial o verificada: la autorización depende del rol.
+         */
+
+        function esAdministrador() {
+
+            return sesionActiva()
+
+                && exists(
+                    /databases/$(database)/documents/usuarios/$(request.auth.uid)
+                )
+
+                && perfilActual().rol
+                    in [
+                        "sistema-planetario",
+                        "administrador"
+                    ];
+
+        }
+
+
+        /*
+         * Contrato completo del documento administrado.
+         * Impide campos inesperados, tipos incorrectos y que el cliente
+         * suplante al usuario que realizó la actualización.
+         */
+
+        function lanzamientoValido() {
+
+            return request.resource.data.keys()
+                .hasAll([
+                    "titulo",
+                    "descripcion",
+                    "fecha",
+                    "imagen",
+                    "disponibilidad",
+                    "spotify",
+                    "appleMusic",
+                    "visible",
+                    "actualizadoEn",
+                    "actualizadoPor",
+                    "actualizadoPorNombre"
+                ])
+
+                && request.resource.data.keys()
+                    .hasOnly([
+                        "titulo",
+                        "descripcion",
+                        "fecha",
+                        "imagen",
+                        "disponibilidad",
+                        "spotify",
+                        "appleMusic",
+                        "visible",
+                        "actualizadoEn",
+                        "actualizadoPor",
+                        "actualizadoPorNombre"
+                    ])
+
+                && request.resource.data.titulo
+                    is string
+
+                && request.resource.data.titulo.size()
+                    > 0
+
+                && request.resource.data.titulo.size()
+                    <= 120
+
+                && request.resource.data.descripcion
+                    is string
+
+                && request.resource.data.descripcion.size()
+                    > 0
+
+                && request.resource.data.descripcion.size()
+                    <= 600
+
+                && request.resource.data.fecha
+                    is timestamp
+
+                && request.resource.data.imagen
+                    is string
+
+                && request.resource.data.imagen.size()
+                    <= 1000
+
+                && request.resource.data.disponibilidad
+                    is string
+
+                && request.resource.data.disponibilidad.size()
+                    > 0
+
+                && request.resource.data.disponibilidad.size()
+                    <= 160
+
+                && request.resource.data.spotify
+                    is string
+
+                && request.resource.data.spotify.size()
+                    <= 1000
+
+                && request.resource.data.appleMusic
+                    is string
+
+                && request.resource.data.appleMusic.size()
+                    <= 1000
+
+                && request.resource.data.visible
+                    is bool
+
+                && request.resource.data.actualizadoEn
+                    == request.time
+
+                && request.resource.data.actualizadoPor
+                    == request.auth.uid
+
+                && request.resource.data.actualizadoPorNombre
+                    is string
+
+                && request.resource.data.actualizadoPorNombre.size()
+                    <= 120;
+
+        }
+
+
+        // =========================================
+        // USUARIOS
+        // =========================================
+
+        match /usuarios/{usuarioId} {
+
+            allow read:
+                if sesionActiva();
+
+
+            /*
+             * Un usuario nuevo solo puede crear
+             * un perfil normal de viajero.
+             */
+
+            allow create:
+                if esPropietario(usuarioId)
+
+                && request.resource.data.rol
+                    in [
+                        "viajero",
+                        "usuario"
+                    ]
+
+                && request.resource.data.verificado
+                    == false
+
+                && (
+                    !request.resource.data.keys()
+                        .hasAny([
+                            "oficial"
+                        ])
+
+                    ||
+
+                    request.resource.data.oficial
+                        == false
+                );
+
+
+            /*
+             * El usuario puede editar su perfil,
+             * pero únicamente estos campos.
+             *
+             * No puede cambiar:
+             * rol, oficial, verificado, correo,
+             * fechaRegistro ni contadores.
+             */
+
+            allow update:
+                if esPropietario(usuarioId)
+
+                && request.resource.data
+                    .diff(resource.data)
+                    .affectedKeys()
+                    .hasOnly([
+                        "nombre",
+                        "biografia",
+                        "foto"
+                    ]);
+
+
+            allow delete:
+                if false;
+
+        }
+
+
+        // =========================================
+        // CONFIGURACIÓN PÚBLICA
+        // =========================================
+
+        match /configuracion/proximo-lanzamiento {
+
+            /*
+             * El sitio público podrá leer el lanzamiento
+             * sin exigir una sesión de Firebase.
+             */
+
+            allow read:
+                if resource.data.visible == true
+                || esAdministrador();
+
+
+            /*
+             * La creación y actualización requieren sesión,
+             * rol administrativo y un documento válido.
+             */
+
+            allow create, update:
+                if esAdministrador()
+                && lanzamientoValido();
+
+
+            allow delete:
+                if false;
+
+        }
+
+
+        // =========================================
+        // OBSERVACIONES
+        // =========================================
+
+        match /observaciones/{observacionId} {
+
+            allow read:
+                if sesionActiva();
+
+
+            /*
+             * Publicación normal:
+             * oficial y verificado deben ser falsos.
+             *
+             * Publicación oficial:
+             * el perfil debe pertenecer al
+             * Sistema Planetario.
+             */
+
+            allow create:
+                if sesionActiva()
+
+                && request.resource.data.autorId
+                    == request.auth.uid
+
+                && request.resource.data.texto
+                    is string
+
+                && request.resource.data.texto.size()
+                    > 0
+
+                && request.resource.data.texto.size()
+                    <= 800
+
+                && request.resource.data.estrellas
+                    == 0
+
+                && request.resource.data.ecos
+                    == 0
+
+                && (
+                    (
+                        !esSistemaPlanetario()
+
+                        && request.resource.data.oficial
+                            == false
+
+                        && request.resource.data.verificado
+                            == false
+                    )
+
+                    ||
+
+                    (
+                        esSistemaPlanetario()
+
+                        && request.resource.data.oficial
+                            == true
+
+                        && request.resource.data.verificado
+                            == true
+
+                        && request.resource.data.autorRango
+                            == "Sistema Planetario"
+                    )
+                );
+
+
+            /*
+             * El propietario solo puede editar
+             * el contenido editable de su publicación.
+             *
+             * No puede cambiar autor, rol, estado
+             * oficial, verificación ni contadores.
+             */
+
+            allow update:
+                if sesionActiva()
+
+                && (
+                    (
+                        resource.data.autorId
+                            == request.auth.uid
+
+                        && request.resource.data
+                            .diff(resource.data)
+                            .affectedKeys()
+                            .hasOnly([
+                                "texto",
+                                "imagen",
+                                "editada",
+                                "actualizadaEn"
+                            ])
+
+                        && request.resource.data.texto
+                            is string
+
+                        && request.resource.data.texto.size()
+                            > 0
+
+                        && request.resource.data.texto.size()
+                            <= 800
+                    )
+
+                    ||
+
+                    (
+                        request.resource.data
+                            .diff(resource.data)
+                            .affectedKeys()
+                            .hasOnly([
+                                "estrellas",
+                                "actualizadaEn"
+                            ])
+
+                        && (
+                            request.resource.data.estrellas
+                                == resource.data.estrellas + 1
+
+                            ||
+
+                            request.resource.data.estrellas
+                                == resource.data.estrellas - 1
+                        )
+
+                        && request.resource.data.estrellas
+                            >= 0
+                    )
+
+                    ||
+
+                    (
+                        request.resource.data
+                            .diff(resource.data)
+                            .affectedKeys()
+                            .hasOnly([
+                                "ecos",
+                                "actualizadaEn"
+                            ])
+
+                        && (
+                            request.resource.data.ecos
+                                == resource.data.ecos + 1
+
+                            ||
+
+                            request.resource.data.ecos
+                                == resource.data.ecos - 1
+                        )
+
+                        && request.resource.data.ecos
+                            >= 0
+                    )
+                );
+
+
+            allow delete:
+                if sesionActiva()
+                && resource.data.autorId
+                    == request.auth.uid;
+
+
+            // =====================================
+            // ESTRELLAS
+            // =====================================
+
+            match /estrellas/{usuarioId} {
+
+                allow read:
+                    if sesionActiva();
+
+
+                allow create:
+                    if sesionActiva()
+
+                    && request.auth.uid
+                        == usuarioId
+
+                    && request.resource.data.usuarioId
+                        == request.auth.uid;
+
+
+                allow delete:
+                    if sesionActiva()
+
+                    && request.auth.uid
+                        == usuarioId;
+
+
+                allow update:
+                    if false;
+
+            }
+
+
+            // =====================================
+            // ECOS
+            // =====================================
+
+            match /ecos/{ecoId} {
+
+                allow read:
+                    if sesionActiva();
+
+
+                allow create:
+                    if sesionActiva()
+
+                    && request.resource.data.autorId
+                        == request.auth.uid
+
+                    && request.resource.data.texto
+                        is string
+
+                    && request.resource.data.texto.size()
+                        > 0
+
+                    && request.resource.data.texto.size()
+                        <= 500;
+
+
+                allow update:
+                    if sesionActiva()
+
+                    && resource.data.autorId
+                        == request.auth.uid
+
+                    && request.resource.data
+                        .diff(resource.data)
+                        .affectedKeys()
+                        .hasOnly([
+                            "texto",
+                            "editado",
+                            "actualizadaEn"
+                        ])
+
+                    && request.resource.data.texto
+                        is string
+
+                    && request.resource.data.texto.size()
+                        > 0
+
+                    && request.resource.data.texto.size()
+                        <= 500;
+
+
+                allow delete:
+                    if sesionActiva()
+
+                    && resource.data.autorId
+                        == request.auth.uid;
+
+            }
+
+        }
+
+
+        // =========================================
+        // CONSULTA GLOBAL DE ESTRELLAS
+        // =========================================
+
+        match /{ruta=**}/estrellas/{estrellaId} {
+
+            allow read:
+                if sesionActiva()
+
+                && resource.data.usuarioId
+                    == request.auth.uid;
+
+        }
+
+    }
+
+}

@@ -32,6 +32,50 @@ let botonComunidad = null;
 let perfilActivo = null;
 
 
+function esPerfilAdministrador(perfil) {
+
+    return [
+        "sistema-planetario",
+        "administrador"
+    ].includes(
+        String(perfil?.rol || "")
+            .trim()
+            .toLowerCase()
+    );
+
+}
+
+
+function actualizarAccesoAdministrativo(perfil = null) {
+
+    const menu =
+        document.getElementById("menu-usuario");
+
+    if (!menu) {
+        return;
+    }
+
+    menu.querySelector("#abrir-sistema-planetario")?.remove();
+
+    if (!esPerfilAdministrador(perfil)) {
+        return;
+    }
+
+    const enlace = document.createElement("a");
+    enlace.id = "abrir-sistema-planetario";
+    enlace.className = "menu-usuario__opcion";
+    enlace.href = "sistema-planetario.html";
+    enlace.innerHTML = `
+        <span aria-hidden="true">✦</span>
+        Panel de control
+    `;
+
+    const cerrarSesion = menu.querySelector("#cerrar-sesion");
+    cerrarSesion?.before(enlace);
+
+}
+
+
 // =========================================
 // CREAR MENÚ DEL VIAJERO
 // =========================================
@@ -152,6 +196,9 @@ function mostrarUsuarioConectado(
     perfil
 ) {
 
+    perfilActivo =
+        perfil;
+
     if (
         !botonComunidad ||
         !perfil
@@ -160,9 +207,6 @@ function mostrarUsuarioConectado(
         return;
 
     }
-
-    perfilActivo =
-        perfil;
 
     botonComunidad.dataset.sesionActiva =
         "true";
@@ -211,6 +255,8 @@ function mostrarUsuarioConectado(
 
     }
 
+    actualizarAccesoAdministrativo(perfil);
+
 }
 
 
@@ -222,6 +268,8 @@ function mostrarUsuarioDesconectado() {
 
     perfilActivo =
         null;
+
+    actualizarAccesoAdministrativo(null);
 
     if (!botonComunidad) {
 
@@ -366,6 +414,8 @@ async function cerrarSesion() {
 
     try {
 
+        perfilActivo = null;
+        actualizarAccesoAdministrativo(null);
         cerrarMenuUsuario();
 
         await signOut(
@@ -435,6 +485,15 @@ function iniciarSistemaSesion() {
     console.log(
         "Botón Comunidad encontrado."
     );
+
+
+    if (perfilActivo) {
+
+        mostrarUsuarioConectado(
+            perfilActivo
+        );
+
+    }
 
 
    botonComunidad.addEventListener(
@@ -517,6 +576,9 @@ function iniciarSistemaSesion() {
 onAuthStateChanged(
     auth,
     async function (usuario) {
+
+        perfilActivo = null;
+        actualizarAccesoAdministrativo(null);
 
         if (!usuario) {
 

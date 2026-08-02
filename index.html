@@ -29,6 +29,12 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
 
+    <style>
+        .nuevo-lanzamiento[data-lanzamiento-pendiente][hidden] {
+            display: none !important;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -166,11 +172,17 @@
      CONTADOR NUEVO LANZAMIENTO
 ========================= -->
 
-<section class="nuevo-lanzamiento">
+<section
+    class="nuevo-lanzamiento"
+    id="proximo-lanzamiento"
+    data-lanzamiento-pendiente
+    hidden
+>
 
     <!-- Fondo desenfocado -->
     <div
         class="fondo-lanzamiento"
+        id="fondo-proximo-lanzamiento"
         aria-hidden="true"
     ></div>
 
@@ -185,17 +197,21 @@
 
     <img
         class="portada-lanzamiento"
+        id="portada-proximo-lanzamiento"
         src="img/lanzamientos/nueva-cancion.jpg"
         alt="Portada de Nombre de la canción"
     >
 
 </div>
 
-    <h2>
+    <h2 id="titulo-proximo-lanzamiento">
         Perdón
     </h2>
 
-    <p class="descripcion-lanzamiento">
+    <p
+        class="descripcion-lanzamiento"
+        id="descripcion-proximo-lanzamiento"
+    >
          Nuevo Sencillo.
     </p>
 
@@ -242,6 +258,7 @@
 
             <a
                 href="#"
+                id="spotify-proximo-lanzamiento"
                 class="btn-preguardar spotify-preguardar"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -252,6 +269,7 @@
 
             <a
                 href="#"
+                id="apple-proximo-lanzamiento"
                 class="btn-preguardar apple-preguardar"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -264,7 +282,10 @@
 
     </div>
 
-    <p class="fecha-lanzamiento">
+    <p
+        class="fecha-lanzamiento"
+        id="disponibilidad-proximo-lanzamiento"
+    >
         DISPONIBLE EL 04 DE SEPTIEMBRE DE 2026
     </p>
 
@@ -1314,7 +1335,7 @@ allowfullscreen>
     aria-hidden="true">
 </div>
 
-<script src="js/script.js"></script>
+<script src="js/script.js?v=20260802-2"></script>
 <script src="js/effects/animaciones.js"></script>
 <script src="js/effects/efectos.js?v=3"></script>
 
@@ -1327,6 +1348,12 @@ allowfullscreen>
 <script
     type="module"
     src="js/firebase/auth.js"
+></script>
+
+<script
+    type="module"
+    src="js/ui/lanzamiento-publico.js"
+    onerror="window.mostrarRespaldoLanzamiento?.()"
 ></script>
 
 

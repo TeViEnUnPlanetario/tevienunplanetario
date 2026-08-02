@@ -103,6 +103,48 @@ const elementos = {
 };
 
 
+function esPerfilAdministrador(perfil) {
+
+    return [
+        "sistema-planetario",
+        "administrador"
+    ].includes(
+        String(perfil?.rol || "")
+            .trim()
+            .toLowerCase()
+    );
+
+}
+
+
+function actualizarAccesoAdministrativo(perfil = null) {
+
+    document
+        .getElementById("perfil-panel-control")
+        ?.remove();
+
+    if (!esPerfilAdministrador(perfil)) {
+        return;
+    }
+
+    const acciones =
+        document.querySelector(".perfil-header__acciones");
+
+    if (!acciones) {
+        return;
+    }
+
+    const enlace = document.createElement("a");
+    enlace.id = "perfil-panel-control";
+    enlace.className = "perfil-enlace";
+    enlace.href = "sistema-planetario.html";
+    enlace.textContent = "Panel de control";
+
+    elementos.cerrarSesion?.before(enlace);
+
+}
+
+
 // =========================================
 // MOSTRAR PERFIL
 // =========================================
@@ -110,6 +152,8 @@ const elementos = {
 function mostrarPerfil(
     perfil
 ) {
+
+    actualizarAccesoAdministrativo(perfil);
 
     elementos.nombre.textContent =
         perfil.nombre ||
@@ -307,6 +351,8 @@ async function cerrarSesion() {
 
     try {
 
+        actualizarAccesoAdministrativo(null);
+
         await signOut(
             auth
         );
@@ -370,6 +416,8 @@ elementos.cerrarSesion
 onAuthStateChanged(
     auth,
     async function (usuario) {
+
+        actualizarAccesoAdministrativo(null);
 
         if (!usuario) {
 

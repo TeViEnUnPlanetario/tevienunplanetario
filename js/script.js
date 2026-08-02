@@ -194,7 +194,7 @@ if(banner && bannerImg){
 // Formato: AÑO-MES-DÍA y hora.
 // Ejemplo: 15 de septiembre de 2026 a las 00:00.
 
-const fechaNuevoEP =
+let fechaNuevoEP =
 new Date("2026-09-04T00:00:00").getTime();
 
 const existeContador =
@@ -341,6 +341,53 @@ elementoSegundos.textContent =
 
 
 },1000);
+
+
+// Permite que la lectura pública de Firestore actualice
+// la fecha sin crear un segundo contador ni alterar su diseño.
+window.actualizarFechaLanzamiento =
+function actualizarFechaLanzamiento(fecha) {
+
+    const nuevaFecha =
+        new Date(fecha).getTime();
+
+    if (!Number.isNaN(nuevaFecha)) {
+
+        fechaNuevoEP =
+            nuevaFecha;
+
+    }
+
+};
+
+
+// Si el módulo de Firebase no puede cargarse, la página
+// recupera los valores que ya existen en el HTML.
+window.mostrarRespaldoLanzamiento =
+function mostrarRespaldoLanzamiento() {
+
+    const seccion =
+        document.getElementById(
+            "proximo-lanzamiento"
+        );
+
+    if (!seccion) {
+
+        return;
+
+    }
+
+    seccion.hidden =
+        false;
+
+    seccion.removeAttribute(
+        "data-lanzamiento-pendiente"
+    );
+
+    seccion.dataset.origenLanzamiento =
+        "respaldo";
+
+};
 
 // =========================
 // AURA DEL CURSOR
