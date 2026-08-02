@@ -81,6 +81,24 @@ function esPerfilAdministrador(perfil) {
 }
 
 
+function actualizarAccesosAdministrativos(perfil = null) {
+
+    const permitido =
+        esPerfilAdministrador(perfil);
+
+    document
+        .querySelectorAll("[data-requiere-administrador]")
+        .forEach((elemento) => {
+            elemento.hidden = !permitido;
+            elemento.setAttribute(
+                "aria-hidden",
+                String(!permitido)
+            );
+        });
+
+}
+
+
 function actualizarAccesoAdministrativo(perfil = null) {
 
     const menu =
@@ -233,6 +251,7 @@ function mostrarUsuarioConectado(
 ) {
 
     actualizarAccesosRequierenSesion(true);
+    actualizarAccesosAdministrativos(perfil);
 
     perfilActivo =
         perfil;
@@ -355,6 +374,7 @@ function mostrarUsuarioConectado(
 function mostrarUsuarioDesconectado() {
 
     actualizarAccesosRequierenSesion(false);
+    actualizarAccesosAdministrativos(null);
 
     perfilActivo =
         null;

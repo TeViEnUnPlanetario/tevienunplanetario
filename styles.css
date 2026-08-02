@@ -12365,7 +12365,8 @@ body.pagina-galeria-body > footer > * {
     display: grid;
 }
 
-.explorador-universo [data-requiere-sesion][hidden] {
+.explorador-universo [data-requiere-sesion][hidden],
+.explorador-universo [data-requiere-administrador][hidden] {
     display: none !important;
 }
 
