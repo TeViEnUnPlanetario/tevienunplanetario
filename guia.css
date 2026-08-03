@@ -249,9 +249,10 @@ details > div { padding: 0 24px 22px; color: var(--suave); }
 
 .linea-tiempo { position: relative; display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
 .version { position: relative; padding: 28px; border: 1px solid var(--borde); border-radius: var(--radio); background: var(--panel); }
-.version--actual { border-color: rgba(196,151,255,.8); background: linear-gradient(145deg, rgba(166,108,255,.14), rgba(255,255,255,.025)); box-shadow: 0 0 22px rgba(166,108,255,.2), 0 0 55px rgba(166,108,255,.12); }
-.version__estado { display: inline-flex; align-items: center; min-height: 28px; margin: 0 0 18px; padding: 0 12px; border: 1px solid rgba(220,195,255,.55); border-radius: 999px; color: #fff; background: rgba(166,108,255,.2); box-shadow: 0 0 18px rgba(166,108,255,.24); font-size: 11px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
-.version__estado::before { content: ""; width: 7px; height: 7px; margin-right: 8px; border-radius: 50%; background: #d9bdff; box-shadow: 0 0 10px #c193ff; }
+.version--actual { border-color: rgba(92,232,218,.78); background: linear-gradient(145deg, rgba(39,204,190,.14), rgba(255,255,255,.025)); box-shadow: 0 0 22px rgba(49,218,203,.2), 0 0 55px rgba(35,189,177,.12); }
+.version--actual .version__numero { color:#82f2e7; }
+.version__estado { display: inline-flex; align-items: center; min-height: 28px; margin: 0 0 18px; padding: 0 12px; border: 1px solid rgba(116,242,229,.58); border-radius: 999px; color: #dcfffb; background: rgba(31,190,177,.18); box-shadow: 0 0 18px rgba(44,221,205,.24); font-size: 11px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+.version__estado::before { content: ""; width: 7px; height: 7px; margin-right: 8px; border-radius: 50%; background: #7ff5e9; box-shadow: 0 0 10px #4ce7d8; }
 .version__numero { color: var(--morado-claro); font-size: 12px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
 .version h3 { margin: 8px 0 14px; font-size: 25px; }
 .version ul { padding-left: 20px; color: var(--suave); }
