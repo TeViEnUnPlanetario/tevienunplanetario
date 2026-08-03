@@ -8,7 +8,9 @@ import {
 
 import {
     crearComentariosContextuales
-} from "./comentarios-contextuales.js?v=11";
+} from "./comentarios-contextuales.js?v=12";
+import { cambiarVisibilidadPresentacion, eliminarPresentacion } from "../firebase/firestore-presentaciones.js";
+import { conectarModeracion } from "./moderacion.js";
 
 
 const seccion = document.getElementById("shows");
@@ -99,6 +101,13 @@ function crearTarjeta(show, indice) {
         tipo: "presentacion",
         id: show.id
     });
+    conectarModeracion({
+        contenedor: articulo,
+        oculto: false,
+        alEditar: () => { location.href = `sistema-planetario.html?vista=shows&id=${encodeURIComponent(show.id)}`; },
+        alOcultar: oculto => cambiarVisibilidadPresentacion(show.id, !oculto),
+        alEliminar: () => eliminarPresentacion(show.id)
+    });
 
     requestAnimationFrame(() => {
         requestAnimationFrame(() => articulo.classList.add("visible"));
@@ -136,6 +145,13 @@ async function iniciarShowsPublicos() {
                     id
                 });
             }
+            if (id) conectarModeracion({
+                contenedor: tarjeta,
+                oculto: false,
+                alEditar: () => { location.href = `sistema-planetario.html?vista=shows&id=${encodeURIComponent(id)}`; },
+                alOcultar: oculto => cambiarVisibilidadPresentacion(id, !oculto),
+                alEliminar: () => eliminarPresentacion(id)
+            });
         });
         mostrarSeccion("respaldo");
         return;

@@ -9,7 +9,9 @@ import {
 
 import {
     crearComentariosContextuales
-} from "./comentarios-contextuales.js?v=11";
+} from "./comentarios-contextuales.js?v=12";
+import { eliminarProximoLanzamiento, guardarProximoLanzamiento } from "../firebase/firestore-administracion.js";
+import { conectarModeracion } from "./moderacion.js";
 
 
 const elementos = {
@@ -165,6 +167,13 @@ async function iniciarLanzamientoPublico() {
 
     mostrarSeccion(resultado.estado);
     prepararComentarios(resultado.datos?.hiloComentariosId);
+    if (resultado.datos) conectarModeracion({
+        contenedor: elementos.seccion,
+        oculto: false,
+        alEditar: () => { location.href = "sistema-planetario.html?vista=lanzamiento"; },
+        alOcultar: oculto => guardarProximoLanzamiento({ ...resultado.datos, visible: !oculto }),
+        alEliminar: eliminarProximoLanzamiento
+    });
 }
 
 

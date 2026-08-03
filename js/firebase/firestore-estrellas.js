@@ -15,6 +15,8 @@ import {
     db
 } from "./firebase-config.js";
 
+import { crearNotificacion, obtenerPerfilUsuario, registrarActividad } from "./firestore.js";
+
 
 
 import {
@@ -111,7 +113,7 @@ export async function alternarEstrella(
         );
 
 
-    return runTransaction(
+    const resultado = await runTransaction(
 
         db,
 
@@ -244,6 +246,24 @@ export async function alternarEstrella(
         }
 
     );
+
+    await registrarActividad(usuario.uid, "favoritos", resultado.activa ? 1 : -1);
+
+    if (resultado.activa) {
+        const [observacion, actor] = await Promise.all([
+            getDoc(referenciaObservacion),
+            obtenerPerfilUsuario(usuario.uid)
+        ]);
+        await crearNotificacion(observacion.data()?.autorId, {
+            tipo: "estrella",
+            actorId: usuario.uid,
+            actorNombre: actor?.nombre || usuario.displayName || "Un viajero",
+            observacionId: id,
+            mensaje: "dejó una estrella en tu observación"
+        }).catch(console.error);
+    }
+
+    return resultado;
 
 }
 

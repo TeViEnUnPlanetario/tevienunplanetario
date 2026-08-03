@@ -1,5 +1,7 @@
 import { leerContenidoPublico } from "../firebase/firestore-contenido-publico.js";
-import { crearComentariosContextuales } from "./comentarios-contextuales.js?v=11";
+import { crearComentariosContextuales } from "./comentarios-contextuales.js?v=12";
+import { cambiarVisibilidadContenido, eliminarContenido } from "../firebase/firestore-contenido-administracion.js";
+import { conectarModeracion } from "./moderacion.js";
 
 const seccion = document.querySelector("[data-noticias-pendientes]");
 const lista = document.getElementById("lista-noticias");
@@ -129,6 +131,13 @@ function crearTarjeta(datos) {
 
     articulo.append(marco, cuerpo);
     crearComentariosContextuales(articulo, { tipo: "noticia", id: datos.id });
+    conectarModeracion({
+        contenedor: articulo,
+        oculto: false,
+        alEditar: () => { location.href = `sistema-planetario.html?vista=noticias&id=${encodeURIComponent(datos.id)}`; },
+        alOcultar: oculto => cambiarVisibilidadContenido("noticias", datos.id, !oculto),
+        alEliminar: () => eliminarContenido("noticias", datos.id)
+    });
     return articulo;
 }
 

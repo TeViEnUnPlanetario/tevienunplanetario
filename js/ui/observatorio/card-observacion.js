@@ -23,6 +23,13 @@ import {
     obtenerUltimosEcos
 } from "../../firebase/firestore-ecos.js";
 
+import {
+    conectarIdentidadViajero,
+    crearAccionesViajero
+} from "../identidad-viajero.js";
+import { conectarModeracion } from "../moderacion.js";
+import { eliminarObservacion, ocultarObservacion } from "../../firebase/firestore-observaciones.js";
+
 
 /**
  * Construye una tarjeta completa de Observación.
@@ -116,6 +123,13 @@ export function crearCardObservacion(
         vistaEcos
     );
 
+    conectarModeracion({
+        contenedor: card,
+        oculto: datos.oculta,
+        alOcultar: valor => ocultarObservacion(datos.id, valor),
+        alEliminar: () => eliminarObservacion(datos.id)
+    });
+
 
     if (datos.id) {
 
@@ -178,16 +192,14 @@ async function cargarVistaPreviaEcos(
 
                     const elemento =
                         document.createElement(
-                            "button"
+                            "div"
                         );
-
-
-                    elemento.type =
-                        "button";
-
 
                     elemento.className =
                         "observacion-card__eco-previo";
+
+                    elemento.tabIndex = 0;
+                    elemento.setAttribute("role", "button");
 
 
                     elemento.innerHTML = `
@@ -226,6 +238,18 @@ async function cargarVistaPreviaEcos(
 
                     `;
 
+                    const avatarEco = elemento.querySelector(".observacion-card__eco-avatar");
+                    const nombreEco = elemento.querySelector(".observacion-card__eco-contenido strong");
+                    const accionesEco = crearAccionesViajero(eco.autorId);
+                    accionesEco.addEventListener("click", evento => evento.stopPropagation());
+                    elemento.querySelector(".observacion-card__eco-contenido")?.appendChild(accionesEco);
+                    conectarIdentidadViajero({
+                        uid: eco.autorId,
+                        avatar: avatarEco,
+                        nombre: nombreEco,
+                        respaldo: { nombre: eco.autorNombre, foto: eco.autorAvatar, rango: eco.autorRango }
+                    });
+
 
                     elemento.addEventListener(
                         "click",
@@ -242,6 +266,13 @@ async function cargarVistaPreviaEcos(
 
                         }
                     );
+
+                    elemento.addEventListener("keydown", evento => {
+                        if (evento.key === "Enter" || evento.key === " ") {
+                            evento.preventDefault();
+                            solicitarAbrirEcos(observacionId);
+                        }
+                    });
 
 
                     contenedor.appendChild(
@@ -522,6 +553,11 @@ function normalizarObservacion(
         editada:
             Boolean(
                 observacion.editada
+            ),
+
+        oculta:
+            Boolean(
+                observacion.oculta
             )
 
     };
@@ -577,7 +613,8 @@ function crearHeader(
     const avatar =
         crearAvatar(
             datos.autorAvatar,
-            datos.autorNombre
+            datos.autorNombre,
+            datos.autorId
         );
 
 
@@ -585,6 +622,18 @@ function crearHeader(
         crearIdentidad(
             datos
         );
+
+    conectarIdentidadViajero({
+        uid: datos.autorId,
+        avatar,
+        nombre: identidad.querySelector(".observacion-card__nombre-linea > a, .observacion-card__nombre-linea > strong"),
+        rango: identidad.querySelector(".observacion-card__rango"),
+        respaldo: {
+            nombre: datos.autorNombre,
+            foto: datos.autorAvatar,
+            rango: datos.autorRango
+        }
+    });
 
 
     const fecha =
@@ -611,7 +660,8 @@ function crearHeader(
  */
 function crearAvatar(
     iniciales,
-    nombre
+    nombre,
+    autorId
 ) {
 
     const avatar =
@@ -624,8 +674,20 @@ function crearAvatar(
         "observacion-card__avatar";
 
 
-    avatar.textContent =
-        iniciales;
+    if (/^(?:https?:|img\/)/i.test(iniciales)) {
+        const imagen = document.createElement("img");
+        imagen.src = iniciales;
+        imagen.alt = "";
+        imagen.style.cssText = "width:100%;height:100%;border-radius:inherit;object-fit:cover";
+        avatar.appendChild(imagen);
+    } else {
+        avatar.textContent = iniciales;
+    }
+
+    if (autorId) {
+        avatar.style.cursor = "pointer";
+        avatar.addEventListener("click", () => window.location.href = `perfil.html?uid=${encodeURIComponent(autorId)}`);
+    }
 
 
     avatar.setAttribute(
@@ -666,10 +728,12 @@ function crearIdentidad(
         "observacion-card__nombre-linea";
 
 
-    const nombre =
-        document.createElement(
-            "strong"
-        );
+    const nombre = document.createElement(datos.autorId ? "a" : "strong");
+
+    if (datos.autorId) {
+        nombre.href = `perfil.html?uid=${encodeURIComponent(datos.autorId)}`;
+        nombre.style.cssText = "color:inherit;text-decoration:none";
+    }
 
 
     nombre.textContent =
@@ -710,7 +774,8 @@ function crearIdentidad(
 
     identidad.append(
         lineaNombre,
-        rango
+        rango,
+        crearAccionesViajero(datos.autorId)
     );
 
 

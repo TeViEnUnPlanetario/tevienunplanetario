@@ -1,354 +1,70 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <meta
-        name="description"
-        content="Perfil de la comunidad de Te Vi En Un Planetario"
-    >
-
-    <title>
-        Mi constelación | Te Vi En Un Planetario
-    </title>
-
-    <link
-        rel="stylesheet"
-        href="styles.css"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Constelación personal de la comunidad Te Vi En Un Planetario">
+    <title>Mi constelación | Te Vi En Un Planetario</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body class="pagina-perfil">
-
-    <!-- =========================================
-         FONDO DEL OBSERVATORIO
-    ========================================== -->
-
-    <div
-        class="perfil-fondo"
-        aria-hidden="true"
-    >
-        <span class="perfil-estrella perfil-estrella--1"></span>
-        <span class="perfil-estrella perfil-estrella--2"></span>
-        <span class="perfil-estrella perfil-estrella--3"></span>
-        <span class="perfil-estrella perfil-estrella--4"></span>
-    </div>
-
-
-    <!-- =========================================
-         CABECERA
-    ========================================== -->
-
+    <div class="perfil-fondo" aria-hidden="true"><span class="perfil-estrella perfil-estrella--1"></span><span class="perfil-estrella perfil-estrella--2"></span><span class="perfil-estrella perfil-estrella--3"></span><span class="perfil-estrella perfil-estrella--4"></span></div>
     <header class="perfil-header">
-
-        <a
-            class="perfil-header__marca"
-            href="index.html"
-            aria-label="Volver al inicio"
-        >
-            <span aria-hidden="true">✦</span>
-
-            <span>
-                Te Vi En Un Planetario
-            </span>
-        </a>
-
-        <nav
-            class="perfil-header__acciones"
-            aria-label="Acciones del perfil"
-        >
-
-            <a
-                class="perfil-enlace"
-                href="index.html"
-            >
-                Volver al universo
-            </a>
-
-            <button
-                class="perfil-boton-salir"
-                id="perfil-cerrar-sesion"
-                type="button"
-            >
-                Abandonar el universo
-            </button>
-
+        <a class="perfil-header__marca" href="index.html"><span>✦</span><span>Te Vi En Un Planetario</span></a>
+        <nav class="perfil-header__acciones">
+            <button class="perfil-notificaciones-boton" id="perfil-notificaciones-boton" type="button" aria-label="Abrir notificaciones">✧ <span id="perfil-notificaciones-total">0</span></button>
+            <a class="perfil-enlace" href="observatorio.html">Observatorio</a>
+            <button class="perfil-boton-salir" id="perfil-cerrar-sesion" type="button">Salir</button>
         </nav>
-
     </header>
-
-
-    <!-- =========================================
-         CONTENIDO PRINCIPAL
-    ========================================== -->
-
     <main class="perfil-principal">
-
-        <!-- CARGANDO -->
-
-        <section
-            class="perfil-cargando"
-            id="perfil-cargando"
-            aria-live="polite"
-        >
-            <span
-                class="perfil-cargando__simbolo"
-                aria-hidden="true"
-            >
-                ✦
-            </span>
-
-            <p>
-                Buscando tu constelación...
-            </p>
-        </section>
-
-
-        <!-- PERFIL -->
-
-        <section
-            class="perfil-observatorio"
-            id="perfil-contenido"
-            hidden
-        >
-
+        <section class="perfil-cargando" id="perfil-cargando" aria-live="polite"><span class="perfil-cargando__simbolo">✦</span><p>Buscando la constelación...</p></section>
+        <section class="perfil-observatorio" id="perfil-contenido" hidden>
             <div class="perfil-observatorio__resplandor"></div>
-
+            <div class="perfil-portada-visual" id="perfil-portada-visual"><button class="perfil-edicion-imagen perfil-edicion-imagen--portada" id="perfil-editar-portada" type="button" hidden><span aria-hidden="true">✎</span> Editar portada</button></div>
             <div class="perfil-portada">
-
-                <div
-                    class="perfil-avatar"
-                    id="perfil-avatar"
-                    aria-label="Foto de perfil"
-                >
-                    <span
-                        id="perfil-avatar-inicial"
-                        aria-hidden="true"
-                    >
-                        V
-                    </span>
-
-                    <img
-                        id="perfil-avatar-imagen"
-                        alt="Foto del viajero"
-                        hidden
-                    >
-                </div>
-
+                <div class="perfil-avatar" id="perfil-avatar"><span id="perfil-avatar-inicial">V</span><img id="perfil-avatar-imagen" alt="Avatar del viajero" hidden><button class="perfil-edicion-imagen perfil-edicion-imagen--avatar" id="perfil-editar-avatar" type="button" aria-label="Editar foto de perfil" hidden>✎</button></div>
                 <div class="perfil-identidad">
-
-                    <p class="perfil-etiqueta">
-                        Mi constelación
-                    </p>
-
-                    <h1 id="perfil-nombre">
-                        Viajero
-                    </h1>
-
-                    <div
-                        class="perfil-rango"
-                        id="perfil-rango"
-                    >
-                        <span aria-hidden="true">🌠</span>
-                        Viajero
-                    </div>
-
-                    <p
-                        class="perfil-correo"
-                        id="perfil-correo"
-                    ></p>
-
+                    <p class="perfil-etiqueta" id="perfil-etiqueta">Mi constelación</p>
+                    <h1 id="perfil-nombre">Viajero</h1>
+                    <div class="perfil-rango" id="perfil-rango"></div>
+                    <p class="perfil-progreso-texto" id="perfil-progreso-texto"></p>
+                    <div class="perfil-progreso"><span id="perfil-progreso"></span></div>
                 </div>
-
+                <button class="perfil-accion perfil-accion--principal perfil-agregar" id="perfil-agregar" type="button" hidden>✦ Agregar a mi constelación</button>
             </div>
-
-
-            <!-- INFORMACIÓN -->
-
             <div class="perfil-grid">
-
                 <article class="perfil-panel">
-
-                    <div class="perfil-panel__encabezado">
-
-                        <div>
-                            <p class="perfil-panel__etiqueta">
-                                Sobre mí
-                            </p>
-
-                            <h2>
-                                Biografía
-                            </h2>
-                        </div>
-
-                        <button
-                            class="perfil-panel__editar"
-                            id="perfil-editar-biografia"
-                            type="button"
-                        >
-                            Editar
-                        </button>
-
-                    </div>
-
-                    <p
-                        class="perfil-biografia"
-                        id="perfil-biografia"
-                    >
-                        Este viajero todavía no ha escrito su historia.
-                    </p>
-
+                    <div class="perfil-panel__encabezado"><div><p class="perfil-panel__etiqueta">Sobre este viajero</p><h2>Biografía</h2></div><button class="perfil-panel__editar" id="perfil-editar-biografia" type="button">Editar</button></div>
+                    <p class="perfil-biografia" id="perfil-biografia"></p>
+                    <p class="perfil-edad" id="perfil-edad"></p>
+                    <div class="perfil-redes" id="perfil-redes" aria-label="Redes sociales"></div>
+                    <p class="perfil-privado" id="perfil-privado" hidden>✦ Esta información se revela cuando ambos viajeros comparten constelación.</p>
                 </article>
-
-
-                <article class="perfil-panel">
-
-                    <p class="perfil-panel__etiqueta">
-                        Registro
-                    </p>
-
-                    <h2>
-                        Primera observación
-                    </h2>
-
-                    <p
-                        class="perfil-fecha"
-                        id="perfil-fecha-registro"
-                    >
-                        —
-                    </p>
-
-                </article>
-
+                <article class="perfil-panel perfil-panel--registro"><p class="perfil-panel__etiqueta">Registro</p><h2>Primera observación</h2><p class="perfil-fecha" id="perfil-fecha-registro">—</p><p class="perfil-antiguedad" id="perfil-antiguedad"></p></article>
             </div>
-
-
-            <!-- ESTADÍSTICAS -->
-
-            <section
-                class="perfil-estadisticas"
-                aria-label="Estadísticas del perfil"
-            >
-
-                <article class="perfil-estadistica">
-
-                    <strong id="perfil-publicaciones">
-                        0
-                    </strong>
-
-                    <span>
-                        Publicaciones
-                    </span>
-
-                </article>
-
-                <article class="perfil-estadistica">
-
-                    <strong id="perfil-comentarios">
-                        0
-                    </strong>
-
-                    <span>
-                        Comentarios
-                    </span>
-
-                </article>
-
-                <article class="perfil-estadistica">
-
-                    <strong id="perfil-favoritos">
-                        0
-                    </strong>
-
-                    <span>
-                        Favoritos
-                    </span>
-
-                </article>
-
-            </section>
-
-
-          <!-- ACCIONES -->
-
-<section class="perfil-acciones">
-
-    <a
-        class="perfil-accion perfil-accion--observatorio"
-        href="observatorio.html"
-    >
-        <span aria-hidden="true">
-            ✦
-        </span>
-
-        Entrar al Observatorio
-    </a>
-
-    <button
-        class="perfil-accion perfil-accion--principal"
-        id="perfil-editar"
-        type="button"
-    >
-        Editar mi constelación
-    </button>
-
-    <button
-        class="perfil-accion"
-        id="perfil-configuracion"
-        type="button"
-    >
-        Configuración
-    </button>
-
-</section>
-
+            <section class="perfil-estadisticas" aria-label="Actividad"><article class="perfil-estadistica"><strong id="perfil-publicaciones">0</strong><span>Publicaciones</span></article><article class="perfil-estadistica"><strong id="perfil-comentarios">0</strong><span>Comentarios</span></article><article class="perfil-estadistica"><strong id="perfil-favoritos">0</strong><span>Favoritos</span></article></section>
+            <section class="perfil-constelacion"><div class="perfil-seccion-titulo"><div><p class="perfil-panel__etiqueta">Comunidad</p><h2>Viajeros en la constelación <span id="perfil-constelacion-total">0</span></h2></div></div><div class="perfil-viajeros" id="perfil-viajeros"><p>Aún no hay viajeros en esta constelación.</p></div></section>
+            <section class="perfil-acciones"><a class="perfil-accion perfil-accion--observatorio" href="observatorio.html">✦ Entrar al Observatorio</a><button class="perfil-accion perfil-accion--principal" id="perfil-editar" type="button">Personalizar mi perfil</button></section>
         </section>
-
-
-        <!-- ERROR -->
-
-        <section
-            class="perfil-error"
-            id="perfil-error"
-            hidden
-        >
-
-            <span aria-hidden="true">
-                ☄
-            </span>
-
-            <h2>
-                No pudimos encontrar tu constelación
-            </h2>
-
-            <p id="perfil-error-mensaje">
-                Inténtalo nuevamente.
-            </p>
-
-            <a href="index.html">
-                Volver al inicio
-            </a>
-
-        </section>
-
+        <section class="perfil-error" id="perfil-error" hidden><span>☄</span><h2>No pudimos encontrar esta constelación</h2><p id="perfil-error-mensaje">Inténtalo nuevamente.</p><a href="index.html">Volver al inicio</a></section>
     </main>
 
+    <aside class="perfil-notificaciones" id="perfil-notificaciones" hidden><div class="perfil-notificaciones__cabecera"><div><p class="perfil-panel__etiqueta">Registro estelar</p><h2>Notificaciones</h2></div><button id="perfil-notificaciones-cerrar" type="button" aria-label="Cerrar">×</button></div><div id="perfil-notificaciones-lista" class="perfil-notificaciones__lista"></div></aside>
 
-    <script
-        type="module"
-        src="js/ui/perfil.js"
-    ></script>
-
+    <dialog class="perfil-modal" id="perfil-modal">
+        <form method="dialog" id="perfil-formulario">
+            <div class="perfil-modal__cabecera"><div><p class="perfil-panel__etiqueta">Personalización</p><h2>Edita tu constelación</h2></div><button id="perfil-modal-cerrar" type="button" aria-label="Cerrar">×</button></div>
+            <label>Nombre de viajero<input id="perfil-form-nombre" maxlength="50" required></label>
+            <label>Biografía<textarea id="perfil-form-biografia" maxlength="280" rows="4" placeholder="Cuenta tu historia en este universo..."></textarea><small><span id="perfil-biografia-contador">0</span>/280</small></label>
+            <label>Edad<input id="perfil-form-edad" type="number" min="13" max="120" placeholder="Opcional"></label>
+            <fieldset id="perfil-seccion-avatar"><legend>Foto de perfil</legend><div class="perfil-origen-imagen"><span>Elegir del universo</span><label class="perfil-subida"><input id="perfil-subir-avatar" type="file" accept="image/jpeg,image/png,image/webp" data-tipo-imagen="avatar"><span>Subir desde mi galería</span></label></div><div class="perfil-selector-avatares" id="perfil-selector-avatares"></div></fieldset>
+            <fieldset id="perfil-seccion-portada"><legend>Portada del viajero</legend><div class="perfil-origen-imagen"><span>Elegir del universo</span><label class="perfil-subida"><input id="perfil-subir-portada" type="file" accept="image/jpeg,image/png,image/webp" data-tipo-imagen="portada"><span>Subir desde mi galería</span></label></div><div class="perfil-selector-portadas" id="perfil-selector-portadas"></div></fieldset>
+            <fieldset class="perfil-form-redes"><legend>Señales sociales</legend><label>Facebook<input id="perfil-form-facebook" type="url" placeholder="https://facebook.com/..."></label><label>Instagram<input id="perfil-form-instagram" type="url" placeholder="https://instagram.com/..."></label><label>WhatsApp<input id="perfil-form-whatsapp" placeholder="Número o enlace"></label><label>X<input id="perfil-form-x" type="url" placeholder="https://x.com/..."></label><label>Spotify<input id="perfil-form-spotify" type="url"></label><label>Apple Music<input id="perfil-form-apple" type="url"></label></fieldset>
+            <p class="perfil-form-mensaje" id="perfil-form-mensaje"></p>
+            <div class="perfil-modal__acciones"><button class="perfil-accion" id="perfil-modal-cancelar" type="button">Cancelar</button><button class="perfil-accion perfil-accion--principal" id="perfil-guardar" type="submit">Guardar cambios</button></div>
+        </form>
+    </dialog>
+    <script type="module" src="js/ui/perfil.js"></script>
 </body>
-
 </html>
-
-

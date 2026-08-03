@@ -22,6 +22,11 @@ import {
 } from "./firestore.js";
 
 import {
+    observarPerfilViajero,
+    pintarAvatar
+} from "../ui/identidad-viajero.js";
+
+import {
     onAuthStateChanged,
     signOut
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
@@ -30,6 +35,8 @@ import {
 let botonComunidad = null;
 
 let perfilActivo = null;
+
+let detenerPerfilVivo = () => {};
 
 
 function actualizarAccesosRequierenSesion(conectado) {
@@ -270,7 +277,7 @@ function mostrarUsuarioConectado(
 
     botonComunidad.setAttribute(
         "aria-expanded",
-        "false"
+        String(document.getElementById("menu-usuario")?.classList.contains("menu-usuario--activo"))
     );
 
     const nombrePerfil =
@@ -344,11 +351,11 @@ function mostrarUsuarioConectado(
 
     if (iniciales) {
 
-        iniciales.textContent =
-            obtenerIniciales(
-                perfil.nombre ||
-                "Viajero"
-            );
+        pintarAvatar(
+            iniciales,
+            fotoPerfil,
+            perfil.nombre || "Viajero"
+        );
 
     }
 
@@ -691,6 +698,8 @@ onAuthStateChanged(
     auth,
     async function (usuario) {
 
+        detenerPerfilVivo();
+        detenerPerfilVivo = () => {};
         perfilActivo = null;
         actualizarAccesoAdministrativo(null);
 
@@ -715,6 +724,15 @@ onAuthStateChanged(
 
             mostrarUsuarioConectado(
                 perfil
+            );
+
+            detenerPerfilVivo = observarPerfilViajero(
+                usuario.uid,
+                perfilActualizado => {
+                    if (perfilActualizado) {
+                        mostrarUsuarioConectado(perfilActualizado);
+                    }
+                }
             );
 
 

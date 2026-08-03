@@ -26,6 +26,11 @@ import {
     inicializarAdministracionContenido
 } from "./sistema-planetario-contenido.js";
 
+import {
+    observarPerfilViajero,
+    pintarAvatar
+} from "./identidad-viajero.js";
+
 
 const elementos = {
     carga: document.getElementById("estado-carga"),
@@ -49,6 +54,7 @@ const elementos = {
     estadoConexion: document.getElementById("estado-conexion"),
     cerrarSesion: document.getElementById("cerrar-sesion"),
     adminAvatar: document.getElementById("admin-avatar"),
+    adminAvatarMarca: document.getElementById("admin-avatar-marca"),
     adminNombre: document.getElementById("admin-nombre"),
     adminCorreo: document.getElementById("admin-correo"),
     resumenNombre: document.getElementById("resumen-nombre"),
@@ -91,8 +97,13 @@ const TITULOS_VISTA = {
     musica: "Administración de Música"
 };
 
+document.querySelectorAll("[data-vista-directa]").forEach(boton => boton.addEventListener("click", () => {
+    document.querySelector(`[data-vista="${boton.dataset.vistaDirecta}"]`)?.click();
+}));
+
 let valoresCargados = null;
 let accesoAutorizado = false;
+let detenerPerfilAdministrador = () => {};
 
 
 function mostrarSolo(elemento) {
@@ -145,7 +156,8 @@ function configurarIdentidad(perfil, usuario) {
     );
     elementos.adminNombre.textContent = nombre;
     elementos.adminCorreo.textContent = usuario.email || perfil.correo || "";
-    elementos.adminAvatar.textContent = nombre.trim().charAt(0).toUpperCase() || "A";
+    pintarAvatar(elementos.adminAvatar, perfil.foto, nombre);
+    pintarAvatar(elementos.adminAvatarMarca, perfil.foto, nombre);
     elementos.resumenNombre.textContent = nombre.split(" ")[0];
 }
 
@@ -484,6 +496,8 @@ function registrarEventos() {
 registrarEventos();
 
 onAuthStateChanged(auth, async (usuario) => {
+    detenerPerfilAdministrador();
+    detenerPerfilAdministrador = () => {};
     if (!usuario) {
         activarInicioSesion(false);
         mostrarInicioSesion();
@@ -496,11 +510,24 @@ onAuthStateChanged(auth, async (usuario) => {
         const perfil = await verificarAdministrador(usuario);
         accesoAutorizado = true;
         configurarIdentidad(perfil, usuario);
+        detenerPerfilAdministrador = observarPerfilViajero(
+            usuario.uid,
+            perfilActualizado => {
+                if (perfilActualizado) configurarIdentidad(perfilActualizado, usuario);
+            }
+        );
         mostrarSolo(elementos.panel);
-        cambiarVista("resumen");
+        const vistaSolicitada = new URLSearchParams(location.search).get("vista");
+        cambiarVista(TITULOS_VISTA[vistaSolicitada] ? vistaSolicitada : "resumen");
         await cargarLanzamiento();
         await inicializarAdministracionShows();
         await inicializarAdministracionContenido();
+        const idSolicitado = new URLSearchParams(location.search).get("id");
+        if (idSolicitado && vistaSolicitada === "shows") {
+            Array.from(document.querySelectorAll("#lista-shows [data-accion-show='editar']")).find(boton => boton.dataset.showId === idSolicitado)?.click();
+        } else if (idSolicitado && ["noticias", "galeria", "musica"].includes(vistaSolicitada)) {
+            Array.from(document.querySelectorAll(`#lista-${vistaSolicitada} [data-id]`)).find(fila => fila.dataset.id === idSolicitado)?.querySelector("[data-accion='editar']")?.click();
+        }
     } catch (error) {
         console.warn("Acceso administrativo rechazado:", error);
         mostrarAccesoDenegado(error?.code, error?.message);

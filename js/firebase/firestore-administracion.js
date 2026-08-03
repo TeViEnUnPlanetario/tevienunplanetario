@@ -8,6 +8,7 @@ import {
 } from "./firebase-config.js";
 
 import {
+    deleteDoc,
     doc,
     getDoc,
     serverTimestamp,
@@ -305,12 +306,18 @@ async function guardarProximoLanzamiento(datos) {
     }
 }
 
+async function eliminarProximoLanzamiento() {
+    await verificarAdministrador(auth.currentUser);
+    await deleteDoc(REFERENCIA_LANZAMIENTO);
+}
+
 
 export {
     VALORES_RESPALDO_LANZAMIENTO,
     esRolAdministrador,
     generarHiloComentariosId,
     guardarProximoLanzamiento,
+    eliminarProximoLanzamiento,
     obtenerProximoLanzamiento,
     verificarAdministrador
 };

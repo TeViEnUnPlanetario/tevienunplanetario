@@ -1,6 +1,7 @@
 // Comentarios públicos aislados de Observaciones y Ecos.
 
 import { auth, db } from "./firebase-config.js";
+import { crearNotificacion } from "./firestore.js";
 import {
     addDoc,
     collection,
@@ -62,6 +63,7 @@ function normalizarComentario(documento) {
         autorId: String(datos.autorId || ""),
         autorNombre: String(datos.autorNombre || "Viajero"),
         autorFoto: String(datos.autorFoto || ""),
+        oculta: Boolean(datos.oculta),
         creadoEn: fecha,
         actualizado: datos.actualizadoEn?.isEqual?.(datos.creadoEn) === false
     };
@@ -77,6 +79,11 @@ function referenciaRespuestas(contexto, comentarioId) {
 
 function referenciaEstrellasComentario(contexto, comentarioId) {
     return collection(referenciaComentario(contexto, comentarioId), "estrellas");
+}
+
+function destinoContextual(contexto) {
+    const anclas = { presentacion: "shows", noticia: "noticias", lanzamiento: "nuevo-lanzamiento" };
+    return `index.html#${anclas[contexto?.tipo] || "inicio"}`;
 }
 
 async function contarComentarios(contexto) {
@@ -176,7 +183,8 @@ async function listarRespuestas(contexto, comentarioId, cursor = null) {
 
 async function crearRespuesta(contexto, comentarioId, texto) {
     const { usuario, datos } = await obtenerPerfilActual();
-    return addDoc(referenciaRespuestas(contexto, comentarioId), {
+    const comentario = await getDoc(referenciaComentario(contexto, comentarioId));
+    const respuesta = await addDoc(referenciaRespuestas(contexto, comentarioId), {
         texto: validarTexto(texto),
         autorId: usuario.uid,
         autorNombre: String(datos.nombre || "").trim(),
@@ -184,6 +192,15 @@ async function crearRespuesta(contexto, comentarioId, texto) {
         creadoEn: serverTimestamp(),
         actualizadoEn: serverTimestamp()
     });
+    await crearNotificacion(comentario.data()?.autorId, {
+        tipo: "eco",
+        actorId: usuario.uid,
+        actorNombre: String(datos.nombre || "Viajero").trim(),
+        observacionId: "",
+        destino: destinoContextual(contexto),
+        mensaje: "respondió a tu comentario"
+    }).catch(console.error);
+    return respuesta;
 }
 
 async function contarEstrellasComentario(contexto, comentarioId) {
@@ -217,7 +234,35 @@ async function alternarEstrellaComentario(contexto, comentarioId) {
         autorId: usuario.uid,
         creadoEn: serverTimestamp()
     });
+    const [comentario, perfil] = await Promise.all([
+        getDoc(referenciaComentario(contexto, comentarioId)),
+        getDoc(doc(db, "usuarios", usuario.uid))
+    ]);
+    await crearNotificacion(comentario.data()?.autorId, {
+        tipo: "estrella",
+        actorId: usuario.uid,
+        actorNombre: perfil.data()?.nombre || "Viajero",
+        observacionId: "",
+        destino: destinoContextual(contexto),
+        mensaje: "dejó una estrella en tu comentario"
+    }).catch(console.error);
     return true;
+}
+
+async function ocultarComentario(contexto, comentarioId, oculta) {
+    await updateDoc(referenciaComentario(contexto, comentarioId), {
+        oculta: Boolean(oculta), moderadaPor: auth.currentUser?.uid || "", actualizadoEn: serverTimestamp()
+    });
+}
+
+async function eliminarRespuesta(contexto, comentarioId, respuestaId) {
+    await deleteDoc(doc(referenciaRespuestas(contexto, comentarioId), respuestaId));
+}
+
+async function ocultarRespuesta(contexto, comentarioId, respuestaId, oculta) {
+    await updateDoc(doc(referenciaRespuestas(contexto, comentarioId), respuestaId), {
+        oculta: Boolean(oculta), moderadaPor: auth.currentUser?.uid || "", actualizadoEn: serverTimestamp()
+    });
 }
 
 export {
@@ -230,6 +275,9 @@ export {
     crearRespuesta,
     editarComentario,
     eliminarComentario,
+    eliminarRespuesta,
+    ocultarComentario,
+    ocultarRespuesta,
     listarComentarios,
     listarRespuestas,
     tieneEstrellaComentario

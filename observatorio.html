@@ -85,12 +85,7 @@
             aria-label="Navegación del Observatorio"
         >
 
-            <a
-                class="observatorio-enlace"
-                href="index.html"
-            >
-                Volver al universo
-            </a>
+            <button class="explorador-universo__abrir" id="abrir-explorador-universo" type="button" aria-expanded="false" aria-controls="explorador-universo">Explorar universo <span aria-hidden="true">☰</span></button>
 
             <a
                 class="observatorio-perfil"
@@ -102,6 +97,22 @@
         </nav>
 
     </header>
+
+    <aside class="explorador-universo" id="explorador-universo" aria-label="Explorar universo" aria-hidden="true">
+        <div class="explorador-universo__encabezado"><strong>Explorar universo</strong><button id="cerrar-explorador-universo" type="button" aria-label="Cerrar Explorar universo">×</button></div>
+        <nav aria-label="Secciones principales">
+            <a href="index.html"><span aria-hidden="true">✦</span> Inicio</a>
+            <a href="index.html#shows"><span aria-hidden="true">✧</span> Shows</a>
+            <a href="index.html#noticias"><span aria-hidden="true">✺</span> Noticias</a>
+            <a href="musica.html"><span aria-hidden="true">♫</span> Música</a>
+            <a href="galeria.html"><span aria-hidden="true">◇</span> Galería</a>
+            <a href="observatorio.html"><span aria-hidden="true">✧</span> Observatorio<small>Ecos · Estrellas</small></a>
+            <a href="perfil.html"><span aria-hidden="true">◉</span> Mi constelación</a>
+            <a href="sistema-planetario.html" data-requiere-administrador hidden><span aria-hidden="true">✦</span> Panel de control<small>Administración</small></a>
+            <a href="guia.html" data-requiere-administrador hidden><span aria-hidden="true">◇</span> Guía del sitio</a>
+        </nav>
+    </aside>
+    <div class="explorador-universo__velo" id="velo-explorador-universo" aria-hidden="true"></div>
 
 
     <!-- =========================================
@@ -570,6 +581,7 @@
         defer>
     </script>
 
+    <script src="js/ui/navegacion-universo.js?v=1"></script>
 </body>
 
 </html>

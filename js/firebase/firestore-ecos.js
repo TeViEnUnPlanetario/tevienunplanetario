@@ -15,17 +15,23 @@ import {
     db
 } from "./firebase-config.js";
 
+import { crearNotificacion, registrarActividad } from "./firestore.js";
+
 
 import {
     collection,
+    deleteDoc,
     doc,
+    getDoc,
     getDocs,
+    increment,
     limit,
     onSnapshot,
     orderBy,
     query,
     runTransaction,
-    serverTimestamp
+    serverTimestamp,
+    updateDoc
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 
@@ -131,6 +137,8 @@ export async function guardarEco(
         );
 
 
+    let datosPublicacion = null;
+
     await runTransaction(
 
         db,
@@ -158,6 +166,8 @@ export async function guardarEco(
 
             const datosObservacion =
                 snapshotObservacion.data();
+
+            datosPublicacion = datosObservacion;
 
 
             const ecosActuales =
@@ -247,6 +257,15 @@ export async function guardarEco(
         }
 
     );
+
+    await registrarActividad(usuario.uid, "comentarios", 1);
+    await crearNotificacion(datosPublicacion?.autorId, {
+        tipo: "eco",
+        actorId: usuario.uid,
+        actorNombre: normalizarTexto(datos.autorNombre || usuario.displayName || usuario.email?.split("@")[0] || "Un viajero"),
+        observacionId: id,
+        mensaje: "respondió con un eco a tu observación"
+    }).catch(console.error);
 
 
     return referenciaEco.id;
@@ -599,6 +618,26 @@ const snapshotEco =
 
     );
 
+    await registrarActividad(usuario.uid, "comentarios", -1);
+
+}
+
+export async function ocultarEco(observacionId, ecoId, oculta) {
+    if (!auth.currentUser) throw new Error("Debes iniciar sesión para moderar.");
+    await updateDoc(doc(db, COLECCION_OBSERVACIONES, observacionId, SUBCOLECCION_ECOS, ecoId), {
+        oculta: Boolean(oculta), moderadaPor: auth.currentUser.uid, actualizadoEn: serverTimestamp()
+    });
+}
+
+export async function eliminarEcoModeracion(observacionId, ecoId) {
+    if (!auth.currentUser) throw new Error("Debes iniciar sesión para moderar.");
+    const ecoRef = doc(db, COLECCION_OBSERVACIONES, observacionId, SUBCOLECCION_ECOS, ecoId);
+    const eco = await getDoc(ecoRef);
+    await deleteDoc(ecoRef);
+    await updateDoc(doc(db, COLECCION_OBSERVACIONES, observacionId), {
+        ecos: increment(-1), actualizadaEn: serverTimestamp()
+    }).catch(() => {});
+    await registrarActividad(eco.data()?.autorId, "comentarios", -1);
 }
 
 
@@ -678,7 +717,9 @@ function transformarEco(
         editado:
             Boolean(
                 datos.editado
-            )
+            ),
+
+        oculta: Boolean(datos.oculta)
 
     };
 

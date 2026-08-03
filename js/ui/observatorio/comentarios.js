@@ -23,12 +23,24 @@ import {
 import {
     escucharEcos,
     guardarEco,
-    eliminarEco
+    eliminarEco,
+    eliminarEcoModeracion,
+    ocultarEco
 } from "../../firebase/firestore-ecos.js";
+
+import {
+    conectarIdentidadViajero,
+    crearAccionesViajero,
+    observarPerfilViajero
+} from "../identidad-viajero.js";
+import { conectarModeracion } from "../moderacion.js";
+import { confirmarAccion } from "../confirmacion.js";
 
 
 let panelEcos =
     null;
+
+let detenerPerfilActual = () => {};
 
 
 let listaEcos =
@@ -571,6 +583,8 @@ async function cargarPerfilActual() {
 
     if (!usuario) {
 
+        detenerPerfilActual();
+        detenerPerfilActual = () => {};
         perfilUsuarioActual =
             null;
 
@@ -585,6 +599,11 @@ async function cargarPerfilActual() {
             await asegurarPerfilUsuario(
                 usuario
             );
+
+        detenerPerfilActual();
+        detenerPerfilActual = observarPerfilViajero(usuario.uid, perfil => {
+            if (perfil) perfilUsuarioActual = perfil;
+        });
 
     }
     catch (error) {
@@ -820,8 +839,21 @@ function crearElementoEco(
 
     autor.append(
         nombre,
-        rango
+        rango,
+        crearAccionesViajero(eco.autorId)
     );
+
+    conectarIdentidadViajero({
+        uid: eco.autorId,
+        avatar,
+        nombre,
+        rango,
+        respaldo: {
+            nombre: eco.autorNombre,
+            foto: eco.autorAvatar,
+            rango: eco.autorRango
+        }
+    });
 
 
     const acciones =
@@ -928,6 +960,13 @@ function crearElementoEco(
         avatar,
         contenido
     );
+
+    conectarModeracion({
+        contenedor: articulo,
+        oculto: eco.oculta,
+        alOcultar: valor => ocultarEco(observacionActivaId, eco.id, valor),
+        alEliminar: () => eliminarEcoModeracion(observacionActivaId, eco.id)
+    });
 
 
     return articulo;
@@ -1150,10 +1189,7 @@ async function solicitarEliminarEco(
     }
 
 
-    const confirmado =
-        window.confirm(
-            "¿Deseas eliminar este Eco?"
-        );
+    const confirmado = await confirmarAccion({ titulo: "Eliminar Eco", mensaje: "Este Eco se eliminará definitivamente y no se puede recuperar.", aceptar: "Eliminar" });
 
 
     if (!confirmado) {

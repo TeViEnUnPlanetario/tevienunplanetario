@@ -757,7 +757,13 @@ document.addEventListener(
                         "La configuración de Firebase no es válida.",
 
                 "auth/unauthorized-domain":
-                         "Este dominio todavía no está autorizado en Firebase."
+                         "Este dominio todavía no está autorizado en Firebase.",
+
+                "permission-denied":
+                         "Firestore rechazó el acceso. Publica las reglas actualizadas del proyecto.",
+
+                "firestore/permission-denied":
+                         "Firestore rechazó el acceso. Publica las reglas actualizadas del proyecto."
 
             };
 

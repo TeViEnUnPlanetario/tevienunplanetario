@@ -38,6 +38,8 @@ import {
     asegurarPerfilUsuario
 } from "../../firebase/firestore.js";
 
+import { observarPerfilViajero, pintarAvatar } from "../identidad-viajero.js";
+
 
 import {
     onAuthStateChanged
@@ -53,6 +55,8 @@ const TAMANO_MAXIMO_IMAGEN =
 
 let perfilAutorActual =
     null;
+
+let detenerPerfilAutor = () => {};
 
 
 /* ==================================================
@@ -154,6 +158,9 @@ onAuthStateChanged(
         perfilAutorActual =
             null;
 
+        detenerPerfilAutor();
+        detenerPerfilAutor = () => {};
+
 
         if (!usuario) {
 
@@ -178,6 +185,12 @@ onAuthStateChanged(
                 perfil,
                 usuario
             );
+
+            detenerPerfilAutor = observarPerfilViajero(usuario.uid, perfilVivo => {
+                if (!perfilVivo) return;
+                perfilAutorActual = perfilVivo;
+                mostrarAutorEnFormulario(perfilVivo, usuario);
+            });
 
         }
         catch (
@@ -306,6 +319,7 @@ function mostrarAutorEnFormulario(
 
     const avatar =
         String(
+            perfil?.foto ||
             perfil?.avatar ||
             perfil?.iniciales ||
             obtenerIniciales(nombre)
@@ -354,8 +368,11 @@ function mostrarAutorEnFormulario(
 
     if (elementoAvatar) {
 
-        elementoAvatar.textContent =
-            avatar;
+        pintarAvatar(
+            elementoAvatar,
+            perfil?.foto || avatar,
+            nombre
+        );
 
         elementoAvatar.dataset.usuarioAvatar =
             avatar;
@@ -551,6 +568,7 @@ async function obtenerDatosAutor() {
 
     const avatar =
         String(
+            perfil?.foto ||
             perfil?.avatar ||
             perfil?.iniciales ||
             obtenerIniciales(nombre)

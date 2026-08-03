@@ -27,9 +27,7 @@ async function leerProximoLanzamientoPublico() {
     try {
         const documento = await getDoc(REFERENCIA_LANZAMIENTO);
 
-        if (!documento.exists()) {
-            return { estado: "respaldo", datos: null };
-        }
+        if (!documento.exists()) return { estado: "oculto", datos: null };
 
         const datos = documento.data();
 

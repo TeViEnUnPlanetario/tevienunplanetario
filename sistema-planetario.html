@@ -61,13 +61,13 @@
 
     <div class="panel" id="panel-administracion" hidden>
         <button class="menu-movil" id="abrir-menu" type="button" aria-controls="barra-lateral" aria-expanded="false">
-            <span aria-hidden="true">☰</span><span>Menú</span>
+            <span aria-hidden="true">☰</span><span>Explorar universo</span>
         </button>
         <button class="menu-fondo" id="cerrar-menu-fondo" type="button" aria-label="Cerrar menú" hidden></button>
 
         <aside class="barra-lateral" id="barra-lateral" aria-label="Navegación administrativa">
             <div class="marca-panel">
-                <span class="marca-panel__simbolo" aria-hidden="true">✦</span>
+                <span class="marca-panel__simbolo" id="admin-avatar-marca" aria-hidden="true">✦</span>
                 <div><strong>Sistema Planetario</strong><small>Centro de control</small></div>
             </div>
             <nav class="navegacion-panel">
@@ -95,6 +95,8 @@
                 <div><strong id="admin-nombre">Administrador</strong><small id="admin-correo"></small></div>
             </div>
             <div class="barra-lateral__acciones">
+                <a href="observatorio.html">Observatorio</a>
+                <a href="perfil.html">Mi constelación</a>
                 <a href="index.html">Ver sitio público</a>
                 <button id="cerrar-sesion" type="button">Cerrar sesión</button>
             </div>
@@ -138,6 +140,9 @@
                         <strong id="resumen-origen">Verificando</strong>
                         <small id="resumen-origen-detalle">Conectando con Firebase</small>
                     </article>
+                    <article class="tarjeta-resumen tarjeta-resumen--acceso"><span class="tarjeta-resumen__icono" aria-hidden="true">◎</span><p>Shows</p><strong>Presentaciones</strong><button type="button" data-vista-directa="shows">Administrar <span aria-hidden="true">→</span></button><a href="index.html#shows">Ver sección pública</a></article>
+                    <article class="tarjeta-resumen tarjeta-resumen--acceso"><span class="tarjeta-resumen__icono" aria-hidden="true">◇</span><p>Galería</p><strong>Fotografías</strong><button type="button" data-vista-directa="galeria">Administrar <span aria-hidden="true">→</span></button><a href="galeria.html">Ver sección pública</a></article>
+                    <article class="tarjeta-resumen tarjeta-resumen--acceso"><span class="tarjeta-resumen__icono" aria-hidden="true">♫</span><p>Música</p><strong>Lanzamientos</strong><button type="button" data-vista-directa="musica">Administrar <span aria-hidden="true">→</span></button><a href="musica.html">Ver sección pública</a></article>
                 </div>
             </section>
 

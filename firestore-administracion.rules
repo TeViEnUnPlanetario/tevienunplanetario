@@ -499,7 +499,12 @@ service cloud.firestore {
         match /usuarios/{usuarioId} {
 
             allow read:
-                if sesionActiva();
+                if esPropietario(usuarioId)
+                || esAdministrador()
+                || (
+                    sesionActiva()
+                    && !resource.data.keys().hasAny(["correo", "edad", "redes"])
+                );
 
 
             /*
@@ -550,13 +555,124 @@ service cloud.firestore {
                     .hasOnly([
                         "nombre",
                         "biografia",
-                        "foto"
+                        "foto",
+                        "portada",
+                        "actualizadoEn",
+                        "publicaciones",
+                        "comentarios",
+                        "favoritos",
+                        "constelacionTotal",
+                        "correo",
+                        "edad",
+                        "redes"
                     ]);
 
 
             allow delete:
                 if false;
 
+
+            // Datos que no deben formar parte del perfil público.
+            match /privado/{documento} {
+
+                allow read:
+                    if documento == "perfil"
+                    && (
+                        esPropietario(usuarioId)
+                        || esAdministrador()
+                        || (
+                            sesionActiva()
+                            && exists(
+                                /databases/$(database)/documents/usuarios/$(request.auth.uid)/constelacion/$(usuarioId)
+                            )
+                        )
+                    );
+
+                allow create, update:
+                    if documento == "perfil"
+                    && esPropietario(usuarioId)
+                    && request.resource.data.keys().hasOnly([
+                        "correo",
+                        "edad",
+                        "redes"
+                    ]);
+
+                allow delete:
+                    if false;
+
+            }
+
+
+            match /constelacion/{viajeroId} {
+
+                allow read:
+                    if sesionActiva();
+
+                allow create:
+                    if sesionActiva()
+                    && viajeroId != usuarioId
+                    && request.resource.data.uid == viajeroId
+                    && (
+                        (esPropietario(usuarioId) && exists(/databases/$(database)/documents/usuarios/$(usuarioId)/invitaciones/$(viajeroId)))
+                        || (request.auth.uid == viajeroId && exists(/databases/$(database)/documents/usuarios/$(viajeroId)/invitaciones/$(usuarioId)))
+                    );
+
+                allow update:
+                    if false;
+
+                allow delete:
+                    if sesionActiva() && (request.auth.uid == usuarioId || request.auth.uid == viajeroId);
+
+            }
+
+
+            match /invitaciones/{remitenteId} {
+
+                allow read, delete:
+                    if sesionActiva() && (request.auth.uid == usuarioId || request.auth.uid == remitenteId);
+
+                allow create:
+                    if sesionActiva()
+                    && request.auth.uid == remitenteId
+                    && usuarioId != remitenteId
+                    && request.resource.data.remitenteId == remitenteId
+                    && request.resource.data.estado == "pendiente";
+
+                allow update:
+                    if false;
+
+            }
+
+
+            match /notificaciones/{notificacionId} {
+
+                allow read, delete:
+                    if esPropietario(usuarioId);
+
+                allow create:
+                    if sesionActiva()
+                    && usuarioId != request.auth.uid
+                    && request.resource.data.actorId == request.auth.uid
+                    && request.resource.data.tipo in ["eco", "estrella", "constelacion"]
+                    && request.resource.data.leida == false;
+
+                allow update:
+                    if esPropietario(usuarioId)
+                    && request.resource.data
+                        .diff(resource.data)
+                        .affectedKeys()
+                        .hasOnly(["leida"])
+                    && request.resource.data.leida == true;
+
+            }
+
+        }
+
+        function moderacionContextualValida() {
+            return esAdministrador()
+                && request.resource.data.diff(resource.data).affectedKeys()
+                    .hasOnly(["oculta", "moderadaPor", "actualizadoEn"])
+                && request.resource.data.moderadaPor == request.auth.uid;
         }
 
 
@@ -587,7 +703,7 @@ service cloud.firestore {
 
 
             allow delete:
-                if false;
+                if esAdministrador();
 
 
             match /hilos/{hiloId}/comentarios/{comentarioId} {
@@ -1141,8 +1257,10 @@ service cloud.firestore {
 
             allow delete:
                 if sesionActiva()
-                && resource.data.autorId
-                    == request.auth.uid;
+                && (
+                    resource.data.autorId == request.auth.uid
+                    || esAdministrador()
+                );
 
 
             // =====================================
@@ -1205,7 +1323,9 @@ service cloud.firestore {
 
 
                 allow update:
-                    if sesionActiva()
+                    if moderacionContextualValida()
+                    || (
+                    sesionActiva()
 
                     && resource.data.autorId
                         == request.auth.uid
@@ -1226,14 +1346,17 @@ service cloud.firestore {
                         > 0
 
                     && request.resource.data.texto.size()
-                        <= 500;
+                        <= 500
+                    );
 
 
                 allow delete:
                     if sesionActiva()
 
-                    && resource.data.autorId
-                        == request.auth.uid;
+                    && (
+                        resource.data.autorId == request.auth.uid
+                        || esAdministrador()
+                    );
 
             }
 
@@ -1243,6 +1366,27 @@ service cloud.firestore {
         // =========================================
         // CONSULTA GLOBAL DE ESTRELLAS
         // =========================================
+
+        match /observaciones/{observacionId} {
+            allow update:
+                if esAdministrador()
+                && request.resource.data.diff(resource.data).affectedKeys()
+                    .hasOnly(["oculta", "moderadaPor", "moderadaEn", "actualizadaEn"])
+                && request.resource.data.moderadaPor == request.auth.uid;
+            allow delete: if esAdministrador();
+
+            match /ecos/{ecoId} {
+                allow update: if moderacionContextualValida();
+                allow delete: if esAdministrador();
+            }
+        }
+
+        match /{rutaComentarios=**}/comentarios/{comentarioId} {
+            allow update: if moderacionContextualValida();
+            match /respuestas/{respuestaId} {
+                allow update: if moderacionContextualValida();
+            }
+        }
 
         match /{ruta=**}/estrellas/{estrellaId} {
 

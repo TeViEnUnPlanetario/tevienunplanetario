@@ -5,6 +5,7 @@ import {
     importarContenidoInicial,
     listarContenido
 } from "../firebase/firestore-contenido-administracion.js";
+import { confirmarAccion } from "./confirmacion.js";
 
 const GALERIA_INICIAL = [
     ["galeria-01", "En vivo", "Una noche donde las luces y los sonidos comenzaron un nuevo viaje.", "img/galeria/foto1.jpg", "Te Vi En Un Planetario en vivo", "grande"],
@@ -214,6 +215,10 @@ function renderizar(tipo) {
         informacion.append(titulo, detalle);
         const acciones = document.createElement("div");
         acciones.className = "contenido-fila__acciones";
+        const acceso = document.createElement("a");
+        acceso.href = tipo === "galeria" ? "galeria.html" : tipo === "musica" ? "musica.html" : "index.html#noticias";
+        acceso.textContent = "Abrir"; acceso.target = "_blank"; acceso.rel = "noopener";
+        acciones.append(acceso);
         [
             ["editar", "Editar"],
             ["visibilidad", elemento.visible ? "Ocultar" : "Mostrar"],
@@ -222,7 +227,8 @@ function renderizar(tipo) {
             const boton = document.createElement("button");
             boton.type = "button";
             boton.dataset.accion = accion;
-            boton.textContent = texto;
+            if (accion === "visibilidad") { boton.className = "accion-interruptor"; boton.setAttribute("role", "switch"); boton.setAttribute("aria-checked", String(elemento.visible)); boton.setAttribute("aria-label", texto); boton.title = texto; }
+            else boton.textContent = texto;
             acciones.appendChild(boton);
         });
         fila.append(imagen, informacion, acciones);
@@ -275,11 +281,12 @@ async function manejarAccion(tipo, evento) {
             return;
         }
         if (boton.dataset.accion === "visibilidad") {
+            if (!await confirmarAccion({ titulo: elemento.visible ? "Ocultar contenido" : "Mostrar contenido", mensaje: elemento.visible ? `“${elemento.titulo}” dejará de aparecer en el sitio público.` : `“${elemento.titulo}” volverá a aparecer en el sitio público.`, aceptar: elemento.visible ? "Ocultar" : "Mostrar" })) return;
             await cambiarVisibilidadContenido(tipo, elemento.id, !elemento.visible);
             await cargar(tipo);
             return;
         }
-        if (boton.dataset.accion === "eliminar" && window.confirm(`¿Eliminar “${elemento.titulo}”?`)) {
+        if (boton.dataset.accion === "eliminar" && await confirmarAccion({ titulo: "Eliminar definitivamente", mensaje: `Se eliminará “${elemento.titulo}”. Esta acción no se puede deshacer.`, aceptar: "Eliminar" })) {
             await eliminarContenido(tipo, elemento.id);
             await cargar(tipo);
         }
@@ -295,7 +302,7 @@ function registrar(tipo) {
     config.lista.addEventListener("click", (evento) => manejarAccion(tipo, evento));
     document.getElementById(`cancelar-${tipo}`).addEventListener("click", () => cerrarEditor(tipo));
     config.importar.addEventListener("click", async () => {
-        if (!window.confirm(`¿Importar el contenido actual de ${tipo} a Firestore?`)) return;
+        if (!await confirmarAccion({ titulo: "Importar contenido", mensaje: `Se copiará el contenido actual de ${tipo} a Firestore.`, aceptar: "Importar" })) return;
         mensaje(tipo, "Importando contenido inicial…");
         try {
             await importarContenidoInicial(tipo, config.inicial);

@@ -26,7 +26,8 @@ import {
 } from "./firebase-config.js";
 
 import {
-    asegurarPerfilUsuario
+    asegurarPerfilUsuario,
+    registrarActividad
 } from "./firestore.js";
 
 
@@ -35,6 +36,7 @@ import {
     collection,
     deleteDoc,
     doc,
+    getDoc,
     limit,
     onSnapshot,
     orderBy,
@@ -255,6 +257,8 @@ const estaVerificado =
             ),
             observacion
         );
+
+    await registrarActividad(usuario.uid, "publicaciones", 1);
 
 
     return referencia.id;
@@ -500,16 +504,26 @@ export async function eliminarObservacion(
     }
 
 
-    await deleteDoc(
-
-        doc(
+    const referencia = doc(
             db,
             COLECCION_OBSERVACIONES,
             id
-        )
+        );
+    const existente = await getDoc(referencia);
+    await deleteDoc(referencia);
 
-    );
+    await registrarActividad(existente.data()?.autorId || usuario.uid, "publicaciones", -1);
 
+}
+
+export async function ocultarObservacion(observacionId, oculta) {
+    if (!auth.currentUser) throw new Error("Debes iniciar sesión para moderar.");
+    await updateDoc(doc(db, COLECCION_OBSERVACIONES, normalizarTexto(observacionId)), {
+        oculta: Boolean(oculta),
+        moderadaPor: auth.currentUser.uid,
+        moderadaEn: serverTimestamp(),
+        actualizadaEn: serverTimestamp()
+    });
 }
 
 
@@ -595,6 +609,11 @@ function transformarDocumento(
         editada:
             Boolean(
                 datos.editada
+            ),
+
+        oculta:
+            Boolean(
+                datos.oculta
             )
 
     };

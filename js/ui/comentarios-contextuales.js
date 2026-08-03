@@ -11,19 +11,28 @@ import {
     crearRespuesta,
     editarComentario,
     eliminarComentario,
+    eliminarRespuesta,
     listarComentarios,
     listarRespuestas,
+    ocultarComentario,
+    ocultarRespuesta,
     tieneEstrellaComentario
-} from "../firebase/firestore-comentarios-contextuales.js?v=2";
+} from "../firebase/firestore-comentarios-contextuales.js?v=3";
 import {
     alternarEstrella,
     contarEstrellas,
     tieneEstrellaActual
 } from "../firebase/firestore-estrellas-contextuales.js";
+import { conectarModeracion } from "./moderacion.js";
+import { confirmarAccion } from "./confirmacion.js";
+import {
+    conectarIdentidadViajero,
+    crearAccionesViajero,
+    observarPerfilViajero
+} from "./identidad-viajero.js";
 
 const componentes = new Set();
 const LIMITE_ECOS_VISIBLES = 3;
-const perfilesAutores = new Map();
 let perfilActual = null;
 
 function elemento(etiqueta, clase, texto = "") {
@@ -77,31 +86,27 @@ function crearAvatar(comentario) {
     return avatar;
 }
 
-async function aplicarRangoAutor(comentario, rango, articulo) {
-    let perfil = null;
-    if (comentario.autorId === auth.currentUser?.uid && perfilActual) {
-        perfil = perfilActual;
-    } else if (perfilesAutores.has(comentario.autorId)) {
-        perfil = perfilesAutores.get(comentario.autorId);
-    } else if (auth.currentUser && comentario.autorId) {
-        try {
-            const consulta = await getDoc(doc(db, "usuarios", comentario.autorId));
-            perfil = consulta.exists() ? consulta.data() : null;
-        } catch {
-            perfil = null;
+function aplicarRangoAutor(comentario, rango, articulo, avatar, nombre) {
+    conectarIdentidadViajero({
+        uid: comentario.autorId,
+        avatar,
+        nombre,
+        rango,
+        respaldo: {
+            nombre: comentario.autorNombre,
+            foto: comentario.autorFoto,
+            rango: "\u{1F6F8} Viajero"
         }
-        perfilesAutores.set(comentario.autorId, perfil);
-    }
-
-    const rol = String(perfil?.rol || "").trim().toLowerCase();
-    const administrativo = rol === "sistema-planetario" || rol === "administrador";
-    articulo.classList.toggle("comentario-contextual--administrativo", administrativo);
-    articulo.dataset.rol = administrativo ? rol : "viajero";
-    rango.textContent = rol === "sistema-planetario"
-        ? "Sistema Planetario"
-        : rol === "administrador"
-            ? "Administrador"
-            : "\u{1F6F8} Viajero";
+    });
+    observarPerfilViajero(comentario.autorId, perfil => {
+        const rol = String(perfil?.rol || "").trim().toLowerCase();
+        const administrativo = rol === "sistema-planetario" || rol === "administrador";
+        articulo.classList.toggle("comentario-contextual--administrativo", administrativo);
+        articulo.dataset.rol = administrativo ? rol : "viajero";
+        rango.textContent = rol === "sistema-planetario"
+            ? "Sistema Planetario"
+            : rol === "administrador" ? "Administrador" : (perfil?.rango || "\u{1F6F8} Viajero");
+    });
 }
 
 function crearComponente(contenedor, contexto) {
@@ -228,8 +233,7 @@ function crearComponente(contenedor, contexto) {
 
     function accionesComentario(comentario, articulo, texto) {
         const propias = auth.currentUser?.uid === comentario.autorId;
-        const admin = ["sistema-planetario", "administrador"].includes(perfilActual?.rol);
-        if (!propias && !admin) return;
+        if (!propias) return;
 
         const acciones = elemento("div", "comentario-contextual__acciones");
         if (propias) {
@@ -261,10 +265,10 @@ function crearComponente(contenedor, contexto) {
             acciones.appendChild(editar);
         }
 
-        const eliminar = elemento("button", admin && !propias ? "comentario-contextual__moderar" : "", admin && !propias ? "Eliminar · Moderación" : "Eliminar");
+        const eliminar = elemento("button", "", "Eliminar");
         eliminar.type = "button";
         eliminar.addEventListener("click", async () => {
-            if (!window.confirm("¿Eliminar este comentario?")) return;
+            if (!await confirmarAccion({ titulo: "Eliminar comentario", mensaje: "El comentario y sus respuestas dejarán de estar disponibles. Esta acción no se puede deshacer.", aceptar: "Eliminar" })) return;
             try {
                 await eliminarComentario(contexto, comentario.id);
                 articulo.remove();
@@ -277,15 +281,14 @@ function crearComponente(contenedor, contexto) {
 
     function agregarComentario(comentario) {
         const articulo = elemento("article", "comentario-contextual");
-        articulo.appendChild(crearAvatar(comentario));
+        const avatar = crearAvatar(comentario);
+        articulo.appendChild(avatar);
         const cuerpo = elemento("div", "comentario-contextual__cuerpo");
         const cabecera = elemento("div", "comentario-contextual__cabecera");
         const identidad = elemento("div", "comentario-contextual__identidad");
         const rango = elemento("span", "comentario-contextual__rango", "\u{1F6F8} Viajero");
-        identidad.append(
-            elemento("strong", "", comentario.autorNombre),
-            rango
-        );
+        const nombre = elemento("strong", "", comentario.autorNombre);
+        identidad.append(nombre, rango, crearAccionesViajero(comentario.autorId));
         cabecera.append(
             identidad,
             elemento("time", "", fechaTexto(comentario.creadoEn))
@@ -296,7 +299,13 @@ function crearComponente(contenedor, contexto) {
         accionesComentario(comentario, articulo, texto);
         crearInteraccionesEco(comentario, articulo);
         lista.appendChild(articulo);
-        aplicarRangoAutor(comentario, rango, articulo);
+        aplicarRangoAutor(comentario, rango, articulo, avatar, nombre);
+        conectarModeracion({
+            contenedor: articulo,
+            oculto: comentario.oculta,
+            alOcultar: valor => ocultarComentario(contexto, comentario.id, valor),
+            alEliminar: () => eliminarComentario(contexto, comentario.id)
+        });
     }
 
     function crearInteraccionesEco(comentario, articulo) {
@@ -379,15 +388,14 @@ function crearComponente(contenedor, contexto) {
 
         function agregarRespuesta(respuesta) {
             const tarjeta = elemento("article", "comentario-contextual__respuesta");
-            tarjeta.appendChild(crearAvatar(respuesta));
+            const avatar = crearAvatar(respuesta);
+            tarjeta.appendChild(avatar);
             const contenido = elemento("div", "comentario-contextual__respuesta-contenido");
             const encabezado = elemento("div", "comentario-contextual__respuesta-encabezado");
             const identidad = elemento("div", "comentario-contextual__respuesta-identidad");
             const rango = elemento("span", "comentario-contextual__rango", "\u{1F6F8} Viajero");
-            identidad.append(
-                elemento("strong", "", respuesta.autorNombre),
-                rango
-            );
+            const nombre = elemento("strong", "", respuesta.autorNombre);
+            identidad.append(nombre, rango, crearAccionesViajero(respuesta.autorId));
             encabezado.append(
                 identidad,
                 elemento("time", "", fechaTexto(respuesta.creadoEn))
@@ -398,7 +406,13 @@ function crearComponente(contenedor, contexto) {
             );
             tarjeta.appendChild(contenido);
             listaRespuestas.appendChild(tarjeta);
-            aplicarRangoAutor(respuesta, rango, tarjeta);
+            aplicarRangoAutor(respuesta, rango, tarjeta, avatar, nombre);
+            conectarModeracion({
+                contenedor: tarjeta,
+                oculto: respuesta.oculta,
+                alOcultar: valor => ocultarRespuesta(contexto, comentario.id, respuesta.id, valor),
+                alEliminar: () => eliminarRespuesta(contexto, comentario.id, respuesta.id)
+            });
         }
 
         async function cargarRespuestas(reset = false) {

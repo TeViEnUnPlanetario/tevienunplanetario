@@ -16,6 +16,7 @@ import {
     subirCartelPresentacion,
     validarArchivoCartel
 } from "../firebase/storage-presentaciones.js";
+import { confirmarAccion } from "./confirmacion.js";
 
 
 const elementos = {
@@ -235,9 +236,11 @@ function renderizarLista() {
 
         const acciones = document.createElement("div");
         acciones.className = "show-fila__acciones";
+        const acceso = document.createElement("a"); acceso.href = "index.html#shows"; acceso.target = "_blank"; acceso.rel = "noopener"; acceso.textContent = "Abrir"; acciones.append(acceso);
+        const visibilidad = crearBoton("", "visibilidad", show.id); visibilidad.classList.add("accion-interruptor"); visibilidad.setAttribute("role", "switch"); visibilidad.setAttribute("aria-checked", String(show.visible)); visibilidad.setAttribute("aria-label", show.visible ? "Ocultar" : "Mostrar"); visibilidad.title = visibilidad.getAttribute("aria-label");
         acciones.append(
             crearBoton("Editar", "editar", show.id),
-            crearBoton(show.visible ? "Ocultar" : "Mostrar", "visibilidad", show.id),
+            visibilidad,
             crearBoton("Eliminar", "eliminar", show.id, "show-accion--eliminar")
         );
 
@@ -274,9 +277,7 @@ async function cargarPresentaciones() {
 
 
 async function importarShowsActuales() {
-    const confirmado = window.confirm(
-        "¿Importar las tres presentaciones actuales a Firestore?"
-    );
+    const confirmado = await confirmarAccion({ titulo: "Importar presentaciones", mensaje: "Se copiarán las presentaciones actuales a Firestore.", aceptar: "Importar" });
 
     if (!confirmado) {
         return;
@@ -441,6 +442,7 @@ async function manejarAccionLista(evento) {
 
     try {
         if (accion === "visibilidad") {
+            if (!await confirmarAccion({ titulo: show.visible ? "Ocultar presentación" : "Mostrar presentación", mensaje: show.visible ? `“${show.nombre}” dejará de aparecer en la agenda pública.` : `“${show.nombre}” volverá a aparecer en la agenda pública.`, aceptar: show.visible ? "Ocultar" : "Mostrar" })) { boton.disabled = false; return; }
             await cambiarVisibilidadPresentacion(show.id, !show.visible);
             await cargarPresentaciones();
             mostrarMensaje(
@@ -451,9 +453,7 @@ async function manejarAccionLista(evento) {
         }
 
         if (accion === "eliminar") {
-            const confirmado = window.confirm(
-                `¿Eliminar definitivamente la presentación “${show.nombre}”?`
-            );
+            const confirmado = await confirmarAccion({ titulo: "Eliminar presentación", mensaje: `Se eliminará definitivamente la presentación “${show.nombre}”.`, aceptar: "Eliminar" });
 
             if (!confirmado) {
                 boton.disabled = false;
